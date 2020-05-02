@@ -1,0 +1,38 @@
+# me le firgai tersla be la xunre nunmro
+
+.i la .edgyr.alyn.pos. finti
+
+.i zo'e xe fanva la'e zoi gy. The Masque Of The Red Death gy. le glibau
+fu la .zaifir.
+
+ni'o la xunre nunmro goi ko'a pu ze'u daspo le gugde .i lo terbi'a ze'epu noroi zmadu
+ko'a loka ckape .e loka selte'a .ipe'a lo ciblu cu xadni je sinxa be ko'a
+.i loka xunre jo'u selte'a pe lo ciblu cu go'i
+.i ko'a zo'u carmi bo cortu jo'u suksa carmalga'e .ibabo sutra blucri ra'i lo
+kapkevna ca lonu bi'arze'a .i lo xunre morna be le xadni
+.e le flira be lo te bilma cu sinxa loka se dapma .imu'ibo no lo prenu
+cu sidju ja xendo .i lepu'u bi'arbi'o ce'o farvi ce'o fanmo kei pe le terbi'a
+cu cacra li pimu
+
+ni'o ku'i la .nol.prosperos. goi ko'a gleki je virnu je prije .i co'i lonu
+pimu lo nilxa'u befi lei tutra be ko'a cu morsi kei ko'a klacpe fi le selzva be
+ri lei pa ki'o ki'o kanro je xalbo pendo bele'a lei xirno'i ja
+fetno'i ku pe le ko'a nolzda .i ko'a jo'u ra klama pa le ko'a
+badydi'u malsi goi ko'i zi'e noi mutce loka sivni
+.i ko'i noi barda je banli
+dinju cu te platu ko'a noi banli ju cizra fi loka jdice
+.i lo tsali je galte bitmu cu sruri ko'i .i ra se bimvrogai ma'e lo tirse
+.i lei nolkansa goi ko'o ba lonu nerkla cu bevri lo toknu ku jo'u lo tilju mruli
+le bimvrogai gi'e runme lasna lei klupe
+.i ko'o jdice lodu'u na'e sabgau
+lo pluta be lo nenri .a lo bartu lo nenri prenu poi suksa cinmo
+loka badri ja jai fenki .i ko'i ricfu lo sorcu .i ki'u la'e di'u ko'o kakne
+lonu renvi tu'a lo terbi'a .i roda poi bartu cu kakne lozu'o kurji ri
+.i cabo lozu'o da badri gi'a pensi cu selbebna
+.i le nolraitru cu sabji ro le'i zdile no'u lo xampre ce lo nalbrezu'e terpemci
+ce lo dansu ce lo zgipre ce lope'a ka melbi ce lo vanju
+.ipe'a le sego'i jo'u loza'i snura cu nenri .i la xunre nunmro cu bartu
+
+...
+
+[Home](/index.html)
