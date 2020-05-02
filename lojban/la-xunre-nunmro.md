@@ -33,6 +33,45 @@ lonu renvi tu'a lo terbi'a .i roda poi bartu cu kakne lozu'o kurji ri
 ce lo dansu ce lo zgipre ce lope'a ka melbi ce lo vanju
 .ipe'a le sego'i jo'u loza'i snura cu nenri .i la xunre nunmro cu bartu
 
+ni'o ca lenu ko'a pu'o mo'u sepli ze'a lo masti be li mu .a li xa
+kei ca ji'a lonu le nunsorbi'a cu xlarai vi le bartu kei la .nol.prosperos.
+zdigau fi le pa ki'o ki'o pendo be ko'a lo ticta'u tersla noi rirci loka banli
+
+ni'o le ticta'u tersla cu fasnu sekai loka carmi pluka .iku'i pamai
+mi skicu lei kumfa poi se zvati le go'i .i ra banli zemei
+.i ku'i lo'e tai kumgri noi se stuzi lo badydi'u
+cu clani je sirji .iji'a lonu lo se polje vrogai pe ra ti'a sakli muvdu
+lo bitmu cu rinka loza'i lo jvinu be roda cu se klina .i le vi
+tcini cu frica sei la'e di'u nalspaji ki'u loka ce'u prami ro da poi cizra kei
+pe le nolraitru .i le stura be le'i kumfa cu vitci .iseri'abo lonu
+viska za'upa ri cu tolcu'i
+*to'i li'o toi* .i lo cnino cu zvati ro lo kruvi .i lo frasuje canko noi
+rajycla je jarki zu'a je ri'u midju lo bitmu gi'e te jvinu lo vorme noi
+lamji piro le kumgri .i ro le canko cu te marji lo selcinta
+blaci noi mapti lei jadni be le se canko kumfa loka skari
+.imu'a le kumfa poi traji loka stuna cu se jadni le blanu
+.ije carmi blanu fa le canko pe ru .i le jadni
+je bukybimgai pe le remoi be le'i kumfa cu zirpu .ije le canko blaci
+vi zirpu .i roda pe le cimoi cu crino .i le canko go'i .i le vomoi cu se
+nilce je se gusni cei broda lo narju .i le mumoi cu broda lo blabi
+.i le xamoi cu broda lo labzi'u
+.i le zemoi be le'i kumfa be'o goi ko'u se bukybimgai lo xekri
+demsilka noi gacri ve'a le drudi ku bi'i le bitmu ku'o gi'epe'a farlu
+tai lo se polje derxi tu'a le buklolgai noi simsa befi loka marji .e loka skari
+.i ne'ipo'o ko'u lei canko na mapti lei jadni loka skari .i le vi canko
+blaci cu carmi ke ciblu xunre
+.i ne'iki le ze kumfa lo tergu'i na cmima lu'i le solji jadni noi
+vi ja va se cunfaigau gi'a dandu lo drudi .i noda gusni fi lo gapci livla tergu'i
+.a lo laktergu'i ne'ikiku .i ku'i ne'i le vorme poi lamji
+le kumgri re'o ro le canko cu sanli fa lo
+cibytu'e zbepi be lo fagri .i lo gusli'i befi ra cu pagre lo
+selcinta blaci gi'e rufsu gusni lo kumfa seri'a lo cizra *to'i li'o toi*
+selvi'a
+.i ne'i ko'u no'u le stici je xekri kumfa loza'i lo fagygu'i noi
+pagre le ciblu se skari ke canko blaci cu gusni lo xekri bukybimgai
+cu traji loka pruxi selte'a .i lo flira be lo prenu cu simlu loka cilce
+fo loza'i zvati ko'u .isemu'ibo so'upo'o le'i kansa cu milxe nerkla ko'u
+
 ...
 
 [Home](/index.html)
