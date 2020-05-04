@@ -77,5 +77,3 @@ cu traji loka pruxi selte'a .i lo flira be lo prenu cu simlu loka cilce
 fo loza'i zvati ko'u .isemu'ibo so'upo'o le'i kansa cu milxe nerkla ko'u
 
 ...
-
-[Home](/index.html)
