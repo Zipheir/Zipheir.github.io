@@ -1,3 +1,7 @@
+<head>
+<title>SIGWINCH - Home</title>
+</head>
+
 # Home
 
 There's not much here right now.  Check back soon.
