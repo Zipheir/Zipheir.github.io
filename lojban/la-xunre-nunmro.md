@@ -77,3 +77,7 @@ cu traji loka pruxi selte'a .i lo flira be lo prenu cu simlu loka cilce
 fo loza'i zvati ko'u .isemu'ibo so'upo'o le'i kansa cu milxe nerkla ko'u
 
 ...
+
+© 2020 Wolfgang Corcoran-Mathe.  Released under a Creative Commons
+[Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
+license.
