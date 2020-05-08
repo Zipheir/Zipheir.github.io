@@ -2,6 +2,13 @@
 
 ## Session 1 (2020-05-06)
 
+The PCs and their players are:
+
+* Asa Smith-Moseley Rogueman (elf rogue) -- Audrey LoBue
+* Ezren (human wizard) -- Bran Kamp
+* Friar Chip Of Dale (dwarf cleric) -- Ned Allen
+* Xavier E. Kingston (half-elf bard) -- Tyler Beaulieu
+
 > It has been three days since you left Elidir, climbing into
 > the back of one of Bort Bargith's wagons bound for the faraway
 > Andoran capital of Almas.  The smiling caravan master cut your
