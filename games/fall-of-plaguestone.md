@@ -9,6 +9,8 @@ The PCs and their players are:
 * Friar Chip Of Dale (dwarf cleric) -- Ned Allen
 * Xavier E. Kingston (half-elf bard) -- Tyler Beaulieu
 
+The scene:
+
 > It has been three days since you left Elidir, climbing into
 > the back of one of Bort Bargith's wagons bound for the faraway
 > Andoran capital of Almas.  The smiling caravan master cut your
