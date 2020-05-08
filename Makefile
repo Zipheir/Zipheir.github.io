@@ -10,7 +10,8 @@ all: $(HTML) $(INCS)
 .SUFFIXES: .md .html
 
 .md.html:
-	markdown $< | cat $(HEADER) - $(FOOTER) > $@
+	@echo generating $@
+	@./title.sed < $< | markdown | cat $(HEADER) - $(FOOTER) > $@
 
 clean:
 	rm -f $(HTML)

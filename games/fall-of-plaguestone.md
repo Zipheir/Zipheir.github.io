@@ -1,6 +1,3 @@
-<head>
-<title>The Fall Of Plaguestone - Game Journal</title>
-</head>
 # The Fall Of Plaguestone - Game Journal
 
 ## Session 1 (2020-05-06)

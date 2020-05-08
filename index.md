@@ -1,8 +1,4 @@
-<head>
-<title>SIGWINCH - Home</title>
-</head>
-
-# Home
+# SIGWINCH Home
 
 There's not much here right now.  Check back soon.
 
