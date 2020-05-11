@@ -98,7 +98,7 @@ lo zilska .a lo larcu tcila .i ko'a toljundi lo jadni poi zasni misno
 ckaji loka cilce carmi .i .ia lo so'o prenu cu jinvi lodu'u ko'a jai
 fenki kei goi fo'e .i lei kansa be ko'a cu birti to'ebo fo'e .i roda
 zo'u lonu da tirna jo'u viska jo'u pencu ko'a cu sarcu loza'i da birti
-du'u fo'e jitfa
+lodu'u fo'e jitfa
 
 ni'o .i ko'a ralju fi loka ce'u jitro tu'a lei muvdu kakne jadni be le
 ze kumfa kei sera'a lenu banli tersla .iji'a lei ticta'u salci cu
