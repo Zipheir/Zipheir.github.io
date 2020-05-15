@@ -78,13 +78,13 @@ fa'a slilu fi'o sance lo jimdaxsna noi kandi je rapli bo fanza .i co'i
 lonu le mentu merli ve junla mo'u sruri klama le sefta be fo'a kei
 no'u lonu lu'e le tcika pu'o se notsku lepe'a ransu fepri be fo'a cu
 se sance lo curve je cladu je mutce be loka zgike be'o noi ku'i cizra
-fi loka selto'a .e loka smuni .isemu'ibo fi'o te dikni lo cacra be li
+fi loka selto'a .e loka smuni .isemu'ibo fi'o terdikni lo cacra be li
 pa le se balzgibe'e cu ze'i denpa lonu tirna la'e di'u fo lonu selzgi
 .isi'a loi dansu cu sisti lozu'o carna .i piro lei gleki kansa ze'i se
 cfipu .i ca lonu lo janbe be fo'a cu selsna kei le traji be loka
 bebgei cu labybi'o .ije le tolci'o je junri zmadu cu satre le ri mebri
 le xance tai loza'i ce'u cfipu sipna gi'a pensi .iku'i co'u lonu
-mirsna kei lei kansa cu milxe cfila .i le'i zgipre cu simxu lonu catlu
+mirsna kei lei kansa cu milxe cmila .i le'i zgipre cu simxu lonu catlu
 kei gi'e cisma tai lonu sevzi ckasu fi loka xanka je bebna kei gi'e
 simxu lonu smaba'u nupre lonu lo za'umoi be lo'inu darxi kei pe fo'a
 cu na'e rinka lonu simsa cinmo .i ba lo mentu be li xano *to'i li'o toi*
@@ -127,6 +127,29 @@ jai mukti lonu terpa .i lo prenu poi stapa le xekri buklolgai cu tirna
 ra'i le vi mudrnpersimo junla lo se smagai seljanbe noi zmadu loka
 jundi je se basna kei ro le sance poi se tirna le prenu poi salci bu'u
 le drata kumfa
+
+ni'o ku'i le drata kumfa cu mutce loka predenmi .i pe'a je ne'iku le
+risna be lo kamji'e cu carmi slilu .i le tersla ca'o co'e sekai loka
+cilce carna kei pu lenu le junla co'a selsna notsku lu'e lo ctemidju
+.i ke'u le zgike cu se sisti .i lonu lei dansu ru'i carna cu binxo
+loka smaji .i xanka nu se sisti tai le purci .i ku'i caku li pare se
+klani leni darxi be le janbe pe le junla .i la'a ja'ebo lo caizma za'i
+pensi cu se lifri le kampeikai noi cmima le'i tersla .i ja'ebo pu lonu
+le romoi be le'i mirsna be le romoi be le'i junla selsna cu mo'u jdika
+ji'e loza'i smaji ku kei so'i le se predenmi cu kakne lonu sajbi'o
+loza'i zvati fa le selticta'u noi pu na'e se jundi .i lei kansa cu
+smaba'u casnu le nuzba be ra .ibazi cfari fa lenu desku sance cmoni be
+fi loka tolzau je se spaji ku ce'o bazabo loka carmi terpa je se rigni
+
+ni'o la'a da sruma lodu'u lo simlu be loka fadni na'e ka'e mukti
+le go'i va'o le vi jmaji .i je'u le ticta'u tersla cu
+mutce loka se curmi .i ku'i le vi selticta'u cu jai bancu fo leka drani
+befo le nolraitru kei noi cunso
+.i le do'anai traji be loka ckape prami zo'u lope'a nu se pencu le cinmo
+gitsko cu rinka lonu cinmo .i do'anai lope'a traji be loka farcri be'o
+noi xalbo lo kamji'e .e loka morsi cu na'e xalbo lo so'u cuntu
+.i za'a piro lei jmaji cu jinvi lodu'u le fange selticta'u goi ko'i zo'u
+lenu ko'i tarti ku jo'u lenu ko'i dasni cu na'e ke xajmi ja drani
 
 ...
 
