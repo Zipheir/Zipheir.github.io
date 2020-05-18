@@ -56,7 +56,7 @@ minutes later.  Chip was able to tell that he'd been poisoned.  The local
 sheriff, Rolth Garley, was brought to the Feedmill and began questioning
 everyone.  He concluded by requesting everyone stay in town until the
 regional magistrate, Lord Mubbage Cranberry, could arrive to sort things
-out--likely in a few weeks.
+out---likely in a few weeks.
 
 The PCs went to an ad-hoc memorial service for Bort out in the stables
 among the wagons.  Tamli, Bort's second-in-command, asked them solemnly to
@@ -68,7 +68,7 @@ to someone named "H" for the past five years.  These deliveries were
 numbered 1 through 14; the most recent delivery happened earlier in the day.
 
 Searching the grounds, Chip and Asa were also able to find a vial containing
-a few drops of floral-smelling liquid, similar to a scent the noticed about
+a few drops of floral-smelling liquid, similar to a scent they noticed about
 Bort's porridge-bowl.
 
 The PCs camped out with the wagons, and agreed to begin following up on
