@@ -150,6 +150,26 @@ gitsko cu rinka lonu cinmo .i do'anai lope'a traji be loka farcri be'o
 noi xalbo lo kamji'e .e loka morsi cu na'e xalbo lo so'u cuntu
 .i za'a piro lei jmaji cu jinvi lodu'u le fange selticta'u goi ko'i zo'u
 lenu ko'i tarti ku jo'u lenu ko'i dasni cu na'e ke xajmi ja drani
+.i ko'i xadycla je bilma cinla gi'e mipri dasni le mrota'u .i le
+firgai be ko'a cu se zbasu setai lo flira be lo tinsa mroxadni
+.iri'abo lonu ganse loka drata cu nandu fi lo do'anai zu'o jundi lanli
+.iku'i lei vi fenki salci cu la'a curmi je do'anai zanru la'e lu'o
+de'u .iku'i ko'i darsi lonu jarco tu'a lo selbi'a fi la xunre nunmro
+.i le se dasni be ko'i cu se barna fi lo ciblu .i le mebri noi ganra
+ku jo'u piro le flira cu go'i fi lepe'a xunre selte'a
+
+ni'o le vi pruxi tolcanci no'u ko'i cu vi ja va masno je banli cadzu
+va'o lei dansu mu'i la'a lonu zenba *to'i li'o toi* .i la
+.nol.prosperos.  goi ko'a ca lonu viska ko'i cu simlu loka vlile cinmo
+.itaibo pamai ko'a carmi desku ri'a lonu camte'a ja rigni .i remai le
+mebri be ko'a cu xunre binxo ri'a lonu fengu .i ko'a rufsu voksa cusku
+lu ma darsi li'u lei nolkansa poi vi sanli ku'o gi'e go'i lu o'onai ma
+darsi lonu te mabla mi tai le .i'enaire'e vi ve ckasu .i ko ri'urgau
+ta gi'e to'e gairgau tezu'e lonu mi'o djuno lodu'u mi'o dadycatra
+makau le badydi'u garna co'i lo solnuntolcanci li'u .i ko'a bacru di'u
+ne'i le stuna je blanu kumfa .i ra noi cladu je se filsmu cu sance
+preja le ze kumfa .iri'abo ge ko'a darsi je kanro gi le zgike cu smaji
+binxo co'i lenu ko'a xansku
 
 ...
 
