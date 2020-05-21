@@ -185,7 +185,27 @@ do'anai broda fe le labzi'u pu lonu su'o da troci lonu dicra tu'a ko'i
 .i la .nol.prosperos.  noi carmi bo fengu je ckeji be lonu ke'a zasni
 toldarsi cu sutkla fo vu'i le'i xa kumfa
 
-...
+.icabo noda jersi ko'a mu'i loza'i roda carmi terpa .i ko'a ga'u jgari
+lo dakyxa'i gi'e sutra darsi jbikla ko'i noi mo'iti'a klama ku'o va lo
+mitre be li ji'i pa .icabo ko'i noi co'i nerkla le demsilka kumfa cu
+suksa carna gi'e fapype'i le jersi be ko'i .i suksa krixa .i le
+dakyxa'i cu farlu gi'e gusycai cpana le xekri buklolgai .ibazibo ri se
+farlu la .nol.prosperos.  noi morsi vreta .i le girzu befi le'i salci
+be'o noi cilce darsi binxo kai lonu to'e pacna vu'o goi ko'o cu fengu
+sutkla le xekri kumfa gi'e lebna ko'i noi sirji sanli je to'e muvdu
+bu'u le ctino be le junla bema'e la .ebenis.  .i ko'o vasxu cmoni fi
+loka nalcumselsku camte'a kei mu'i lonu facki lodu'u lei mrota'u ku
+jo'u le mroxadni firgai vu'o noi ko'o vlile jgari cu na se vasru lo
+dacti
+
+ni'o ca jimpe fe lodu'u la xunre nunmro cu zvati .ipe'a ri klama tai
+lo nicte zerle'a .i *to'i li'o toi* le salci farlu ne'i le kumfa pe le
+vo'a tersla zi'e noi ciblu selba'a gi'e mrobi'o *to'i li'o toi* .i
+lepe'a kamji'e pe le junla cu se fanmo ca lonu le romoi be le'i gleki
+cu no'a .i fanmo le fagri pe le cibytu'e .i la manku ku jo'u la su'u
+se fusra ku jo'u la xunre nunmro ca ze'e turni roda
+
+fa'o
 
 © 2020 Wolfgang Corcoran-Mathe.  Released under a Creative Commons
 [Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
