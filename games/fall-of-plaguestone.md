@@ -77,3 +77,29 @@ their clues the next morning.
 XP: 120 per character
 
 Items: small glass vial.  Asa pocketed 7 sp that he found on Bort's body.
+
+
+## Session 3 (2020-05-20) <a name="session3"></a>
+
+The party spoke to Delma, the owner of the Feedmill where the murder
+occurred.  She asked them to spend some time with her father, the aged
+mayor of Etran's Folly; in exchange, she offered them a reduced price
+for room and board at the inn.  The PCs met the mayor, Targen Fulst,
+and helped him lead them on a tour of the town.  They went through the
+Dead Homes (the slums), saw an old "druidic" shrine along the Drunk
+Shepard's Path, and the house ruins at Etran's Hill.  They had lunch
+back at the Feedmill, and talked to Edra, the stablehand, afterward.
+She told them she'd seen several people leave the inn during the last
+night's brawl, including Tamli and Phinick (both servers).  Edra asked
+the PCs to retrieve some rosemary to use in a salve for the caravan's
+newly flea-ridden horses.  They found this herb in grove near town
+which was inhabited by a grumpy grizzly bear; they outwitted the bear,
+and returned to Edra (at the Feedmill stables) with the ingredient.
+
+XP: 200 per character
+
+Items: n/a.  For helping Delma entertain her father, the PCs are
+entitled to room and board at the Feedmill for 2 sp per night (the
+entire party).
+
+Other: Asa earned a Hero Point for his bear-outwitting acrobatics.
