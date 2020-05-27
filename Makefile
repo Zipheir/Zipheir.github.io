@@ -11,7 +11,7 @@ all: $(HTML) $(INCS)
 
 .md.html:
 	@echo generating $@
-	@./title.sed < $< | markdown | cat $(HEADER) - $(FOOTER) > $@
+	@./title.sh < $< | markdown | cat $(HEADER) - $(FOOTER) > $@
 
 clean:
 	rm -f $(HTML)
