@@ -207,6 +207,8 @@ se fusra ku jo'u la xunre nunmro ca ze'e turni roda
 
 fa'o
 
+[lujvo](/lojban/lxn-lujvo.html)
+
 © 2020 Wolfgang Corcoran-Mathe.  Released under a Creative Commons
 [Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
 license.
