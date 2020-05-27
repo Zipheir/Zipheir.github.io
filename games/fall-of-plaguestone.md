@@ -76,7 +76,8 @@ their clues the next morning.
 
 XP: 120 per character
 
-Items: small glass vial.  Asa pocketed 7 sp that he found on Bort's body.
+Items: small glass vial, bloodstone (worth 5 gp).  Asa pocketed 7 sp
+that he found on Bort's body.
 
 
 ## Session 3 (2020-05-20) <a name="session3"></a>
