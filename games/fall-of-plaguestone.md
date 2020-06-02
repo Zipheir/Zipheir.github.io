@@ -127,6 +127,7 @@ Walking back north through the town as dusk started to fall, the PCs
 noticed a short figure creeping around behind some houses...
 
 XP: 100 per character.  Chip earned 5 bonus XP for his careful
-interviewing of witnesses.  Ezren earned 3 for his bee-roasting prowess.
+interviewing of witnesses.  Ezren earned 3 for his bee-roasting prowess,
+and Asa, 3 for general competence.
 
 Items: Turnip cakes from Amora.
