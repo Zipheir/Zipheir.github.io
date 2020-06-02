@@ -104,3 +104,29 @@ entitled to room and board at the Feedmill for 2 sp per night (the
 entire party).
 
 Other: Asa earned a Hero Point for his bear-outwitting acrobatics.
+
+
+## Session 4 (2020-05-27) <a name="session4"></a>
+
+After a lunch at the Feedmill, the PCs continued their investigation
+of Bort's murder.  They talked to Flonk, the town bard, then visited the
+Feedmill's cook, Alora, at her house by the orchard north of town.  They
+fought off a bee swarm while approaching the house; Xavier was rather
+badly stung.  Alora told Chip that she didn't see anyone unusual poking
+around with Bort's dinner the previous night; she said that Phinick, the
+(currently missing) goblin server plated it, and that Trin served it.
+After this meeting, the PCs continued down the outskirt road to Trin's
+house, south of town.  The helped save Trin's father from a wild boar,
+then rested up for a while in her farmhouse.  Trin told them she left
+during the fight at the Feedmill, during which she was hit with a mug.
+She confirmed Amora's evidence regarding Bort's dessert: Phinick gave her
+a plate, which she served.  Neither Amora nor Trin seemed to know
+anything about Phinick's lodgings.
+
+Walking back north through the town as dusk started to fall, the PCs
+noticed a short figure creeping around behind some houses...
+
+XP: 100 per character.  Chip earned 5 bonus XP for his careful
+interviewing of witnesses.  Ezren earned 3 for his bee-roasting prowess.
+
+Items: Turnip cakes from Amora.
