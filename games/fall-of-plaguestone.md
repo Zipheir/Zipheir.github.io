@@ -110,9 +110,9 @@ Other: Asa earned a Hero Point for his bear-outwitting acrobatics.
 
 After a lunch at the Feedmill, the PCs continued their investigation
 of Bort's murder.  They talked to Flonk, the town bard, then visited the
-Feedmill's cook, Alora, at her house by the orchard north of town.  They
+Feedmill's cook, Amora, at her house by the orchard north of town.  They
 fought off a bee swarm while approaching the house; Xavier was rather
-badly stung.  Alora told Chip that she didn't see anyone unusual poking
+badly stung.  Amora told Chip that she didn't see anyone unusual poking
 around with Bort's dinner the previous night; she said that Phinick, the
 (currently missing) goblin server plated it, and that Trin served it.
 After this meeting, the PCs continued down the outskirt road to Trin's
