@@ -131,3 +131,45 @@ interviewing of witnesses.  Ezren earned 3 for his bee-roasting prowess,
 and Asa, 3 for general competence.
 
 Items: Turnip cakes from Amora.
+
+
+## Session 5 (2020-06-03) <a name="session5"></a>
+
+The party shadowed Phinick through the southern part of town, then
+chased him across several areas when he noticed them and started
+running.  The caught up with him in a turnip field, and questioned
+him about his involvement in Bort's murder.  He told them that
+Hallod, the local bruiser, had bullied him into adding the contents
+of the vial of floral-smelling liquid to Bort's dessert.  Phinick
+claimed that Hallod told him it was "just some bitter herbs" which
+would make Bort sick, as payback for a bad deal Hallod made with
+him.  Phinick was very frightened and told the PCs the whereabouts
+of Hallod's house in the northern section of Etran's Folly.  Asa
+helped Phinick get back to his temporary shelter in a house in the
+Dead Homes section of town, then the party rested for the night at
+the Feedmill.
+
+In the morning, the PCs went to the north of town and dropped off
+some food for Phinick.  Before leaving, Asa told Trin (server at
+the Feedmill who seemed to be concerned about Phinick) that the
+goblin was afraid for his safety and was laying low.  The PCs made
+their way to Hallod's house, which appeared to be deserted and
+partly collapsed.  They found a concealed entrance, and discovered
+a crawlspace running under the ground floor of the house.  This
+took them to a closet-like room with a door (apparently blocked
+from the other side by debris) and a hatch leading to a chute with
+stone walls.  The PCs went down this chute, after tying a rope to
+the nearby doorknob.  They landed in a short stone hallway some 30
+feet below the closet.  Opening a door at the other end of the
+hallway, they entered a larger stone-floored, torch-lit room
+containing some boxes and barrels, and a kennel area with an iron
+gate.  They saw Hallod watching them through a grated door at the
+far end of the room; a moment later, the kennel gate began to open.
+They quickly defeated Hallod's four guard dogs.  Asa spent the fight
+opening the grated door, and sprinted after Hallod once it was open.
+
+XP: 210 per character.  Asa got a bonus of 10 XP for doing extensive
+trap handling.  Ezren got 5 bonus XP for making creative use of his
+evocation spells when chasing Phinick.
+
+Items: None.
