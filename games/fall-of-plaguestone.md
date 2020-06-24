@@ -173,3 +173,67 @@ trap handling.  Ezren got 5 bonus XP for making creative use of his
 evocation spells when chasing Phinick.
 
 Items: None.
+
+
+## Session 6 (2020-06-17) <a name="session6"></a>
+
+The PCs pursued Hallod through some basement chambers that comprised
+his home, and into a series of natural cave tunnels.  Chip hung
+back and grabbed a strongbox which he found stashed under Hallod's
+cot.  They defeated a lightning serpent belonging to Hallod in a
+cavern during their pursuit, then found Hallod waiting for them in
+a larger cave mouth opening to the surface.  They fought Hallod in
+this cave and knocked him unconscious, although Xavier was seriously
+wounded during the fight.  In Hallod's pockets, the PCs found the
+key to his strongbox and a letter containing the following text:
+
+> Hallod,
+>
+> The final shipment of corpse blood is due in just over a week, and
+> it is the last thing I need from that greedy bastard, Bort. I've
+> enclosed a parting gift for him that should ensure he never tells
+> anyone of our dealings. Be sure that he gets it, my darling.
+>
+> Drop off the reagents as soon as they arrive. My work is almost
+> done. You will find your usual reward in the stump. ---V
+
+In the cave mouth where Hallod launched his ambush, the PCs found
+several heavy chests of alchemical reagents, which Ezren appraised
+to be worth around 50 gp.  Having stabilized and bound Hallod, they
+made their way back through the caves to his chambers and made a
+thorough search.  Asa opened his strongbox and found receipts
+matching the transaction records from Bort's caravan, as well as a
+crude map showing the location of the stump used by Hallod and "V"
+as a drop-off point.  Chip dug through some trash and discovered a
+number of small glass bottles, all alike, containing an acrid-smelling
+silvery residue.  Asa returned to Hallod's kennel and befriended the
+remaining guard dog.
+
+The party returned to town with the restrained Hallod, and turned him
+over to the sheriff (Rolth) along with the receipts found in his
+strongbox.  They then returned to the Feedmill for dinner and a full
+night's sleep.
+
+XP: 282 XP per character.  Asa got 10 bonus XP for befriending and
+rescuing Hallod's former guard dog.  Ezren got 10 XP for quickly
+adminstering aid to Xavier.  Xavier got 5 for hanging in despite
+almost dying.  Chip got 3 for digging through Hallod's garbage piles.
+
+Xavier also earned a hero point.
+
+### Items
+
+* 2 vials of Lesser Alchemist's Fire
+* Coin purse containing 2 gp, 8 sp, 14 cp
+* Strongbox containing receipts, a map, 21 gp, and 37 sp
+* Letter from "V" to Hallod
+* Several crates of alchemical reagents, worth about 50 gp
+* Runestone containing the Shadow rune
+* 2 everburning torches
+* Miscellaneous: rope, whetstone, dagger, candles, empty mutagen
+  bottles, various food and cheap ale.
+* +1 kukri (1-handed martial weapon, 1d6+1 S; agile, finesse, trip)
+* Heavy crossbow and 7 bolts
+* Leather armor
+* Lesser juggernaut mutagen
+* Strongbox key
