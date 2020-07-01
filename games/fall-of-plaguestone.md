@@ -237,3 +237,37 @@ Xavier also earned a hero point.
 * Leather armor
 * Lesser juggernaut mutagen
 * Strongbox key
+
+## Session 7 (2020-06-24) <a name="session7"></a>
+
+The session began with the party resting for the night at the Feedmill.
+In the morning, they had breakfast, then set out to talk to Hallod (whom
+they left with Rolth, the sheriff) and to find the stump where Hallod
+was dropping reagents for "V".  In the center of town, they were
+approached by a hooded woman pulling a wooden sledge carrying several
+wolf carcases--the same wolves the PCs killed in the first session.
+She introduced herself as Noala Kesrir, a ranger who has been caring for
+the lands around Etran's Folly, and asked the PCs if they were the ones
+who killed the wolves.  The PCs eventually told her the story of the
+wolf attack on their caravan.  She told them the wolves were "blighted",
+and that other wildlife she'd seen in the area were suffering from the
+same disease.  She asked for the party's help, and they agreed to meet
+her north of the town.
+
+The PCs interviewed Hallod, and learned the full name of "V"--Vilree.
+Hallod told them that Vilree once lived in town, that she was doing
+"important work", and that he hadn't seen her in at least a year.
+The PCs also talked to the customers in the Feedmill's dining room,
+seeking information about Vilree; one elderly farmer mentioned that he
+recalled a "clever elf lady" by that name who spent time in Etran's
+Folly, but wasn't clear on when.
+
+Afterwards, the PCs visited Hallod's drop-off stump, but found only
+some tracks made by Hallod himself.  They then set off to meet Noala.
+They found her preparing to burn the wolf carcasses she'd been dragging.
+She repeated her request for help: not knowing the source or cause of
+the spreading blight, she desperately needs help in investigating it.
+
+XP: None.
+
+Items: None.
