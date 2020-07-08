@@ -271,3 +271,32 @@ the spreading blight, she desperately needs help in investigating it.
 XP: None.
 
 Items: None.
+
+
+## Session 8 (2020-07-01) <a name="session8"></a>
+
+The PCs agreed to follow Noala to "one of the smaller blights", a den
+about three hours' march from Etran's Folly where she believed the
+wolves that attack the party's caravan came from.  The party first
+returned to town to rest for the evening.  At the Feedmill, they met
+Targen Fulst (the mayor) and joined him for dinner.  He told them that
+he'd remembered some things about the name "Vilree": During the plague
+that struck the Etran's Folly region 20 years ago, the local priest of
+Saranrae, Bolgrist, accused a "clever woman" named Silwyth of starting
+the plague.  Silwyth and Bolgrist both eventually died of the plague,
+but Silwyth's daughter, Vilree, left the town when her mother died and
+was not heard from again.
+
+The PCs met Noala outside of town early the next morning and began the
+march to the blighted forest area.  During the trip, they spotted a
+stash of items, including some gems wrapped in a crumbling poster
+offering a reward for "the witch Silwyth".  The party and Noala reached
+the blight around midday.  Noala left the party to set up traps to keep
+any other blighted animals from leaving the area.  The PCs defeated some
+bloodlash bushes in a clearing near the center of the blight, then
+proceeded toward the mud-tunnel entrance of some kind of den.
+
+XP: 120 per character
+
+Items: Lesser antidote, old poster, four gems (tiger's eye, alabaster,
+lapis, sardonyx)
