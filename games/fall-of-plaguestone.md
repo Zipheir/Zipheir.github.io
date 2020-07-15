@@ -300,3 +300,28 @@ XP: 120 per character
 
 Items: Lesser antidote, old poster, four gems (tiger's eye, alabaster,
 lapis, sardonyx)
+
+
+## Session 9 (2020-07-08) <a name="session9"></a>
+
+The party sent Chip to investigate the den.  He found a large, slightly
+luminous pool of sludgy water, the body of a large wolf, and two
+diseased-looking live wolves.  He took a sample of the pool water and
+returned to the party, but they were unable to learn much from the water
+sample.  They called Noala, who asked them to dispose of the two
+remaining wolves.  The PCs forced the wolves out of their den and
+defeated them.  Afterwards, they investigated the den fully, and
+discovered that the pool originated from an underground source, and was
+heavily polluted with alchemical materials which had likely caused the
+mutations in the wolves.
+
+The PCs passed this news to Noala, who had killed two other wolves while
+the PCs were investigating the den.  She said that she did not know of
+any nearby wells that could be the source of the alchemical pollution.
+She asked the PCs to accompany her to the oldest blight in these woods,
+a large area which she has yet to explore thoroughly.  The party agreed
+to join her the next morning, and made their way back to Etran's Folly
+to rest for the night.
+
+XP: 150 per character.  Chip gets 10 bonus XP for exploring the den on
+his own.
