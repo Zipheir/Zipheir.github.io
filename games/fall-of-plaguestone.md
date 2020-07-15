@@ -100,8 +100,7 @@ and returned to Edra (at the Feedmill stables) with the ingredient.
 XP: 200 per character
 
 Items: n/a.  For helping Delma entertain her father, the PCs are
-entitled to room and board at the Feedmill for 2 sp per night (the
-entire party).
+entitled to room and board at the Feedmill for 2 sp per night (per PC).
 
 Other: Asa earned a Hero Point for his bear-outwitting acrobatics.
 
