@@ -296,7 +296,7 @@ any other blighted animals from leaving the area.  The PCs defeated some
 bloodlash bushes in a clearing near the center of the blight, then
 proceeded toward the mud-tunnel entrance of some kind of den.
 
-XP: 120 per character
+XP: 150 per character
 
 Items: Lesser antidote, old poster, four gems (tiger's eye, alabaster,
 lapis, sardonyx)
