@@ -384,3 +384,22 @@ door.
 XP: Approx. 355 (enough to level up) to everyone.
 
 Items: n/a (several potions which the party used in the course of game.)
+
+
+## Session 12 (2020-07-29) <a name="session12"></a>
+
+The PCs finished investigate the hidden laboratory.  The found extensive
+notes written by the chief alchemist, detailing many experiments performed
+by him and his assistants for Vilree.  Studying the notes, they found that
+Vilree had recently stopped ordering experiments to be performed.
+
+After making the long trek back to Etran's Folly, the party arrived at the
+Feedmill to rest for the night.  In the taproom, they were hailed by a
+strange party of goblins, who demanded 5 sp from each member of the party.
+Ezren had "a better offer", striking the lead goblin and one of his
+companions with an electric arc.  The party quickly defeated the goblins,
+and were given a weapon potency runestone as a reward from Delma.
+
+XP: 60 per character
+
+Items: TODO
