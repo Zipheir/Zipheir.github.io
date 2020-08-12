@@ -403,3 +403,33 @@ and were given a weapon potency runestone as a reward from Delma.
 XP: 60 per character
 
 Items: TODO
+
+## Session 13 (2020-08-05) <a name="session12"></a>
+
+After spending a couple of days in town preparing, the party set off
+toward Spite's Cradle (the laboratory indicated on a map they found at
+the lab they just investigated).  Traveling by horse, they skirted the
+forest surrounding Etran's Folly and, following their map, headed toward
+the Five Kings Mountains.  They reached the foothills of these mountains
+near dark, and camped for the night.
+
+The next morning, they continued, entered a valley, and soon came to a
+large wooden palisade wall.  Asa climbed over and entered a courtyard
+guarded by several orc warriors; he opened the gate and let the rest of
+the party into the yard.  They fought a number of orcs under the command
+of a large orc who emerged from a tent near the gate.  Facing the party
+was a fortress with a small watchtower.  Coming under arrow fire from the
+tower, Axel scaled the tower's ladder and attack the archer, an orc ranger
+called "Greytusk" by the other orcs.  With the help of the rest of the
+party, he defeated Greytusk and her companions.
+
+XP: 175 per character.
+
+Items: Bronze key (found on the orc leader), +1 studded leather, bucket
+of 90 arrows.  The orc leader also had two hachets and a +1 greatclub,
+and Greytusk had a composite longbow; the party didn't pick up these
+items.
+
+Asa found a silver key and an invisibility potion in the sleeping
+caves.  He also located a compartment in the orc leader's throne, but
+couldn't get it open.
