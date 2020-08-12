@@ -7,7 +7,8 @@ The PCs and their players are:
 * Asa Smith-Moseley Rogueman (elf rogue) -- Audrey LoBue
 * Ezren (human wizard) -- Bran Kamp
 * Friar Chip Of Dale (dwarf cleric) -- Ned Allen
-* Xavier E. Kingston (half-elf trombone bard) -- Tyler Beaulieu
+* Axel (human fighter) or Xavier E. Kingston (half-elf bard)
+  -- Tyler Beaulieu
 
 The scene:
 
