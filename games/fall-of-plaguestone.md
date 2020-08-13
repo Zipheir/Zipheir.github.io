@@ -405,7 +405,7 @@ XP: 60 per character
 
 Items: TODO
 
-## Session 13 (2020-08-05) <a name="session12"></a>
+## Session 13 (2020-08-05) <a name="session13"></a>
 
 After spending a couple of days in town preparing, the party set off
 toward Spite's Cradle (the laboratory indicated on a map they found at
