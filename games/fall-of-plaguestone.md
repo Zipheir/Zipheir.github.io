@@ -434,3 +434,52 @@ items.
 Asa found a silver key and an invisibility potion in the sleeping
 caves.  He also located a compartment in the orc leader's throne, but
 couldn't get it open.
+
+## Session 14 (2020-08-12) <a name="session14"></a>
+
+The party scoured the orc caves for loot.  Asa managed to open the
+compartment in the throne, and found coins, gems, several scrolls,
+and a straw doll made to look like an elvish woman, with long
+black humanoid hairs attached to its head.
+
+The party regrouped on the roof of the watchtower, then proceeded into
+the building through the hatch on the roof.  They left the tower floor
+and entered the entrance hall, where they defeated two small bird-like
+air elementals.  Moving on, they found a study and an ornate door which
+led to Vilree's private chambers.  In here, they heard a lot of noise
+from a small side room; Asa quietly closed and locked the door to this
+room.  In the bedroom upstairs, the PCs found extensive personal notes.
+Among them, Ezren found receipts corresponding to the reagents purchased
+from Bort by Hallod (which the PCs found in <a href="#session2">session
+2</a>), as well as a timeline of recent dates in Vilree's hand.  A note on
+this sheet next to the date of Bort's murder read "Tied up loose end:
+merchant".  A note next to yesterday's date read "The last reaction
+is in place", and a final, undated entry read "Mother avenged".
+The PCs also found sacks of money and several potions.
+
+Downstairs and past the study, the PCs found a room containing only
+a statue of a weeping elvish woman, surrounded by a churning pool of
+water.  The PCs approached to examine the statue, and were attacked
+by two water elementals which took the form of sharks.  The party
+quickly defeated them.
+
+XP: 190 per character
+
+### Items
+
+* Sapphire (flawed)
+* Scroll of Heal (2nd level)
+* Scroll of Sound Burst
+* Scroll of Restoration
+* Silver locket of young Vilree (worth about 5 gp)
+* Hand of the Mage
+* Lesser Bravo's Brew
+* Mistform elixir
+* Lesser elixir of life (2)
+* Moderate alchemist's fire (4)
+* Lesser tanglefoot bag (2)
+* Moderate fire energy mutagen (drinking gives fire resist 10 and
+  1d4 fire damage when striking with a melee weapon for 10 minutes.
+  You also gain weakness 5 to acid, cold, and electricity for 10
+  minutes.)
+* 53 gp, 383 sp, 668 cp in sacks
