@@ -483,3 +483,24 @@ XP: 190 per character
   You also gain weakness 5 to acid, cold, and electricity for 10
   minutes.)
 * 53 gp, 383 sp, 668 cp in sacks
+
+
+## Session 15 (2020-08-26) <a name="session15"></a>
+
+The party returned to Vilree's chambers and investigated the kitchen.
+Here they found a small flying homunculus which seemed to be trying to
+cook.  It threw a pot of soup at Asa and tried to flee.  The party
+destroyed it, but Ezren remembered that homonculi frequently have
+telepathic links to their creators.
+
+Moving back through the study and shrine room, they entered a long
+laboratory room with several tables, a forge, and another statue of an
+elven woman.  Here they encountered four large homonculus-like creatures
+with elemental attacks.  They defeated them and explored the laboratory.
+
+XP: 135 per character
+
+Items: 6 lesser alchemist's fires, 4 lesser acid flasks, vial of
+lesser stone body mutagen (drink to gain resistance 5 to physical
+damage (except bludgeoning) for 1 hour.  Your speed is reduced by
+10 feet and you take a -2 penalty to Ref saves during this time.).
