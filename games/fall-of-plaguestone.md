@@ -504,3 +504,40 @@ Items: 6 lesser alchemist's fires, 4 lesser acid flasks, vial of
 lesser stone body mutagen (drink to gain resistance 5 to physical
 damage (except bludgeoning) for 1 hour.  Your speed is reduced by
 10 feet and you take a -2 penalty to Ref saves during this time.).
+
+
+## Session 16 (2020-09-02) <a name="session16"></a>
+
+The party rested in Vilree's lounge, then returned to the laboratory.
+They sent Asa down a spiral staircase to a lower level of the building.
+He scouted the area and returned to the party.  They descended to a
+short hallway.  Opening a wooden door at the end, they found another
+larger, laboratory.  They defeated attacked two more of Vilree's
+homunculus-like servants who were cleaning the laboratory; in the midst
+of the fight, a large multi-limbed creature shambled into the room from
+a northern chamber.  The PCs defeated the monsters and a small fire
+elemental which attacked when they disturbed the lab's alchemical
+preparations.  Exploring the laboratory, they found extensive notes
+indicating that Vilree and her servants were preparing large amounts
+of a poison called "viridian vapor".  Though they found a dwarven body
+in a glass tube full of the poison, they could not find any other doses.
+They also found a sketch of a flat-topped rock with a depression in the
+top, along with designs for creating a reservoir in such a stone.  Ezren
+recognized the stone as the Plaguestone in the center of Etran's Folly.
+
+XP: 160 per character
+
+### Items
+
+* Lesser healing potion
+* Lesser elixir of life (2)
+* Lesser acid flask (4)
+* Lesser alchemist's fire (2)
+* Lesser tanglefoot bag (2)
+* Lesser frost vial (2)
+* Lesser cognitive mutagen
+* Lesser stone body mutagen
+* Moderate electricity energy mutagen (drink for electricity resist 10
+  and 1d4 electricity damage on a melee hit for 10 minutes.  You also
+  gain weakness 5 to acid, cold, and fire for the same duration.)
+* Massive formula book
