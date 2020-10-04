@@ -541,3 +541,34 @@ XP: 160 per character
   and 1d4 electricity damage on a melee hit for 10 minutes.  You also
   gain weakness 5 to acid, cold, and fire for the same duration.)
 * Massive formula book
+
+## Session 17 (2020-09-16) <a name="session17"></a>
+
+The party left the laboratory a large pair of doors, and proceeded
+downward through a corridor that quickly turned into a natural cave
+tunnel.  They found themselves in a dimly-lit series of passages,
+with occasional puddles and boulders, and walls gleaming with veins
+of a strange green stone.  They encountered a swarm of bats here, as
+well as a giant bat which approached while they battled the swarm.
+After defeating the bats, the PCs healed and prepared to enter a
+large natural cavern beyond the narrow tunnels.  In the cavern, they
+found Vilree on the other side of an underground river.  She mocked
+them and offered to let them leave unharmed.  Ezren attacked, at
+which point a large sewn-together beast emerged from the river and
+attacked the wizard.  The party defeated the beast, then crossed the
+river and defeated Vilree.  Before her death, Vilree told them she'd
+already sent a minion to Etran's Folly to complete her plan for the
+destruction of the town.
+
+XP: 200--280 (level up)
+
+### Items
+
+* Purse containing 2 pp, 38 gp, 4 sp
+* Bracers of missile deflection
+* Alchemical crossbow
+* Lesser potion of fire resistance
+* Lesser juggernaut mutagen
+* Lesser stone body mutagen
+* +1 striking dagger
+* Moderate acid body mutagen
