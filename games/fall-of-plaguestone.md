@@ -512,7 +512,7 @@ The party rested in Vilree's lounge, then returned to the laboratory.
 They sent Asa down a spiral staircase to a lower level of the building.
 He scouted the area and returned to the party.  They descended to a
 short hallway.  Opening a wooden door at the end, they found another
-larger, laboratory.  They defeated attacked two more of Vilree's
+larger, laboratory.  They defeated two more of Vilree's
 homunculus-like servants who were cleaning the laboratory; in the midst
 of the fight, a large multi-limbed creature shambled into the room from
 a northern chamber.  The PCs defeated the monsters and a small fire
