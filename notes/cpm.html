@@ -1,0 +1,1570 @@
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<p><head><title>
+Notes on <em>Computation, Proof, Machine</em> by Gilles Dowek
+</title></head>
+Notes on <em>Computation, Proof, Machine</em> by Gilles Dowek</p>
+
+<h1>Introduction</h1>
+
+<p>Mathematics changed more in the 20th century than in all previous
+centuries combined, and the 21st may see equally dramatic changes.</p>
+
+<p>Since the 1970s, the notion of proof has been changing quickly, driven
+by new understandings of the &ldquo;somewhat underrated&rdquo; concept of computation.</p>
+
+<p>Since Euclid and until recently, computation has been relegated to
+the boring parts of mathematics, and completely insulated from the
+process of proof by axioms and inference rules.  This is an ironic
+oversight.</p>
+
+<p>Recent discoveries about the axiomatic method, &ldquo;challenging the
+primacy of reason over computing&rdquo;, suggest a closer relationship
+between these activities.</p>
+
+<p>This shift also bears on the relationship between mathematics and
+the natural sciences, and on philosophical issues like the notion of
+analytic and synthetic judgements.</p>
+
+<p>This &ldquo;revolution&rdquo; also reveals new ways of solving mathematical
+problems and of thinking about mathematical concepts.</p>
+
+<p>Two theories launched the &ldquo;crisis of the axiomatic method&rdquo; and
+brought computing to the fore: Computability and constructivity.</p>
+
+<h1>Part 1</h1>
+
+<h1>Chapter 1</h1>
+
+<p>A tablet found in Mesopotamia dating to 2500 CE records the
+earliest-known mathematical activity.  It describes an arithmetic
+problem relating to the distribution of grain and shows that
+Mesopotamian accountants understood how to perform division.
+Other accountants and surveyors from the pre-Greek world could
+measure the area of rectangles and circles, and had an understanding
+of how to solve quadratic equations.</p>
+
+<p>The start of the &ldquo;history of mathematics&rdquo; is placed by many in the
+5th century BCE.  Why?</p>
+
+<p>The search for an isosceles right triangle by the Pythagoreans
+required a solution to the equation 2x² = y².</p>
+
+<p>The nonexistence of this solution led to the discovery of irrational
+numbers, but this took many centuries.</p>
+
+<p>The way this problem was approached by the Pythagoreans is
+revolutionary.  It was a highly abstract problem, more so than
+the grain distribution and land measurement problems of the
+Mesopotamian tablet.  The Pythagoreans were dealing with abstract
+triangles and numbers, not with barns and measures of grain.  This
+abstractive step is crucial to the history of mathematics, but it
+meant a very different approach to solving the problem at hand.
+As long as the objects of mathematics were physical objects, an
+exhaustive solution might be sufficient.  Since they were dealing
+with abstract objects, a general solution had to be found.</p>
+
+<p>The &ldquo;rift &hellip; between mathematical objects, which are abstract,
+and concrete, natural objects&rdquo; which this problem and its solution
+opened &ldquo;was the big breakthrough of the 5th century BCE&rdquo;.</p>
+
+<p>Comparing the concrete problems solved by the Mesopotamians and
+Egyptians with the abstract problems of the Greeks, we see that
+different ways of finding a solution were used: the concrete
+problems were solved by computing, while the abstract ones
+required reasoning.  The first was just a matter of applying an
+algorithm; the second required imagination.</p>
+
+<p>There was a certain determinism to the division problems of the
+Mesopotamian accountants&ndash;after applying the algorithm, a result
+was sure to be found.  The people applying the kind of reasoning
+needed to prove the irrationality of sqrt(2) had no clear path,
+and no assurance what kind of result they would find, or whether
+there would be a result.</p>
+
+<p>Mathematics takes imagination (hard); applying an algorithm is
+just following steps (easy).</p>
+
+<p>Why did mathematicians drop computation?</p>
+
+<p>What puts abstract problems out of the reach of computation?</p>
+
+<p>The difference between these types of problems is the &ldquo;irruption
+of the infinite&rdquo;.  &ldquo;Reasoning&rdquo; problems require solutions covering
+an infinite number of objects (e.g. all possible right triangles).</p>
+
+<p>If we only had to solve a problem for a finite set of objects, we
+could solve it by computation.</p>
+
+<p>What is reasoning?</p>
+
+<p>Inference rules are the core of mathematical reasoning.</p>
+
+<p>These were of course first formally investigated by the Greeks,
+particularly Aristotle and &ldquo;the Stoics&rdquo;.</p>
+
+<p>Oddly, the logical discoveries of these philosophers had barely
+any influence on the mathematicians, even though the same techniques
+were used in reasoning and argument.</p>
+
+<p>Euclid&rsquo;s works use deductive reasoning to prove everything, yet
+they never make any reference to the techniques of Aristotle, etc.</p>
+
+<p>Possibly this was due to the coarseness of the logic of the time.
+With only atomic propositions of the form &ldquo;Socrates is mortal&rdquo; and
+conjunctions, logic was a blunt tool.</p>
+
+<p>Aristotle&rsquo;s logic also lacked a way to denote individuals.</p>
+
+<p>Even without this defect (e.g. as extended by the Medieval
+philosophers), Aristotelian logic can&rsquo;t express propositions like
+&ldquo;4 is less than 5&rdquo;.  This makes it a rather poor tool for mathematical
+reasoning.</p>
+
+<p>No one seriously tried to develop a logic usable for mathematics
+until the 17th century (Leibniz).  Things really moved forward with
+Frege in 1879, followed by Russell &amp; Whitehead, Hilbert, etc.</p>
+
+<p>&ldquo;The inference rules and the grammar of mathematical propositions
+simply remained implicit until the 19th century.&rdquo;</p>
+
+<p>For 2000 years, Euclid&rsquo;s <em>Elements</em> was the model of mathematical
+reasoning.  Axioms and inference lead to theorems.</p>
+
+<p>There is no computation, and the Greek mathematicians did not try
+to understand how the reasoning approach might be related to the
+computational approach of their predecessors.  They seemingly
+abandoned computation as a serious mathematical tool.</p>
+
+<h1>Chapter 2</h1>
+
+<p>Even if computation was discounted, mathematicians continued to
+develop algorithms.  This is the &ldquo;hidden history&rdquo; of mathematics.</p>
+
+<p>Euclid, whose geometrical work is entirely &ldquo;reasoning-based&rdquo; but
+who also discovered an algorithm for finding GCDs, is a good
+example of this split in mathematical history.</p>
+
+<p>The simplest algorithm for finding the GCD of two integers is
+to enumerate the divisors of both numbers and to take the largest
+integer appearing in both lists.</p>
+
+<p>Euclid&rsquo;s algorithm is less tedious and is guaranteed to find a
+result in a finite number of division steps.  Its validity rests
+on several theorems&ndash;a crucial point.  For integers a and b,
+b ≤ a,</p>
+
+<ul>
+<li><p>If the remainder resulting from dividing a by b is 0, then b
+is the GCD.</p></li>
+<li><p>If r ≠ 0 is the remainder of a / b, then the common divisors
+of a and b are the same as those of b and r.</p></li>
+<li><p>The remainder of a division is always less than the divisor.</p></li>
+<li><p>A decreasing series of natural numbers is necessarily finite.</p></li>
+</ul>
+
+
+<p>Euclid demonstrated these theorems by axiomatic reasoning.</p>
+
+<p>Most of the time, constructing an algorithm requires a reasoning
+process.</p>
+
+<p>So how did the Mesopotamians and Egyptian mathematicians develop
+algorithms to solve arithmetic problems?</p>
+
+<p>Presumably the reasoning process was familiar to them, but implicit.
+(NB: Sort of the reverse of the situation with inference rules in
+Greek axiomatic methods.)</p>
+
+<p>A hypothesis is that the &ldquo;reasoning revolution&rdquo; came about through
+the process of thinking about and elaborating algorithms.</p>
+
+<p>There is an apparent contradiction between mathematical discourse
+(reasoning-based) and mathematical practice (computation).</p>
+
+<p>How could computation be ignored by mathematicians who were aware
+of and who worked on algorithms like Euclid&rsquo;s?</p>
+
+<p>Another way to look at solving a problem with Euclid&rsquo;s algorithm
+phrases the process entirely in terms of makeing inferences from
+the underlying theorems.  The &ldquo;algorithm&rdquo; is then implicit.
+We can think of this as a process of reasoning from axioms and
+established results.</p>
+
+<p>Computation -> Proof.</p>
+
+<h3>Positional notation</h3>
+
+<p>The decimal Arabic notation for numbers, which allows simple
+addition and subtraction algorithms to be used, is a descendent
+of Mesopotamian systems used as early as 2000 BCE.  Refined
+by Indian and Arabic mathematicians and introduced into Europe
+through the works of al-Khwarizmi, this notation drastically
+changed European mathematics.  It essentially comes from a
+computational tradition; the Greek tradition had no comparable
+notation.</p>
+
+<h3>Calculus</h3>
+
+<p>Archimedes&rsquo;s first solution to finding the area of a parabola
+involved finding upper and lower bounds by summing triangular
+subdivisions.  In the 16th century, Stevin and Viète bypassed
+this method by computing sums of infinite sequences.  Descartes&rsquo;s
+analytic geometry then allowed many curves to be described by
+equations.  The discovery of the link between differential and
+integral calculus showed a way to find the area of these curves,
+thanks to their equational representation.</p>
+
+<p>Calculus was greatly simplified by the discovery of basic
+theorems concerning differentiation:</p>
+
+<ul>
+<li><p>The derivative of a sum is the sum of the derivatives.</p></li>
+<li><p>The derivative of kf is k times the derivative of f.</p></li>
+<li><p>The derivative of xⁿ is nxⁿ⁻¹.</p></li>
+</ul>
+
+
+<p>These theorems, proved by reasoning, allow us to solve derivatives
+(some of them) through simple computation.</p>
+
+<p>Similar theorems make finding antiderivatives more of a
+computational process.</p>
+
+<p>By calculating a primitive of the equation of a parabola (using
+basically a computational process), we can bypass all of the
+reasoning processes used by Archimedes, etc., and obtain an
+area for the curve.</p>
+
+<p>Until the twentieth century, finding primitives required a
+mix of computation and reasoning.</p>
+
+<p>But the 17th century development of calculus reduced many
+problems important to geometry and physics to computations.
+The areas of many figures that were beyond the reach of ancient
+mathematicians were found thanks to these (algorithmic) tools.</p>
+
+<h1>Chapter 3: Predicate Logic</h1>
+
+<p>The development of computation since the mid 19th century has
+been in tandem with that of reasoning.  The turning point comes
+with Frege, who was investigating Kant&rsquo;s notion of synthetic and
+analytic judgements.</p>
+
+<p>Frege&rsquo;s investigation into logic began with a disagreement with
+Kant&rsquo;s belief that all mathematical judgements are synthetic,
+a priori judgements.  (e.g. the judgement that 2 + 2 is 4.)
+Frege believed that such judgements are analytic.</p>
+
+<p>Reasoning, according to Frege, was the process of making explicit
+the implicit properties of mathematical objects.  e.g. the property
+of being equal to 4 is implicit in the definitions underlying the
+number that is 2 + 2.</p>
+
+<p>These implicit properties of definitions were not necessarily
+forseen by anyone, including the creator of the definition.</p>
+
+<p>This led Frege to first provide a definition of the natural numbers,
+something that Dedekind and Peano had also investigated.</p>
+
+<p>An interesting point: Before the late 19th century, no-one had
+tried to establish arithmetic on a basis derived by reasoning.
+Why not, considering that Euclid did this with geometry over
+1k years earlier?</p>
+
+<p>Did the effective algorithms which had been known for so long make
+it seem unnecessary to prove the soundness of arithmetic?</p>
+
+<p>Frege&rsquo;s definition of the integers depended on the notion of a
+set (taking some inspiration from David Hume).</p>
+
+<p>Frege took propositions to be formed from atomic propositions and
+conjunctions.  Unlike earlier logicians, he allowed predicates to
+be relational, e.g. &ldquo;is smaller than&rdquo;, which relates two arguments.
+Medieval ideas of predicates only allowed unary predicates.</p>
+
+<p>Frege, like C.S. Peirce, allowed quantified variables to stand for
+propositions.  This idea goes back to at least the 16th century, in
+the works of François Viète.</p>
+
+<p>He also provided a number of familiar inference rules.</p>
+
+<h2>The Universality of Mathematics</h2>
+
+<p>Frege both developed a logic richer than that of previous logicians
+and gave a formal definition of the natural numbers, including a
+proof of the soundness of natural number addition.</p>
+
+<p>By combining logic with mathematical reasoning, Frege united two
+streams of thought which had, for some reason, been distinct.</p>
+
+<p>&ldquo;There is no specifically <em>mathematical</em> reasoning.&rdquo;</p>
+
+<p>There are also no specifically &ldquo;mathematical&rdquo; objects, since numbers
+were shown to be based in the very general notion of a set.
+We should define mathematics in terms of how it <em>describes</em> its
+objects, which are themselves universal.</p>
+
+<h2>Predicate logic and set theory</h2>
+
+<p>Paradoxes were found in Frege&rsquo;s logic, first by Burali-Forti in 1897.
+Russell and Whitehead created a revised version of the logic
+incorporating types in 1903, which avoided some of these paradoxes.</p>
+
+<p>Russell and Whitehead defined a hierarchy of types.  Non-set entities
+(atoms) are of type 0, sets of atoms are of type 1, sets of type-1
+entities are of type 2, and so on.  A result of this structure is that
+the proposition &ldquo;x is an element of y&rdquo; is only valid when the type of
+y is one greater than that of x.</p>
+
+<p>In this system, there can be no set of all sets.</p>
+
+<p>Like Frege&rsquo;s logic, Russell and Whitehead&rsquo;s logic combined set theory
+with logic (e.g. inference rules).  Both systems included notions
+specific to sets, an artifact of Frege&rsquo;s view of sets as concepts.</p>
+
+<p>Hilbert created a set-less refinement called &ldquo;predicate logic&rdquo; in
+the 1920s, which is the basis of all later logic.  Set-specific
+axioms, on the other hand, were relegated to set theory.</p>
+
+<p>This apparently destroyed Russell&rsquo;s thesis of the universality of
+mathematics.  To do mathematics within predicate logic, it was
+apparently necessary to pull in set theory.</p>
+
+<p>So is mathematics the set-theoretical side of logic?</p>
+
+<p>Gödel did show in 1930 that any theory can be translated into set
+theory, which revives the universality idea.</p>
+
+<h2>The problem of axioms</h2>
+
+<p>Predicate logic alone cannot define the natural numbers.  Some
+axioms are needed.  Peano provided some which were equivalent to
+the old set-theoretical ones, but simpler.</p>
+
+<p>What does the need for axioms do to Frege&rsquo;s thesis that
+mathematical judgements are analytic?  Is the acceptance of
+an axiom analytic or synthetic?  More generally, why should
+we accept axioms in the first place?</p>
+
+<p>Poincaré tried to answer this question: axioms provide definitions
+of concepts.  The true propositions which contain a word&ndash;&ldquo;point&rdquo;,
+&ldquo;line&rdquo;, or anything&ndash;are constitutive of that word&rsquo;s meaning.
+&ldquo;There is only one straight line through two points&rdquo; is thus a
+valid axiom, since it forms part of the definition of the concepts
+of &ldquo;straight line&rdquo;, &ldquo;point&rdquo;, and &ldquo;through&rdquo;.</p>
+
+<h2>The results of Frege&rsquo;s project</h2>
+
+<p>So axioms <em>were</em> needed to establish arithmetic.  If we extend
+the notion of definition to include axioms (per Poincaré), then
+Frege succeeded: &ldquo;2 + 2 = 4&rdquo; is a consequence of the axioms of
+arithmetic, and thus of the defs. of the natural numbers, etc.</p>
+
+<p>So whether mathematical judgements are &ldquo;analytic&rdquo; or &ldquo;synthetic&rdquo;
+hinges on your view of axioms.</p>
+
+<p>And there are other notions of analyticity.  Basically, Kant&rsquo;s
+division of concepts was based on a rather hazy distinction.</p>
+
+<p>But out of this project came many discoveries, most critically
+that of predicate logic, which Hilbert &ldquo;released&rdquo; in 1928.  This
+was the biggest advance in the understanding of reasoning since
+the BCE years.</p>
+
+<h1>Chapter 4</h1>
+
+<p>Two critical theories that emerged at the beginning of the 20th
+century: computability and constructivity.  Both were accounts
+of computation and had many similarities, but these went
+unremarked for a while.</p>
+
+<p>OTOH, they were developed to solve different problems.</p>
+
+<p>Predicate logic, as it was developed, deals with inference rules and
+allows the construction of proofs through inference steps.  There is
+no computation, apparently; predicate logic went back to &ldquo;the axiomatic
+vision&rdquo;.</p>
+
+<p>Solving a problem in predicate logic amounts to showing that a
+proposition is true/false.</p>
+
+<p>From a predicate logic perspective, Euclid&rsquo;s algorithm is a proof
+technique&ndash;it allows us to decide whether propositions of the form
+&ldquo;the greatest common divisor of the numbers x and y is the number z&rdquo;
+is provable or not.  This is a significant change.</p>
+
+<p>A large number of algorithms were developed in the early 20th century
+to determine the provability of classes of propositions.</p>
+
+<p>Presburger (1929): algorithmic techniques to decide the validity of
+arithmetic expressions with addition but not multplication.</p>
+
+<p>Skolem (1930): The same, for multiplication without addition.</p>
+
+<p>Tarski (1930) came up with an algorithm that covered both.
+This implied that all geometrical problems of the kind conceived by
+Euclid could be solved by computation.</p>
+
+<h2>The decision problem</h2>
+
+<p>The obvious question that this work suggests: Can algorithms replace
+reasoning in mathematics as a whole?</p>
+
+<p>Hilbert posed this as the Entscheidungsproblem.</p>
+
+<p>A &ldquo;computable&rdquo; function was one for which an algorithm exists which
+can compute its value.  Is their a computable function which takes
+any proposition to a Boolean value indicating its provability?</p>
+
+<p>Clearly, this calls for a metamathematical computable function.</p>
+
+<p>Studying predicate logic&ndash;the means of reasoning&ndash;as an object in
+itself was required.</p>
+
+<p>Which the discovery of such an algorithm would have immense
+practical value for mathematicians, Hilbert&rsquo;s other idea was the
+avoidance of inconsistencies in predicate logic; similar things
+hidden in Frege&rsquo;s logic led to its downfall.</p>
+
+<h2>Elimination of the infinite</h2>
+
+<p>By specializing a quantified expression to a finite range (of, say,
+integers), Presburger, Skolem, Tarski, etc. could &ldquo;eliminate the
+infinite&rdquo;.  As discussed earlier, the need to develop solutions
+general to an infinite number of cases was probably one of the main
+reasons that ancient mathematicians turned to reasoning as their
+primary tool.</p>
+
+<p>The success of quantifier elimination in tackling arithmetic
+propositions led people to hope for a similar, general technique.</p>
+
+<h2>Church&rsquo;s theorem</h2>
+
+<p>Church and Turing both found negative answers to the
+Entscheidungsproblem in 1936.</p>
+
+<p>By this point in the 20th century, reasoning had been studied and
+formal models given.</p>
+
+<p>To solve the Entscheidungsproblem, Turing and Church had to do the
+same thing with computation: they needed formal definitions of the
+idea of an algorithm and of a computable function.</p>
+
+<p>Herbrand &amp; Gödel, Church, Turing, and Kleene all proposed models
+for computation, which eventually turned out to be equivalent.</p>
+
+<p>All of these models had the notion of transformation, or rewriting,
+steps.  &ldquo;Computation is thus defined as the gradual transformation
+of one expression into another, the process being guided by a body
+of rules.&rdquo;</p>
+
+<p>This is surprisingly similar to the formalized notion of reasoning,
+in which expressions are replaced by others via inference rules.</p>
+
+<p>The difference was identified by precisely the same people.  It was
+the kernel of the reason why Hilbert&rsquo;s program was impossible:
+the kind of replacement steps occurring in a reasoning process may
+extend infinitely.</p>
+
+<p>Critical to the formal models of computation by the above people
+was the notion of termination: an &ldquo;algorithm&rdquo; reaches a result in
+a finite number of steps.</p>
+
+<p>By this definition, Euclid&rsquo;s &ldquo;algorithm&rdquo; <em>is</em> one.</p>
+
+<p>Also by this definition, Hilbert&rsquo;s sought-after &ldquo;algorithm&rdquo;
+couldn&rsquo;t be.</p>
+
+<p>But this didn&rsquo;t rule-out replacing reasoning with a &ldquo;computation
+method&rdquo;, since inference rules now clearly had computational
+equivalents!</p>
+
+<p>So Hilbert wasn&rsquo;t merely searching for a &ldquo;computational method&rdquo;
+which could replace reasoning; he was looking for a method with
+a guarantee of termination.  That the former was possible was
+apparently obvious by this point.</p>
+
+<h2>Algorithms as objects of computation</h2>
+
+<p>An interpreter is an algorithm which operates on sets of computation
+rules, as well as some input.  (From this perspective, it is a
+function of two arguments.)</p>
+
+<p>e.g. if U is an interpreter, a the set of rules defining Euclid&rsquo;s
+algorithm, and b the pair (90, 21), then U applied to a and b computes
+the GCD of 90 and 21.</p>
+
+<h2>The halting problem</h2>
+
+<p>The discovery of the halting problem concerned an interpreter.
+Namely, the idea was to construct an interpreter A which would
+give the result 1 if its computation ruleset halted on the given
+input, and 0 otherwise.</p>
+
+<p>It was proven in 1936 by Turing, Church, and Kleene (independenty)
+that A cannot exist, and that the problem is undecidable.</p>
+
+<p>The obvious thing to do was to apply this theorem to Hilbert&rsquo;s
+decision problem.</p>
+
+<p>Church&rsquo;s theorem establishes that, were there a decision procedure
+like that imagined by Hilbert, it could be used to solve the halting
+problem.  So there is no such decision algorithm.</p>
+
+<p>This demonstrates the gulf between reasoning and computation.  There
+are some problems which cannot be solved by computation.</p>
+
+<h2>Analytic does not mean obvious</h2>
+
+<p>A traditional complaint about &ldquo;analytic&rdquo; judgements is that they
+reveal nothing new; an analytic process is a &ldquo;tautology machine&rdquo;,
+since it only produces the results implicit in the axioms of the
+system.</p>
+
+<p>Church&rsquo;s Theorem shows this view to be simplistic.  If analytic
+reasoning were trivial, there would certainly be an algorithm to
+replace it.  But there can&rsquo;t be, so reasoning must produce results
+which cannot be discovered through (provably terminating)
+computation.</p>
+
+<p>Critical quote: &ldquo;Metaphorically, this operation may be compared to
+the work of a prospector, panning for gold in a river, sifting the
+sand for months in search of a nugget.  Of course, the nugget was
+in the sand from the very start, but it would be an overstatement
+to claim that finding it is as trivial as bending over and picking
+it up.  Even when a result is implicit in the axioms, making it
+explicit yields information and knowledge.&rdquo;</p>
+
+<p>Many &ldquo;analytic&rdquo; propositions which can be decided by algorithms may
+yet be very much non-obvious, in the sense that they may take years
+of computation to solve.</p>
+
+<h1>Chapter 5</h1>
+
+<p>After finding an answer to Hilbert&rsquo;s decision problem,
+mathematicians continued to solidify the notion of an algorithm.
+The various systems they developed all turned out to be equivalent,
+a remarkable result.</p>
+
+<p>These systems would now be called &ldquo;programming languages&rdquo;.</p>
+
+<p>In the 30s, it was hard to believe in their being &ldquo;one&rdquo; notion
+of computation.</p>
+
+<p>The equivalence of all computational models is known as Church&rsquo;s
+Thesis.  (More often, the Church-Turing Thesis.)</p>
+
+<p>This thesis claims the identity of (a) any computational model
+and (b) &ldquo;the&rdquo; common concept of computation.  (b) is hard to
+define precisely.</p>
+
+<p>The claim sounds a bit extreme.</p>
+
+<p>So the &ldquo;common&rdquo; concept of an algorithm needed a clearer statement.</p>
+
+<p>Two versions of the Church-Turing thesis:</p>
+
+<ul>
+<li><p>Any algorithm that a human being can execute to solve a specific
+problem can be expressed by a set of computation rules. (The
+&ldquo;psychological form&rdquo;)</p></li>
+<li><p>All the algorithms that a machine is capable of executing
+&ldquo;systematically&rdquo; to solve a specific problem can be expressed by
+a set of computation rules.  (The &ldquo;physical&rdquo; form)</p></li>
+</ul>
+
+
+<p>For people holding materialist beliefs, the psychological form is
+just a consequence of the physical form.</p>
+
+<p>But the two forms are not equivalent.</p>
+
+<p>One interesting consequence of this thesis is the notion of &ldquo;the
+computational completeness of human beings&rdquo;.  If the psychological
+form is true (whether as a consequence of the physical form or not),
+then human beings cannot be beaten as computing devices.</p>
+
+<p>In a way, this is &ldquo;the converse of materialism&rdquo;.  While it would
+also be true that human computation is always expressable by
+computation rules, the further consequence is that anything that
+<em>can</em> be computed can be computed on a human being.</p>
+
+<p>Let:</p>
+
+<pre><code>R = the set of algorithms expressible by a body of
+    computation rules
+M = the set of algorithms that can be computed by a physical
+    system
+H = the set of algorithms that can be computed by a human
+</code></pre>
+
+<p>The theses are:</p>
+
+<ul>
+<li>M ⊂ R: the physical form of the Church-Turing thesis</li>
+<li>H ⊂ R: the psychological form</li>
+<li>H ⊂ M: the &ldquo;materialist&rdquo; thesis</li>
+<li>M ⊂ H: the computational completeness of human beings</li>
+</ul>
+
+
+<p>It certainly holds that R ⊂ M and R ⊂ H.</p>
+
+<h2>The physical form of Church&rsquo;s thesis</h2>
+
+<p>Neither form of the Church-Turing thesis can be proved by
+mathematics alone.</p>
+
+<p>Robin Gandy proposed (1978) a proof of the physical form.</p>
+
+<p>This proof goes way beyond computation rules and proposes a physical
+model of the states and tranformations of computing mechanisms.
+Here, computation is a series of state transitions, each one
+depending only on the previous state of the system, with the result
+of the computation being the final state.</p>
+
+<p>Fundamental assumptions of Gandy&rsquo;s argument: Euclidean space,
+finite density of information, finite information transmission
+speed.</p>
+
+<p>Are these assumptions too much?  Would Gandy&rsquo;s argument still work
+with adjustments for more accurate physics?</p>
+
+<p>In any case, the Church-Turing thesis has held up very well, so far.</p>
+
+<h2>Mathematizing nature</h2>
+
+<p>A question related to the Church-Turing thesis is why (or whether)
+mathematical concepts are so good at describing nature.</p>
+
+<p>There are dramatic examples of mathematical objects being almost
+perfectly suited to describing phenomena first studied centuries
+after the development of the mathematical tools.  (e.g. ellipses
+and Kepler&rsquo;s Laws.)</p>
+
+<p>Is it because mathematics is vaguely based on empirical models?
+Are natural scientists simply ignoring what doesn&rsquo;t yield to
+mathematical tools?  If the latter, why do the un-overlooked
+phenomena fit so well?</p>
+
+<p>Of course, there is approximation and simplfication.</p>
+
+<p>Sometimes, a phenomenon&rsquo;s conformance to some mathematical model
+is not explained until it is better understood.</p>
+
+<p>The discovery of the atomic masses of the elements is a good
+example of this.  The amazing regularity of the periodic table,
+and Mendeleev&rsquo;s successful prediction of the existence of scandium,
+gallium, and germanium based purely on the structure of the table,
+was later found to be a consequence of the number of particles in
+each atom&rsquo;s nucleus.  Mendeleev &ldquo;merely&rdquo; foretold the possibility
+of nuclei made up of 45, 68, or 70 particles.  (Of course, this
+opened up more puzzles of mathematical regularity.)</p>
+
+<p>Physical phenomena, e.g. gravity, often turn out to be
+fairly deterministic, which the Church-Turing thesis doesn&rsquo;t have
+anything to say about.</p>
+
+<p>More relevant to this thesis is the fact that we can represent
+properties of physical processes, e.g. the relationship between
+time and distance, by mathematical propositions.</p>
+
+<p>The entire physical system comprising an experiment (the book&rsquo;s
+example is a system of a tower, a ball, a clock, and a height gauge
+used to measure the ball&rsquo;s movement over a given time) is, from the
+Church-Turing perspective, a calculating machine.  It takes a time
+measured in seconds (or whatever) to a distance.  The thesis claims
+that this system is performing a calculation which could as well
+be performed by any system equipped with the appropriate algorithm.</p>
+
+<p>So the physical Church-Turing thesis implies that the law of
+gravitation can be expressed in mathematical language!</p>
+
+<p>It expresses a remarkable idea about nature: that the behavior
+of natural phenomena can be captured by computation rules.
+This is a direct consequence of the physical form of Church&rsquo;s
+thesis, or, alternatively, of the psychological form and the
+theory of the computational completeness of human beings.</p>
+
+<p>Even more generally: <em>Our</em> computing capacity is merely a
+consequence of the computing capacity of nature.</p>
+
+<p>Although &ldquo;laws&rdquo; of phenomena may be inherently mathematizable by
+this thesis, this still would not account for their (sometimes)
+remarkable simplicity when mathematized.</p>
+
+<h2>The form of natural laws</h2>
+
+<p>This explanation-sketch of the mathematizability of the theories
+of natural phenomena leads to an investigation of the <em>form</em> of
+these mathematical propositions.</p>
+
+<p>An example proposition is the equation relating the distance
+covered by a free-falling ball and the time during which it falls,
+d = 1/2gt².</p>
+
+<p>Why does this proposition exist?</p>
+
+<p>Does it hold because there exists an algorithm which lets you
+calculate d from a given t?  If so, then it&rsquo;s an algorithm which
+connects these physical quantities.</p>
+
+<p>If nature is indeed mathematizable <em>and</em> computable, then we can
+express theories about it not only in propositions, but in
+algorithms.</p>
+
+<p>An example: grammars.</p>
+
+<p>Enunciations (grammatical utterances) take place in nature, so
+the Church-Turing thesis suggests that there exists an algorithm
+or at least a computing method which can evaluate an utterance in
+a given language.</p>
+
+<p>The psychological form further suggests that a speaker of a language
+must have a method of evaluating utterances, and that, therefore,
+it must be possible to express a grammar as an algorithm, not just
+a series of rules (propositions).</p>
+
+<p>Reformulating grammars as algorithms raises many new questions.</p>
+
+<h1>Chapter 6: Lambda calculus</h1>
+
+<p>As well as providing a negative answer to the decision problem, the
+development of computability was part of an attempt to bring computation
+back into mathematics.  Lambda calculus was the central component of
+this attempt.</p>
+
+<p>The &ldquo;functional expression&rdquo; notation for functions, e.g. x ↦ x × x,
+was probably first used by the Bourbaki group around 1930.  Almost
+simultaneously, Church introduced the notation λx(x × x).
+(The story about the publisher&rsquo;s corruption of &ldquo;hat-x&rdquo; to &ldquo;λx&rdquo; is
+bogus.  Church&rsquo;s choice of λ was either an adaptation of
+Russell &amp; Whitehead&rsquo;s hat-x notation or completely arbitrary; Church&rsquo;s
+explanations varied.)</p>
+
+<p>Church allowed functions to be treated as first-class values.
+Russell &amp; Whitehead had suggested something like this; they thought
+that replacing the f variable in f(4) with x ↦ x × x gave 4 × 4.
+Church objected that the real result of this substitution is
+(x ↦ x × x)(4); only by using the further rule of application would
+4 × 4 be derived.  With this objection, Church divided two things
+that had traditionally been confuted: substitution and application.</p>
+
+<p>Using application (beta reduction), substitution, and the rest,
+Church was able to construct a computationally complete system.
+Lambda calculus is thus equivalent to a universal Turing machine
+or to Herbrand-Gödel equations.  This took a while for mathematicians
+(including Gödel) to accept.</p>
+
+<p>The even more interesting part is Church&rsquo;s proposal of a new
+formalization of mathematics based on lambda calculus, which he
+provided (also in the early 30s).</p>
+
+<p>Every function in such a system would be expressed directly by
+an algorithm.</p>
+
+<p>Kleene and Rosser showed in 1935 that this system was inconsistent.</p>
+
+<p>Haskell Curry, with help from Church, tried to rework the theory.
+Church tried an approach similar to what Russell&rsquo;s types and tried
+eliminating self-application; this restored consistency, but at the
+cost of the full power of lambda calculus.</p>
+
+<p>In sum, Church et al&rsquo;s attempt to provide a computational
+formalization for mathematics failed.</p>
+
+<h1>Chapter 7: Constructivity</h1>
+
+<p>The theory of constructivity was developed independently of that
+of computability.</p>
+
+<p>The original insight was probably to notice that some proofs show
+the existence of an object satisfying a certain property <em>without
+giving us such an object</em>, whereas other proofs establish their
+claim by providing an example object.</p>
+
+<p>Proofs of the first kind are called <em>nonconstructive</em>.  Those of
+the second kind are called constructive.</p>
+
+<p>The only inference rule which allows us to prove propositions of
+the form &ldquo;there exists x such that A&rdquo; is the <em>existential
+quantification introduction rule</em>.  To use this, we must have an
+instance of A&ndash;a proposition similar to A with some expression
+replacing x, e.g. from &ldquo;Vienna is an Austrian city at which the
+Orient Express stops&rdquo; we can use existential quantification
+introduction to obtain &ldquo;There exists an Austrian city at which
+the Orient Express stops&rdquo;.</p>
+
+<p>So the use of such a rule requires a witness, which can always be
+found in the instance of A used.</p>
+
+<p>So how can we &ldquo;lose&rdquo; witnesses in nonconstructive proofs?</p>
+
+<p>&ldquo;The principle of excluded middle is an inference rule that allows
+us to prove a proposition of the form &lsquo;A or not A&rsquo; without having
+to prove a premise.&rdquo; (Good statement.)</p>
+
+<p>This is what allows us to produce proofs of existence which do
+not provide witnesses.</p>
+
+<h2>Brouwer&rsquo;s constructivism</h2>
+
+<p>Before the debate on constructive vs. non-constructive reasoning,
+many mathematicians used the principle of excluded middle out of
+convenience; they were not necessarily writing nonconstructive
+proofs.</p>
+
+<p>The first real nonconstructive proofs probably appeared in the
+late 19th century.  Kronecker and Poincaré were among those who
+questioned the validity of such proofs.</p>
+
+<p>Luitzen Egbertus Jan (how often do you see it written out?!)
+Brouwer was the first to propose avoiding PEM in mathematics.</p>
+
+<p>Doing so would immediately throw into question all known theorems
+whose proofs required PEM.</p>
+
+<p>A moderate view of the question was to consider nonconstructive
+proofs merely uninteresting.  As a pragmatic matter, there is
+not much value in a proof which doesn&rsquo;t provide any way to find
+an object satisfying the related theorem.</p>
+
+<p>On the far other hand, you might say that nonconstructive proofs
+are simply false.  This was Brouwer&rsquo;s view.</p>
+
+<p>The debate became one between Brouwer and Hilbert (who already
+had a bad history) and escalated into a personal argument.</p>
+
+<p>Brouwer also got associated with the term &ldquo;intuitionism&rdquo;, due
+to his claim &ldquo;that our intuition about mathematical objects
+matters more than the knowledge we gain about those objects
+through proofs.&rdquo;  Brouwer&rsquo;s rather mystical adherence to this
+theory repelled some more moderate folks from his constructive
+theories.</p>
+
+<h2>Resolving the crisis</h2>
+
+<p>Obviously, this crisis has parallels with the crisis around
+non-Euclidean geometries.</p>
+
+<p>If the constructivists were using different inference rules from
+other mathematicians, it was simply a matter of having different
+axioms for the words &ldquo;and&rdquo;, &ldquo;or&rdquo;, etc.</p>
+
+<p>In particular, the constructivists had a very different definition
+of the proposition &ldquo;there exists an object that&hellip;&rdquo;.  For them,
+this meant &ldquo;we know of an object that&hellip;&rdquo;, whereas that &ldquo;traditional&rdquo;
+mathematicians took it to mean &ldquo;there must exist an object that&hellip;
+even if we don&rsquo;t know the object&rdquo;.</p>
+
+<p>As usual, the furious debate about constructivism revealed
+hitherto ignored distinctions in the ideas mathematicians had been
+using for a long time.</p>
+
+<h2>Constructivity today (good magazine title?)</h2>
+
+<p>The two versions of &ldquo;there exists&rdquo; are not necessarily mutually
+exclusive.</p>
+
+<p>The only thing really necessary to resolve the constructivism
+crisis was to define two distinct expressions for these two
+versions.</p>
+
+<p>Gödel proposed such a logic in 1933.</p>
+
+<p>In summary, PEM is sort of like the Axiom of Choice.  Some
+proofs might be proved first with PEM, then again constructively.
+Rather than warring over it, it&rsquo;s proven more useful to see what
+can and can&rsquo;t be done without this axiom.</p>
+
+<h1>Chapter 8</h1>
+
+<p>So what does constructive proof have to do with computation?</p>
+
+<h2>Cut elimination</h2>
+
+<p>Does a constructive existence proof (i.e. one not using PEM) always
+provide a witness?  If so, can this be proven?</p>
+
+<p>One of the first proofs that such a proof always provides a witness
+uses Gerhard Gentzen&rsquo;s &ldquo;cut elimination algorithm&rdquo;, which he published
+in 1935.</p>
+
+<p>Interestingly, this algorithm is applied to <em>proofs</em>.</p>
+
+<p>&ldquo;Cut elimination&rdquo; refers to the simplification of arguments in a
+proof.  e.g. a general result followed only by its application to
+a specific case might be replaced by a direct proof of the specific
+case.  When simplified by this algorithm, an existence proof that
+does not use PEM always ends with existential quantifier introduction,
+and thus explicitly presents a witness.</p>
+
+<p>Here we have an explicit connection between the notion of proof and
+that of an algorithm: in particular, proofs are seen to be objects
+that we can compute with.</p>
+
+<p>A function like x ↦ x × x can be given a constructive proof, but
+other functions (like x ↦ sqrt(x)) cannot be given a (finite) proof
+without PEM.</p>
+
+<p>A function with a constructive proof has the following advantage:
+the proof of a function f is an algorithm which, when applied to
+an element a in the domain of f, computes the object b = f(a).
+(This was proved by Kleene.)</p>
+
+<p>This gives us a new way to define an algorithm, rather surprisingly:
+An algorithm is a function which can be defined constructively.</p>
+
+<h2>Constructive proofs as algorithms</h2>
+
+<p>This is &ldquo;the tip of a vast iceberg&rdquo;, the &ldquo;algorithmic interepretation&rdquo;
+of constructive proofs.  Major advances here took place in the 60s,
+due to the work of Haskell Curry, Nicolaas Govert de Bruijn, and
+William Howard.</p>
+
+<p>This interpretation provides a new answer to the question of the
+meaning of &ldquo;proof&rdquo;.</p>
+
+<p>How are proofs constructed, and how are they used?</p>
+
+<p>A proof of the proposition &ldquo;if A then B&rdquo; can be used to construct
+a proof of B from a proof of A.  It is <em>used</em>, in other words,
+like an algorithm for transforming proofs.</p>
+
+<p>It becomes reasonable, then, to simply define proofs as the
+algorithms which have the same use-patterns.  (Along with some
+other proofs of this correspondance.)</p>
+
+<p>So proofs, the foundation of mathematics since at least Euclid,
+turn out to be founded on algorithms, something the Mesopotamians
+started out with.</p>
+
+<p>The proof of the proposition &ldquo;for all numbers x and y, there
+exists a number z that is the greatest common divisor of x and y&rdquo;
+is, in the algorithmic interpretation, an algorithm which gives
+us, for each pair (a, b), a pair of a number c and a proof that
+c is the GCD of a and b.  (NB: read that carefully)</p>
+
+<p>Here we go: &ldquo;Algorithmic interpretation of proofs thus shows not
+only that proofs are algorithms, but also that cut elimination
+acts as an <em>interpreter</em> for these algorithms.&rdquo;</p>
+
+<p>So both constructivity and computability place great importance
+on the notions of algorithm and computation, the former because
+it provides it defines constructive proofs as algorithms.
+The proofs of interest to constructive mathematics, however, are
+proofs from the axiomatic (non-computational) tradition!  And
+the suggestion is that this is the important part of mathematics;
+once again, <em>not</em> computation.</p>
+
+<h1>Part 3</h1>
+
+<h1>Chapter 9: Intuitionistic type theory</h1>
+
+<p>The axiomatic method was challenged simultaneously in several
+disciplines of mathematics and computer science during the 1970s.</p>
+
+<p>In the late 60s there were many advances in constructive mathematics.
+The algorithmic interpretation of proofs was developed by Curry,
+de Bruijn, and Howard and cut elimination was extended to new
+theories (Tait, Martin-Löf, Girard), in particular Church&rsquo;s typed
+lambda calculus.</p>
+
+<p>This last development led to Martin-Löf&rsquo;s creation of intuitionistic
+type theory, a minimal, constructive basis for mathematics.
+It excludes not only PEM, but several axioms from Church&rsquo;s type
+theory: extensionality, the axiom of choice, and impredicative
+comprehension.</p>
+
+<p>&ldquo;Vast sections of mathematics&rdquo; have by now been expressed within
+this system and its extensions.</p>
+
+<p>In Martin-Löf&rsquo;s type theory, proofs are again defined as algorithms.
+It also introduces a notion not found in Church&rsquo;s types or in set
+theory, &ldquo;equality by definition&rdquo;.</p>
+
+<p>Church&rsquo;s type theory has only one notion of equality, which is the
+same notion in all cases&ndash;whether equality is definitional or the
+result of some reasoning process.  Martin-Löf type theory has both
+the &ldquo;ordinary&rdquo; notion equality and equality by definition.</p>
+
+<p>Definitions, in this theory, are neither axioms nor inference rules.
+They state that proving one proposition is equivalent to proving
+another, thus establishing what might better be called &ldquo;equality by
+computation&rdquo;.  This is related to Church&rsquo;s dilemma with beta
+reduction, where he at first called (x ↦ (x × x))(4) → 4 × 4 a
+computation step, then later a simple equality.  In intuitionistic
+type theory, the definition of ↦ leads to the fact that these two
+expressions are equal in the definitional sense: (x ↦ t)(u) is
+equal by definition to the expression t[x := u] (t with u
+replacing x).</p>
+
+<h2>Equality by definition and analytic judgements</h2>
+
+<p>&ldquo;Equality by definition&rdquo; is not as strong as Poincaré&rsquo;s idea of
+axioms as implicit definitions, in which any two things which can
+be proved equal are so by definition.</p>
+
+<p>Also, in intuitionistic type theory, equality by definition is
+always decidable.  Church&rsquo;s theorem shows that equality by <em>implicit</em>
+definition is not.</p>
+
+<p>(I&rsquo;m not clear on what distinction is being made in the following
+paragraphs.)</p>
+
+<p>The notions of analytic and synthetic judgement appear differently
+in Martin-Löf type theory; a judgement is analytic when it requires
+only computation, and synthetic when &ldquo;demonstration&rdquo; is required.
+The judgement &ldquo;2 + 2 equals 4&rdquo; is analytic, but judging the proposition
+&ldquo;the sum of the angles in a triangle is 180°&rdquo; is synthetic.</p>
+
+<p>(&ldquo;Demonstration&rdquo; is a notion that isn&rsquo;t described here.)</p>
+
+<h2>Shorter proofs, longer proof checking</h2>
+
+<p>With proofs being algorithms, a distinction arises between proofs
+based on the complexity of the proof and the time it takes to
+execute the algorithm (i.e. check the proof).</p>
+
+<p>Notions may take a long or short time to write and check depending
+on how they are defined.</p>
+
+<p>A proof that a certain number is composite (i.e. not prime) might
+be state as &ldquo;f(91) = 1&rdquo;, where f(x) is an algorithm that returns 1
+if x is composite and 0 otherwise.  This proposition is equal by
+definition to the proposition &ldquo;1 = 1&rdquo;, which has a very short proof
+using only the axiom &ldquo;∀x.x = x&rdquo;.  Checking this proof, though, may
+involve the evaluation of f(91), which (in the simple implementation
+which tests the divisibility of 91 by all smaller natural numbers)
+is lengthy.</p>
+
+<p>Another proof of the compositeness of 91 might be to claim
+&ldquo;∃y.g(91, y) = 1&rdquo;, where g(x, y) computes 1 iff y is a divisor of
+x, and 0 otherwise.  The proof is longer, since it&rsquo;s necessary to
+introduce a y, then to make the claim of it.  But checking it is
+easy: we just have to compute g(91, 7).  This is an example of a
+proof whose statement and demonstration are both relatively simple.</p>
+
+<p>The proofs presented all make use of some computation rules in
+their demonstration (see above).  The &ldquo;low level&rdquo; proof, which uses
+<em>no</em> computation rules, must decompose the multiplication algorithm,
+applied to 7 and 13, to its tiniest steps, resulting in a very long
+proof <em>and</em> check.</p>
+
+<p>The &ldquo;best&rdquo; proofs, the one with f(x) and the one with g(x, y), are
+only possible because intuitionistic type theory allows proofs to
+use axioms, inference rules, and computation rules.</p>
+
+<p>So Martin-Löf&rsquo;s &ldquo;equality by definition&rdquo; fully introduced
+computation into mathematics in the early 1970s.  Computation rules
+were finally available as tools to mathematicians.</p>
+
+<h1>Chapter 10: Automated theorem proving</h1>
+
+<p>The idea of constructing proofs with computation rules as well
+as inference rules and axioms also developed in computer science
+in the 1970s.  The critical research in this development was in
+automated theorem proving.</p>
+
+<p>The workers in type theory and in automated theorem proving,
+though researching similar ideas at the same time, ignored
+each other.</p>
+
+<p>Automated theorem prover: A program which, given a collection of
+axioms and a proposition, attempt to prove the proposition from
+the axioms.</p>
+
+<p>Church&rsquo;s theorem implies a fundamental limit for the project of
+automated theorem proving: no program can determine whether the
+given proposition has a proof.</p>
+
+<h1>The fantasy of &ldquo;intelligent machines&rdquo;</h1>
+
+<p>As with most AI topics in the 1950s, early claims about the future
+of automated theorem proving were massively inflated.</p>
+
+<p>One interesting claim concerned the possibility of a theorem-prover
+which is as good as a human being at constructing proofs.  This
+relates to the Church-Turing thesis, which, if it holds (in the
+psychological form), guarantees the possibility of such a system.</p>
+
+<p>If we accept the materialist hypothesis and (per Gandy) that
+information has finite density and transmission speed, then it
+must be possible, in theory, for the reasoning processes of a
+human proof-constructor to be simulated by a program.</p>
+
+<p>In any case, provers are not nearly there yet.  However, theorem
+proving has made &ldquo;steady and significant progress&rdquo; since the
+early days.</p>
+
+<p>What are the ideas that have made this progress possible?</p>
+
+<h2>&ldquo;Resolution&rdquo; and paramodulation</h2>
+
+<p>The earliest methods of automated proof, including resolution
+(A. Robinson 1965) and paramodulation (Wos &amp; G. Robinson 1969),
+searched for proofs within predicate logic.</p>
+
+<p>Both of these methods use the unification algorithm, which compares
+expressions and constructs substitutions which can be applied to
+make the expressions identical.</p>
+
+<p>Paramodulation is similar to resolution using subexpressions of
+axioms to transform expressions into identical forms.</p>
+
+<p>The idea of the unification algorithm may actually go back to
+Herbrand&rsquo;s research into the Entscheidungsproblem.</p>
+
+<h2>Turning axioms of equality into computation rules</h2>
+
+<p>Given an axiom of the form t = u, paramodulation allows us to replace
+any instance of t with the corresponding u instance, and vice versa.</p>
+
+<p>This technique often requires a lot of computation, even for simple
+problems.  It can also be difficult to choose how to apply
+paramodulation at each step in a computation process.  This leads to
+widely branching process trees.</p>
+
+<p>By restricting the use of paramodulation to produce a &ldquo;normal form&rdquo;
+of some sort, rather than testing all possible ways to create identical
+expressions (e.g. always shifting left with associativity applications),
+shorter computations may be possible.</p>
+
+<p>This might give us an approach in which, with an axiom t = u, we only
+replace t with u, say.  This transforms an axiom into a computation
+rule.</p>
+
+<p>This assumes a set of <em>confluent</em> computation rules, AKA rules which
+have the Church-Rosser property, AKA rules which give a computation
+process which terminates with the same result regardless of the
+order in which the rules are used.</p>
+
+<p>Knuth &amp; Bendix suggested (1970) that axioms could be transformed
+into a confluent set of rules.</p>
+
+<h2>From unification to equation solving</h2>
+
+<p>Transforming axioms into computation rules means that certain
+quantified propositions can no longer be proved.</p>
+
+<p>Plotkin&rsquo;s research in 1972 showed a way to transform axioms without
+leaving out any kind of proof.  Plotkin&rsquo;s version of unification has
+&ldquo;associativity built in&rdquo;: in proving the proposition &ldquo;there exists y
+such that a + y = (a + b) + c&rdquo;, this algorithm compares the two
+expressions and produces y = b + c.  While more complicated than
+Robinson&rsquo;s unification, this allows many more proofs to be constructed.</p>
+
+<p>It was later shown that other axioms could be integrated into the
+unification algorithm.</p>
+
+<p>Essentially, automated proving was increasingly starting to include
+equation-solving as a tool for constructing proofs.  By integrating
+arithmetic axioms, e.g., a system could prove propositions like
+&ldquo;there exists x such that x + 2 = 4&rdquo; without resorting to computation
+rules.</p>
+
+<p>This puts a new focus on equations themselves.</p>
+
+<p>A simple way to describe an equation is as a pair of expressions
+containing variables; its solution is a <em>substitution</em> which assigns
+expressions to the variables such that the two expressions are equal,
+along with a proof showing that the two expressnions so produced
+compute the same value.</p>
+
+<p>But some equations, e.g. a + 2 = 4, given an expression a, do not
+need a proof that a + 2 = 4; it suffices to compute 2 + 2, which is
+equal by definition to 4.</p>
+
+<p>So there are two classes of equations: those requiring solutions and
+proofs, and those requiring only solutions and computation.</p>
+
+<h2>Church&rsquo;s type theory</h2>
+
+<p>In the early 70s, computer scientists adopted a similar approach to
+Plotkin and built specialized provers for Church&rsquo;s type theory and
+set theory.  Andrews (1971) suggested building in beta reduction;
+this was accomplished a year later by Huet.</p>
+
+<p>So a theme of all this work of the 1970s is transforming axioms into
+computation rules which can be built into some sort of unification
+algorithm.</p>
+
+<p>This approach is one of the &ldquo;crucial&rdquo; reasons for the progress made
+in the automated theorem proving field since the 50s.  Had the axiomatic
+conception of mathematics remained the primary model, propositions like
+&ldquo;2 + 2 = 4&rdquo; might have required enormous numbers of axioms to prove;
+adding computation rules makes it just a matter of &ldquo;doing the addition&rdquo;.</p>
+
+<h1>Ch. 11: Proof checking</h1>
+
+<p>An alternative to theorem provers was proof-checking systems.
+Though less ambitious, this area has produced a large number of results
+quickly in verifying a very wide range of proofs.</p>
+
+<p>The use of proof checkers has also enabled the writing of much longer
+and more detailed proofs than were previously useful.  In many
+cases, the length and detail has been unavoidable, making automated</p>
+
+<p>The first proof checker, Automath, was developed by De Bruijn in
+1967, and already allowed proofs constructed with axioms, inference
+rules, and (limited) computation rules.  Automath did not allow a
+proof of 2 + 2 = 4 using simple addition; a reasoning process had
+to be constructed.  De Bruijn noted the weirdness of this.</p>
+
+<p>Later proof checkers used Martin-Löf&rsquo;s type theory or other systems
+which allowed more scope for computation.</p>
+
+<h2>The correctness of programs</h2>
+
+<p>The proof-checking of programs (i.e. not specifically
+math-related algorithms) has a longer history.  Here, too, the
+length and complexity of programs skyrocketed during the late
+twentieth century, thus (presumably) making verification systems
+a necessity.</p>
+
+<p>Unlike in mathematics, where proofs of a single proposition often come
+in different lengths, the length of a program proof is at least
+proportional to the length of the program.  Verifying these proofs by
+hand is thus very difficult.</p>
+
+<p>In such proofs, computation rules are a natural way to prove results.</p>
+
+<p>Milner&rsquo;s LCF, and the ACL proof-checker (Boyer &amp; Moore) were two such
+systems.  In these, even inference rules are themselves expressed as
+computation rules.  Church&rsquo;s theorem thus sets a limit to this sort of
+system, but this nonetheless represents a partial realization of
+Hilbert&rsquo;s program.</p>
+
+<p>Thus, research in both areas revealed the importance of computation
+rules in constructing proofs.</p>
+
+<h1>Chapter 12: News from the field</h1>
+
+<p>The move to include computation rules in proofs has had important
+results in mathematical practice.</p>
+
+<p>This chapter includes some examples.</p>
+
+<h2>The four-color theorem</h2>
+
+<p>The four-color problem began with Francis Guthrie&rsquo;s conjecture
+that any map could be colored (i.e. with distinct colors for
+neighboring regions) with a maximum of four colors.  He showed
+this to be possible with a map of Great Britain, but failed to
+prove the general case.</p>
+
+<p>A proof-attempt by Alfred Kempe (1878) was found to be mistaken
+by Heawood in 1890.  The problem was solved by Appel and Haken
+in 1976.</p>
+
+<p>Kempe&rsquo;s approach was an inductive one.  It rests on showing that,
+with a partially colored (with a maximum of four colors) map, it
+is possible to select a valid color from the four to color an
+uncolored region.</p>
+
+<p>An interesting thought is to assume that Kempe&rsquo;s proof works
+for all maps in which > 10 regions have already been colored.  It
+then would remain only to show that the (finite) set of all maps
+with 10 or fewer regions satisfied the theorem.</p>
+
+<p>Although much more complex, the approach that Appel and Haken
+took used a similar method: reducing the problem to a finite set
+of about 1500 maps, then showing exhaustively that each of these
+maps could be four-colored.</p>
+
+<p>Using a computer, they were able to check the entire set in 1200
+hours of computation.  No &ldquo;hand&rdquo; solution to the problem is
+currently known.</p>
+
+<p>Prior to 1976, computers had been used to test the primality
+of large numbers, to calculate mathematical constants, to
+construct approximate solutions to equations, etc.  These tasks
+can be regarded as the construction of proofs of (usually very
+specific) theorems.</p>
+
+<p>The statements of these proofs are generally very long: &ldquo;n is
+prime&rdquo;, where n is represented by thousands of digits, or &ldquo;the
+highest temperature in an object of shape R is 80° C&rdquo;, where R
+describes a very complex shape, e.g.</p>
+
+<p>The four-color theorem differs: It is a proof with a short
+statement, but a very long proof.</p>
+
+<h2>Symbolic computation and computer algebra systems</h2>
+
+<p>Computer algebra systems were used early on to detect errors in
+physical calculations.</p>
+
+<p>A proof of Morley&rsquo;s Theorem using linear equations is workable
+only with a CAS.  Unlike the four-color theorem, though, shorter
+proofs are known.</p>
+
+<p>Within the category of proofs which are too long to be constructed
+by hand, there are those whose statements are already long and
+those with short statements.  The latter category can be divided
+into those proofs with proofs of different lengths, and those with
+only long proofs known.</p>
+
+<p>Along with the four-color theorem, several more big theorems with
+proofs too long to write by hand were proved in the 70s and 80s.
+These included Hales&rsquo;s theorem, AKA Kepler&rsquo;s conjecture, which had
+been an unsolved problem since 1610.</p>
+
+<h2>Understanding why</h2>
+
+<p>The appearance of computer-aided proof in 1976 caused a massive
+controversy and raised questions about what constituted an
+acceptable mathematical proof.</p>
+
+<p>Rather than the turn-of-the-20th-century debates about which
+axioms or inference rules could be used, this was a debate about
+the validity of proofs too long to for humans to practically
+read or write.</p>
+
+<p>This debate was small until the 90s and 2000s.  At this time,
+the number of computer-assisted proofs began to increase
+dramatically.</p>
+
+<p>Two attacks on these proofs: (1) they were not &ldquo;explicative&rdquo;,
+and (2) they were hard to prove correct.</p>
+
+<p>The essence of the first criticism is this: A proof like that
+of the four-color theorem does not provide a unique <em>reason</em> for
+the fact that it proves.  It provides about 1500 reasons, but
+&ldquo;the very principle of the scientific method is the necessity
+to find a unique reason accounting for the regularity of
+phenomena&rdquo;.  So Appel &amp; Haken&rsquo;s proof establishes the theorem
+without given a clear explanation (whatever that is) of the
+result.</p>
+
+<p>However, proving a theorem by case analysis is an old approach,
+and proofs by this method might also be said to fail to give
+their result a unified reason.</p>
+
+<p>No-one seriously suggests getting rid of case-by-case proofs.
+And what really differentiates these from a proof by
+computer-assisted case analysis?</p>
+
+<p>The distinction seems to be merely a question of the number
+of cases.  Or is it?</p>
+
+<p>If that criticism can be disposed of, what about the correctness
+of these proofs?</p>
+
+<p>Appel &amp; Haken&rsquo;s proof was verified, though not until 1995 by
+Robertson, et al, who also used a computer to complete their
+verification.  Until then, there was a lingering question of
+whether Appel &amp; Haken&rsquo;s software contained any errors.</p>
+
+<p>Suddenly, we have a notion of &ldquo;reproducibility&rdquo; in mathematics.</p>
+
+<p>Presumably Appel &amp; Haken proved the program they used, right?
+No, as it turns out.</p>
+
+<p>In 2005, Gonthier &amp; Werner rewrote Robertson, et al&rsquo;s proof of
+Appel &amp; Haken&rsquo;s proof using Coq.</p>
+
+<p>More recently, the proof of Hales&rsquo;s theorem has be checkid using
+HOL (completed in 2014).</p>
+
+<h2>The size of proofs and Church&rsquo;s Theorem</h2>
+
+<p>With all of the debate about long proofs, can we say anything
+about any connection between the size of a proposition and that
+of its proof?</p>
+
+<p>A consequence of Church&rsquo;s theorem is that there is not, in general.</p>
+
+<h2>Can it be proved that a theorem only has long proofs?</h2>
+
+<p>We don&rsquo;t know, at the moment.</p>
+
+<h2>New spaces</h2>
+
+<p>Church&rsquo;s theorem gives us three categories of provable propositions:</p>
+
+<ul>
+<li><p>Propositionss which have short axiomatic proofs.</p></li>
+<li><p>Propositions which have no short axiomatic proofs, but which
+have short proofs provided one resorts to computation.</p></li>
+<li><p>Propositions which have only long proofs.</p></li>
+</ul>
+
+
+<p>Before the 1970s, all theorems were in the first category.  The
+second is under investigation now; the third is still currently
+out of reach.</p>
+
+<h1>Chapter 13: Instruments</h1>
+
+<p>Until the 1970s, mathematics was the only science which had not
+undergone an &ldquo;instrumental revolution&rdquo;.  Other sciences had been
+irrevocably changed by the introduction of instruments (microscopes,
+telescopes, etc.), but mathematicians were still working with pencil
+and paper.</p>
+
+<p>&ldquo;In 1976, mathematics entered the instrumented part of its history.&rdquo;
+The instruments, i.e. computers, are unlike the characteristic
+instruments of astronomy or biology, say, in that they don&rsquo;t extend
+our senses, but rather &ldquo;the faculties of our understanding&rdquo;.</p>
+
+<p>This doesn&rsquo;t seem very accurate: &ldquo;When an instrument is introduced
+in a science, a change occurs which is more quantitative than
+qualitative.&rdquo;  I think this is completely false when applied to
+cases where a totally new instrument appeared&ndash;e.g. microscopes
+fundamentally changed our understanding of the microscopic world,
+which, as its name suggests, wasn&rsquo;t even an idea before this tool
+was introduced.</p>
+
+<p>It&rsquo;s better at describing less dramatic technological developements,
+e.g. more powerful microscopes.</p>
+
+<p>(OK, Dowek adds very shortly after that &ldquo;the use of instruments
+can sometimes achieve a qualitative change, as well&rdquo;.  So why
+the earlier statement?  Maybe he forgot an &lsquo;often&rsquo;.)</p>
+
+<h2>Experimental results in mathematics</h2>
+
+<p>Once again, we come back to the apparent distinction between
+analytic and a posteriori judgements.  In using an instrument in
+mathematical work, one is <em>observing</em> the behavior of the tool
+and using these observations to establish an analytic result.</p>
+
+<p>But isn&rsquo;t observation supposed to be useless for proving analytic
+results?</p>
+
+<p>The proposition 2 + 2 = 4 can, it seems, be established as an
+analytic judgement through synthetic means; if 2 + 2 is proven to
+be a natural number, a simple counting experiment with objects of
+any kind &ldquo;seems sufficient to refute the hypothesis that 2 + 2 is
+any other integer than 4&rdquo;.  (This has a Karl Popper sound to it.)</p>
+
+<p>Similar examples of &ldquo;analytic a posteriori judgements&rdquo; are the
+four-color theorem and Hales&rsquo;s theorem.</p>
+
+<h2>Wind tunnels as analogical computers</h2>
+
+<p>Aeronautics experiments with wind tunnels have some relevance here.
+Unlike most scientific experiments in which the result predicted by
+theory is known in advance (otherwise, the theory is just speculation),
+wind tunnel tests are carried out to determine results and to provide
+data for later predictions.</p>
+
+<p>These tests are thus not &ldquo;experiments&rdquo; in the natural science sense
+of the word.</p>
+
+<p>One view is that such tests are purely data-gathering on the wing
+(etc.) under &ldquo;real conditions&rdquo;.  But the conditions are simulated,
+and the wing is often a scale model.  Similar experiments in geology
+make extensive use of scale and other adjustments in their tests.
+Here, theory must be used to predict the factors by which various
+elements are scaled.</p>
+
+<p>Another, &ldquo;more satisfactory explanation&rdquo;: The test is an attempt to
+solve a problem, e.g. the speed of airflow around a wing.  A theory
+allows this problem to be translated to a mathematical problem,
+which is too difficult to solve.  So theory again allows this problem
+to be translated to a scaled-down physical test system, which allows
+us to <em>compute</em> the solution to the mathematical problem, and thus
+to the original problem.</p>
+
+<p>So the scale model is here an analog computer designed to solve a
+mathematical problem.</p>
+
+<p>A critical difference between such &ldquo;analog computations&rdquo; and
+experiments in the natural sciences is that the former can and often
+have been replaced by simulations, whereas the latter absolutely
+cannot.</p>
+
+<h2>Building instruments</h2>
+
+<p>Unlike theories in the natural sciences, mathematical results are
+considered valid for all time once proved.</p>
+
+<p>But what about mathematical results proved with instrumental aid,
+i.e. which rely on some interaction with nature?</p>
+
+<p>Proofs acquired through instruments appear to be analytic results
+resting on synthetic knowledge (i.e. about how to build machines).</p>
+
+<p>Calculations on a hand-calculator require building a calculator,
+the components of which are known to function correctly by virtue
+of our current theories of physics.</p>
+
+<p>But no one assumes our understanding of physics is wrong when they
+get a different result than the calculator.</p>
+
+<p>In fact, tools seem to have made our reasoning more reliable.
+CASs and proof-checkers have been used to catch errors in the work
+of Newton, Delaunay, etc..</p>
+
+<p>But isn&rsquo;t this introducing (hypothetical), science-based knowledge
+into analytic results, and thus introducing a source of error?</p>
+
+<p>The fundamental mistake here is to assume that mental calculations
+are themselves completely reliable, or even analytic.</p>
+
+<p>(The latter point is very interesting.)  In any case, the
+&ldquo;instrumented age&rdquo; of mathematics has revealed the error-prone-ness
+of our understanding.</p>
+
+<h1>Chapter 14: The end of axioms?</h1>
+
+<p>The idea of using computation in proofs arose, as we saw, in
+different areas at around the same time.  Each of the streams of
+type theory, automated theorem proving, proof checking, and practical
+mathematical work (the four-color theorem proof, etc.) added something.</p>
+
+<p>In the 90s, Dowek, Hardin, &amp; Kirchner reformulated the notion of
+mathematical proof within predicate logic.  In this extension,
+&ldquo;deduction modulo&rdquo;, proofs are constructed with axioms, inference
+rules, and computation rules.  The goal was to express the new
+view of proof &ldquo;in the most general framework possible&rdquo;.</p>
+
+<p>A surprising result of this and related projects was the discovery
+that many classical axioms could be replaced with computation rules.</p>
+
+<p>So why not get rid of axioms altogether?</p>
+
+<p>&ldquo;Axioms have been marring mathematics ever since Hilbert&rsquo;s days&ndash;if
+not since Euclid&rsquo;s!&rdquo;</p>
+
+<p>We don&rsquo;t know if this is possible, as yet.</p>
+
+<h1>Conclusion</h1>
+
+<p>Unresolved problems encountered in this book:</p>
+
+<p>We know that their are provable, short propositions which have only
+long proofs, but we have no techniques for showing that a proposition
+is such.</p>
+
+<p>Is a mathematics without axioms possible?  Computation rules have
+nicer properties overall, and &ldquo;every time one successfully replaces
+an axiom with a computation rule, there is cause to rejoice&rdquo;.
+If axioms <em>are</em> required, in which cases?</p>
+
+<p>An algorithmic formulation of natural laws is possible, as shown
+by the Church-Turing thesis.</p>
+
+<p>How far can we go with the Church-Turing thesis&rsquo;s ability to explain
+the mathematizability of natural phenomena?</p>
+
+<p>Can the varying utility of computational tools to the branches of
+mathematics be determined?</p>
+
+<p>Will the ways in which mathematics is expressed change as a result of
+the use of computation?  Will more algorithms and fewer axiom/inference
+examples appear in mathematical writing?</p>
+
+<p>How far will the &ldquo;instrumented age&rdquo; of mathematics take us from the
+chalk-and-blackboard days?</p>
+
+<hr />
+
+<p><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a> (public domain)</p>
+<p><a href="/index.html">Home</a></p>

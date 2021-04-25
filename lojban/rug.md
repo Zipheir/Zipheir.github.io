@@ -1,0 +1,197 @@
+# me la .rug.
+
+.i la .filip.dik. finti
+
+.i xe fanva fu la .zaifir.
+
+ni'o lo'u .rug. le'u se cusku le gerku .i ri cpana punji le jamfu
+le bitmu gi'e ru'u catlu .i pa cmima be la'i .rug. cei broda mo'ifa'a
+bajra le purdi
+.i cerni pu'o lonu le solri ga'u muvdu .i le vacri cu lenku je grusi
+.ije lei bitmu be fo le zdani cu cilmo .i le gerku goi ko'a ve'i kargau
+lei xedja ca lonu catlu .i lei jamfu noi barda je xekri cu jgari le
+mudri pe le bitmu .i le broda goi ko'i sanli vi le
+bimvrogai gi'e ne'i catlu le purdi .i ko'i noi cinla je blaci je
+tuple desku cu cmalu broda .i ko'i kalgaisligau fa'a
+ko'a .i ko'a jarco tu'a lei denci .i lo'u .rug. le'u za'ure'u se
+cusku ko'a .i le sance cu se mirsna ve'a le smaji ke milxe manku .i noda
+muvdu .i ko'a ni'a klama gi'e dzukla le serti be le tsina fo le purdi
+.i ko'a zutse le terserti poi traji loka dizlo ku'o gi'e catlu ko'i
+.i ko'i sutra catlu ko'a .i bazibo ko'i mo'iga'u tengau le cnebo le canko
+be le zdani be'o noi gapru ku'o gi'e panzga fa'a ri .i le gerku mo'ifa'a
+sutra klama
+fo le purdi .i ko'a janli le bitmu seri'a lonu le bimvrogai cu desku
+je pe'a cmoni .i ko'i ca'o to'o dzukla fo le purdi dzuklaji
+tai lozu'o cizra je cmalu stapa .i ko'a noi vasxu gunka cu vreta
+re'o le bimvrogai tanbo .i le tance noi xunre cu dandu .i ko'a catlu
+lonu ko'i canci
+
+ni'o ko'a smaji vreta .i lei kanla pe ko'a carmi je xekri .i co'a donri
+.i le tsani cu zenba loka blaci kei li so'u .ije ru'u mirsna lei sance be
+loi prenu ve'a le cerni vacri .i co'a gusni
+fi le trixe be le canko gacri .i lenku cermurse .i cabo lo canko cu se kargau
+.i ko'a na'e muvdu zukte .i ko'a catlu le dzuklaji
+
+ni'o bu'u le jupku'a la .fetspes.kardosis. goi ko'o tisyse'a le djacu
+le kafpatxu .i le jaurgapci cu galmu'u seri'a lonu ko'o ze'i na'e viska
+.i ko'o punji le kafpatxu le jupsfe gi'e klama le cidja te sorcu
+.i ca lenu ko'o xrukla kei la .alf. goi ko'u cu sanli vi le vrogai pe
+le jupku'a .i ko'u daspu'i le barkalyle'o .i ko'u cusku lu xu do bevri
+le karni li'u .i lu ri bartu li'u co'e .i ko'u mo'ipa'o dzukla fo le
+jupku'a gi'e to'e telgau le trixe vrogai gi'e fe'e co'a stapa le
+tsina .i ko'u catlu le grusi je cilmo cerni .i re'o le bitmu la .boris.
+noi xekri je mutce loka selkre zi'e noi se tance le dandu cu vreta
+.i lu ko ne'i punji le tance li'u se cusku la .alf. i le gerku ga'u
+sutra catlu .i le rebla cu te darxi fe le loldi .i ko'u cusku lu .i
+.e'o me le tance .i ko ne'i punji le tance li'u .i ko'a ce ko'u simxu
+lenu catlu .i ko'a cmoni .i le kanla be ko'a cu se bilma carmi .i lo'u
+.rug. le'u smaji se cusku ko'a .i ko'u cusku lu ke'o li'u gi'e ru'u catlu
+.i lu xu da fa'a klama
+.i xu le karni bevri cu go'i li'u se cusku ko'u .i ko'a catlu ko'u
+.i le moklu cu kalri .i lu za'a ju'o do ze'a di'i xanka li'u se cusku
+ko'u .i lu .e'u ko surla .i leni mi'o tolcitno cu dukse fi lonu cinmo li'u
+go'i .i ko'u klama le zdani
+
+ni'o le solri mo'u gapkla .i le klaji cu se gusni je pe'a skari bo jmive
+.i le xelmri ku joi lei xatra je karni cu klama fo le dagmlaterdzu
+.i so'o lo verba noi cmila ja tavla cu zo'a sutkla
+
+ni'o li papa tcika lonu la .fetspes.kardosis. no'u ko'o brulu'i
+le crane tsina .i ko'o ze'i denpa je panzga le vacri .i lu .uiro'o
+za'a lonu ca se sumne cu pluka .ika'u ri'abo le tcima ba glare
+li'u se cusku ko'o
+
+ni'o le xekri gerku no'u ko'a cu tcena vreta ni'a le tsina fi'o tcini
+loza'i dormidju ke solri glare .i le cutne be ko'a cu
+slilu .i lei cipni goi fo'a cu kelci bu'u le ricrceraso
+.i lu'i fo'a simxu lonu cmoni je krixa .i la .boris. so'uroi lafti
+le stedu gi'e catlu fo'a .i bazibo ko'a sanli gi'e dzukla le cnita be le
+tricu
+
+ni'o ko'a sanli ne'i le tricu ca lonu ko'a viska lonu lei re broda goi fo'e
+zutse le bitmu gi'e catlu ko'a .i le pamoi be fo'e goi fo'i cu cusku lu
+ta barda fi le so'emei be la'i .bandus. li'u .i le remoi goi fo'o cu
+sedmu'utu'i
+.i le stedu cu desku se sarji le cnebo .i la .boris.
+noi na'e muvdu zi'e noi le xadni be ke'a tinsa cu catlu fo'e
+.i fo'e smaji gi'e catlu le barda gerku noi
+le blaci kerfa cu sruri le cnebo be ke'a
+.i fo'i cusku lu le friti kabri cu mo .i xu ri zi culno li'u .i lu go'i
+.i bazi bredi li'u se cusku fo'o noi sedmu'utu'i .i fo'i cladu zmadu
+cusku lu ju'i .i
+xu do tirna tu'a mi .i mi'o jdice lodu'u mi'o su'ore'u cpacu
+le se friti .i ko ba morji tu'a lonu ko curmi lonu mi'o nerkla
+.i .e'oga'u ko na'e xalbo li'u .i lu ga'u ko na'e tolmorji li'u se cusku
+fo'o .i lu baza co'e li'u go'i .i la .boris. na'e cusku
+
+ni'o fo'e mo'ini'a plipe fi le bitmu gi'e fe'eza'o klama le
+dzuklaji .i pa fo'e cu tolse'a le cartu .i fo'e tadni ri
+.i fo'i cusku lu .i'enai le vi canlu cu na'e mapti lenu pare'u
+cipra .i za'a du'e le cmima be la'i .bandus. cu co'e .y .i zu'u le berti
+canlu li'u .i lu ta'a tu pu jdice .i lei tcila cu so'emei li'u se cusku fo'o
+.i lu .ieju'o li'u co'e .i fo'e sutra catlu la .boris. no'u ko'a gi'e
+to'o vi klama le bitmu .i ko'a na'e kakne lonu le remei ca'o tavla .ibazibo
+fo'e setca le cartu pe vo'a gi'e to'o klama fo le pluta
+.i ko'a dzukla le bitmu gi'e panzga vi lei tanbo .i ko'a
+te panci lo broda le titla je fusra
+
+ni'o ca lenu la .alf. no'u ko'u cu xrukla le zdani ti'u le zi nicte kei le gerku
+cu sanli ne'a le bimvrogai gi'e vi ve'a catlu le dzuklaji .i ko'u kargau
+le bitmu gi'e nerkla le purdi .i ko'u cusku lu do mo li'u ca
+lonu satre darxi le cutne be ko'a .i go'i fa lu .i xu do co'u se raktu .i
+za'a do ze'i ca xanka .i .uanai do ze'e pu na'e go'i li'u .i ko'a
+cmoni gi'e fa'a carmi catlu le flira pe ko'u .i lu do .iu xamgu gerku
+doi .boris. li'u se cusku ko'u .i lu .i ji'a do barda fi lo gerku
+.i do na'e morji fi lo pu za'i do cmalu cityge'u li'u go'i .i ko'a
+salpo vreta le tuple be ko'u .i lu do .i'e xamgu gerku .i .o'unairu'e
+mi djica lonu djuno lodu'u do pensi makau li'u se smaji cusku ko'u
+
+ni'o ko'u nerkla le zdani .i la .fetspes.kardosis. no'u ko'o bregau le
+jubme lemu'e citka le vacysai .i ko'u nerkla le surku'a
+gi'e na'e dasni le kosta .e le mapku .i ko'u punji le
+cidja tanxe le mlana jubme gi'e xrukla le jupku'a
+.i ko'o cusku lu ma raktu li'u .i lu .o'unai mi djica lonu
+ta noi gerku cu sisti lo ta'e zu'o jai vruri'a je gercmo .i ba'a lei
+jbixa'u za'ure'u pante fi lei pulji li'u co'e .i lu mi na'e pacna
+lonu mi'o bilga lonu dunda ta le bruna be do li'u se cusku ko'o noi
+kucysimgau le'i birka .i lu .i ku'i ta ta'e jai fenki fi'o tcini ra'u
+lonu mumdei cerni ti'u lonu lei festi vimcu cu klama li'u go'i
+.i la .alf. cusku lu .i la'aru'e ta goi ko'a ba surla li'u .i ko'u
+jelgau le tu'ursigja gi'e sigva'u sekai loka junri
+.i lu .i za'a ko'a pu ta'e na'e go'e .i .o'a la'aru'e ko'a ba xagze'a
+tai la'e di'u li'u co'e .i lu .i mi'o ba facki li'u se cusku ko'o
+
+ni'o le solri noipe'a lenku je nupre cu gapkla .i lei
+tricu ku jo'u lei dizlo cu bumru .i ca mumdei cerni .i le xekri gerku no'u
+ko'a vreta je tinju'i ni'a le tsina .i lei kanla cu mutce be
+loka kalri je catlu .i lei kerfa cu tinsa ri'a tu'a le bislunsa .i
+le se vasxu noi se vikmi fo lei terzbi cu binxo lei dilnu va'o lei toldenmi
+vacri .i ko'a bikla ke stedu muvgau ke'e ce'o sanli .i vu sance
+tai le no'a be lonu janli
+.i lo'u .rug. le'u se krixa la .boris. noi ru'u catlu .i ko'a
+sutkla le bimvrogai gi'e sanli .i lei jamfu cu cpana le bitmu
+.i rere'u vu lauzma sance le jbimau .i la'edi'u janli je jimdaxsna ri'a da'i
+lonu le la'acu'i vrogai cu mo'iti'a gunro ja kargau .i lo'u .rug. le'u se
+krixa la .boris. noi xanka catlu lei canko noi manku .i noda muvdu
+.i bazibo lei broda cu klama fo le klaji .i lei broda goi ko'e ge'u joi
+le bevma'e cu muvdu gi'e se minra lei rokci seri'a loinu janli ja desku
+sance .i la .boris. krixa lo'u .rug. le'u gi'e fengu plipe .i ko'a bazi
+zenba loka smacni .i ko'a ni'a klama gi'e vreta le loldi gi'e tinju'i
+denpa .i ko'e za ca'u sisti lozu'o sazri le bevma'e .i ko'a tirna lenu
+ko'e kargau lei vrogai gi'e cpare lo cnita seka'a le dagmlaterdzu
+.i ko'a mo'iru'u bajra gi'e cmoni .ije le flira
+cu za'ure'u carna fi le zdani
+
+ni'o ne'i le sipku'a noi kufygla je manku ku'o la .nakspes.kardosis. no'u
+ko'u co'i no'e vreta le ckana gi'e troci lomu'e viska le
+junla .i lu ta se mabla gerku li'u se cusku ko'u .i lu .i ke'u ta se mabla
+gerku li'u go'i .i ko'u cargau le flira fo le kicne gi'e ga'orgau lei
+kanla
+
+no'i lei broda no'u ko'e ca'o klama fo le pluta .i le pamoi be ko'e
+catke le bimvrogai .i ri kalri .i ko'e nerkla le purdi .i ko'a
+mo'iti'a klama gi'e krixa lo'u .rug. rug. le'u .i le panci be lu'a la'i
+.rug. be'o noi rigni je kurki cu se sumne ko'a .ije ko'a to'o cargau
+.i fo'i cusku lu le friti kabri zo'u culno pe'i li'u .i go'i lu ki'e zo'o do'u
+do xendo li'u le fengu gerku
+.i ko'e jbikla le jinme kabri .i pa ko'e vimcu le gacri .i lo'u .rug. rug.
+le'u se cusku la .boris. noi re'o jgari le loldi be le serti be le tsina .i ko'a
+desku ri'a loli'i terpa .i ko'e ca'o lafti le barda ke jinme kabri gi'e
+cargau ri
+.i lei selvau cu preja le loldi .i ko'e crepu le pelji dakli
+noi punli je porpi ku'o gi'e troci crepu le najnimre ke pilka jo'u selpo'i
+.e le cmalu spisa be le jelnanba be'o .e le sovda calku .i pa ko'e
+setca pa le sovda calku le moklu gi'e denci jai marxa ra .i ko'a sezysku la'aru'e
+ke badri krixa lo'u .rug. le'u .i ko'e bazi mo'u crepu le selfriti
+.i ko'e ze'i denpa gi'e catlu la .boris. i bazibo sekai loka
+masno je smaji kei ko'e mo'iga'u catlu le mlana be le zdani be'o ku ce'o
+le bitmu drudi fa'a le canko noi se gacri le bunre .i ko'a
+camki'a lo'u .rug. le'u .ije ko'a co'a klama ko'e tai lonu pe'a dansu ri'a
+loza'i fengu je dunku .i ko'e to'e djica cargau fo na'ebo le
+canko .i ko'e cliva fi le bimvrogai gi'e ga'orgau ri .i lu .ionai
+ko catlu ta li'u se cusku le romoi be lu'i ko'e be'o noi co'a janco bevri le
+vi kojna be le boxfo .i ko'a noi ca'o cunso batke cu catke re'o le bitmu
+.i le traji be loka barda beifo ko'e goi fo'u co'a sutra sligau lei birka
+.i ko'a
+mo'iti'a klama gi'e vreta ne'a le loldi be le tsina serti .i le moklu be
+ko'a za'o kalri .i ko'a carmi cmoni fi loka badri je tolpa'a
+.i lu ko klama li'u
+se cusku le drata be le broda be'o fo'u noi stali re'o le bitmu
+.i ko'e mo'ito'o dzukla fo le pluta
+
+ni'o fo'u
+cusku lu .i'e le vi canlu mo'u te crepu .i po'o to'e mupli fa lei vi cmalu
+canlu be lai .bandus. i mi ba gleki lonu da'i ta noi cmima la'i .bandus. cu jai
+mulno .i ju'o ta di'i jai raktu mi'o li'u .i lu ko geirde'a
+li'u se cusku pa ko'e .i ri cisma gi'e cusku lu .i zo'o le mi'o bevma'e mo'u
+culno .i .e'u mi'o denpa le bavlamjeftu fo da li'u .i ro ko'e cmila .i ko'e
+noi bevri le friti noi se bakfu le toljinsa je cludandu cu
+ca'o klama fo le pluta
+
+fa'o
+
+[lujvo](rug-lujvo.html)
+
+© 2020 Wolfgang Corcoran-Mathe.  Released under a Creative Commons
+[Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
+license.
