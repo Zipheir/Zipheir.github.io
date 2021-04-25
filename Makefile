@@ -5,7 +5,7 @@ HEADER = head.html
 FOOTER = foot.html
 INCS = $(HEADER) $(FOOTER)
 
-all: $(HTML) $(INCS)
+all: $(HEADER) $(FOOTER) $(HTML) $(INCS)
 
 .SUFFIXES: .md .html
 
