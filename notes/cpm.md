@@ -1,3 +1,5 @@
+Notes on Computation, Proof, Machine by Gilles Dowek
+
 # Introduction
 
 Mathematics changed more in the 20th century than in all previous
