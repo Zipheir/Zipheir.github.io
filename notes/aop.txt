@@ -1,0 +1,1182 @@
+# Chapter 2
+
+## Exercise 2.4.
+
+NTS: f . g = id => g is monic and f is epic.
+
+Assume that g is not monic, and let h, i be maps such that
+
+    g . h = g . i and h /= i
+
+But we have that
+
+    h
+  = id . h
+  = (f . g) . h
+  = f . (g . h)
+  = f . (g . i)
+  = (f . g) . i
+  = id . i
+  = i,
+
+a contradiction.  Using PEM, g must be monic.
+
+Similarly, assume that f is not epic, and let j, k by maps such that
+
+    j . f = k . f and j /= k
+
+But we have that
+
+    j
+  = j . id
+  = j . (f . g)
+  = (j . f) . g
+  = (k . f) . g
+  = k . (f . g)
+  = k . id
+  = k,
+
+a contradiction.  Using PEM, f must be monic.
+
+Can we prove these results constructively?
+
+Yes; here they are.
+
+g is monic if g ∘ h = g ∘ i ⇒ h = i for all h, i.
+
+Assume that we have h, i such that g ∘ h = g ∘ i.  By left-composing
+both compositions with f, we have f ∘ g ∘ h = f ∘ g ∘ i; then, since
+f ∘ g = id, we have h = i, as required.
+
+f is epic if h ∘ f = i ∘ f ⇒ h = i for all h, i.
+
+Assume that we have h, i such that h ∘ f = i ∘ f.  By right-composing
+both compositions with g, we have h ∘ f ∘ g = i ∘ f ∘ g; then, since
+f ∘ g = id, h = i, as required.
+
+## Ex. 2.5
+
+(a) NTS: If f ∘ g is epic, then f is epic.
+
+Let h, i be maps such that h ∘ f = i ∘ f.  We must also have that
+h ∘ f ∘ g = i ∘ f ∘ g, and thus h ∘ id = i ∘ id ≡ h = i, as required.
+
+(b) What is the dual statement?
+
+Let's construct this carefully.  We know that "is epic" is dual to
+"is monic"; we reverse the composition, and rename the maps for
+clarity: "If f ∘ g is monic, then g is monic."
+
+Proof: Let h, i be maps such that g ∘ h = g ∘ i.  Then it also holds
+that f ∘ g ∘ h = f ∘ g ∘ i, and thus id ∘ h = id ∘ i ≡ h = i,
+as required.
+
+## Ex. 2.6
+
+A preorder regarded as a category is a thin category (at most one
+arrow between any two objects), so every arrow is both monic and epic,
+trivially.  Nothing requires that an arrow have an inverse, however
+(this only happens for objects a, b where a ≤ b and b ≤ a), so not
+every arrow is an isomorphism.
+
+## Ex. 2.7
+
+(a) A relation ~ : A ← B is *onto* if ∀a ∈ A . ∃b ∈ B. a ~ b.  Is
+every onto arrow in Rel epic?
+
+Assume R : A ← B is onto and S, T : C ← A are arrows (in Rel) such that
+S ∘ R = T ∘ R.  By composition of relations, we have
+
+    (c, b) ∈ (S ∘ R) ⇔ ∃a ∈ A . a `R` b ∧ c `S` a
+
+In general, we do not have that S = T.  For example, let B = {b},
+A = {a, a′}, C = {c}, and let R = {(a, b), (a′, b)},
+S = {(c, a)}, and T = {(c, a′)}.  Then S ∘ R = T ∘ R, but S ≠ T.
+
+If R is a partial function (functional relation), though, then we
+must have S = T (that is, R is epic).  In this case, if there is
+some (c, b) in both S ∘ R and T ∘ R, then there must be a unique
+a ∈ A such that (a, b) ∈ R, and thus (c, a) is in S ∘ R and in
+T ∘ R.  Since (c, b) was arbitrary, we have that S = T, as required.
+
+(I was misled somewhat by the "partial" terminology.)
+
+## Ex. 2.8
+
+From any category A, we can construct the *Arrow category* Arr(A)
+whose objects are the morphisms of A.  What are the objects?
+
+I had to look this one up.  It's very interesting; the arrows are
+pairs of arrows of A describing commuting squares.  If A is given by
+the commuting diagram
+
+          h         i
+      L -----> M -----> R
+      |        |        |
+    f |        | g      | j
+      v        v        v
+      P -----> Q -----> S
+          k         l
+
+then (h, k) is a morphism of Arr(A) since k ∘ f = g ∘ h, and (i, l)
+is another, since l ∘ g = j ∘ i.
+
+        (h,k)    (i,l)
+     f -----> g -----> j
+
+The composition (i, l) ∘ (h, k) is defined, since
+j ∘ i ∘ h = l ∘ k ∘ f in A.
+
+TODO: Find more about arrow categories.
+
+TODO: What are the monic arrows in this category?
+
+## Ex. 2.9
+
+NTS: Functors preserve isomorphisms.
+
+Let i : B ← A be an isomorphism with inverse i⁻¹ : A → B in some
+category C, and let F : C → D be a functor.  Since functors preserve
+the source and target of arrows, we have
+
+    F(i)   : F(B) ← F(A)
+    F(i⁻¹) : F(A) ← F(B)
+
+so the types are right.  We reason:
+
+    F(i⁻¹) ∘ F(i)
+
+=     { functor law }
+
+    F(i⁻¹ ∘ i)
+
+=     { inverse }
+
+    F(id_A)
+
+=     { functor law }
+
+    id_(F A),
+
+so that F(i) is an isomorphism between F(A) and F(B), as required.
+
+## Ex. 2.10
+
+What is a functor between preorders?
+
+This maps a preorder to another preorder with (possibly) different
+objects but with the same structure; that is, if A ≤ B in a preorder
+P and F : Q ← P, then F(A) ≤ F(B).
+
+## Ex. 2.11
+
+For a category C, define
+
+    H(A, B)   = { f | f : A ← B in C }
+    H(f, h) g = f ∘ g ∘ h
+
+H is a bifunctor which maps a pair of objects to their set of arrows
+(hom set), and maps a pair of arrows to the function which "bookends"
+an arrow with them.
+
+So the objects of H's codomain category are the hom sets of C.  What
+are the morphisms?
+
+The composition law doesn't seem to hold?
+
+H(f, g) (H(h, k) i) = H(f, g) (h . i . k)
+                    = f . h . i . k . g
+                    = (f . h) . i . (k . g)
+                    = H(f . h, k . g) i
+
+(After doing some searching.)  This is because H is contravariant in
+its first argument and covariant in its second; equivalently,
+H : Cop × C → Set.
+
+H is the "hom bifunctor" of C.
+
+## Ex. 2.12
+
+tree A ::= tip A | bin (tree A, tree A)
+
+Considered as a functor, tree : Fun ← Fun takes a set A to the set of
+binary trees over A.  What does it do on morphisms?
+
+For f : B ← A,
+
+    tree f : tree B ← tree A
+    tree f (tip a)   = tip (f a)
+    tree f (bin s t) = bin (tree f s) (tree f t)
+
+The first functor property,
+
+    tree id = id,
+
+is almost immediate by induction.  For the second, we reason as
+follows.
+
+For tips, we have
+
+    tree (f ∘ g) (tip a) = tip (f (g a))
+                         = tree f (tip (g a))
+                         = (tree f ∘ tree g) (tip a),
+
+which establishes the case.  For trees of the form (bin s t), assume
+that the result holds for s and t.  Then:
+
+    tree (f ∘ g) (bin s t)
+
+  =   { tree.2 }
+
+    bin (tree (f ∘ g) s) (tree (f ∘ g) t)
+
+  =   { hypothesis }
+
+    bin ((tree f ∘ tree g) s) ((tree f ∘ tree g) t)
+
+  =   { tree.2 }
+
+    (tree f ∘ tree g) (bin s t)
+
+as required. ∎
+
+## Ex. 2.14
+
+What are the functors in the naturality condition for swap?
+
+The equation was (g × f) ∘ swap = swap ∘ (f × g).
+
+                swap
+        C × A ←—————— A × C
+          |             |
+    g × f |             | f × g
+          ↓             ↓
+        D × B ←—————— B × D
+                swap
+
+We can describe the (bi)functor on the left side of the diagram as
+(×′), given by
+
+    A ×′ B = B × A
+    f ×′ g = g × f
+
+So the natural transformation is swap : (_×′_) ← (_×_).
+
+## Ex. 2.15
+
+τ_A : P A ← A
+τ_A a = {a}
+
+NTS: τ is a natural transformation P ← id.
+
+For all objects A, B and morphism f : A ← B, does the following
+commute?
+
+             τ_A
+       P A ←—————— A
+        |          |
+    P f |          | f
+        ↓          ↓
+       P B ←—————— B
+             τ_B
+
+Yes, since { f a } and { f x | x ∈ { a } } are the same subsets of B.
+
+Do we also have the natural trans. Jτ : JE ← id ?
+
+        Jτ : JP ← Jid ≡ JP ← J
+
+              Jτ_A
+       JP A ←—————— J A
+         |           |
+    JP f |           | J f
+         ↓           ↓
+       JP B ←—————— J B
+              Jτ_B
+
+We know (p. 35) that Jτ is natural, so this commutes.  We need to
+determine whether JP ← J is equivalent to JE ← id.
+
+From p. 32, we know that P = EJ.  Thus,
+JP ← J ≡ JEJ ← J ≡η JE ← id, as required.
+
+Diagram TODO.
+
+## Ex. 2.16
+
+cp : ∀α . listr (P α) → P (listr α)
+cp [x₁, x₂, ..., xₙ] = { [a₁, a₂, ..., aₙ] | ∀i ∈ [1, n] : aᵢ ∈ xᵢ }
+
+Informally, cp takes a (right) list of subsets of A to the set of
+lists with elements drawn in order from those subsets.  The functors
+involved are listr P and P listr.
+
+                      cp_A
+          P listr A ←—————— listr P A
+              |               |
+    P listr f |               | listr P f
+              ↓               ↓
+          P listr B ←—————— listr P B
+                      cp_B
+
+Does this commute?  For arbitrary f : B ← A and
+[x₁, x₂, ..., xₙ] ∈ listr (P A), we have
+
+  P (listr f) (cp [x₁, x₂, ..., xₙ])
+=   { P on arrows }
+  { listr f as | as ∈ cp [x₁, x₂, ..., xₙ] }
+=   { cp.1 }
+  { listr f as | as ∈ { [a₁, a₂, ..., aₙ] | ∀i ∈ [1, n] : aᵢ ∈ xᵢ } }
+=   { compactify }
+  { listr f [a₁, a₂, ..., aₙ] | ∀i ∈ [1, n] : aᵢ ∈ xᵢ }
+=   { listr f def. }
+  { [f a₁, f a₂, ..., f aₙ] | ∀i ∈ [1, n] : aᵢ ∈ xᵢ }
+=   { naturality of listr, P (TODO: formalize) }
+  { [a₁, a₂, ..., aₙ] | ∀i ∈ [1, n] : aᵢ ∈ ((P f) xᵢ) }
+=   { cp.1 }
+  cp [(P f) x₁, (P f) x₂, ..., (P f) xₙ]
+=   { listr on arrows }
+  cp (listr (P f) [x₁, x₂, ..., xₙ]),
+
+as required.  This is rather informal.  The "TODO" step uses the
+notion that drawing a list from a collection of sets xss after
+applying f to all of the elements of those sets is equivalent to
+drawing a list from the sets xss, then applying listr f to the
+result.
+
+## Ex. 2.17
+
+             φ_HA
+       F A ←—————— G (H A)
+        |             |
+    F f |             | G (H f)
+        ↓             ↓
+       F B ←—————— G (H B)
+             φ_HB
+
+Clearly φ is a natural trans. of type F ← GH.  We also are given
+that (φH)_A = φ_HA, that is
+
+           H
+     H A ←————— A
+      |         ||
+    φ |         ||
+      ↓         ||
+     F A ←————— A
+         φ_HA
+
+So we must have that H = GH, and thus H = id.  φ ∘ id = φ, so φH is
+a natural transformation.
+
+## Ex. 2.18
+
+We can generalize listr : Fun ← Fun to a functor Par ← Par by defining
+
+    (listr f) x = ⊥ if ∃a ∈ x . f x = ⊥
+
+For each set A, we have a morphism head : A ← listr A in Par.  Is head
+a natural transformation id ← listr ?
+
+The diagram is
+
+         head_A
+      A ←——————— listr A
+      |            |
+    f |            | listr f
+      ↓            ↓
+      B ←——————— listr B
+         head_B
+
+or f ∘ head ≟ head ∘ listr f.  Let's assume that we have a list [a₁, a₂]
+and that f a₁ = b but f a₂ = ⊥.  Then
+
+    f (head [a₁, a₂]) = f a₁ = b
+
+but
+
+    head (listr f [a₁, a₂]) = head ⊥ = ⊥
+
+So the naturality does not hold of head.
+
+## Ex. 2.20
+
+An element of A is an arrow e : A ← 1 (where 1 is a terminal object).
+
+(a) NTS: Any element is constant.
+
+Let e : A ← 1 be an element and let f, g : 1 ← B be arbitrary arrows.
+Since 1 is terminal, we must have that f = !_B = g, so e ∘ f = e ∘ g,
+i.e. e is constant. ∎
+
+(b) NTS: Assuming that B (an object) has at least one element, any
+    constant arrow c : A ← B can be factored as e ∘ !_B for some
+    element e of A.
+
+        !_B
+    B —————→ 1
+    ||       |
+    ||       | e
+    ||       ↓
+    B —————→ A
+        c
+
+If we define e = c b, we have a constant arrow e ∘ !_B : A ← B which
+selects the same element of A as does c.
+
+## Ex. 2.21
+
+An object A is called empty if the only arrows with target A are
+¡_A : A ← 0 (where 0 is an initial object) and id_A.
+
+The empty object of Fun is the empty set (which is also initial).
+Similarly for Rel.
+
+In Fun × Fun, any object of the form (A × ∅) or (∅ × B) is empty.
+
+## Ex. 2.22
+
+A preorder-as-category with a terminal object has an upper bound, i.e.
+there is an element e such that a ≤ e for all elements a of the
+preorder.
+
+## Ex. 2.23
+
+If categories C and D have terminal objects, clearly C × D does as
+well; for every object (A, B), there is an arrow (!_A, !_B) : (1_C,
+1_D) ← (A, B), so (1_C, 1_D) is terminal.  Dually, if C and D have
+initial objects, then for every object (a, b) in C × D there is an
+arrow (¡_A, ¡_B) : (A, B) ← (0_A, 0_B), so (0_A, 0_B) is initial.
+
+## Ex. 2.24
+
+If C and D (categories) have terminal objects, what is the terminal
+object in C^D (the category of functors A ← B)?
+
+A terminal object in C^D is a functor F1 such that, for any other
+functor G : C ← D, there is a natural transformation !_G : F1 ← G.
+We know what kinds of functors have this property; namely, the
+constant functors:
+
+            const A
+          A ←—————— G A
+          |          |
+    K_A f |          | G f
+          ↓          ↓
+          A ←—————— G B
+            const A
+
+So, for any object A ∈ C, the constant functor K_A is terminal.
+
+How does this relate to the terminal objects of C and D?
+
+## Ex. 2.25
+
+Products in the category derived from the partial order (ℕ, ≤)
+correspond to meets.  The product m × n gives the meet of m, n,
+which may here be interpreted as the greatest lower bound.  m × n
+has arrows to both m and n, and, for all p with arrows to m and to
+n (meaning p ≤ m ∧ p ≤ n in our partial order), we have an arrow
+m × n ← p (meaning p ≤ glb(m, n)).
+
+Dually, coproducts here correspond to joins, which are least upper
+bounds in the partial order setting.
+
+## Ex. 2.27
+
+Prove the exchange law:
+
+    ⟨[f, g], [h, k]⟩ = [⟨f, h⟩, ⟨g, k⟩]
+
+This must follow from the universal properties of product and
+coproduct, but here's the straightforward point-wise proof.
+
+The types match:
+
+     f : B ← A  g : B ← C     h : D ← A  k : D ← C
+     --------------------     --------------------
+      [f, g] : B ← A + C        [h, k] : D ← A + C
+    -----------------------------------------------
+          ⟨[f, g], [h, k]⟩ : B × D ← A + C
+
+     f : B ← A  h : D ← A     g : B ← C  k : D ← C
+     --------------------     --------------------
+      ⟨f, h⟩ : B × D ← A       ⟨g, k⟩ : B × D ← C
+    -----------------------------------------------
+          [⟨f, h⟩, ⟨g, k⟩] : B × D ← A + C
+
+We can show that the two are equal by case analysis on the
+A + C argument.  Case inl:
+
+  ⟨[f, g], [h, k]⟩ (inl a)
+=   { split def. }
+  ([f, g] (inl a), [h, k] (inl a))
+=   { either.1 }
+  (f a, h a)
+=   { split def. }
+  ⟨f, h⟩ a
+=   { either.1 }
+  [⟨f, h⟩, ⟨g, k⟩] (inl a)
+
+which establishes the case.  Case inr:
+
+  ⟨[f, g], [h, k]⟩ (inr c)
+=   { split def. }
+  ([f, g] (inr c), [h, k] (inr c))
+=   { either.2 }
+  (g c, k c)
+=   { split def. }
+  ⟨g, k⟩ c
+=   { either.2 }
+  [⟨f, h⟩, ⟨g, k⟩] (inr c)
+
+as required. ∎
+
+## Ex. 2.28
+
+Let A × B be a product in Fun.  The projections outl, outr are epic
+iff A and B are non-empty (basic set theory), but not in general.
+For a coproduct A + B, the injections inl, inr are monic regardless
+of the choice of A and B; each a ∈ will correspond to a single element
+(inl a) ∈ A + B, and similarly for each b.
+
+Does this contradict duality?  I'm not entirely sure what this
+question means.
+
+## Ex. 2.33
+
+What is the initial algebra of the identity functor?
+
+id : A ← I A is pretty much the only identity algebra available to us.
+
+If f is any I-algebra B ← I B, then we must solve the following for α:
+
+    ([f]) ∘ α = f ∘ ([f])
+
+Let's assume that A is initial, that α = id, and that ([f]) = ¡_B, the
+unique morphism B ← A, for any f.  This works out type-wise, but does
+it hold that
+
+    ¡_B = f ∘ ¡_B
+
+for any identity-algebra f?  Yes, this makes sense, given what we
+said about identity algebras.  It's a little fuzzy, though.
+
+So, if we have a category C with an initial object, then the identity
+functor I : C ← C has an initial algebra.
+
+## Ex. 2.34
+
+Let α : T ← F T be the initial algebra of F.  NTS: If m : T → A and
+m′ : A → T (for some A) and m′ ∘ m = id_T, then m is a catamorphism.
+
+Define f = m ∘ α ∘ F m′.  Then, by functorality of F,
+
+    f ∘ F m
+  = m ∘ α ∘ F m′ ∘ F m
+  = m ∘ α ∘ F (m′ ∘ m)
+  = m ∘ α ∘ F id
+  = m ∘ α ∘ id
+  = m ∘ α,
+
+showing that m = ([f]), i.e. m is a catamorphism. ∎
+
+## Ex. 2.35
+
+NTS: ([f ∘ g]) = f ∘ ([g ∘ F f]).
+
+This is basically just a matter of type inference:
+
+If f : A → B, then F f : F A → F B.  Since both f ∘ g and g ∘ F f are
+defined, we must have that g : F B → A, so that f ∘ g : F B → B is an
+F-algebra.
+
+Applying cata fusion, we have
+
+    f ∘ ([g ∘ F f]) = ([h]) ⇐ f ∘ g ∘ F f = h ∘ F f
+
+for some F-algebra h : F B → B.  This hold for h = f ∘ g. ∎
+
+The diagram makes all of this quite clear, but is hard to textify.
+
+## Ex. 2.36
+
+Let α : T ← F T be the initial algebra of F.  NTS: If f : A ← T, then
+f = outl ∘ ([g]) for some g.
+
+Proof: Define
+
+    ([g]) : A × T ← T
+    ([g]) = ⟨f, id⟩
+
+and define g : A × T ← F (A × T) by the homomorphism equation
+
+    g ∘ F ([g]) = ([g]) ∘ α
+
+Then, by product cancellation, outl ∘ ([g]) = f, as required. ∎
+
+This assumes, of course, that the product A × T is defined.  But the
+proposition makes no sense if it isn't.
+
+## Ex. 2.38
+
+What is the meaning of a type T with a base functor of type
+F : (D × C) → C ?  What is the type of the functor T?
+
+Why are the arguments D, C lexically swapped?
+
+If T is given by
+
+    T X = F (X, T X),
+
+then we have that T is an endofunctor D → C.
+
+Let D = Fun × Fun, C = Fun, and
+
+    F ((f, g), h) = f + g
+
+Given the definitions above, T would be a functor Fun × Fun → Fun;
+using the definition of type functors (2.13), its behavior on maps
+is given by
+
+    T (f, g) = ⦇α ∘ F((f, g), id)⦈
+             = ⦇α ∘ (f + g)⦈
+
+Can we say more about this type functor?
+
+# Chapter 3
+
+## Ex. 3.1
+
+Let F X = 1 + (N × X).  NTS:
+
+    ⟨[zero, plus] ∘ F outl, [zero, succ ∘ outr] ∘ F outr⟩
+      = [zeros, pluss]
+
+where
+
+    zeros : A → ⟨ℕ, ℕ⟩
+    zeros = ⟨zero, zero⟩                    (zeros.1)
+
+    pluss : (ℕ × (ℕ × ℕ)) → ℕ × ℕ
+    pluss (a, (b, n)) = (a + b, n + 1)
+
+This is the missing piece in the chapter's example.  It is
+motivated by
+
+    sum     = ⦇[zero, plus]⦈
+    length  = ⦇[zero, succ ∘ outr]⦈
+
+    average = div ∘ ⟨sum, length⟩,
+
+on which the banana-split theorem yields
+
+    div ∘ ⟨sum, length⟩ =
+      div ∘ ⦇⟨[zero, plus] ∘ F outl, [zero, succ ∘ outr] ∘ F outr⟩⦈
+
+where F is the base functor above.
+
+Though given only implicitly, we know that
+
+    F f = id + id × f
+
+First, we need a point-free def. of pluss:
+
+    pluss = ⟨plus ∘ (id × outl), succ ∘ outr ∘ outr⟩   (pluss.1)
+
+Then, we reason
+
+    ⟨[zero, plus] ∘ F outl, [zero, succ ∘ outr] ∘ F outr⟩
+
+  =   { F on arrows }
+
+    ⟨[zero, plus] ∘ (id + id × outl), [zero, succ ∘ outr] ∘ (id + id × outr)⟩
+
+  =   { + absorption, id natural }
+
+    ⟨[zero, plus ∘ (id × outl)], [zero, succ ∘ outr ∘ (id × outr)]⟩
+
+  =   { × cancellation }
+
+    ⟨[zero, plus ∘ (id × outl)], [zero, succ ∘ outr ∘ outr]⟩
+
+  =   { exchange law }
+
+    [⟨zero, zero⟩, ⟨plus ∘ (id × outl), succ ∘ outr ∘ outr⟩]
+
+  =   { zeros.1, pluss.1 }
+
+    [zeros, pluss]
+
+∎
+
+## Ex. 3.2
+
+Let F : C ← C be a functor, where C is a category with products.
+Define φ = ⟨F outl, F outr⟩.  Between what functors is φ a natural
+transformation?
+
+We define the functors G, H by
+
+    G (f, g) = F (f × g)
+    H (f, g) = F f × F g
+
+with the obvious behavior on objects.  It is immediate by
+composition that G is a bifunctor; that H is as well is worth
+showing:
+
+    H (id, id) = F id × G id = id × id = id
+
+    H (f ∘ h, g ∘ k)
+
+  =   { H on arrows }
+
+    F (f ∘ h) × F (g ∘ k)
+
+  =   { F functor }
+
+    (F f ∘ F h) × (F g × F k)
+
+  =   { × bifunctor }
+
+    (F f × F g) ∘ (F h × F k)
+
+  =   { H on arrows }
+
+    H (f, g) ∘ H (h, k)
+
+We have the diagram:
+
+                     φ
+         H(A, B) ←———————— G(A, B)
+            |                 |
+    H(f, g) |                 | G(f, g)
+            ↓                 ↓
+         H(C, D) ←———————— G(C, D)
+                     φ
+
+This commutes, since:
+
+    H (f, g) ∘ φ
+
+  =   { H on arrows, φ def. }
+
+    (F f × F g) ∘ ⟨F outl, F outr⟩
+
+  =   { × absorption }
+
+    ⟨F f ∘ F outl, F g ∘ F outr⟩
+
+  =   { F functor }
+
+    ⟨F (f ∘ outl), F (g ∘ outr)⟩
+
+  =   { projections/× }
+
+    ⟨F (outl ∘ (f × g)), F (outr ∘ (f × g))⟩
+
+  =   { F functor }
+
+    ⟨F outl ∘ F (f × g), F outr ∘ F (f × g)⟩
+
+  =   { × fusion }
+
+    ⟨F outl, F outr⟩ ∘ F (f × g)
+
+  =   { φ def., G on arrows }
+
+    φ ∘ G (f, g)
+
+## Ex. 3.3
+
+Define a linear-time version of
+
+    steep nil           = true
+    steep (cons (a, x)) = a > sum x ∧ steep x
+
+This is a paramorphism.  Nothing covered in the book so far gives us
+a way to reason about these; presumably that's the next exercise.
+
+Here's the paramorphism:
+
+    steep = outr ∘ ⦇[⟨zero, true⟩], f]⦈
+
+    f (x, (s, b)) = (x + s, b ∧ (x > s))
+
+It's possible to formulate f point-free, but it's hairy.  A simpler
+paramorphism example would have been nice.
+
+## Ex. 3.4
+
+The solution to this is most of Meertens's _Paramorphisms_ paper.  The
+given condition, g ∘ F ⟨f, ⦇h⦈⟩ = f ∘ α is sufficient to make the
+"tupled map" ⟨f, ⦇h⦈⟩ identical to the catamorphism ⦇k⦈, where
+
+    k : F (A × B) → A × B
+    k = ⟨g, h ∘ F outr⟩
+
+The derivation of this property (adapted from Meertens's version):
+
+    ⟨f, ⦇h⦈⟩ = ⦇⟨g, h ∘ F outr⟩⦈
+  ≡   { catamorphism def. }
+    ⟨g, h ∘ F outr⟩ ∘ F ⟨f, ⦇h⦈⟩ = ⟨f, ⦇h⦈⟩ ∘ α
+  ≡   { × fusion }
+    ⟨g ∘ F ⟨f, ⦇h⦈⟩, h ∘ F outr ∘ F ⟨f, ⦇h⦈⟩⟩ = ⟨f ∘ α, ⦇h⦈ ∘ α⟩
+  ≡   { F functor properties }
+    ⟨g ∘ F ⟨f, ⦇h⦈⟩, h ∘ F (outr ∘ ⟨f, ⦇h⦈⟩)⟩ = ⟨f ∘ α, ⦇h⦈ ∘ α⟩
+  ≡   { catamorphism def. }
+    ⟨g ∘ F ⟨f, ⦇h⦈⟩, h ∘ F (outr ∘ ⟨f, ⦇h⦈⟩)⟩ = ⟨f ∘ α, h ∘ F ⦇h⦈⟩
+  ≡   { × cancellation }
+    ⟨g ∘ F ⟨f, ⦇h⦈⟩, h ∘ F ⦇h⦈⟩ = ⟨f ∘ α, h ∘ F ⦇h⦈⟩
+  ≡   { split bijective: ⟨f, g⟩ = ⟨f, h⟩ ⇒ g = h }
+    g ∘ F ⟨f, ⦇h⦈⟩ = f ∘ α
+
+It follows that outl ∘ ⦇k⦈ = f.
+
+All of this comes from Meertens's paper, which includes several other
+very interesting results.  I was not able to derive k myself, but at
+least it got me to go make sense of the paper.
+
+## Ex. 3.5
+
+    tree A ::= null | node (tree A, A, tree A)
+
+Balance condition:
+
+    [balanced null             = true]
+     balanced (node (s, _, t)) = let { n = size s; m = size t } in
+                                   1/3 ≤ n/(n + m + 1) ≤ 2/3 ∧
+                                     balanced s ∧ balanced t
+
+Derive an efficient (paramorphism) implementation.
+
+For slightly more symmetry, I'm going to write the base functor of the
+tree type as
+
+    F(A, B) = 1 + A × (B × B)
+    F(f, g) = id + f × both g
+
+    both g = g × g
+
+For brevity,
+
+    F B = F(A, B)
+    F f = F(id, f)
+
+balanced has a somewhat torturous point-free definition:
+
+    balanced ∘ null = true
+    balanced ∘ node = and ∘
+      ⟨and ∘ (balanced × balanced), in-range ∘ (size × size)⟩ ∘ outr
+
+    in-range : ℕ × ℕ → Bool
+    in-range = and ∘ ⟨ge-1/3, le-2/3⟩ ∘ div ∘ ⟨outl, succ ∘ plus⟩
+
+    ge-1/3 = ≥ ∘ ⟨id, const 1/3⟩
+    le-2/3 = ≤ ∘ ⟨id, const 2/3⟩
+
+First of all, we need the size function, defined directly by
+
+    size : T A → ℕ
+    size ∘ null = zero
+    size ∘ node = succ ∘ plus ∘ (size × size) ∘ outr
+
+(i.e. size (a, (s, t)) = 1 + size s + size t in pointwise terms.)
+Clearly this is a catamorphism:
+
+                       α
+               T A ←———————— F (T A)
+                |               |
+    ⦇ψ⦈ = size  |               | F ⦇ψ⦈
+                ↓               ↓
+                ℕ ←——————————  F ℕ
+                       ψ
+
+The catamorphism universal property and the definition of the initial
+algebra α gives us the equations:
+
+    size ∘ null = ψ ∘ F size ∘ inl
+    size ∘ node = ψ ∘ F size ∘ inr
+
+The solution to the first:
+
+    size ∘ null = ψ ∘ F size ∘ inl
+
+  ≡   { size.1, F def. }
+
+    zero = ψ ∘ (id + id × (size × size)) ∘ inl
+
+  ≡   { + cancellation, id }
+
+    zero = ψ ∘ inl
+
+The second:
+
+    size ∘ node = ψ ∘ F size ∘ inr
+
+  ≡   { size.2, F def. }
+
+    succ ∘ plus ∘ (size × size) ∘ outr = ψ ∘ (id + id × (size × size)) ∘ inr
+
+  ≡   { + cancellation, id }
+
+    succ ∘ plus ∘ (size × size) ∘ outr = ψ ∘ inr ∘ id × (size × size)
+
+  ≡   { f ∘ outr = outr ∘ (g ∘ f) for all well-typed f, g }
+
+    succ ∘ plus ∘ outr ∘ id × (size × size) = ψ ∘ inr ∘ id × (size × size)
+
+  ≡   { cong }
+
+    succ ∘ plus ∘ outr = ψ ∘ inr
+
+So we have
+
+    size = ⦇ψ⦈ = ⦇[zero, succ ∘ plus ∘ outr]⦈
+
+Now we can work on balanced.
+
+                    α
+            T A ←———————— F (T A)
+             |              |
+    balanced |              | F ⟨balanced, ⦇ψ⦈⟩
+             ↓              ↓
+             2 ←——————— F (2 × ℕ)
+                    φ
+
+We define (using Meertens's para-brackets):
+
+    balanced = ⟦φ⟧
+             = outl ∘ ⦇χ⦈
+
+    χ = ⟨φ, ψ ∘ F outr⟩
+
+We've already derived ψ, so now we need to define φ.  Following the
+structure of F, we have two equations.  The first is solved quickly:
+
+    φ ∘ F ⟨balanced, ⦇ψ⦈⟩ ∘ inl = balanced ∘ [null, node] ∘ inl
+
+  ≡   { + cancellation, F def. }
+
+    φ ∘ id + id × both ⟨balanced, ⦇ψ⦈⟩ ∘ inl = balanced ∘ null
+
+  ≡   { + cancellation }
+
+    φ ∘ inl ∘ id = balanced ∘ null
+
+  ≡   { id/∘, balanced.1 }
+
+    φ ∘ inl = true
+
+The second:
+
+    balanced ∘ [null, node] ∘ inr = φ ∘ F ⟨balanced, ⦇ψ⦈⟩ ∘ inr
+
+  ≡   { F def., + cancellation (both sides) }
+
+    balanced ∘ node = φ ∘ inr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+
+  ≡   { balanced.2 }
+
+    and ∘ ⟨and ∘ both balanced), in-range ∘ both size⟩ ∘ outr
+      = φ ∘ inr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+
+  ≡   { × absorption }
+
+    and ∘ and × in-range ∘ ⟨both balanced, both size⟩ ∘ outr
+      = φ ∘ inr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+
+  ≡   { f ∘ outr = outr ∘ (g ∘ f) }
+
+    and ∘ and × in-range ∘ outr ∘ id × ⟨both balanced, both size⟩
+      = φ ∘ inr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+
+  ≡   { define trans =
+                 ⟨⟨outl ∘ outl, outl ∘ outr⟩, ⟨outr ∘ outl, outr ∘ outr⟩⟩ }
+
+    and ∘ and × in-range ∘ outr ∘ id × trans ∘ id × both ⟨balanced, size⟩
+      = φ ∘ inr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+
+  ≡   { ⦇ψ⦈ = size }
+
+    and ∘ and × in-range ∘ outr ∘ id × trans ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+      = φ ∘ inr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+
+  ≡   { × cancellation }
+
+    and ∘ and × in-range ∘ trans ∘ outr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+      = φ ∘ inr ∘ id × both ⟨balanced, ⦇ψ⦈⟩
+
+  ≡   { cong. }
+
+    and ∘ and × in-range ∘ trans ∘ outr = φ ∘ inr
+
+Putting both together (via the universal property of +), we have
+
+    φ = [true, and ∘ and × in-range ∘ trans ∘ outr]
+
+We have a solution for χ, which we simplify:
+
+    χ = ⟨[true, and ∘ and × in-range ∘ trans ∘ outr],
+         [zero, succ ∘ plus ∘ outr] ∘ F outr⟩
+
+      =   { F def. }
+
+        ⟨[true, and ∘ and × in-range ∘ trans ∘ outr],
+         [zero, succ ∘ plus ∘ outr] ∘ id + id × both outr⟩
+
+      =   { + absorption, id/∘ }
+
+        ⟨[true, and ∘ and × in-range ∘ trans ∘ outr],
+         [zero, succ ∘ plus ∘ outr ∘ id × both outr]⟩
+
+      =   { exchange }
+
+        [⟨true, zero⟩, ⟨and ∘ and × in-range ∘ trans ∘ outr,
+                        succ ∘ plus ∘ outr ∘ id × both outr⟩]
+
+      =   { × cancellation }
+
+        [⟨true, zero⟩, ⟨and ∘ and × in-range ∘ trans ∘ outr,
+                        succ ∘ plus ∘ both outr ∘ outr⟩]
+
+In pointwise terms,
+
+    χ null                   = (True, 0)
+    χ (node a (b, n) (c, m)) = (b ∧ c ∧ in-range n m, n + m + 1)
+
+## Ex. 3.6
+
+Write preds as a paramorphism.
+
+    preds : ℕ → list ℕ
+    preds n = [n, n - 1, ..., 1]
+
+We define preds recursively by
+
+    preds ∘ zero = null
+    preds ∘ succ = cons ∘ ⟨succ, preds⟩
+
+The base functor is given by
+
+    F A = 1 + A
+    F f = id + f
+
+It has the initial algebra
+
+    α : F ℕ → ℕ
+    α = [zero, succ]
+
+The diagram:
+
+                 α
+          ℕ ←—————————— F ℕ
+          |              |
+    preds |              | F ⟨preds, ⦇ψ⦈⟩
+          ↓              ↓
+        list ℕ ←——— F (list ℕ × ℕ)
+                φ
+
+The types above give us
+
+    ψ : F ℕ → ℕ
+
+If we can define φ and ψ such that the above commutes, then, by the
+universal property of paramorphism, we'll have
+
+    preds = outl ∘ ⦇ψ⦈
+        χ = ⟨φ, ψ ∘ F outr⟩
+
+As a diagram,
+
+               α
+        ℕ ←—————————— F ℕ
+        |              |
+    ⦇χ⦈ |              | F ⦇χ⦈
+        ↓              ↓
+    list ℕ × ℕ ←— F (list ℕ × ℕ)
+        |      χ       ‖
+   outl |              ‖
+        ↓              ‖
+    list ℕ ←————— F (list ℕ × ℕ)
+              φ
+
+We calculate from the left disjunct:
+
+    φ ∘ F ⟨preds, ⦇ψ⦈⟩ ∘ inl = preds ∘ α ∘ inl
+
+  ≡   { α def., + cancellation }
+
+    φ ∘ F ⟨preds, ⦇ψ⦈⟩ ∘ inl = preds ∘ zero
+
+  ≡   { F def. }
+
+    φ ∘ id + ⟨preds, ⦇ψ⦈⟩ ∘ inl = preds ∘ zero
+
+  ≡   { + cancellation, id/∘ }
+
+    φ ∘ inl = preds ∘ zero
+
+  ≡   { preds.1 }
+
+    φ ∘ inl = null
+
+which gives the first disjunct of φ.  The second:
+
+    φ ∘ F ⟨preds, ⦇ψ⦈⟩ ∘ inr = preds ∘ α ∘ inr
+
+  ≡   { α def., + cancellation }
+
+    φ ∘ F ⟨preds, ⦇ψ⦈⟩ ∘ inr = preds ∘ succ
+
+  ≡   { F def. }
+
+    φ ∘ id + ⟨preds, ⦇ψ⦈⟩ ∘ inr = preds ∘ succ
+
+  ≡   { + cancellation }
+
+    φ ∘ inr ∘ ⟨preds, ⦇ψ⦈⟩ = preds ∘ succ
+
+  ≡   { preds.2 }
+
+    φ ∘ inr ∘ ⟨preds, ⦇ψ⦈⟩ = cons ∘ ⟨succ, preds⟩
+
+  ≡   { flip ≡df outr × outl }
+
+    φ ∘ inr ∘ ⟨preds, ⦇ψ⦈⟩ = cons ∘ flip ∘ ⟨preds, succ⟩
+
+  ≡   { provisionally define ⦇ψ⦈ = succ }
+
+    φ ∘ inr ∘ ⟨preds, ⦇ψ⦈⟩ = cons ∘ flip ∘ ⟨preds, ⦇ψ⦈⟩
+
+  ≡   { cong. }
+
+    φ ∘ inr = cons ∘ flip
+
+I believe that we can generalize ψ to α.  We have calculated
+
+    φ = [null, cons ∘ flip]
+    ψ = α
+
+and of course ⦇ψ⦈ = ⦇α⦈ = id.  So:
+
+    χ = ⟨φ, α ∘ F outr⟩
+
+      = ⟨[null, cons ∘ flip], [zero, succ] ∘ F outr⟩
+
+      =   { F def. }
+
+        ⟨[null, cons ∘ flip], [zero, succ] ∘ id + outr⟩
+
+      =   { + absorption, id/∘ }
+
+        ⟨[null, cons ∘ flip], [zero, succ ∘ outr]⟩
+
+      =   { exchange }
+
+        [⟨null, zero⟩, ⟨cons ∘ flip, succ ∘ outr⟩]
+
+and thus
+
+    preds = outl ∘ ⦇[⟨null, zero⟩, ⟨cons ∘ flip, succ ∘ outr⟩]⦈
+
+This completes the synthesis of the paramorphic version of preds.
