@@ -128,7 +128,7 @@ sublists; e.g.</p>
 <p>This can be specified by the recursive equation</p>
 
 <pre><code>windows k []        = []
-    windows k (x ∷ xs′) = take k (x ∷ xs′) ∷ windows k xs′
+windows k (x ∷ xs′) = take k (x ∷ xs′) ∷ windows k xs′
 </code></pre>
 
 <p>Since the second equation depends on xs′, windows cannot be
@@ -137,9 +137,9 @@ define it as an anamorphism:</p>
 
 <pre><code>windows k = unfoldr (frame k)
 
-    frame : Int → [α] → Maybe ([α], [α])
-    frame _ []       = Nothing
-    frame k (x : xs) = Just (take k (x : xs), xs)
+frame : Int → [α] → Maybe ([α], [α])
+frame _ []       = Nothing
+frame k (x : xs) = Just (take k (x : xs), xs)
 </code></pre>
 
 <p>So we can express all of the &ldquo;frame overlaps&rdquo; of interest by</p>
@@ -155,7 +155,7 @@ define it as an anamorphism:</p>
 <p>where</p>
 
 <pre><code>count : (a → Bool) → [a] → ℕ;
-    count p ≡ length ∘ filter p
+count p ≡ length ∘ filter p
 </code></pre>
 
 <p>which can be expressed easily as the catamorphism</p>
@@ -191,7 +191,7 @@ hylo f e g b = case g b of {
 h = hylo f e g b ⇔ h = foldr f e . unfoldr g b
 </pre></code>
 
-Thus
+<p>Thus</p>
 
 <pre><code>
   depth_changes
