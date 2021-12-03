@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 2</title>
+</head>
+<body>
+
+<h1>Part 1</h1>
+
+<p>We are given three different commands:</p>
+
+<ul>
+<li><p>forward X increases the horizontal position by X units.</p></li>
+<li><p>down X increases the depth by X units.</p></li>
+<li><p>up X decreases the depth by X units.</p></li>
+</ul>
+
+
+<p>Given a long list of these, we are to compute the final depth and
+horizontal position of the submarine.  This is straightforward.
+We define a type of movement commands:</p>
+
+<pre><code>data Command = Forward Int | Down Int | Up Int
+</code></pre>
+
+<p>We then have a function move : [Command] → ⟨Int, Int⟩.  Clearly
+this is a catmorphism:</p>
+
+<pre><code>move = foldr f ⟨0, 0⟩
+
+f : Command → (Int × Int) → (Int × Int);
+f (Forward k) ⟨x, y⟩ = ⟨x + k, y⟩;
+f (Down k)    ⟨x, y⟩ = ⟨x, y + k⟩;
+f (Up k)      ⟨x, y⟩ = ⟨x, y - k⟩
+</code></pre>
+
+<p>We&rsquo;d like to replace the right fold with a (strict) left fold.
+Define:</p>
+
+<pre><code>f′ = flip f
+</code></pre>
+
+<p>Then by some quick informal calculations, we have that f associates
+with f′:</p>
+
+<pre><code>f c ⟨0, 0⟩ = f′ ⟨0, 0⟩ c
+
+f c (f′ ⟨x, y⟩ d) = f c ⟨x + k, y + l⟩
+                  = ⟨x + k + m, y + l + n⟩
+                  = f′ ⟨x + k, y + l⟩ c
+                  = f′ (f d ⟨x + k, y + l⟩) c
+</code></pre>
+
+<p>So we can write</p>
+
+<pre><code>move = foldl f′ ⟨0, 0⟩
+</code></pre>
+
+<h1>Part 2</h1>
+
+<p>The commands are the same, but their meaning is a bit different now.</p>
+
+<ul>
+<li><p>down X increases your aim by X units.</p></li>
+<li><p>up X decreases your aim by X units.</p></li>
+<li><p>forward X does two things:</p>
+
+<ul>
+<li>It increases your horizontal position by X units.</li>
+<li>It increases your depth by your aim multiplied by X.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>So now the 2D state of the submarine is only altered by a forward
+command, and the sub has an additional state variable, the aim.
+aim also starts at 0.</p>
+
+<p>The skeleton of the program is mostly the same.  We need a new
+gene [const ⟨0, 0, 0⟩, g] for the move catamorphism.  We&rsquo;re only
+interested in the final horizontal position and depth, though, so
+we extract the initial two elements of the result with an aux.
+function.</p>
+
+<pre><code>move : [Command] → (Int × Int)
+move = first_two ∘ foldl g ⟨0, 0, 0⟩
+
+first_two ⟨x, y, _⟩ = ⟨x, y⟩
+
+g : (Int × Int × Int) → Command → (Int × Int × Int)
+g ⟨x, y, a⟩ (Forward k) = ⟨x + k, y + (a * k), a⟩
+g ⟨x, y, a⟩ (Down k)    = ⟨x, y, a + k⟩
+g ⟨x, y, a⟩ (Up k)      = ⟨x, y, a - k⟩
+</code></pre>
+
+<p>The new gene component g simply encodes the semantics for the
+movement commands.</p>
+
+</body>
+</html>
