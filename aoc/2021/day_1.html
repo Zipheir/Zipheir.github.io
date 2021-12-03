@@ -1,0 +1,241 @@
+<html>
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 1</title>
+</head>
+<body>
+
+<h1>Part 1</h1>
+
+<p>Scan a list of positive integers and give the number of times an
+integer was greater than the previous one.</p>
+
+<p>Ignoring input, this is a function [ℕ] → ℕ, so it is clearly
+expressible as some sort of fold.</p>
+
+<p>We could express it recursively by</p>
+
+<pre><code>depth_changes : [ℕ] → ℕ
+depth_changes []            = 0
+depth_changes [_]           = 0
+depth_changes (x ∷ x′ ∷ xs) = if x &lt; x&rsquo;;
+                                then 1 + (depth_changes xs);
+                                else depth_changes xs
+</code></pre>
+
+<p>Clearly we&rsquo;re pairing up each element with its successor, so why
+not factor this as some function count_changes : [(ℕ × ℕ)] → ℕ
+after a zip?</p>
+
+<pre><code>
+depth_changes xs = count_changes ∘ zip xs (tail xs)
+</pre></code>
+
+<p>The recursive equations for count_changes are straightforward:</p>
+
+<pre><code>count_changes []            = 0
+count_changes (⟨m, n⟩ ∷ ps) = if m &lt; n;
+                                then 1 + count_changes ps
+                                else count_changes ps
+</code></pre>
+
+<p>This gives the following left fold:</p>
+
+<pre><code>count_changes = foldl f 0
+
+f c ⟨m, n⟩ = if m &lt; n then c + 1 else c
+</code></pre>
+
+<p>Alternatively, we could write this as a tupled fold.  The base
+value could include the first number of the list to avoid introducing
+a spurious change, but here we take a slightly dumber approach: just
+subtract 1 from the result.</p>
+
+<pre><code>depth_changes ns = (fst (foldl compare ⟨0, 0⟩ ns)) - 1
+
+compare : (ℕ × ℕ) → ℕ → (ℕ × ℕ)
+compare ⟨c, m⟩ n = if m &lt; n; then (c + 1, n); else (c, n)
+</code></pre>
+
+<p>I think I prefer the zipped version, which decomposes the problem
+nicely.</p>
+
+<h2>Part 2</h2>
+
+<p>Now we want to compute the number of times the sum over a sliding
+window increases.  In the following example, we compare the sum over
+the "A window" with the sum over the B window, and so on.</p>
+
+<pre><code>
+199  A
+200  A B
+208  A B C
+210    B C D
+200  E   C D
+207  E F   D
+240  E F G
+269    F G H
+260      G H
+263        H
+</pre></code>
+
+<p>The sums over two consecutive windows are always given by</p>
+
+<pre><code>w1 = x1 + x2 + x3
+w2 = x2 + x3 + x4
+</code></pre>
+
+<p>and thus w1 &lt; w2 iff x1 &lt; x4.  So we can avoid repetitive summing by
+reading the list in groups of four and comparing the first and last
+element of each group.</p>
+
+<p>The following reflects an inaccurate understanding of the problem:</p>
+
+<blockquote>
+We can express this by window_changes = count compare_w ∘ chunks 4
+where chunks divides a list into sublists of length ≤ 4.
+</blockquote>
+
+<p>This gives a much lower answer for test input, because these windows
+aren&rsquo;t sliding!  Using this strategy, you get this variation on the
+above diagram:</p>
+
+<pre><code>
+199  A
+200  A B
+208  A B
+210    B
+200  C
+207  C D
+240  C D
+269    D
+260  E
+263  E F
+...
+</pre></code>
+
+<p>We can devise a &ldquo;sliding&rdquo; list-chunker which gives successive
+sublists; e.g.</p>
+
+<pre><code>windows 3 [a, b, c, d, e]
+    = [[a, b, c], [b, c, d], [c, d, e]]
+</code></pre>
+
+<p>This can be specified by the recursive equation</p>
+
+<pre><code>windows k []        = []
+    windows k (x ∷ xs′) = take k (x ∷ xs′) ∷ windows k xs′
+</code></pre>
+
+<p>Since the second equation depends on xs′, windows cannot be
+defined directly as a catamorphism.  It&rsquo;s more interesting to
+define it as an anamorphism:</p>
+
+<pre><code>windows k = unfoldr (frame k)
+
+    frame : Int → [α] → Maybe ([α], [α])
+    frame _ []       = Nothing
+    frame k (x : xs) = Just (take k (x : xs), xs)
+</code></pre>
+
+<p>So we can express all of the &ldquo;frame overlaps&rdquo; of interest by</p>
+
+<pre><code>filter length_four ∘ windows 4
+</code></pre>
+
+<p>Then it&rsquo;s a matter of counting the increasing sums:</p>
+
+<pre><code>count compare_w ∘ filter length_four ∘ windows 4
+</code></pre>
+
+<p>where</p>
+
+<pre><code>count : (a → Bool) → [a] → ℕ;
+    count p ≡ length ∘ filter p
+</code></pre>
+
+<p>which can be expressed easily as the catamorphism</p>
+
+<pre><code>count p = foldl (λc x → if p x; then c + 1; else c) 0
+</code></pre>
+
+<p>This produces the right answer, but since we have a hylomorphism, it
+would be nice to &ldquo;deforest&rdquo; it through fusion.  The first step is to
+fuse the count and filter; instead of using cata fusion, though, we
+simply combine the predicates compare_w and length_four&ndash;since, in
+fact, the domain of compare_w is restricted to length-four lists,
+anyway:</p>
+
+<pre><code>
+increasing : [ℕ] → Bool
+increasing ns = (length ns == 4) ∧ (ns !! 0 < ns !! 3)
+</pre></code>
+
+<p>So now the hylomorphism is clear.  We have the hylo operator for
+single-argument unfold as</p>
+
+<pre><code>
+hylo : (α → β → β) → β → (γ → Maybe (α, γ)) → γ → β
+hylo f e g b = case g b of {
+                 Nothing → e;
+                 Just (x, b′) → f x (hylo f e g b′) }
+</pre></code>
+
+<p>characterized by</p>
+
+<pre><code>
+h = hylo f e g b ⇔ h = foldr f e . unfoldr g b
+</pre></code>
+
+Thus
+
+<pre><code>
+  depth_changes
+
+=   { result above }
+
+  count increasing ∘ windows 4
+
+=   { count def., switching to foldr (first duality theorem) }
+
+  foldr (λc ns → if increasing ns; then c + 1; else c) 0 ∘ windows 4
+
+=   { windows def. }
+
+  foldr (λc ns → if increasing ns; then c + 1; else c) 0
+    ∘ unfoldr (frame k)
+
+=   { hylo u.p. }
+
+  hylo (λc ns → if increasing ns; then c + 1; else c)
+       0
+       (frame k)
+</pre></code>
+
+<p>where the base element b is the list argument.  We can actually
+generalize this as a "counting" hylo which counts the number of
+notionally-constructed type that satisfy a given predicate:</p>
+
+<pre><code>
+count_hylo p g b = hylo (λc x → if p x; then c + 1; else c) 0 g b
+</pre></code>
+
+<p>Then we have</p>
+
+<pre><code>
+depth_changes = count_hylo increasing (frame k)
+</pre></code>
+
+<p>This is pretty compact.  It does use space bounded by 4n for an input
+n-list, and clearly there are going to be list-scanning solutions
+which use constant space.  It&rsquo;s worth considering how we could derive
+those.</p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
