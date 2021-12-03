@@ -200,7 +200,7 @@ h = hylo f e g b ⇔ h = foldr f e . unfoldr g b
 
   count increasing ∘ windows 4
 
-=   { count def., switching to foldr (first duality theorem) }
+=   { count def., switching to foldr (second duality theorem) }
 
   foldr (λc ns → if increasing ns; then c + 1; else c) 0 ∘ windows 4
 
