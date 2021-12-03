@@ -33,7 +33,7 @@ after a zip?</p>
 
 <pre><code>
 depth_changes xs = count_changes ∘ zip xs (tail xs)
-</pre></code>
+</code></pre>
 
 <p>The recursive equations for count_changes are straightforward:</p>
 
@@ -81,7 +81,7 @@ the "A window" with the sum over the B window, and so on.</p>
 269    F G H
 260      G H
 263        H
-</pre></code>
+</code></pre>
 
 <p>The sums over two consecutive windows are always given by</p>
 
@@ -116,7 +116,7 @@ above diagram:</p>
 260  E
 263  E F
 ...
-</pre></code>
+</code></pre>
 
 <p>We can devise a &ldquo;sliding&rdquo; list-chunker which gives successive
 sublists; e.g.</p>
@@ -172,8 +172,8 @@ anyway:</p>
 
 <pre><code>
 increasing : [ℕ] → Bool
-increasing ns = (length ns == 4) ∧ (ns !! 0 < ns !! 3)
-</pre></code>
+increasing ns = (length ns == 4) ∧ (ns !! 0 &lt; ns !! 3)
+</code></pre>
 
 <p>So now the hylomorphism is clear.  We have the hylo operator for
 single-argument unfold as</p>
@@ -183,13 +183,13 @@ hylo : (α → β → β) → β → (γ → Maybe (α, γ)) → γ → β
 hylo f e g b = case g b of {
                  Nothing → e;
                  Just (x, b′) → f x (hylo f e g b′) }
-</pre></code>
+</code></pre>
 
 <p>characterized by</p>
 
 <pre><code>
 h = hylo f e g b ⇔ h = foldr f e . unfoldr g b
-</pre></code>
+</code></pre>
 
 <p>Thus</p>
 
@@ -214,7 +214,7 @@ h = hylo f e g b ⇔ h = foldr f e . unfoldr g b
   hylo (λc ns → if increasing ns; then c + 1; else c)
        0
        (frame k)
-</pre></code>
+</code></pre>
 
 <p>where the base element b is the list argument.  We can actually
 generalize this as a "counting" hylo which counts the number of
@@ -222,13 +222,13 @@ notionally-constructed type that satisfy a given predicate:</p>
 
 <pre><code>
 count_hylo p g b = hylo (λc x → if p x; then c + 1; else c) 0 g b
-</pre></code>
+</code></pre>
 
 <p>Then we have</p>
 
 <pre><code>
 depth_changes = count_hylo increasing (frame k)
-</pre></code>
+</code></pre>
 
 <p>This is pretty compact.  It does use space bounded by 4n for an input
 n-list, and clearly there are going to be list-scanning solutions
