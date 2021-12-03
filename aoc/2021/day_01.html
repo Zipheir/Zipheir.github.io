@@ -32,7 +32,7 @@ not factor this as some function count_changes : [(ℕ × ℕ)] → ℕ
 after a zip?</p>
 
 <pre><code>
-depth_changes xs = count_changes ∘ zip xs (tail xs)
+depth_changes xs = count_changes (zip xs (tail xs))
 </code></pre>
 
 <p>The recursive equations for count_changes are straightforward:</p>
