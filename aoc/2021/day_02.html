@@ -28,7 +28,7 @@ We define a type of movement commands:</p>
 </code></pre>
 
 <p>We then have a function move : [Command] → ⟨Int, Int⟩.  Clearly
-this is a catmorphism:</p>
+this is a catamorphism:</p>
 
 <pre><code>move = foldr f ⟨0, 0⟩
 
