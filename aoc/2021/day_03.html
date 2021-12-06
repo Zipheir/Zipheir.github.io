@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 3</title>
+</head>
+<body>
+
+<h1>Part 1</h1>
+
+<p>We are given a &ldquo;report&rdquo; consisting of a list of fixed-length
+bitstrings and are asked to compute the &ldquo;gamma rate&rdquo; and &ldquo;epsilon
+rate&rdquo; as follows.  The first of these numbers is found by
+concatenating the most common bits in each position over all the
+bitstrings; the second, by concatenating the least common bits.</p>
+
+<p>This is an interesting one.  The first approach that comes to mind
+is simple counting.  The simplest case is for determining the most
+common bit of &ldquo;single column&rdquo; input—i.e. a list of bits:</p>
+
+<pre><code>mcb : [ℕ] → ℕ
+mcb bs = let { ⟨k, m⟩ = count_bits bs } in
+           if k ≤ m then 0; else 1
+
+count_bits : [ℕ] → (ℕ × ℕ)
+count_bits = foldl (λ ⟨k, m⟩ b → if b == 0
+                                    then ⟨k + 1, m⟩
+                                    else ⟨k, m + 1⟩)
+                   ⟨0, 0⟩
+</code></pre>
+
+<p>It&rsquo;s a run-of-the-mill induction to show that <em>mcb</em> gives us the most
+common bit for a list of bits.  Now we want a version which can handle
+k-bitstrings.  We specify this in terms of a variant of <em>count_bits</em>:</p>
+
+<pre><code>-- Specialized to position k
+bpₖ : [[ℕ]] → (ℕ × ℕ)
+bpₖ = foldr (λ bs ⟨m, n⟩ →
+                if (bs !! k) == 0
+                   then ⟨m + 1, n⟩
+                   else ⟨m, n + 1⟩)
+             ⟨0, 0⟩
+
+cbs : [[ℕ]] → ⟨ℕ, ℕ, …⟩
+cbs bss = let { ⟨p₁, p₂, …, pₖ⟩ = ⟨bp₀ bss, …, bpₖ bss⟩
+                com ⟨m, n⟩      = if m ≤ n then 0 else 1 }
+            in ⟨com p₁, com p₂, …, com pₖ⟩
+</code></pre>
+
+<p>The heart of <em>cbs</em> is the split, ⟨<em>bp</em>₀, …, <em>bp</em>ₖ⟩, of type
+[[ℕ]] → ((ℕ × ℕ) × ⋯ × (ℕ × ℕ)).  This applies <em>bp</em> for each position
+to compute the number of occurrences of each bit.  This is
+specification; as an algorithm, it involves traversing the input k
+times.  Converting this to a single traversal is an application of the
+k-ary banana split theorem (see Fokkinga 1991 or many books on
+functional programming from the Richard Bird/Phil Wadler sphere of
+influence), which states that</p>
+
+<pre><code>⟨⦇h₁⦈, …, ⦇hₖ⦈⟩ = ⦇⟨h₁ ∘ F π₁, …, hₖ ∘ F πₖ⟩⦈
+</code></pre>
+
+<p>where the πs are the projections for a k-ary product.
+The type functor in question (underlying [[ℕ]]) is given on objects
+and arrows by:</p>
+
+<pre><code>F A = 1 + ([ℕ] × A)
+F f = id + (id × f)
+</code></pre>
+
+<p>Regarding each <em>bp</em>ᵢ as a catamorphism with &ldquo;gene&rdquo; <em>h</em>ᵢ, we have:</p>
+
+<pre><code>  ⟨bp₀, …, bpₖ⟩
+= ⟨⦇h₁⦈, …, ⦇hₖ⦈⟩
+= ⦇⟨h₁ ∘ F π₁, …, hₖ ∘ F πₖ⟩⦈
+= ⦇⟨h₁ ∘ (id + (id × π₁)), …, hₖ ∘ F (id + (id × πₖ))⟩⦈
+</code></pre>
+
+<p>We don&rsquo;t have to write out the gene <em>h</em>ᵢ in point-free form to
+know that it is of the form [const ⟨0, 0⟩, fᵢ] (the <em>bp</em>ᵢ differ only
+in their &ldquo;inductive case combinator&rdquo;).  Absorbing all of the
+coproducts in the expression above thus gives:</p>
+
+<pre><code>= ⦇⟨ [const ⟨0, 0⟩, f₁ ∘ (id × π₁)], …,
+     [const ⟨0, 0⟩, fₖ ∘ (id × πₖ)] ⟩⦈
+</code></pre>
+
+<p>The usual tactic when applying banana split is now to use the exchange
+law to convert the &ldquo;split&rdquo; gene to an &ldquo;either&rdquo; gene, thus putting the
+catamorphism into a form that follows the type&rsquo;s underlying bifunctor.
+That&rsquo;s indeed the next step; we obtain:</p>
+
+<pre><code>= ⦇[⟨const ⟨0, 0⟩, …, const ⟨0, 0⟩⟩,
+    ⟨f₁ ∘ (id × π₁), …, fₖ ∘ (id × πₖ)⟩]⦈
+</code></pre>
+
+<p>This catamorphism has type [[ℕ]] → ((ℕ × ℕ) × ⋯ × (ℕ × ℕ)).  Each <em>f</em>ᵢ
+has type ([ℕ] × ((ℕ × ℕ) × ⋯ × (ℕ × ℕ))) → (ℕ × ℕ), and can be given
+in point-wise terms as follows:</p>
+
+<pre><code>fᵢ (bs, v) = let { ⟨m, n⟩ = πᵢ v } in
+               if (bs !! i) == 0
+                  then ⟨m + 1, n⟩
+                  else ⟨m, n + 1⟩
+</code></pre>
+
+<p>Expressing the whole thing as a point-wise fold is now easy.  We use
+a variant of <em>f</em>₁ called <em>count_pos</em> which abstracts over the index:</p>
+
+<pre><code>bp_all : [[ℕ]] → ((ℕ × ℕ) × ⋯ × (ℕ × ℕ))
+bp_all = foldr ⟨count_pos 0, …, count_pos k⟩
+               ⟨⟨0, 0⟩, …, ⟨0, 0⟩⟩
+
+count_pos : ℕ → [ℕ] → ((ℕ × ℕ) × ⋯ × (ℕ × ℕ)) → (ℕ × ℕ)
+count_pos i bs v = let { ⟨m, n⟩ = v !! i } in
+                     if (bs !! i) == 0
+                        then ⟨m + 1, n⟩
+                        else ⟨m, n + 1⟩
+</code></pre>
+
+<p>In most programming languages, we&rsquo;ll have to use some kind of vector
+(rather than kosher tuple) type to implement <em>count_pos</em>.  We&rsquo;ll use
+that here to present the entire program for the 5-word case, lazily
+assuming we can treat k-vectors and k-tuples as the same type:</p>
+
+<pre><code>bp_all : [[ℕ]] → Vector 5 (ℕ × ℕ)
+bp_all = foldr ⟨add_pos 0, add_pos 1, add_pos 2, add_pos 3,
+                add_pos 4⟩
+               (make_vector 5 ⟨0, 0⟩)
+
+add_pos : ℕ → [ℕ] → Vector 5 (ℕ × ℕ) → (ℕ × ℕ)
+add_pos i bs v = let { ⟨m, n⟩ = v !! i } in
+                   if (bs !! i) == 0
+                      then ⟨m + 1, n⟩
+                      else ⟨m, n + 1⟩
+
+cbs : [[ℕ]] → Vector 5 ℕ
+cbs bss = let { ⟨p₀, p₁, p₂, p₃, p₄⟩ = bp_all bss
+                com ⟨m, n⟩      = if m ≤ n then 0 else 1 }
+            in ⟨com p₀, com p₁, com p₂, comp p₃, com p₄⟩
+</code></pre>
+
+<p>The repetitive indexed names can be eliminated by replacing the split
+of <em>count_pos i</em> by a vector traversal.  The specification is just</p>
+
+<pre><code>add_all_pos : [ℕ] → Vector k (ℕ × ℕ) → Vector k (ℕ × ℕ)
+add_all_pos bs v = ⟨add_pos 0 bs v, …, add_pos k bs v⟩
+</code></pre>
+
+<p>For dealing with the realities of an array type, we may want to adapt
+<em>add_all_pos</em> to take a single pair instead of the entire array.</p>
+
+<p>In addition to this simplification, we&rsquo;d also want to replace <em>foldr</em>
+with a strict left fold; we can make this replacement thanks to the
+second fold duality theorem (right, er, left as an exercise).</p>
+
+<p><a href="src/common_bits_1.hs">Executable Haskell implementation</a></p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
