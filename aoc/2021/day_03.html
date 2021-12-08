@@ -158,6 +158,172 @@ second fold duality theorem (right, er, left as an exercise).</p>
 
 <p><a href="src/common_bits_1.hs">Executable Haskell implementation</a></p>
 
+<p><a href="src/03_input.hs">Short Haskellized test puzzle input</a></p>
+
+<h1>Part 2</h1>
+
+<p>(Note: In this part, bitstrings are referred to as words, and Word
+is used as a type synonym for [ℕ].)</p>
+
+<p>To search for the solution values of this part, we have to
+progressively refine our collection of words according to certain
+criteria, evaluated at successive positions in the words.  Each of
+the two criteria requires us to find the most common bit in the
+current position among the remaining words:</p>
+
+<blockquote><p>To find oxygen generator rating, determine the most common value
+(0 or 1) in the current bit position, and keep only numbers with
+that bit in that position. If 0 and 1 are equally common, keep
+values with a 1 in the position being considered.</p>
+
+<p>To find CO2 scrubber rating, determine the least common value
+(0 or 1) in the current bit position, and keep only numbers with
+that bit in that position. If 0 and 1 are equally common, keep
+values with a 0 in the position being considered.</p>
+</blockquote>
+
+<p>One way to tackle this is to see it in terms of function iteration,
+in which the wordlist is recursively refined until we have a singleton
+list.  However, this involves lots of list index bookkeeping.  A
+simpler approach is to think of these functions as building the rating
+value up a bit at a time.</p>
+
+<p>Each time we determine the most common bit for a position, we learn
+which bit will be in that position in the final rating.  Since we
+proceed from left to right, we only need consider the first bit of
+all the words at each step:</p>
+
+<pre><code>Index 0
+       ↓
+Words: 0 0 1 0 0
+       1 1 1 1 0
+       1 0 1 1 0
+       ...
+
+Most common bit: 1
+
+--------
+
+Index 1:
+       ↓
+Words: 1 1 1 0
+       0 1 1 0
+       ...
+
+Most common bit: 0
+
+--------
+
+Index 2:
+       ↓
+Words: 1 1 0
+       ...
+
+Most common bit: 1
+</code></pre>
+
+<p>And so on.  Here&rsquo;s the specification:</p>
+
+<pre><code>oxygen_rating : [Word] → Word
+oxygen_rating ws =
+  if null (head ws)
+     then []
+     else
+       let { b = com 0 ws } in
+         b ∷ build_rating (reduce b ws)
+
+reduce : ℕ → [Word] → [Word]
+reduce b = fmap tail ∘ filter (λ(c:_) → b == c)
+</code></pre>
+
+<p>We use <em>null</em> ∘ <em>head</em> as our termination condition, since the words
+are all of the same length.  The <em>reduce</em> function filters for words
+with the correct bit, then takes the tail of all of them.</p>
+
+<p><em>com i ws</em> is a function that gives the most common bit in position
+<em>i</em> in the list <em>ws</em>, breaking ties in favor of 1.</p>
+
+<p>Clearly this is a list unfold (anamorphism).  We use Gibbons&rsquo;s version
+of the unfold universal property:</p>
+
+<pre><code>h = unfold p f g
+  ⇔
+h b = if p b then [] else (f b) ∷ (h (g b))
+</code></pre>
+
+<p>Applying this to the above gives</p>
+
+<pre><code>p = null ∘ head
+f = com 0
+g = λws → reduce (com 0 ws) ws
+</code></pre>
+
+<p>Computing <em>com 0 ws</em> twice is wasteful; this is an excellent use for
+&ldquo;single-function unfold&rdquo; (called <em>unfoldr</em> in Haskell).</p>
+
+<pre><code>oxygen_rating = unfoldr gen_and_filter
+
+gen_and_filter : [Word] → Maybe (ℕ × [Word])
+gen_and_filter ([] ∷ _) = Nothing
+gen_and_filter ws       = let { b = com 0 ws } in
+                            Just ⟨b, reduce b ws⟩
+</code></pre>
+
+<p>This works for computing the oxygen rating, but we get an interesting
+bug when trying to adapt it to find the scrubber rating:</p>
+
+<pre><code>scrubber_rating = unfoldr gen_and_filter′
+
+gen_and_filter′ : [Word] → Maybe (ℕ × [Word])
+gen_and_filter′ ([] ∷ _) = Nothing
+gen_and_filter′ ws       = let { b = bit_flip (com 0 ws) } in
+                            Just ⟨b, reduce b ws⟩
+</code></pre>
+
+<p>This goes off the rails and creates an infinite list.  Why?  We end up
+filtering out the last word in the list, because now we&rsquo;re keeping only
+those (sub)words that begin with the <em>least common</em> bit.</p>
+
+<pre><code>reduce 0 [[1,0]] ⇒ []
+</code></pre>
+
+<p>This wasn&rsquo;t a problem with <em>oxygen_rating</em>, since filtering for the
+words with the most common bit in head position will leave a singleton
+list unchanged:</p>
+
+<pre><code>reduce 1 [[1,0]] ⇒ [[1,0]]
+</code></pre>
+
+<p>This makes me think that the recursive refinement approach might be
+preferable, after all—we need that final word!  But we can fix
+<em>scrubber_rating</em> by generalizing to an apomorphism, which allows
+us to tack a &ldquo;tail&rdquo; onto the unfolded list.  Here&rsquo;s the <em>apo</em>
+function (based on Gibbons 2003):</p>
+
+<pre><code>apo : (β → Maybe (α × (β + [α]))) → β → [α]
+apo f b = case f b of
+            Nothing            → []
+            Just (x, Left v)   → x ∷ (apo f v)
+            Just (x, Right xs) → xs ∷ xs
+</code></pre>
+
+<p>We then have:</p>
+
+<pre><code>scrubber_rating = apo gen_and_filter″
+
+gen_and_filter″ : [Word] → Maybe (ℕ × ([Word] + Word))
+gen_and_filter″ ([] ∷ _)        = Nothing
+gen_and_filter″ ((b ∷ bs) ∷ []) = Just (b, Right bs)
+gen_and_filter″ ws              =
+  let { b = bit_flip (com 0 ws) } in
+    Just ⟨b, Left (reduce b ws)⟩
+</code></pre>
+
+<p>All that&rsquo;s left is to convert the words to decimal numbers and to
+multiply them.</p>
+
+<p><a href="src/ratings.hs">Executable Haskell implementation</a></p>
+
 <p><a href="index.html">AOC 2021 Index</a></p>
 
 <p><a href="/index.html">Home</a></p>
