@@ -16,8 +16,9 @@ some information about the (first) winning board.</p>
 
 <p>As usual, let&rsquo;s ignore parsing completely.</p>
 
-<p>Boards are our fundamental type of interest.  Here are some important
-board operations:</p>
+<p>Boards are our fundamental type of interest, but we&rsquo;ll ignore
+the question of what they &ldquo;are&rdquo; and focus on the operations
+we expect them to support:</p>
 
 <pre><code>mark   : Board → ℕ → Board
 marked : Board → ℕ → Bool
@@ -140,8 +141,9 @@ won   : Board → Bool
 won b = any rcmarked (rows b) ∨ any rcmarked (cols b)
 </code></pre>
 
-<p><em>all</em> and <em>any</em> are library functions that determine whether all/any
-of the elements of a collection satisfy a predicate.  Both are folds,
+<p><em>any</em> is a library function analogous to <em>all</em> that
+determines whether any
+of the elements of a collection satisfy a predicate.  <em>any</em> is a fold,
 so we could rewrite <em>rows</em> and <em>cols</em> as unfolds and apply hylomorphism
 fusion, but this seems good enough for now.</p>
 
