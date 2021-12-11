@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 4</title>
+</head>
+<body>
+<h1>Part 1</h1>
+
+<p>Today we&rsquo;re writing a bingo simulator.  We&rsquo;re given a (large!)
+collection of boards and a stream of numbers and asked to find
+some information about the (first) winning board.</p>
+
+<p>As usual, let&rsquo;s ignore parsing completely.</p>
+
+<p>Boards are our fundamental type of interest.  Here are some important
+board operations:</p>
+
+<pre><code>mark   : Board → ℕ → Board
+marked : Board → ℕ → Bool
+won    : Board → Bool
+</code></pre>
+
+<p><em>mark b k</em> takes the board
+<em>b</em> to a board in which <em>k</em> is marked; if <em>k</em> is not present in <em>b</em>,
+a board identical to <em>b</em> is returned.  We require of <em>mark</em> that:</p>
+
+<pre><code>mark (mark b k) l = mark (mark b l) k
+full b ⇒ mark b k = b
+</code></pre>
+
+<p>for all <em>k</em>, <em>l</em> ∈ ℕ; <em>full b</em> is true iff every element of <em>b</em> is
+marked.</p>
+
+<p><em>marked b k</em> is true iff <em>k</em> both occurs and is marked in <em>b</em>.</p>
+
+<pre><code>    occurs b k  ⇒  is_marked (mark b k) k
+¬ (occurs b k)  ⇒  ¬ (is_marked b k)
+</code></pre>
+
+<p><em>won b</em> determines whether <em>b</em> is a winning board—that is, whether it
+contains a marked row or column.</p>
+
+<p>This is all we need to describe the game:</p>
+
+<pre><code>bingo : [Board] → [ℕ] → ℕ
+
+bingo bs (n ∷ ns) = let bs′ = marks n bs in
+                      case winner bs′ of
+                        Nothing → bingo bs′ ns
+                        Just b  → score b n
+
+marks : ℕ → [Board] → [Board]
+marks k = list (λ b → mark b k)
+
+winner : [Board] → Maybe Board
+winner = find won
+
+score : Board -&gt; Int -&gt; Int
+</code></pre>
+
+<p><em>bingo bs ns</em> runs through the drawn numbers, represented by the list
+<em>ns</em>, marking each in <em>bs</em> to create the next game state.  It
+terminates when there is a winning board among the <em>bs</em> (we will
+assume that this winner is unique) and computes the score of the
+winning board.  (The recursion in <em>bingo</em> is slightly funky, since a
+board&rsquo;s score depends on the last number called.) The helper functions
+<em>marks</em> and <em>winner</em> mark a given number in a list of boards and find
+a winning board in a list, respectively.  <em>winner</em> makes use of the
+<em>find</em> function, which gives Just the first element of a list
+satisfying a predicate, or Nothing if no such element exists.</p>
+
+<p>(Another way to go about this is to follow the compositionality of
+multiplayer bingo.  Since an <em>n</em>-player game of bingo is just <em>n</em>
+games of solo bingo, we could specify <em>bingo</em> in terms of a function
+<em>solo</em> : Board → [ℕ] → Bool, specialized to each of the boards.
+<em>solo</em> can be described as a fold, leading to another use of the
+banana split theorem on <em>bingo</em>.  The details are muddier than what
+we have above, though.)</p>
+
+<p>We leave the scoring function for last and go on to talking about
+Boards in more detail.  We consider them as a parametric type T:</p>
+
+<pre><code>Board = T (ℕ × Bool)
+</code></pre>
+
+<p>We expect that T is a functor and also foldable, in the sense of
+the Haskell typeclass.  <em>mark</em> is then easy:</p>
+
+<pre><code>mark b k = board (mark1 k) b
+
+mark1 : ℕ → (ℕ × Bool) → (ℕ × Bool)
+mark1 k (x, mk) = if k == x then (x, True) else (x, mk)
+</code></pre>
+
+<p><em>marked</em> is also easy, using the function
+<em>any</em> : Foldable τ ⇒ (α → Bool) → τ α → Bool which returns
+whether some element of a parametric foldable type satisfies a
+predicate:</p>
+
+<pre><code>marked b k = any (λ (x, mk) → k == x ∧ mk) b
+</code></pre>
+
+<p>Of course, the predicate <em>won</em> involves the most work.  In this case,
+we need to attach a notion of 2-D geometric structure to boards.  We
+want an additional constraint on the Board type:</p>
+
+<pre><code>S ⊆ (ℕ × ℕ) ⇒ Board ≅ S → (ℕ × Bool)
+</code></pre>
+
+<p>That is, a board is isomorphic to a function from pairs of naturals
+in a certain range to possibly-marked naturals.  (I&rsquo;m sure there&rsquo;s a
+lighter-weight constraint.)  This means that we can easily check if
+a given &ldquo;cell&rdquo; is marked; we specify:</p>
+
+<pre><code>cell_marked : Board → S → Bool
+cell_marked b = π₂ ∘ (to b)
+</code></pre>
+
+<p>where <em>to</em> : Board → (S → (ℕ × Bool)) is a witness of the Board/map
+isomorphism.  We can extract the rows or columns of a Board with
+bound (k, k):</p>
+
+<pre><code>rows : Board → [[(ℕ × Bool)]]
+rows b = [[ (to b) (i, j) | j ← [0..k]] | i ← [0..k]]
+
+cols : Board → [[(ℕ × Bool)]]
+cols b = [[ (to b) (i, j) | i ← [0..k]] | j ← [0..k]]]
+</code></pre>
+
+<p>We have a winning board if a row or a column is entirely marked:</p>
+
+<pre><code>rcmarked : [(ℕ × Bool)] → Bool
+rcmarked = all π₂
+
+won   : Board → Bool
+won b = any rcmarked (rows b) ∨ any rcmarked (cols b)
+</code></pre>
+
+<p><em>all</em> and <em>any</em> are library functions that determine whether all/any
+of the elements of a collection satisfy a predicate.  Both are folds,
+so we could rewrite <em>rows</em> and <em>cols</em> as unfolds and apply hylomorphism
+fusion, but this seems good enough for now.</p>
+
+<p>Now it&rsquo;s just a matter of scoring the winning board.  According to the
+puzzle description, we score a board by summing all of its unmarked
+elements, then multiplying their sum by the last number called.
+Specify:</p>
+
+<pre><code>score b n = n * sum (unmarked b)
+
+unmarked : Board → [ℕ]
+unmarked = foldr cons_um []
+
+cons_um : (ℕ, Bool) → [ℕ] → [ℕ]
+cons_um (_, True)  ns = ns
+cons_um (n, False) ns = n ∷ ns
+</code></pre>
+
+<p>Any easy application of fold fusion gives us:</p>
+
+<pre><code>score b n = n * sum_um b
+
+sum_um : Board → ℕ
+sum_um = foldr add_um 0
+
+add_um (_, True)  n = n
+add_um (x, False) n = x + n
+</code></pre>
+
+<p><a href="src/bingo_1.hs">Executable Haskell solution</a></p>
+
+<p><a href="src/04_input.hs">Haskellized short test puzzle input</a></p>
+
+<h1>Part 2</h1>
+
+<p>(TODO)</p>
+
+<p>We&rsquo;re still playing bingo, but now we want to find the last board in
+our set that will win with the given numbers drawn.  We can&rsquo;t assume
+that every board will eventually win, so we will run the game to its
+conclusion (all boards filled, or no more numbers), then return the
+score of the most-recently-filled board.</p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
