@@ -74,14 +74,6 @@ a winning board in a list, respectively.  <em>winner</em> makes use of the
 <em>find</em> function, which gives Just the first element of a list
 satisfying a predicate, or Nothing if no such element exists.</p>
 
-<p>(Another way to go about this is to follow the compositionality of
-multiplayer bingo.  Since an <em>n</em>-player game of bingo is just <em>n</em>
-games of solo bingo, we could specify <em>bingo</em> in terms of a function
-<em>solo</em> : Board → [ℕ] → Bool, specialized to each of the boards.
-<em>solo</em> can be described as a fold, leading to another use of the
-banana split theorem on <em>bingo</em>.  The details are muddier than what
-we have above, though.)</p>
-
 <p>We leave the scoring function for last and go on to talking about
 Boards in more detail.  We consider them in terms of a parametric type T:</p>
 
