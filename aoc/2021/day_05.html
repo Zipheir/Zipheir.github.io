@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 5</title>
+</head>
+<body>
+<h1>Part 1</h1>
+
+<p>Given a collection of line segments, we are looking for points in a
+2-D space where at least two horizontal or vertical segments overlap.</p>
+
+<pre><code>Seg = ((ℕ × ℕ), (ℕ × ℕ))
+
+to_set : Seg → Set ℕ²
+</code></pre>
+
+<p>We can extract the vertical or horizontal segments of a set by simply
+comparing coordinates:</p>
+
+<pre><code>vertical : Seg → Bool
+vertical ((x₁, _), (x₂, _)) = x₁ == x₂
+
+horizontal : Seg → Bool
+horizontal ((_, y₁), (_, y₂)) = y₁ == y₂
+</code></pre>
+
+<p>Generating the set of points contained by a vertical or horizontal
+line segment is slightly convoluted, since the pairs describing the
+segment may not be ordered:</p>
+
+<pre><code>points : Seg → [(ℕ × ℕ)]
+point p = if vertical p
+             then points_v p
+             else if horizontal p
+                     then points_h p
+                     else error "diagonal segment"
+
+points_v ((x, y₁), (_, y₂)) =
+  let { maxy = max y₁ y₂ } in
+    unfold (λ y → y == maxy)
+           (λ y → (x, y))
+           (+ 1)
+           (min y₁ y₂)
+</code></pre>
+
+<p>Using Haskell-style list comprehensions, <em>points_v</em> can be written
+more compactly as:</p>
+
+<pre><code>points_v ((x, y₁), (_, y₂)) =
+  [ (x, y) | y &lt;- [min y₁ y₂ .. max y₁ y₂]]
+</code></pre>
+
+<p><em>points_h</em> is analogous.</p>
+
+<p>The overlapping points of two segments is then the intersection of
+the sets they denote.  Given a list of segments, the set of all
+overlapping points is then the union of all such intersections.</p>
+
+<pre><code>overlaps : Set ℕ² → [Set ℕ²] → Set ℕ²
+                            n
+μ(overlaps s [t₁, …, tₙ]) = U (μ(s) ∩ μ(tᵢ))
+                           i=1
+
+all_overlaps : Set (Set ℕ²) → Set ℕ²
+μ(all_overlaps ss) = U { μ(overlaps s ss) : s ∈ ss }
+</code></pre>
+
+<p>The value of <em>all_overlaps</em> on the given set of line segments is the
+solution.  Even taking into account the commutativity of intersection,
+though, this is expensive to compute: Θ(n²) in the number of sets.
+We can use arithmetic to quickly determine whether two segments
+intersect, of course, but we still have to do the same number of
+comparisons.</p>
+
+<p>As is common with AoC, it seems that the author has an imperative
+solution in mind.  In fact, the puzzle&rsquo;s example is described in a way
+that suggests such an approach, namely drawing all the segments on
+a 2-D canvas large enough to include all of their points, then
+traversing the canvas to find the overlaps.</p>
+
+<p>What is the meaning of this approach?  We can see this algorithm as
+counting the number of points that occur more than once in the disjoint
+union of all of the segments.  If S is this disjoint union, then the
+set T of overlap points is given by</p>
+
+<pre><code>T = { p : (p, s) ∈ S ∧ (p, t) ∈ S, s ≠ t }
+</code></pre>
+
+<p>The solution to the puzzle is then |T|.  Given some function</p>
+
+<pre><code>occurs : (ℕ × ℕ) → ℕ
+</code></pre>
+
+<p>which gives the number of times a point occurs in the disjoint union
+of all segments, we can also compute the answer by counting the number
+of points <em>p</em> in the union of segments for which <em>occurs p</em> > 1.  We
+need not traverse the disjoint union each time we evaluate <em>occurs p</em>;
+we can accumulate a point-to-number-of-occurrences dictionary in a
+single traversal of the disjoint union.  (Many fans of Perl-flavored
+imperative programming will recognize their favorite Swiss Army
+chainsaw in this approach.)</p>
+
+<p>We can easily obtain a list of all points in a list of segments:</p>
+
+<pre><code>all_points : [Seg] → [(ℕ × ℕ)]
+all_points = concat ∘ list points
+</code></pre>
+
+<p>From here, it&rsquo;s easy to construct a dictionary.  Many structural
+options will be available, but here&rsquo;s an example using the
+brain-dead-simple association list:</p>
+
+<pre><code>make_dict : [(ℕ × ℕ)] → [((ℕ × ℕ), ℕ)]
+make_dict = foldr (λ (x, y) ps →
+                     case assoc (x, y) ps of
+                       Nothing -&gt; ((x, y), 1) ∷ ps
+                       Just k  -&gt; update (x, y) (k + 1) ps)
+                  []
+
+-- Standard alist operations.
+assoc : α → [(α × β)] → Maybe β
+
+update : α → β → [(α × β)] → [(α × β)]
+
+point_dict : [Seg] → [((ℕ × ℕ), ℕ)]
+point_dict =
+  make_dict ∘ all_points ∘ filter (vertical ∨ horizontal)
+</code></pre>
+
+<h1>Part 2</h1>
+
+<p>This is identical to part 1, except that we now handle diagonal
+segments.  Fortunately, these are guaranteed to be &ldquo;at exactly
+45°&rdquo;.  Or, rather, at 45°, 135°, 225°, or 315°.  (Recall that the
+Y axis increases downward.)</p>
+
+<p>The point-set-generating function <em>points</em> has to be extended to
+handle two classes of diagonal segments: those with symmetrically
+increasing/decreasing X and Y coordinates (i.e. segments at 45° or at
+225°), and those with inversely increasing/decreasing coordinates
+(i.e. those at 135° or 315°).</p>
+
+<pre><code>points : Seg → [(ℕ × ℕ)]
+point p = if vertical p
+             then points_v p
+             else if horizontal p
+                     then points_h p
+                     else points_d p
+
+points_d : Seg → [(ℕ × ℕ)]
+points_d ((x₁, y₁), (x₂, y₂)) =
+  if x₁ &lt; x₂
+     if y₁ &lt; y₂
+        then sym_inc ((x₁, y₁), (x₂, y₂))   -- 45°
+        else dec_y ((x₁, y₁), (x₂, y₂))     -- 315°
+     else
+       if y₁ &lt; y₂
+          then dec_x ((x₁, y₁), (x₂, y₂))   -- 135°
+          else sym_inc ((x₂, y₂), (x₁, y₁)) -- 225°
+</code></pre>
+
+<p>The <em>sym_inc</em>, <em>dec_x</em>, and <em>dec_y</em> functions handle the various
+coordinate cases.  They&rsquo;re straightforward list-building functions
+similar to <em>points_v</em> above.</p>
+
+<p><a href="src/vents.hs">Executable Haskell solutions</a></p>
+
+<p><a href="src/05_input.hs">Haskellized short test puzzle input</a></p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
