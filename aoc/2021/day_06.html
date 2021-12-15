@@ -17,7 +17,7 @@ the lanternfish.  At the moment, the only thing that characterizes a
 fish is its &ldquo;internal timer&rdquo;, a natural number between 0 and 8 which
 tells us how many days we have until the fish reproduces:</p>
 
-<pre><code>Fish = ℕ
+<pre><code>type Fish = ℕ
 
 school_day : [Fish] → [Fish]
 </code></pre>
@@ -45,7 +45,7 @@ function-power application,</p>
 run_days n = power n school_day
 </code></pre>
 
-<p>where <em>power n f</em> = <em>f</em>ⁿ.</p>
+<p>where <em>power n f</em> = <em>fⁿ</em>.</p>
 
 <p>All that remains is to write <em>day</em>, which is just a matter of
 transcribing the informal semantics we&rsquo;re given.</p>
@@ -72,7 +72,7 @@ simple-but-enormous situation.</p>
 
 <p>Running the simulation of even the five-fish example for 256 days
 will give us billions of fish, so we clearly can&rsquo;t simulate the
-school in O(n) (in current population) space with existing computers.
+school in O(<em>n</em>) (in current population) space with existing computers.
 Instead, we can simply describe the system by a count of the fish at
 each timer stage, since they have no other properties and we&rsquo;re only
 interested in population size.</p>
