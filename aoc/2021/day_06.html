@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 6</title>
+</head>
+<body>
+<h1>Part 1</h1>
+
+<p>We are building a lanternfish simulator.  Each lanternfish is a
+little discrete automaton which reproduces under certain conditions.
+We have a whole collection of them, and each &ldquo;day&rdquo; is a step for all
+the lanternfish.  At the moment, the only thing that characterizes a
+fish is its &ldquo;internal timer&rdquo;, a natural number between 0 and 8 which
+tells us how many days we have until the fish reproduces:</p>
+
+<pre><code>Fish = ℕ
+
+school_day : [Fish] → [Fish]
+</code></pre>
+
+<p><em>school_day</em> steps a list of fish (i.e. their counters), adding any
+newly-spawned ones.  Since an individual fish can reproduce, the
+<em>day</em> function takes a single fish to either one or two fish (&ldquo;chain&rdquo;
+reproductions can&rsquo;t occur, since new lanternfish start at the maximum
+timer count).  For convenience, we use a list instead of a sum:</p>
+
+<pre><code>day : Fish → [Fish]
+</code></pre>
+
+<p>We then define</p>
+
+<pre><code>school_day = concat ∘ List day
+</code></pre>
+
+<p>Enthusiasts will recognize the list monad; we&rsquo;ll remember this detail
+for when things get more complicated in Part 2.  We want to be able
+to run our simulation for a given number of days; this is a classic
+function-power application,</p>
+
+<pre><code>run_days : ℕ → [Fish] → [Fish]
+run_days n = power n school_day
+</code></pre>
+
+<p>where <em>power n f</em> = <em>f</em>ⁿ.</p>
+
+<p>All that remains is to write <em>day</em>, which is just a matter of
+transcribing the informal semantics we&rsquo;re given.</p>
+
+<pre><code>day 0        = [6, 8]     -- reset, spawn
+day (Succ n) = [n]
+</code></pre>
+
+<p>The population size after 80 steps is given by</p>
+
+<pre><code>length ∘ run_days 80
+</code></pre>
+
+<p><a href="src/06_input.hs">Haskellized test puzzle input</a></p>
+
+<p><a href="src/fish_1.hs">Executable Haskell implementation</a></p>
+
+<h1>Part 2</h1>
+
+<p>Rather than giving us a more interesting system to simulate, Wastl
+has decided to try to melt our hardware.  I&rsquo;m disappointed, but it
+did give an opportunity to think about how to represent this
+simple-but-enormous situation.</p>
+
+<p>Running the simulation of even the five-fish example for 256 days
+will give us billions of fish, so we clearly can&rsquo;t simulate the
+school in O(n) (in current population) space with existing computers.
+Instead, we can simply describe the system by a count of the fish at
+each timer stage, since they have no other properties and we&rsquo;re only
+interested in population size.</p>
+
+<pre><code>type School = [ℕ]
+</code></pre>
+
+<p>(Treating a list as a 9-tuple, in this case.)  The initial state of
+the example would be, for example, [0, 1, 1, 2, 3, 0, 0, 0, 0].
+<em>school_day</em> is then:</p>
+
+<pre><code>school_day : School → School
+school_day [z, o, tw, th, fr, fv, sx, sv, e] =
+  [o, tw, th, fr, fv, sx, sv + z, e, z]
+</code></pre>
+
+<p>Ungainly though it is, this encodes in a single expression the same
+rules for the simulation as the previous program&rsquo;s <em>day</em>, etc.
+functions.  On each day, the population of fish at 0 (given by <em>z</em>)
+first drops to zero, the same number of fish &ldquo;come into being&rdquo; at
+6 and 8, then the existing populations &ldquo;shift down&rdquo; (&ldquo;ones&rdquo; become
+&ldquo;zeros&rdquo;, and so on).</p>
+
+<p>This allows us to describe the system in space independent of its
+size.  We have to convert the puzzle input (lists of fish-counters)
+to this population-count form; this is a simple but, again, ungainly
+fold, specified by</p>
+
+<pre><code>pop_count ns = [count (== 0) ns, …, count (== 8) ns]
+</code></pre>
+
+<p>This can be calculated with the banana split theorem, but the details
+are left to the hard-nosed (see my discussion of Day 3).  It&rsquo;s pretty
+easy to see how it works, I think.</p>
+
+<p>The solution is then given by:</p>
+
+<pre><code>sum ∘ power school_day 256 ∘ pop_count
+</code></pre>
+<p><a href="src/fish_2.hs">Executable Haskell implementation</a></p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
