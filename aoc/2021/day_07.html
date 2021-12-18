@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 7</title>
+</head>
+<body>
+<h1>Part 1</h1>
+
+<p>Part one is messy and not very interesting.  We want to find the
+position closest to all of a set of points using a simple 1-D
+Euclidean distance metric and compute their total distance from
+that point.  As far as we know, the points we&rsquo;re given are just a
+random set of integers, so there&rsquo;s no formal way to show that such
+a unique minimum-total-distance position exists.</p>
+
+<p>What <em>is</em> a bit interesting is that all the solutions I&rsquo;ve seen are
+some form of brute-force approach—enumerate every possible position
+(i.e. those in the interval between the maximum and minimum of the
+input positions), compute the total distance to that point, then
+take the minimum of those results.  It occurred to me immediately
+that the median of the input set should be a good bet; sure enough,
+this works, and is only as expensive as sorting the input list.</p>
+
+<pre><code>total_distance : [ℕ] → ℕ
+total_distance ns = sum (distances (median ns) ns)
+
+distances a = list (distance a)
+
+distance a b = |a - b|
+</code></pre>
+
+<p><em>total_distance</em> can be reformulated as a catamorphism via type
+functor fusion, but meh; the Scheme version includes this fusion.</p>
+
+<p>Again, I have no proof that this is the unique solution.  We have
+to trust the AoC solution validator, which is annoying to me.</p>
+
+<p><a href="src/07_part_1.scm">Executable Scheme solution</a></p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
