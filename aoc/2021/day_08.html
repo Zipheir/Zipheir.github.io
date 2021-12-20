@@ -21,7 +21,7 @@ solution.  Let <em>outputs</em> : [[String]] be the list of all the
 output sections (each element corresponding to the output
 section of a line of the puzzle input).  Then:</p>
 
-<pre><code>total = sum (concat (filter p outputs))
+<pre><code>total = length (concat (list (filter p) outputs))
 
 p s = (length s) ∈ {2, 3, 4, 7}
 </code></pre>
