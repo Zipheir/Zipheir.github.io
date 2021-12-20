@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 8</title>
+<h1>Part 1</h1>
+
+<p>This part is just string counting.  The output section of each
+line consists of four words separated by spaces, and we are asked
+to find the total number of words corresponding to a one-digit
+(two segments), a four-digit (four segments), a seven-digit (three
+segments), or an eight-digit (seven segments).
+We don&rsquo;t even need to keep separate counts, since the problem
+only calls for the total number of these digit-coding strings.</p>
+
+<p>Since we can do it concisely, here&rsquo;s a specification of the
+solution.  Let <em>outputs</em> : [[String]] be the list of all the
+output sections (each element corresponding to the output
+section of a line of the puzzle input).  Then:</p>
+
+<pre><code>total = sum (concat (filter p outputs))
+
+p s = (length s) ∈ {2, 3, 4, 7}
+</code></pre>
+
+<p>Fusing <em>total</em> into a single traversal is left as an exercise.</p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+
+</body>
+</html>
