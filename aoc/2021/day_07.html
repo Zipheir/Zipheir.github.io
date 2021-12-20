@@ -41,8 +41,27 @@ to trust the AoC solution validator, which is annoying to me.</p>
 
 <p><a href="src/07_part_1.scm">Executable Scheme solution</a></p>
 
+<h1>Part 2 (TODO)</h1>
+
+<p>All that changes here is the fuel-usage function, which is now
+nonlinear and distinct from the distance.  Since each unit of
+movement costs one more fuel than the last, we have</p>
+
+<pre><code>fuel a b = let n = distance a b in (n * (n + 1)) / 2
+</code></pre>
+
+<p>using a familiar formula.  We seek the (unique?) point <em>p</em> such that</p>
+
+<pre><code> Σ   fuel a p
+</code></pre>
+
+<p>   p ∈ S</p>
+
+<p>is minimized.</p>
+
 <p><a href="index.html">AOC 2021 Index</a></p>
 
 <p><a href="/index.html">Home</a></p>
+
 </body>
 </html>
