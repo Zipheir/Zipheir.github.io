@@ -197,7 +197,7 @@ for rose trees that allows us to &ldquo;deforest&rdquo; our algorithm.</p>
 
 <p>We specify:</p>
 
-<pre><code>hyloR :: (α → γ → β) → ([β] → γ) → (β → α) → (β → [β]) → β → γ
+<pre><code>hyloR :: (α → γ → δ) → ([δ] → γ) → (β → α) → (β → [β]) → β → δ
 hyloR f g h l = foldR f g ∘ unfoldR h l
 </code></pre>
 
