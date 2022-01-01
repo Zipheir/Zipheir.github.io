@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 9</title>
+</head>
+<body>
+<h1>Part 1</h1>
+
+<p>Today we&rsquo;re given a 2-D matrix of natural numbers (a heightmap) and
+must first find the &ldquo;low points&rdquo;.  A low point is defined to be an
+entry which is less than each of its four row-and-column neighbors.</p>
+
+<p>Our &ldquo;map&rdquo; will thus support a 2-D notion of indexing, as well as a
+map from each index to its neighbors:</p>
+
+<pre><code>∀ m, n : ℕ → Height_Map (m, n) ≅ [(i, j) | i ← [0..m-1], j ← [0..n-1]]
+
+elem_at : Height_Map (m, n) → (ℕ × ℕ) → ℕ
+
+neighbors : Height_Map (m, n) → (ℕ × ℕ) → [ℕ]
+</code></pre>
+
+<p>For simplicity, we assume all indices are within bounds.</p>
+
+<p><em>neighbors</em> gives the neighbors of the element at <em>i</em>, <em>j</em> in Height_Map;
+its value will be a list of two, three, or four numbers, depending
+on where <em>i</em>, <em>j</em> is in the map (corner elements have only two neighbors,
+etc.).  We assume indices are row-major:</p>
+
+<pre><code>neighbors hm = list (elem_at hm) ∘ neighbor_ixs (bounds hm)
+
+neighbor_ixs : (ℕ × ℕ) → (ℕ × ℕ) → [(ℕ × ℕ)]
+neighbor_ixs (m, n) (r, c) =
+  filter (≠ (r, c))
+    (nub [(r ∸ 1, c), (r, c ∸ 1), (r, min (c + 1) n),
+         (min (r + 1) m, c)])
+</code></pre>
+
+<p><em>neighbor_ixs</em> is a little tedious.  ∸ here is natural
+number subtraction (AKA &ldquo;monus&rdquo;), which returns zero if the first
+argument is less than the second.  <em>nub</em> : Eq α → [α] → [α] is a
+library function which removes duplicate equal elements from a list.</p>
+
+<p>We can now specify a function that produces the low points of a
+Height_Map.</p>
+
+<pre><code>low : Height_Map (m, n) → (ℕ × ℕ) → Bool
+low hm (i, j) =
+  let (e, ns) = (elem_at hm (i, j), neighbors hm (i, j)) in
+    all (λ n → e &lt; n) ns
+
+low_points : Height_Map (m, n) → [ℕ × ℕ]
+low_points hm = [ (i, j) | i ← [0..m-1],
+                           j ← [0..n-1],
+                           low hm (i, j) ]
+
+low_point_heights hm = list (elem_at hm) ∘ low_points hm
+</code></pre>
+
+<p>The rest is easy.  We want the sum of the &ldquo;risk levels&rdquo; of the low
+points:</p>
+
+<pre><code>risk : ℕ → ℕ
+risk n = n + 1
+</code></pre>
+
+<p>The whole thing is thus</p>
+
+<pre><code>sum ∘ list risk ∘ low_points_heights
+</code></pre>
+
+<p>As usual, this can be fused into a single traversal, but it doesn&rsquo;t
+seem worth the trouble.</p>
+
+<p><a href="src/heights.hs">Executable Haskell solution</a></p>
+
+<p><a href="src/09_input.hs">Haskellized short test input</a></p>
+
+<h1>Part 2</h1>
+
+<p>Now things get much more interesting.  We want to find <em>basins</em>; a
+basin is described informally as a collection of &ldquo;all locations
+that eventually flow downward to a single low point&rdquo;.  Locations of
+height 9 are not included in any basin.</p>
+
+<p>Let&rsquo;s try to come up with a more formal definition.</p>
+
+<ul>
+<li><p>Each low point is in a basin.</p></li>
+<li><p>If a point <em>p</em> is in a basin, then so is each neighbor <em>q</em> of
+<em>p</em> satisfying</p>
+
+<ul>
+<li><em>q</em> has height 8 or less.</li>
+<li>The height of <em>q</em> is greater than the height of <em>p</em>.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>This immediately suggests an algorithm for finding the basin associated
+with a low point <em>p</em>.  We can see each location as a node of a graph
+with four edges linking it to its neighbors; to find a basin, we begin
+with just a low point, add the neighboring nodes that satisfy the above
+conditions, then recurse on each neighbor.</p>
+
+<p>This allows us to construct a tree (specifically, a rose tree)
+describing a basin.  Each node associates a location in the basin with
+its &ldquo;watershed&rdquo; (the node&rsquo;s children), so we can think of this as a
+model of the basin&rsquo;s &ldquo;flow&rdquo;:</p>
+
+<pre><code>data Rose α   = Node α (Forest α)
+data Forest α = [Rose α]
+
+basin_flow : Height_Map (m, n) → (ℕ × ℕ) → Rose (ℕ × ℕ)
+basin_flow hm (i, j) =
+  let h          = elem_at hm (i, j)
+      ns         = neighbor_ixs (m, n) (i, j)
+    in Node (i, j)
+            (Forest (list (basin_flow hm)
+                          (filter (inb h ∘ elem_at hm) ns)))
+
+inb : ℕ → ℕ → Bool
+inb h k = k ≠ 9 ∧ k &gt; h
+</code></pre>
+
+<p>Rose trees have the following mutually-recursive pairs of fold and
+unfold functions (from Gibbons 2003):</p>
+
+<pre><code>foldR : (α → γ → β) → ([β] → γ) → Rose α → β
+foldR f g (Node x ts) = f x (foldF f g ts)
+
+foldF : (α → γ → β) → ([β] → γ) → Forest α → γ
+foldF f g = g ∘ list (foldR f g)
+
+unfoldR : (β → α) → (β → [β]) → β → Rose α
+unfoldR f g x = Node (f x) (unfoldF f g x)
+
+unfoldF : (β → α) → (β → [β]) → β → Forest α
+unfoldF f g = list (unfoldR f g) ∘ g
+</code></pre>
+
+<p>Reworking <em>basin_flow</em> slightly, we can express it as a rose tree
+unfold:</p>
+
+<pre><code>basin_flow : Height_Map (m, n) → (ℕ × ℕ) → Rose (ℕ × ℕ)
+basin_flow hm = unfoldR id (expand hm)
+
+expand : Height_Map (m, n) → ((ℕ × ℕ) → [(ℕ × ℕ)])
+expand hm (i, j) =
+  let h = elem_at hm (i, j) in
+    [ (k, l) | (k, l) ← neighbor_ixs (m, n) (i, j),
+               inb h (elem_at hm (k, l)) ]
+</code></pre>
+
+<p>Note the use of use of curried application here to keep the
+height map separate from the unfold.  All of the details here are
+in <em>expand</em>, which expands the basin by a step, that is, it generates
+the surrounding set of basin locations for a given point.</p>
+
+<p>Every low point in our map is part of exactly one basin (since two
+basins sharing the same low point would be contiguous at that low
+point, and hence we&rsquo;d have only one basin).  Thus, we can express the
+list of all basins in our map by:</p>
+
+<pre><code>basins hm = list (nub ∘ flatten ∘ basin_flow hm) (low_points hm)
+
+flatten : Rose α → [α]
+flatten = foldR (∷) concat
+</code></pre>
+
+<p>The library function <em>nub</em> : [α] → [α] is used to remove duplicate
+nodes, which can be introduced by our method for finding basins; it
+may happen that two nodes share the same neighbor, which is of greater
+height than both.</p>
+
+<p>The list of sizes is then</p>
+
+<pre><code>basin_sizes hm = list length (basins hm)
+</code></pre>
+
+<p>Using the functor properties of <em>list</em>, this becomes</p>
+
+<pre><code>basin_sizes hm = list (length ∘ nub ∘ flatten ∘ basin_flow hm)
+                      (low_points hm)
+</code></pre>
+
+<p>In practice, this definition is quite efficient enough for solving the
+current puzzle.  However, let&rsquo;s improve it.  As many have probably
+already seen, we don&rsquo;t need to construct the intermediate &ldquo;flow trees&rdquo;
+at all.  Using a quick calculation, we derive a hylomorphism operator
+for rose trees that allows us to &ldquo;deforest&rdquo; our algorithm.</p>
+
+<p>We specify:</p>
+
+<pre><code>hyloR :: (α → γ → β) → ([β] → γ) → (β → α) → (β → [β]) → β → γ
+hyloR f g h l = foldR f g ∘ unfoldR h l
+</code></pre>
+
+<p>The calculation is straightforward.  For all x : β,</p>
+
+<pre><code>  hyloR f g h l x
+
+=  { specification }
+
+  foldR f g (unfoldR h l x)
+
+=  { unfoldR.1 }
+
+  foldR f g (Node (h x) (unfoldF h l x))
+
+=  { foldR.1 }
+
+  f (h x) (foldF f g (unfoldF h l x))
+
+=  { specify: hyloF f g h l = foldF f g ∘ unfoldF h l }
+
+  f (h x) (hyloF f g h l x)
+</code></pre>
+
+<p>As expected, <em>hyloR</em> is one of a pair of mutually-recursive functions.
+Now we calculate its Forest counterpart, <em>hyloF</em>:</p>
+
+<pre><code>  hyloF f g h l x
+
+=  { specification }
+
+  foldF f g (unfoldF h l x)
+
+=  { unfoldF.1 }
+
+  foldF f g (list (unfoldR h l) (l x))
+
+=  { foldF.1 }
+
+  g (list (foldR f g) (list (unfoldR h l) (l x)))
+
+=  { functor property of list }
+
+  g (list (foldR f g ∘ unfoldR h l) (l x))
+
+=  { specification of hyloR }
+
+  g (list (hyloR f g h l) (l x))
+</code></pre>
+
+<p>This completes the derivation of <em>hyloR</em> and <em>hyloF</em>.</p>
+
+<p>Since for all <em>hm</em> : Height_Map (m, n) we have,</p>
+
+<pre><code>flatten ∘ basin_flow hm = foldR (∷) concat ∘ unfoldR id (expand hm)
+</code></pre>
+
+<p>we now redefine</p>
+
+<pre><code>basin_sizes hm = list (length ∘ nub ∘ enum_basins hm)
+                      (low_points hm)
+
+enum_basins : Height_Map (m, n) → (ℕ × ℕ) → [(ℕ × ℕ)]
+enum_basins hm = hyloR (∷) concat id (expand hm)
+</code></pre>
+
+<p><em>enum_basins</em> is thus a function which, given a low point, produces
+the list of the coordinates of the surrounding basin.</p>
+
+<p>A further set of calculations would allow us to fuse <em>length</em>, <em>nub</em>,
+and <em>enum_basins</em>, eliminating the intermediate lists, as well.  The
+fusion of <em>length</em> and <em>nub</em> doesn&rsquo;t produce a significant improvement,
+however, and fusing the resulting list catamorphism with the rose tree
+hylomorphism <em>enum_basins</em> requires quite a bit more work.  We&rsquo;ve
+eliminated the trees, so, for now, we&rsquo;ll call this enough.</p>
+
+<p>The rest of the puzzle is bookkeeping.  We want to know the product of
+the sizes of the three largest basins:</p>
+
+<pre><code>three_biggest = take 3 ∘ sort_decreasing
+
+solution hm = product ∘ three_biggest ∘ basin_sizes hm
+</code></pre>
+
+<h1>References</h1>
+
+<p>Gibbons, Jeremy &amp; de Moor, Oege, eds. (2003). <em>The Fun of Programming</em>.
+Palmgrave Macmillan.  See Chapter 3, &ldquo;Origami Programming&rdquo;.</p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
