@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 11</title>
+</head>
+<body>
+<h1>Part 1</h1>
+
+<p>We are simulating a grid of octopi, i.e. of cellular automata.  Each
+is represented by a natural number, and a step of the simulation goes
+like this:</p>
+
+<ol>
+<li><p>The energy level of each cell (the number representing it)
+increases by 1.</p></li>
+<li><p>If any cell&rsquo;s energy level is greater than 9, then the energy
+level of each adjacent (including diagonally adjacent) cell
+increases by 1.  Chain reactions may trigger at this point, but
+each cell can &ldquo;flash&rdquo; at most once each step.</p></li>
+<li><p>The energy level of each cell that &ldquo;flashed&rdquo; becomes 0.</p></li>
+</ol>
+
+
+<p>Once again, we have a grid-like type at the center of our puzzle.
+We require the following operations:</p>
+
+<pre><code>neighbors : Grid ℕ → (ℕ × ℕ) → [((ℕ × ℕ) × ℕ)]
+
+inc_all : Grid ℕ → Grid ℕ
+</code></pre>
+
+<p>As usual, we also assume Grid is a functor.</p>
+
+<p><em>neighbors (i, j)</em> gives a list of the neighbors of the cell at
+(i, j) paired with their energy levels.  <em>inc_all</em> increments every
+cell in the grid; thus, it describes the first part of a step of the
+simulation.  [Note: I didn&rsquo;t actually check what information we were
+supposed to be collecting until after writing all of this.  We are
+looking for the total number of flashes that occur, so some changes
+to the following are needed to return this information.]</p>
+
+<pre><code>step : Grid ℕ → Grid ℕ
+step = inc_all ; ... ?
+</code></pre>
+
+<p>Handling flashing cells and their effects (indeed) is where things
+get trickier.  A flash is a nonlinear phenomenon, so we cannot model
+it compositionally.  Each flashing cell can, in principle, transform
+the entire grid.</p>
+
+<pre><code>resolve_flashes : Grid ℕ → Grid ℕ
+
+reset_flashed : Grid ℕ → Grid ℕ
+
+step = inc_all ; resolve_flashes ; reset_flashed
+</code></pre>
+
+<p>Further complicating matters (though saving us from
+a truly off-the-rails simulation) is the fact that each cell can flash
+at most once per step.  We therefore need to reference the set of
+cells that have flashed during the current step.</p>
+
+<p>An important fact for working out <em>resolve_flashes</em> is that the set
+of cells that will flash during a given step shrinks by only one
+cell when that cell&rsquo;s flash is resolved.  A single flash may push
+many other cells into the set of flashers, but it can&rsquo;t pull any
+out.</p>
+
+<p>In other words, the set of flashing cells behaves like a stack.</p>
+
+<p>To simplify things, we will consider the propagation of a flash as
+a computation using the parametric State type.  Each computation
+produces a list of &ldquo;new&rdquo; flashing cells.</p>
+
+<pre><code>resolve_flashes : Grid ℕ → Grid ℕ
+resolve_flashes g = π₁ (execState (resolve (flashers g)) (g, ∅))
+
+flashers : Grid ℕ → [(ℕ × ℕ)]
+flashers = keys ∘ filter (&gt; 9)
+
+resolve : [(ℕ × ℕ)] → State ((Grid ℕ) × Set (ℕ × ℕ)) ⊤
+</code></pre>
+
+<p>⊤ here is the unit type, which has a single member, <code>tt</code>.
+(Haskell <code>()</code> of type <code>()</code>, not the greatest notation ever, IMO.)</p>
+
+<p>Let&rsquo;s try to figure out <em>resolve</em>.  If the list <em>cs</em> of flashing
+cells is empty, then <em>resolve</em> is simply the identity transformer:</p>
+
+<pre><code>resolve [] = pure tt
+</code></pre>
+
+<p>Otherwise, at least one flash occurs, so the state must be
+transformed.  Using monadic <code>do</code> notation,</p>
+
+<pre><code>resolve (c ∷ cs) = do new ← resolve1 c
+                      resolve (push_adj new cs)
+
+push_adj : Eq α ⇒ [α] → [α] → [α]
+push_adj xs ys = (filter (λ x → not (x ∈ ys)) xs) ⧺ ys
+</code></pre>
+
+<p><em>resolve1</em> (i, j) flashes the cell at (i, j), updates the state,
+and returns a list of the neighbors of (i, j) which have become
+flashers.  We require that the address passed to <em>resolve1</em> is
+never that of a cell that has already flashed during this step.</p>
+
+<pre><code>resolve1 : (ℕ × ℕ) → State ((Grid ℕ) × Set (ℕ × ℕ)) [(ℕ × ℕ)]
+resolve1 c =
+  state (λ (g, s) →
+           let g' = flash g c
+               ns = neighbors g' c
+               cs = list π₁ (filter ((&gt; 9) ∘ π₂) ns)
+               s′ = adjoin c s
+             in (filter (not (∈ s′)) cs, (g', s′)))
+</code></pre>
+
+<p><em>state</em> is a library function which embeds a function
+σ → (α × σ) (transforming a state σ and returning a value α) into
+the state monad; it gives us a pretty compact way to write <em>resolve1</em>.
+The extensive transformation of the list of neighbors gives us the
+list of new flashers; first, we filter for cells with energy above 9,
+then we remove those in the &ldquo;already-flashed&rdquo; set.</p>
+
+<p><em>flash c</em> increments the neighbors of the cell at <em>c</em>:</p>
+
+<pre><code>flash : Grid ℕ → (ℕ × ℕ) → Grid ℕ
+flash g c =
+  map_with_key (λ d n →
+                  if in_square c d ∧ c ≠ d
+                     then n + 1
+                     else n)
+               g
+</code></pre>
+
+<p><em>map_with_key</em> : ((ℕ × ℕ) → α → β) → Grid α → Grid β is a variant of
+functorial application in the Grid type that passes the address as
+well as the element to the applied function.</p>
+
+<p>The function <em>in_square</em> : (ℕ × ℕ) → (ℕ × ℕ) determines whether the
+second address is within the 3 × 3 square surrounding and including
+the first.</p>
+
+<p>We now have a definition for <em>step</em>, with which we can write a
+function that runs the simulation for a given number of steps:</p>
+
+<pre><code>steps : ℕ → Grid → Grid
+steps n = iterateN step n
+</code></pre>
+
+<p>where <em>iterateN f n x</em> = f (f &hellip; (f x)) (<em>n</em> repeated applications
+of <em>f</em>).</p>
+
+<p><em>This is a clean-enough process, but I&rsquo;d like to be a bit more formal.
+We didn&rsquo;t really come up with any equations describing this
+simulation; instead, the above was more a matter of picking a way to
+model it that &ldquo;seemed good&rdquo;, then elaborating it.</em></p>
+
+<p><a href="src/octo_1.hs">Executable Haskell solution</a></p>
+
+<p><a href="src/11_input.hs">Haskellized short test input</a></p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
