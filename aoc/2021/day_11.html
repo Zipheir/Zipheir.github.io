@@ -184,7 +184,8 @@ steps_until p g = length (takeWhile (¬ p) (iterate step g))
 </code></pre>
 
 <p>where <em>iterate f x</em> produces the infinite list of repeated
-applications of <em>f</em>: [<em>x</em>, <em>f x</em>, <em>f (</em>f x*), …].</p>
+applications of <em>f</em>:
+[<em>x</em>, <em>f x</em>, <em>f</em> (<em>f x</em>), …].</p>
 
 <p>Then:</p>
 
