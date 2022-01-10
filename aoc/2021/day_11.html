@@ -164,6 +164,36 @@ model it that &ldquo;seemed good&rdquo;, then elaborating it.</em></p>
 
 <p><a href="src/11_input.hs">Haskellized short test input</a></p>
 
+<h1>Part 2</h1>
+
+<p>This is much the same as Part 1, except we will now count the number
+of steps it takes to reach a certain state; namely, a state where all
+the cells flash at once.  Since a flash resets a cell, to zero, we
+can express this by the predicate</p>
+
+<pre><code>all_flashed : Grid ℕ → Bool
+all_flashed = all (== 0)
+</code></pre>
+
+<p>where <em>all p</em> is true iff every cell of a grid satisfies <em>p</em>.</p>
+
+<p>We can express the step-counting with:</p>
+
+<pre><code>steps_until : (Grid → Bool) → Grid → ℕ
+steps_until p g = length (takeWhile (¬ p) (iterate step g))
+</code></pre>
+
+<p>where <em>iterate f x</em> produces the infinite list of repeated
+applications of <em>f</em>: [<em>x</em>, <em>f x</em>, <em>f (</em>f x*), …].</p>
+
+<p>Then:</p>
+
+<pre><code>solution : Grid → ℕ
+solution = steps_until all_flashed
+</code></pre>
+
+<p><a href="src/octo_2.hs">Executable Haskell solution</a></p>
+
 <p><a href="index.html">AOC 2021 Index</a></p>
 
 <p><a href="/index.html">Home</a></p>
