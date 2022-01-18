@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 12</title>
+</head>
+<body>
+
+<h1>Part 1</h1>
+
+<p>We are searching for paths through a cave system, which can be
+described as a simple graph.  Our paths must connect the <code>start</code> and
+<code>end</code> nodes, and they <em>can</em> contain some cycles; namely, &ldquo;large caves&rdquo;
+(nodes labeled with upper-case names).  Specifically, we want to know
+the number of valid paths through the given cave.</p>
+
+<p>This kind of puzzle is perfect for relational programming, but the
+specific information we&rsquo;re required to find is an immediate obstacle
+to this approach.  We can quickly sketch out a predicate
+<code>path(A, B, Path)</code> (to use a generalized logic programming notation)
+which succeeds if <em>Path</em> is a valid path from <em>A</em> to <em>B</em>, but we
+want to know <em>how many times</em> this relation succeeds for a given
+graph (cave system).  This is &ldquo;extra-logical&rdquo;; presumably there&rsquo;s some
+weird Prolog technique for dealing with this, but we&rsquo;ll try a different
+approach.</p>
+
+<p>(The embedded logic programming language
+<a href="http://minikanren.org/">miniKanren</a> is nicely suited to this task,
+since it&rsquo;s rather easy to pull a list of successes out of miniKanren
+into the host functional language.  <a href="src/path1.scm">Here</a> is a solver
+using this idea.  Unfortunately, it is extremely slow.)</p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
