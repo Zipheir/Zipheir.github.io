@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 13</title>
+</head>
+<body>
+
+<h1>Day 13 &mdash; Part 1</h1>
+
+<p>This one involves literal folding!  Given a 2D grid (yet again) with
+a set of marked coordinates, I want to fold it along a given row or
+column.  Since the grid is &ldquo;transparent&rdquo;, the marks on each side of
+the &ldquo;crease&rdquo; will &ldquo;show through&rdquo;, giving a new set of marked
+coordinates (on a smaller grid).  The first part of this puzzle is
+to find the number of marks on the grid after a single fold&ndash;the
+first one given in the puzzle input.</p>
+
+<p>I&rsquo;ll once again use a grid type, this time with boolean entries
+indicating whether a given coordinate is marked.</p>
+
+<pre><code>for S ⊆ (ℕ × ℕ),
+
+Grid Bool ≅ S → Bool
+
+hbounds : Grid α → (ℕ × ℕ)
+</code></pre>
+
+<p>Coordinates are column-major and (0, 0) is the top left entry.  Grids
+can be of all sizes.  <em>hbounds g</em> gives the maximum column and row
+indices for <em>g</em>.</p>
+
+<p>Now I have to think about what it means to fold a Grid onto itself.
+For simplicity, I&rsquo;ll write separate transformations for row and column
+folds.  To avoid confusion, I&rsquo;m going to call these <em>crease</em>
+operations.</p>
+
+<pre><code>crease_row : Grid Bool → ℕ → Grid Bool
+
+crease_col : Grid Bool → ℕ → Grid Bool
+</code></pre>
+
+<p><em>crease_row r g</em> can be thought of as being composed of three steps:
+first, split the grid <em>g</em> into two grids on row <em>r</em>, second, &ldquo;flip
+over&rdquo; one of the segments, and third, overlay them.  Here&rsquo;s the
+specification (<code>;</code> is right-to-left composition):</p>
+
+<pre><code>-- Specification
+crease_row : ℕ → Grid Bool → Grid Bool
+crease_row k = split_row k ; orient_v ; overlay
+
+split_row : ℕ → Grid α → (Grid α × Grid α)
+
+orient_v : (Grid α × Grid α) → (Grid α × Grid α)
+
+overlay : (Grid Bool × Grid Bool) → Grid Bool
+</code></pre>
+
+<p>These functions will mostly be described abstractly, in terms of
+how they map indices to elements.  This is enough to calculate with.</p>
+
+<p>The sum of the number of rows of the two grids returned by <em>split_row</em>
+will always be smaller than the row-size of the original.</p>
+
+<p>Define</p>
+
+<pre><code>nrows : Grid α → ℕ
+nrows g = let (_, r) = hbounds g in r + 1
+</code></pre>
+
+<p>Then</p>
+
+<pre><code>(g′, g″) := split_row g
+
+nrows g′ + nrows g″ &lt; nrows g
+</code></pre>
+
+<p>where <em>nrows</em> : Grid α → ℕ gives the number of rows of a grid.  I&rsquo;ll
+go further and postulate:</p>
+
+<pre><code>nrows g = nrows g′ + nrows g″ + 1
+</code></pre>
+
+<p>That is, <em>split_row</em> always divides a grid equally along its central
+row.  This is a big simplification; maybe it only works for the example
+puzzle.  [EDIT: Yes, it holds in general.  Each crease instruction
+bisects a grid.]</p>
+
+<p>The horizontal dimension is preserved by <em>split_row</em>:</p>
+
+<pre><code>ncols g′ = ncols g″ = ncols g
+</code></pre>
+
+<p>where</p>
+
+<pre><code>ncols g = let (c, _) = hbounds g in c + 1
+</code></pre>
+
+<p>Here&rsquo;s the crucial property of <em>split_row k g</em>, which I&rsquo;m thinking of
+here as a map T ⊆ ((ℕ × ℕ) × (ℕ × ℕ)) → Bool × Bool:</p>
+
+<p>   (split_row k g) ! ((i, j), (p, r))</p>
+
+<pre><code>   ⎧ ⊥, if j ≡ k ∨ r ≡ k   -- cut out the kth row
+ = ⎨
+   ⎩ (g ! (i, j), g ! (p, r + k + 1)), otherwise
+</code></pre>
+
+<p>This is complicated a bit by the &ldquo;cutting out&rdquo; of the <em>k</em>th row.
+<code>!</code> denotes the index operation Grid α → (ℕ × ℕ) → α.</p>
+
+<p>A similar property describes <em>split_col</em>:</p>
+
+<p>   (split_col k g) ! ((i, j), (p, r))</p>
+
+<pre><code>   ⎧ ⊥, if i ≡ k ∨ p ≡ k   -- cut out the kth column
+ = ⎨
+   ⎩ (g ! (i, j), g ! (p + k + 1, r)), otherwise
+</code></pre>
+
+<p>I don&rsquo;t really want to define (!) on products of Grids; this is just
+a compact way to describe how these functions transform their
+arguments.</p>
+
+<p><em>overlay</em> is really the core of the function.  What are its properties?
+Again, I assume for simplicity that I can only overlay grids of the
+same size.  The crucial idea of &ldquo;transparency&rdquo; is captured by the
+following property of <em>overlay</em>:</p>
+
+<pre><code>(overlay (g₁, g₂)) ! (i, j) = g₁ ! (i, j) ∨ g₂ ! (i, j)
+</code></pre>
+
+<p>In other words, a place in the grid <em>overlay</em> (<em>g</em>₁, <em>g</em>₂)) is marked
+iff it is marked in <em>g</em>₁ or <em>g</em>₂.  This is pretty much all the meaning
+I need to work with <em>overlay</em>.</p>
+
+<p>The puzzle promises not to put marks on the row/column of folding,
+which eliminates some weird corner cases.  It also explains how to
+overlay the two grid sections in each case: when folding vertically
+(on rows), I&rsquo;m to fold the <em>bottom</em> section <em>up</em>, and, when folding
+horizontally (on columns), I&rsquo;m to fold the <em>left</em> section <em>over</em>.</p>
+
+<p>This is not actually a matter for <em>overlay</em>, but for the <em>orient</em>
+functions.</p>
+
+<pre><code>orient_v (gt, gb) = (gt, vflip gb)
+orient_h (gl, gr) = (hflip gl, gr)
+</code></pre>
+
+<p>where <em>vflip</em> and <em>hflip</em> perform vertical and horizontal flips
+of a grid, respectively:</p>
+
+<pre><code>(vflip g) ! (i, j) = let rmax = π₂ (hbounds g) in
+                       g ! (i, rmax - j)
+
+(hflip g) ! (i, j) = let cmax = π₁ (hbounds g) in
+                       g ! (cmax - i, j)
+</code></pre>
+
+<p>where <em>row_max g</em> and <em>col_max g</em> give the greatest row/column
+indices of <em>g</em>, respectively.</p>
+
+<h2>Fusion</h2>
+
+<p>I have a specification for the <em>crease</em> functions, but it involves
+creating intermediate values (the two halves of the split input
+grid) only to compute the value I&rsquo;m actually interested in.  It
+should be possible to calculate more efficient implementations.</p>
+
+<pre><code>crease_row = split_row ; orient_v ; overlay
+</code></pre>
+
+<p>Thinking of grids as functions, what is the relationship between
+the functions <em>g</em> and <em>crease_row k g</em>?  Clearly the domain of
+the latter is a smaller subset of ℕ × ℕ.  Call it S; for
+(i, j) ∈ S, I can calculate:</p>
+
+<pre><code>  (crease_row k g) (i, j)
+
+=   { crease_row spec. }
+
+  (overlay (orient_v (split_row k g))) (i, j)
+
+=   { overlay property }
+
+  let (g₁, g₂) = orient_v (split_row k g) in
+    g₁ ! (i, j) ∨ g₂ ! (i, j)
+
+=   { orient_v def. }
+
+  let (g₁, g₂) = split_row k g in
+    g₁ ! (i, j) ∨ (vflip g₂) ! (i, j)
+
+=   { vflip spec. }
+
+  let (g₁, g₂) = split_row k g
+      rmax     = π₂ (hbounds g₂) in
+    g₁ ! (i, j) ∨ g₂ ! (i, rmax - j)
+</code></pre>
+
+<p>This eliminates all of the intermediate stuff except for
+<em>split_row</em>, so I&rsquo;m almost at the point where I can compute
+<em>crease_row k g</em> in terms of <em>g</em> alone.  With slight informality,
+I now use the defining property of <em>split_row</em>:</p>
+
+<pre><code>=   { split_row property }
+
+  let (g₁, g₂) = split_row k g
+      rmax     = π₂ (hbounds g₂) in
+    g₁ ! (i, j) ∨ g₂ ! (i, (rmax - j) + k + 1)
+</code></pre>
+
+<p>To eliminate <em>split_row</em>, I have to calculate <em>rmax</em> without
+reference to <em>g</em>₂.  This is easy, by the transforming the postulate
+stated above for <em>split_row</em>:</p>
+
+<pre><code>  nrows g₂ = nrows g - nrows g₁ - 1
+
+≡   { nrows g₁ = k }
+
+  nrows g₂ = nrows g - k - 1
+</code></pre>
+
+<p>Then:</p>
+
+<pre><code>π₂ (hbounds g₂) = (nrows g₂) - 1
+               = (nrows g - k - 1) -1
+               = nrows g - k - 2
+               = (π₂ (hbounds g)) - k - 1
+</code></pre>
+
+<p>No more <em>split_row</em>:</p>
+
+<pre><code>(crease_row k g) (i, j) =
+  let rmax = (π₂ (hbounds g)) - k - 1 in
+    g ! (i, j) ∨ g ! (i, (rmax - j) + k + 1)
+</code></pre>
+
+<p>Arithmetic further simplifies this:</p>
+
+<pre><code>(crease_row k g) (i, j) = g ! (i, j) ∨ g ! (i, (π₂ (hbounds g)) - j)
+</code></pre>
+
+<p>In data terms, this is sufficient to compute the result of
+<em>crease_row k g</em> without building any intermediate results.
+Assume there&rsquo;s a <em>grid</em> constructor (modelled on <em>array</em> from
+the Data.Array Haskell library) that takes a pair of bounds
+and a list of ((ℕ × ℕ) × Bool) pairs to a new grid.  Then:</p>
+
+<pre><code>crease_row k g =
+  let (c, r) = hbounds g
+      rmax   = r - k - 1 in
+    grid ((0, 0), (c, rmax))
+      [ ((i, j), g ! (i, j) ∨ g ! (i, r - j)) |
+        i ← [0..c], j ← [0..rmax] ]
+</code></pre>
+
+<p>This completes the calculation of a more space-efficient
+<em>crease_row</em>.  An analogous calculation (left as an exercise for
+the reader) can be used to compute <em>crease_col</em>, which is similar:</p>
+
+<pre><code>crease_col k g =
+  let (_, r) = hbounds g
+      cmax   = k - 1     in
+    grid ((0, 0), (cmax, r))
+      [ ((i, j), g ! (cmax - i, j) ∨ g ! (i + k + 1, j)) |
+        i ← [0..cmax], ← &lt;- [0..r] ]
+</code></pre>
+
+<h2>The rest</h2>
+
+<p>Assume the grid section of the puzzle input has already been
+parsed and converted into a Grid Bool, and let the folding
+instructions be described by a list:</p>
+
+<pre><code>data Inst = X ℕ | Y ℕ
+
+[Y 7, X 5, …]
+</code></pre>
+
+<p>This is easy enough to construct from the puzzle input.
+Then it&rsquo;s just a matter of folding the folds.  To get the solution
+for part 1, I only need to count the number of marks visible after
+the first crease.  Here&rsquo;s a more general function which can be used
+for part 2, as well:</p>
+
+<pre><code>creases : Grid Bool → [Inst] → Grid Bool
+creases = fold (λ g c →
+                 case c of
+                   X k → crease_col k g
+                   Y k → crease_row k g)
+
+solution = marked (creases init (take 1 insts))
+
+marked : Grid Bool → ℕ
+marked = count id
+</code></pre>
+
+<p>Here, <em>init</em> is the starting grid and <em>insts</em> is the list of
+fold instructions, both constructed from the puzzle input.</p>
+
+<h1>Part 2</h1>
+
+<p>I have to complete the folding, now, and read the digits off the
+final grid.  Pretty much everything is in place to do this, except
+for functions to print a grid in a readable form.  (No, I&rsquo;m not going
+to write an OCR function!)  This isn&rsquo;t very interesting, but here it
+is, for completeness:</p>
+
+<pre><code>print_row :: Grid -&gt; Int -&gt; IO ()
+print_row g r = sequence_
+                  (map putStr
+                    (map (\c → if g ! (c, r) then "#" else ".")
+                         [0 .. (fst (hbounds g))])
+                    ⧺ [putChar '\n'])
+
+print_grid :: Grid -&gt; IO ()
+print_grid g = sequence_ (map (print_row g)
+                              [0 .. (snd (hbounds g))])
+</code></pre>
+
+<p>These functions use the (pseudo-)monadic structure of Haskell&rsquo;s
+<code>IO</code> type.  If this is unfamiliar, take a look at the built-in function
+<a href="https://hackage.haskell.org/package/base-4.16.0.0/docs/Prelude.html#v:sequence_"><code>sequence_</code></a>
+and maybe Chapter 12 of Graham Hutton&rsquo;s <em>Programming in Haskell</em>.</p>
+
+<p><a href="src/crease.hs">Executable Haskell solution</a></p>
+
+<p><a href="src/13_input.hs">Module with test puzzle input</a></p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
