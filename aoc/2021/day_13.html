@@ -38,9 +38,9 @@ For simplicity, I&rsquo;ll write separate transformations for row and column
 folds.  To avoid confusion, I&rsquo;m going to call these <em>crease</em>
 operations.</p>
 
-<pre><code>crease_row : Grid Bool → ℕ → Grid Bool
+<pre><code>crease_row : ℕ → Grid Bool → Grid Bool
 
-crease_col : Grid Bool → ℕ → Grid Bool
+crease_col : ℕ → Grid Bool → Grid Bool
 </code></pre>
 
 <p><em>crease_row r g</em> can be thought of as being composed of three steps:
