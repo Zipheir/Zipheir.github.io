@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 14</title>
+</head>
+<body>
+<h1>Day 14</h1>
+
+<h2>Part 1</h2>
+
+<p>Each pair of elements in the input polymer sequence gives rise to a
+new element which is inserted in the middle of the pair.  Given a
+function <em>step</em> which computes a single step of pair insertion,
+I can specify a function to compute any number of steps as follows:</p>
+
+<pre><code>steps : ℕ → [Element] → [Element]
+steps n = iter n step
+</code></pre>
+
+<p>Here&rsquo;s an approach to computing a single step of insertion: from the
+input list, compute the list of bases to be inserted, then interleave
+the lists.  If I assume that <em>every</em> pair matches some insertion rule,
+then an input <em>k</em>-list will generate a (<em>k</em> - 1)-list of new elements.</p>
+
+<p>I can specify this as follows:</p>
+
+<pre><code>step : [Element] → [Element]
+step es = let ins = list pair_insert (pairs es) in
+            interleave es ins
+
+interleave : [α] → [α] → [α]
+interleave as       []       = as
+interleave []       bs       = bs
+interleave (a : as) (b : bs) = a : b : interleave as bs
+
+pairs : [α] → [[α]]
+pairs xs = zipWith pair_list xs (tail xs)
+
+pair_list : α → α → [α]
+pair_list a b = [a, b]
+</code></pre>
+
+<p>For convenience, I&rsquo;m using fixed-length lists of elements instead
+of tuples.  Note that <em>interleave</em> is very nearly the same as
+<em>zipWith pair_list</em>, except that it appends the remaining tail of
+a longer list.</p>
+
+<p><em>pair_insert</em> is the core of this transformation; it takes a pair of
+elements to the list of new elements they generate:</p>
+
+<pre><code>pair_insert : [Element] → Element
+pair_insert p = lookup p rules
+</code></pre>
+
+<p>where <em>rules</em> is a table of insertion rules described as a mapping
+[Element] → Element.</p>
+
+<p>Now, it should be possible to fuse the components of <em>step</em> to
+(1) eliminate the intermediate list <em>ins</em> and (2) produce the
+result with only a single traversal of the input list.</p>
+
+<p>I&rsquo;ll do this by inductive synthesis on <em>step</em>, calculating a new,
+recursive implementation of the function.</p>
+
+<p>The case <em>step</em> [] quickly simplifies to [].  The singleton list
+case is also &ldquo;degenerate&rdquo; and follows directly from the definitions
+of <em>interleave</em> and <em>zipWith</em>:</p>
+
+<pre><code>  step [e]
+
+= { step.1 }
+
+  let ins = list pair_insert (pairs [e]) in
+    interleave [e] ins
+
+= { pairs def., zipWith (x ∷ xs) [] = [] }
+
+  let ins = list pair_insert [] in
+    interleave [e] ins
+
+= { list, replace ins with its value }
+
+  interleave [e] []
+
+= { interleave.1 }
+
+  [e]
+</code></pre>
+
+<p>The recursive case handles lists of length two or greater, and it&rsquo;s
+obviously the interesting one.  First, I&rsquo;ll remove the <code>let</code> binding,
+which might make the final steps of the calculation a little easier
+to understand.</p>
+
+<pre><code>  step (e₁ ∷ e₂ ∷ es)
+
+= { step.1 }
+
+  let ins = list pair_insert (pairs (e₁ ∷ e₂ ∷ es)) in
+    interleave (e₁ ∷ e₂ ∷ es) ins
+
+= { replace ins with its value }
+
+  interleave (e₁ ∷ e₂ ∷ es)
+    (list pair_insert (pairs (e₁ ∷ e₂ ∷ es)))
+
+= { pairs.1, zipWith def. }
+
+  interleave (e₁ ∷ e₂ ∷ es)
+    (list pair_insert ([e₁, e₂] ∷ pairs (e₂ ∷ es)))
+
+= { list }
+
+  interleave (e₁ ∷ e₂ ∷ es)
+             (pair_insert [e₁, e₂]) ∷
+               (list pair_insert (pairs (e₂ ∷ es)))
+
+= { interleave.3 }
+
+  e₁ ∷ (pair_insert [e₁, e₂]) ∷
+    interleave (e₂ ∷ es) (list pair_insert (pairs (e₂ ∷ es)))
+
+= { step def. }
+
+  e₁ ∷ (pair_insert [e₁, e₂]) ∷ (step (e₂ ∷ es))
+</code></pre>
+
+<p>which is a recursive equation whose only external dependency is
+<em>pair_insert</em>.  In sum, I&rsquo;ve calculated:</p>
+
+<pre><code>step []             = []
+step [e]            = [e]
+step (e₁ ∷ e₂ ∷ es) = e₁ ∷ (pair_insert [e₁, e₂]) ∷ (step (e₂ ∷ es))
+</code></pre>
+
+<p>This completes the synthesis of <em>step</em>.</p>
+
+<p>All that remains now is to find the &ldquo;magic number&rdquo; for part 1: here,
+it&rsquo;s the difference of the number of occurrences of the most and
+least common elements of the sequence after performing ten steps
+of insertion.  This is not very interesting, so I&rsquo;ve left it to the
+Haskell source file, where it&rsquo;s implemented in terms of a few functions
+from the <code>Data.List</code> library.</p>
+
+<p><a href="src/polymers_1.hs">Executable Haskell solution</a></p>
+
+<p><a href="src/14_input.hs">Haskellized test puzzle input</a></p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+
+</body>
+</html>
