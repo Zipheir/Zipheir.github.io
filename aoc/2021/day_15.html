@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- mobile device brain-damage -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/style.css" rel="stylesheet" type="text/css">
+<title>Advent of Code 2021 -- Day 11</title>
+</head>
+<body>
+<h1>Day 15</h1>
+
+<h2>Part 1</h2>
+
+<p>I am given (yet another) 2D grid whose elements are risk scores, and I
+must find the best path (i.e. the one with the lowest total risk) from
+the top left to the bottom right.  Although it&rsquo;s not explicitly stated,
+the path can meander, i.e. move up and to the left as well as directly
+toward its terminus.  Thus, a path is a minimum-cost spanning tree for
+the given grid.</p>
+
+<p>Note after struggling through the work below: I don&rsquo;t like this
+problem.  The description doesn&rsquo;t give me any grounds to believe that
+there is a unique solution, yet this is what the puzzle expects me to
+find.  As will become clear below, this is a serious defect for trying
+to reason about this puzzle.  (I suspect that the puzzle input is
+generated under some invisible constraints that ensure that there <em>is</em>
+a unique MCST, but I don&rsquo;t have access to that information.)  Thus, the
+following is wrong-headed, since I began by assuming a unique
+solution, when I really have to assume the existence of many
+solutions, then refine the solutions down to a single candidate.</p>
+
+<p>A classic way to tackle such a problem is with a greedy (frugal, in
+this case) algorithm&ndash;something along the vague lines of &ldquo;to find the
+safest path, take the safest step at each point in the graph&rdquo;.  But it
+is by no means obvious at this point that a greedy algorithm will find
+the best path.  I&rsquo;ll try to be more formal, so that I can state a
+condition that has to hold for this approach to work.</p>
+
+<h3>Specifying the problem, first attempt</h3>
+
+<p>What follows are tools for reasoning, so please forget about
+efficiency.  I first define a way to find the best path from a
+list all possible candidates.</p>
+
+<pre><code>type Path = [(ℕ × ℕ)]
+type Grid = [[ℕ]]
+
+least_risk : Grid → Path
+least_risk g = minWith (risk g) (candidates g)
+
+minWith : Ord α ⇒ (α → β) → [α] → α
+minWith f = let { smaller f x y = if f x ≤ f y then x else y } in
+              foldr1 (smaller f)
+
+risk : Grid → Path → ℕ
+risk g = sum ∘ map (λ (x, y) → ((g !! x) !! y))
+</code></pre>
+
+<p>A path is a sequence of coordinates describing a path from (0, 0),
+the top left corner of a grid, to (max-x, max-y), the bottom right
+corner.  Total risk is computed by looking up each point of a path
+in the given grid and summing the results.</p>
+
+<p>Given a metric <em>f</em>, <em>minWith f</em> returns the least element of a
+non-empty list.  There is ambiguity here; the version above
+returns the first minimum element, but this is really a
+non-deterministic function in disguise.</p>
+
+<p><em>candidates</em> is the core of the specification; it generates all
+possible complete paths.</p>
+
+<pre><code>candidates : Grid → [Path]
+candidates g = filter (complete g) (all_paths g)
+
+all_paths : Grid → [Path]
+all_paths g =
+  let blocked ps = null (neighbors g ps)
+      step       = concatMap ∘ extend g
+    in until (all (complete ∨ blocked)) step [(0, 0)]
+
+complete : Grid → Path → Bool
+complete (p ∷ _) = is_bottom_right g p
+
+extend : Grid → Path → [Path]
+extend g ps = map (∷ ps) (neighbors g ps)
+
+neighbors : Grid → Path → [(ℕ × ℕ)]
+neighbors g ps@(p ∷ _) = filter (∉ ps) (adjacents g p)
+
+adjacents : Grid → (ℕ × ℕ) → [(ℕ × ℕ)]
+
+is_bottom_right : Grid → (ℕ × ℕ) → Bool
+</code></pre>
+
+<p>There is quite a bit here.  <em>candidates</em> extends each of a list
+of paths until all of them have either reached the destination
+or are &ldquo;out of moves&rdquo;.</p>
+
+<p>The <em>neighbors</em> function produces the list of available next steps
+for a given list, filtering out nodes already visited. It uses
+<em>adjacents</em>, which produces a list of two (for a corner position)
+or four adjacent positions.</p>
+
+<p>[Note: After further reading, I found that this is known as
+Kruskal&rsquo;s algorithm.]</p>
+
+<p>Having specified all of that, I can specify the greedy approach
+as a fusion of <em>least_risk</em>:</p>
+
+<pre><code>least_risk g = minWith (risk g) (candidates g)
+             = minWith (risk g) (filter (complete g) (all_paths g))
+</code></pre>
+
+<p>While it&rsquo;s easy enough to fuse the <em>minWith</em> and <em>filter</em> components
+(both of which are folds), I&rsquo;m left with the problem of fusing a
+fold with <em>all_paths</em>, an <em>until</em> expression.  There is no clear way
+to do this, since the corecursion of <em>until</em> does not mirror the
+recursion of a right fold.</p>
+
+<p>The only way I see to proceed is to generalize <em>minWith</em> and thus
+the whole problem to nondeterministic functions or relations.  I&rsquo;ll
+try to return to this problem when I&rsquo;m more familiar with the
+reasoning processes for those.</p>
+
+<p><a href="index.html">AOC 2021 Index</a></p>
+
+<p><a href="/index.html">Home</a></p>
+</body>
+</html>
