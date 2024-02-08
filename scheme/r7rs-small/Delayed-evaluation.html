@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Delayed evaluation (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Delayed evaluation (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Delayed evaluation (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Dynamic-bindings.html" rel="next" title="Dynamic bindings">
+<link href="Iteration.html" rel="prev" title="Iteration">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Delayed-evaluation">
+<div class="header">
+<p>
+Next: <a href="Dynamic-bindings.html" accesskey="n" rel="next">Dynamic bindings</a>, Previous: <a href="Iteration.html" accesskey="p" rel="prev">Iteration</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Delayed-evaluation-1"></span><h4 class="subsection">4.2.5 Delayed evaluation</h4>
+
+<span id="index-promise"></span>
+
+<dl class="def">
+<dt id="index-delay"><span class="category">lazy library syntax: </span><span><strong>delay</strong> <em>&#x27e8;expression&#x27e9;</em><a href='#index-delay' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>delay</code> construct is used together with the procedure <code>force</code> to
+implement <dfn>lazy evaluation</dfn> or <dfn>call by need</dfn>.
+<code>(delay</code> &#x27e8;expression&#x27e9;<code>)</code> returns an object called a
+<dfn>promise</dfn> which at some point in the future can be asked (by
+the <code>force</code> procedure) to evaluate
+&#x27e8;expression&#x27e9;, and deliver the resulting value.
+The effect of &#x27e8;expression&#x27e9; returning multiple values
+is unspecified.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-delay_002dforce"><span class="category">lazy library syntax: </span><span><strong>delay-force</strong> <em>&#x27e8;expression&#x27e9;</em><a href='#index-delay_002dforce' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The expression <code>(delay-force</code> <var>expression</var><code>)</code> is conceptually similar to
+<code>(delay (force</code> <var>expression</var><code>))</code>,
+with the difference that forcing the result
+of <code>delay-force</code> will in effect result in a tail call to
+<code>(force</code> <var>expression</var><code>)</code>,
+while forcing the result of
+<code>(delay (force</code> <var>expression</var><code>))</code>
+might not.  Thus
+iterative lazy algorithms that might result in a long series of chains of
+<code>delay</code> and <code>force</code>
+can be rewritten using <code>delay-force</code> to prevent consuming
+unbounded space during evaluation.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-force"><span class="category">lazy library procedure: </span><span><strong>force</strong> <em>promise</em><a href='#index-force' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>force</code> procedure forces the value of a <var>promise</var> created
+by <code>delay</code>, <code>delay-force</code>, or <code>make-promise</code>.
+If no value has been computed for the promise, then a value is
+computed and returned.  The value of the promise must be cached (or
+&ldquo;memoized&rdquo;) so that if it is forced a second time, the previously
+computed value is returned.
+Consequently, a delayed expression is evaluated using the parameter
+values and exception handler of the call to <code>force</code> which first
+requested its value.
+If <var>promise</var> is not a promise, it may be returned unchanged.
+</p>
+<div class="example lisp">
+<pre class="lisp">(force (delay (+ 1 2)))   &rArr;  3
+(let ((p (delay (+ 1 2))))
+  (list (force p) (force p)))
+                               &rArr;  (3 3)
+
+(define integers
+  (letrec ((next
+            (lambda (n)
+              (delay (cons n (next (+ n 1)))))))
+    (next 0)))
+(define head
+  (lambda (stream) (car (force stream))))
+(define tail
+  (lambda (stream) (cdr (force stream))))
+
+(head (tail (tail integers)))
+                               &rArr;  2
+</pre></div>
+
+</dd></dl>
+
+<p>The following example is a mechanical transformation of a lazy
+stream-filtering algorithm into Scheme.  Each call to a constructor is
+wrapped in <code>delay</code>, and each argument passed to a deconstructor is
+wrapped in <code>force</code>.  The use of <code>(delay-force &hellip;)</code> instead of
+<code>(delay (force &hellip;))</code> around the body of the procedure ensures that an
+ever-growing sequence of pending promises does not
+exhaust available storage,
+because <code>force</code> will in effect force such sequences iteratively.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define (stream-filter p? s)
+  (delay-force
+   (if (null? (force s))
+       (delay '())
+       (let ((h (car (force s)))
+             (t (cdr (force s))))
+         (if (p? h)
+             (delay (cons h (stream-filter p? t)))
+             (stream-filter p? t))))))
+
+(head (tail (tail (stream-filter odd? integers)))) &rArr; 5
+</pre></div>
+
+<p>The following examples are not intended to illustrate good programming
+style, as <code>delay</code>, <code>force</code>, and <code>delay-force</code> are mainly intended
+for programs written in the functional style.
+However, they do illustrate the property that only one value is
+computed for a promise, no matter how many times it is forced.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define count 0)
+(define p
+  (delay (begin (set! count (+ count 1))
+                (if (&gt; count x)
+                    count
+                    (force p)))))
+(define x 5)
+p                   &rArr; <span class="roman">a promise</span>
+(force p)           &rArr; 6
+p                   &rArr; <span class="roman">a promise, still</span>
+(begin (set! x 10)
+       (force p))   &rArr; 6
+</pre></div>
+
+<p>Various extensions to this semantics of <code>delay</code>, <code>force</code> and
+<code>delay-force</code> are supported in some implementations:
+</p>
+<ul>
+<li> Calling <code>force</code> on an object that is not a promise may simply return the object.
+
+</li><li> It may be the case that there is no means by which a promise can be operationally
+ distinguished from its forced value. That is, expressions like the following may evaluate
+ to either <code>#t</code> or to <code>#f</code>, depending on the implementation:
+
+<div class="example lisp">
+<pre class="lisp">(eqv? (delay 1) 1)         &rArr; <span class="roman">unspecified</span>
+(pair? (delay (cons 1 2))) &rArr; <span class="roman">unspecified</span>
+</pre></div>
+
+</li><li> Implementations may implement &ldquo;implicit forcing,&rdquo; where the value of a promise is
+ forced by procedures that operate only on arguments of a certain type, like
+<code>cdr</code> and <code>*</code>.
+ However, procedures that operate uniformly on their arguments, like
+<code>list</code>, must not
+ force them.
+
+<div class="example lisp">
+<pre class="lisp">(+ (delay (* 3 7)) 13) &rArr; <span class="roman">unspecified</span>
+(car
+  (list (delay (* 3 7)) 13)) &rArr; <span class="roman">a promise</span>
+</pre></div>
+</li></ul>
+
+<dl class="def">
+<dt id="index-promise_003f"><span class="category">lazy library procedure: </span><span><strong>promise?</strong> <em>obj</em><a href='#index-promise_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The promise? procedure returns <code>#t</code> if its argument is a promise, and
+<code>#f</code> otherwise. Note
+that promises are not necessarily disjoint from other Scheme types such as procedures.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-make_002dpromise"><span class="category">lazy library procedure: </span><span><strong>make-promise</strong> <em>obj</em><a href='#index-make_002dpromise' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The make-promise procedure returns a promise which, when forced, will return
+<var>obj</var>. It is similar to delay, but does not delay its argument: it is a procedure rather than
+syntax. If
+<var>obj</var> is already a promise, it is returned.
+</p></dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Dynamic-bindings.html">Dynamic bindings</a>, Previous: <a href="Iteration.html">Iteration</a>, Up: <a href="Derived-expression-types.html">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

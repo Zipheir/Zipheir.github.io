@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Input (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Input (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Input (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Input-and-output.html" rel="up" title="Input and output">
+<link href="Output.html" rel="next" title="Output">
+<link href="Ports.html" rel="prev" title="Ports">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Input">
+<div class="header">
+<p>
+Next: <a href="Output.html" accesskey="n" rel="next">Output</a>, Previous: <a href="Ports.html" accesskey="p" rel="prev">Ports</a>, Up: <a href="Input-and-output.html" accesskey="u" rel="up">Input and output</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Input-1"></span><h4 class="subsection">6.13.2 Input</h4>
+
+<p>If <var>port</var> is omitted from any input procedure, it defaults to the
+value returned by <code>(current-input-port)</code>. It is an error to
+attempt an input operation on a closed port.
+</p>
+<dl class="def">
+<dt id="index-read"><span class="category">read library procedure: </span><span><strong>read</strong><a href='#index-read' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read-1"><span class="category">read library procedure: </span><span><strong>read</strong> <em>port</em><a href='#index-read-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>read</code> procedure converts external representations of Scheme
+objects into the objects themselves. That is, it is a parser for the
+non-terminal &#x27e8;datum&#x27e9; (see <a href="External-representations-formal.html">External representations</a> and <a href="Pairs-and-lists.html">Pairs and lists</a>). It returns the
+next object parsable from the given textual input <var>port</var>, updating
+<var>port</var> to point to the first character past the end of the external
+representation of the object.
+</p>
+<p>Implementations may support extended syntax to represent record types
+or other types that do not have datum representations.
+</p>
+<p>If an end of file is encountered in the input before any characters are
+found that can begin an object, then an end-of-file object is returned.
+The port remains open, and further attempts to read will also return an
+end-of-file object. If an end of file is encountered after the
+beginning of an object&rsquo;s external representation, but the external
+representation is incomplete and therefore not parsable, an error that
+satisfies <code>read-error?</code> is signaled.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-read_002dchar"><span class="category">procedure: </span><span><strong>read-char</strong><a href='#index-read_002dchar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002dchar-1"><span class="category">procedure: </span><span><strong>read-char</strong> <em>port</em><a href='#index-read_002dchar-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the next character available from the textual input <var>port</var>,
+updating the <var>port</var> to point to the following character. If no more
+characters are available, an end-of-file object is returned.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-peek_002dchar"><span class="category">procedure: </span><span><strong>peek-char</strong><a href='#index-peek_002dchar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-peek_002dchar-1"><span class="category">procedure: </span><span><strong>peek-char</strong> <em>port</em><a href='#index-peek_002dchar-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the next character available from the textual input <var>port</var>,
+but without updating the <var>port</var> to point to the following
+character. If no more characters are available, an end-of-file object
+is returned.
+</p>
+<p>Note: The value returned by a call to <code>peek-char</code> is the same as
+the value that would have been returned by a call to <code>read-char</code>
+with the same <var>port</var>.  The only difference is that the very next
+call to <code>read-char</code> or <code>peek-char</code> on that <var>port</var> will
+return the value returned by the preceding call to <code>peek-char</code>.
+In particular, a call to <code>peek-char</code> on an interactive port
+will hang waiting for input whenever a call to <code>read-char</code>
+would have hung.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-read_002dline"><span class="category">procedure: </span><span><strong>read-line</strong><a href='#index-read_002dline' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002dline-1"><span class="category">procedure: </span><span><strong>read-line</strong> <em>port</em><a href='#index-read_002dline-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the next line of text available from the textual input
+<var>port</var>, updating the <var>port</var> to point to the following
+character. If an end of line is read, a string containing all of the
+text up to (but not including) the end of line is returned, and the
+port is updated to point just past the end of line. If an end of file
+is encountered before any end of line is read, but some characters have
+been read, a string containing those characters is returned. If an end
+of file is encountered before any characters are read, an end-of-file
+object is returned. For the purpose of this procedure, an end of line
+consists of either a linefeed character, a carriage return character,
+or a sequence of a carriage return character followed by a linefeed
+character. Implementations may also recognize other end of line
+characters or sequences.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-eof_002dobject_003f"><span class="category">procedure: </span><span><strong>eof-object?</strong> <em>obj</em><a href='#index-eof_002dobject_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>obj</var> is an end-of-file object, otherwise
+returns <code>#f</code>.  The precise set of end-of-file objects will vary
+among implementations, but in any case no end-of-file object will
+ever be an object that can be read in using <code>read</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-eof_002dobject"><span class="category">procedure: </span><span><strong>eof-object</strong><a href='#index-eof_002dobject' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns an end-of-file object, not necessarily unique.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-char_002dready_003f"><span class="category">procedure: </span><span><strong>char-ready?</strong><a href='#index-char_002dready_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dready_003f-1"><span class="category">procedure: </span><span><strong>char-ready?</strong> <em>port</em><a href='#index-char_002dready_003f-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if a character is ready on the textual input
+<var>port</var> and returns <code>#f</code> otherwise.  If <code>char-ready</code>
+returns <code>#t</code> then the next <code>read-char</code> operation on the
+given <var>port</var> is guaranteed not to hang.  If the <var>port</var> is at
+end of file then <code>char-ready?</code> returns <code>#t</code>.
+</p>
+<span id="Rationale_003a-7"></span><h4 class="subheading">Rationale:</h4>
+
+<p>The <code>char-ready?</code> procedure exists to make it possible for
+a program to accept characters from interactive ports without
+getting stuck waiting for input.  Any input editors associated with
+such ports must ensure that characters whose existence has been
+asserted by <code>char-ready?</code> cannot be removed from the input.
+If <code>char-ready?</code> were to return <code>#f</code> at end of file, a port
+at end of file would be indistinguishable from an interactive port
+that has no ready characters.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-read_002dstring"><span class="category">procedure: </span><span><strong>read-string</strong> <em>k</em><a href='#index-read_002dstring' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002dstring-1"><span class="category">procedure: </span><span><strong>read-string</strong> <em>k port</em><a href='#index-read_002dstring-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Reads the next <var>k</var> characters, or as many as are available
+before the end of file, from the textual input <var>port</var> into a
+newly allocated string in left-to-right order and returns the string.
+If no characters are available before the end of file, an end-of-file
+object is returned.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-read_002du8"><span class="category">procedure: </span><span><strong>read-u8</strong><a href='#index-read_002du8' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002du8-1"><span class="category">procedure: </span><span><strong>read-u8</strong> <em>port</em><a href='#index-read_002du8-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the next byte available from the binary input <var>port</var>,
+updating the <var>port</var> to point to the following byte. If no more
+bytes are available, an end-of-file object is returned.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-peek_002du8"><span class="category">procedure: </span><span><strong>peek-u8</strong><a href='#index-peek_002du8' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-peek_002du8-1"><span class="category">procedure: </span><span><strong>peek-u8</strong> <em>port</em><a href='#index-peek_002du8-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the next byte available from the binary input <var>port</var>, but
+without updating the <var>port</var> to point to the following byte. If no
+more bytes are available, an end-of-file object is returned.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-u8_002dready_003f"><span class="category">procedure: </span><span><strong>u8-ready?</strong><a href='#index-u8_002dready_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-u8_002dready_003f-1"><span class="category">procedure: </span><span><strong>u8-ready?</strong> <em>port</em><a href='#index-u8_002dready_003f-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if a byte is ready on the binary input <var>port</var>
+and returns <code>#f</code> otherwise.  If <code>u8-ready?</code> returns <code>#t</code>
+then the next <code>read-u8</code> operation on the given <var>port</var> is
+guaranteed not to hang.  If the <var>port</var> is at end of file then
+<code>u8-ready?</code> returns <code>#t</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-read_002dbytevector"><span class="category">procedure: </span><span><strong>read-bytevector</strong> <em>k</em><a href='#index-read_002dbytevector' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002dbytevector-1"><span class="category">procedure: </span><span><strong>read-bytevector</strong> <em>k port</em><a href='#index-read_002dbytevector-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Reads the next <var>k</var> bytes, or as many as are available before the
+end of file, from the binary input <var>port</var> into a newly allocated
+bytevector in left-to-right order and returns the bytevector.  If no
+bytes are available before the end of file, an end-of-file object
+is returned.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-read_002dbytevector_0021"><span class="category">procedure: </span><span><strong>read-bytevector!</strong> <em>bytevector</em><a href='#index-read_002dbytevector_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002dbytevector_0021-1"><span class="category">procedure: </span><span><strong>read-bytevector!</strong> <em>bytevector port</em><a href='#index-read_002dbytevector_0021-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002dbytevector_0021-2"><span class="category">procedure: </span><span><strong>read-bytevector!</strong> <em>bytevector port start</em><a href='#index-read_002dbytevector_0021-2' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-read_002dbytevector_0021-3"><span class="category">procedure: </span><span><strong>read-bytevector!</strong> <em>bytevector port start end</em><a href='#index-read_002dbytevector_0021-3' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Reads the next <var>end</var> - <var>start</var> bytes, or as many as are
+available before the end of file, from the binary input <var>port</var> into
+<var>bytevector</var> in left-to-right order beginning at the <var>start</var>
+position. If <var>end</var> is not supplied, reads until the end of
+<var>bytevector</var> has been reached. If <var>start</var> is not supplied,
+reads beginning at position 0. Returns the number of bytes read. If no
+bytes are available, an end-of-file object is returned.
+</p>
+</dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Output.html">Output</a>, Previous: <a href="Ports.html">Ports</a>, Up: <a href="Input-and-output.html">Input and output</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

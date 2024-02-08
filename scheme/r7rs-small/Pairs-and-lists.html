@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Pairs and lists (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Pairs and lists (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Pairs and lists (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Symbols.html" rel="next" title="Symbols">
+<link href="Booleans.html" rel="prev" title="Booleans">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Pairs-and-lists">
+<div class="header">
+<p>
+Next: <a href="Symbols.html" accesskey="n" rel="next">Symbols</a>, Previous: <a href="Booleans.html" accesskey="p" rel="prev">Booleans</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Pairs-and-lists-1"></span><h3 class="section">6.4 Pairs and lists</h3>
+
+<p>A <dfn>pair</dfn> (sometimes called a <dfn>dotted pair</dfn>) is a record
+structure with two fields called the car and cdr fields (for historical
+reasons). Pairs are created by the procedure <code>cons</code>.  The car and
+cdr fields are accessed by the procedures <code>car</code> and <code>cdr</code>. The
+car and cdr fields are assigned by the procedures <code>set-car!</code>
+and <code>set-cdr!</code>.
+</p>
+<span id="index-empty-list-2"></span>
+
+<p>Pairs are used primarily to represent lists. A <dfn>list</dfn> can be defined
+recursively as either the empty list or a pair whose cdr is a list. More
+precisely, the set of lists is defined as the smallest set <var>X</var>
+such that
+</p>
+<ul>
+<li> The empty list is in <var>X</var>.
+
+</li><li> If <var>list</var> is in <var>X</var>, then any pair whose cdr field contains
+<var>list</var> is also in <var>X</var>.
+
+</li></ul>
+
+<p>The objects in the car fields of successive pairs of a list are the
+elements of the list.  For example, a two-element list is a pair whose
+car is the first element and whose cdr is a pair whose car is the second
+element and whose cdr is the empty list.  The length of a list is the
+number of elements, which is the same as the number of pairs.
+</p>
+<span id="index-empty-list-3"></span>
+
+<p>The empty list is a special object of its own type.  It is not a pair,
+it has no elements, and its length is zero.
+</p>
+<p>Note: The above definitions imply that all lists have finite length and
+are terminated by the empty list.
+</p>
+<p>The most general notation (external representation) for Scheme pairs
+is the &ldquo;dotted&rdquo; notation <code>(</code><var>c<sub>1</sub></var><code> . </code><var>c<sub>2</sub></var><code>)</code>
+where <var>c<sub>1</sub></var> is the value of the car field and <var>c<sub>2</sub></var> is the value of
+the cdr field.  For example <code>(4 . 5)</code> is a pair whose car is 4 and
+whose cdr is 5.  Note that <code>(4 . 5)</code> is the external representation
+of a pair, not an expression that evaluates to a pair.
+</p>
+<span id="index-empty-list-4"></span>
+
+<p>A more streamlined notation can be used for lists: the elements of
+the list are simply enclosed in parentheses and separated by spaces.
+The empty list is written <code>()</code>.  For example,
+</p>
+<div class="example lisp">
+<pre class="lisp">(a b c d e)
+</pre></div>
+
+<p>and
+</p>
+<div class="example lisp">
+<pre class="lisp">(a . (b . (c . (d . (e . ())))))
+</pre></div>
+
+<p>are equivalent notations for a list of symbols.
+</p>
+<p>A chain of pairs not ending in the empty list is called an
+<dfn>improper list</dfn>. Note that an improper list is not a list. The list
+and dotted notations can be combined to represent improper lists:
+</p>
+<div class="example lisp">
+<pre class="lisp">(a b c . d)
+</pre></div>
+
+<p>is equivalent to
+</p>
+<div class="example lisp">
+<pre class="lisp">(a . (b . (c . d)))
+</pre></div>
+
+<p>Whether a given pair is a list depends upon what is stored in the cdr
+field. When the <code>set-cdr!</code> procedure is used, an object can be a
+list one moment and not the next:
+</p>
+<div class="example lisp">
+<pre class="lisp">(define x (list 'a 'b 'c))
+(define y x)
+y              &rArr; (a b c)
+(list? y)      &rArr; <code>#t</code>
+(set-cdr! x 4) &rArr; <span class="roman">unspecified</span>
+x              &rArr; (a . 4)
+(eqv? x y)     &rArr; <code>#t</code>
+y              &rArr; (a . 4)
+(list? y)      &rArr; <code>#f</code>
+(set-cdr! x x) &rArr; <span class="roman">unspecified</span>
+(list? x)      &rArr; <code>#f</code>
+</pre></div>
+
+<p>Within literal expressions and representations of objects read by the
+<code>read</code> procedure, the forms <code>'</code>&#x27e8;datum&#x27e9;,
+<code>`</code>&#x27e8;datum&#x27e9;, <code>,</code>&#x27e8;datum&#x27e9;, and <code>,@</code>&#x27e8;datum&#x27e9;
+denote two-element lists whose first elements are the symbols
+<code>quote</code>, <code>quasiquote</code>, <code>unquote</code>, and
+<code>unquote-splicing</code>, respectively. The second element in each case
+is &#x27e8;datum&#x27e9;. This convention is supported so that arbitrary Scheme
+programs can be represented as lists. That is, according to Scheme&rsquo;s
+grammar, every &#x27e8;expression&#x27e9; is also a &#x27e8;datum&#x27e9;
+(See <a href="External-representations-formal.html">External representations</a>).
+Among other things, this permits the use of the <code>read</code> procedure to
+parse Scheme programs. See <a href="External-representations-basic.html">External representations (basic)</a>.
+</p>
+<dl class="def">
+<dt id="index-pair_003f"><span class="category">procedure: </span><span><strong>pair?</strong> <em>obj</em><a href='#index-pair_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>pair?</code> predicate returns <code>#t</code> if <var>obj</var> is a pair,
+and otherwise returns <code>#f</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(pair? '(a . b)) &rArr; #t
+(pair? '(a b c)) &rArr; #t
+(pair? '())      &rArr; #f
+(pair? '#(a b))  &rArr; #f
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-cons"><span class="category">procedure: </span><span><strong>cons</strong> <em><var>obj<sub>1</sub></var> <var>obj<sub>2</sub></var></em><a href='#index-cons' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated pair whose car is <var>obj<sub>1</sub></var> and whose cdr is
+<var>obj<sub>2</sub></var>. The pair is guaranteed to be different (in the sense of
+<code>eqv?</code>) from every existing object.
+</p>
+<div class="example lisp">
+<pre class="lisp">(cons 'a '())        &rArr; (a)
+(cons '(a) '(b c d)) &rArr; ((a) b c d)
+(cons &quot;a&quot; '(b c))    &rArr; (&quot;a&quot; b c)
+(cons 'a 3)          &rArr; (a . 3)
+(cons '(a b) 'c)     &rArr; ((a b) . c)
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-car"><span class="category">procedure: </span><span><strong>car</strong> <em>pair</em><a href='#index-car' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<span id="index-empty-list-5"></span>
+
+<p>Returns the contents of the car field of <var>pair</var>. Note that it is an
+error to take the car of the empty list.
+</p>
+<div class="example lisp">
+<pre class="lisp">(car '(a b c))     &rArr; a
+(car '((a) b c d)) &rArr; (a)
+(car '(1 . 2))     &rArr; 1
+(car '())          &rArr; <span class="roman">error</span>
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-cdr"><span class="category">procedure: </span><span><strong>cdr</strong> <em>pair</em><a href='#index-cdr' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the contents of the cdr field of <var>pair</var>. Note that it is an
+error to take the cdr of the empty list.
+</p>
+<div class="example lisp">
+<pre class="lisp">(cdr '((a) b c d)) &rArr; (b c d)
+(cdr '(1 . 2))     &rArr; 2
+(cdr '())          &rArr; <span class="roman">error</span>
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-set_002dcar_0021"><span class="category">procedure: </span><span><strong>set-car!</strong> <em>pair obj</em><a href='#index-set_002dcar_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Stores <var>obj</var> in the car field of <var>pair</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define (f) (list 'not-a-constant-list))
+(define (g) '(constant-list))
+(set-car! (f) 3) &rArr; <span class="roman">unspecified</span>
+(set-car! (g) 3) &rArr; <span class="roman">error</span>
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-set_002dcdr_0021"><span class="category">procedure: </span><span><strong>set-cdr!</strong> <em>pair obj</em><a href='#index-set_002dcdr_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Stores <var>obj</var> in the cdr field of <var>pair</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-caar"><span class="category">procedure: </span><span><strong>caar</strong> <em>pair</em><a href='#index-caar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-cadr"><span class="category">procedure: </span><span><strong>cadr</strong> <em>pair</em><a href='#index-cadr' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-cdar"><span class="category">procedure: </span><span><strong>cdar</strong> <em>pair</em><a href='#index-cdar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-cddr"><span class="category">procedure: </span><span><strong>cddr</strong> <em>pair</em><a href='#index-cddr' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures are compositions of <code>car</code> and <code>cdr</code> as
+follows:
+</p>
+<div class="example lisp">
+<pre class="lisp">(define (caar x) (car (car x)))
+(define (cadr x) (car (cdr x)))
+(define (cdar x) (cdr (car x)))
+(define (cddr x) (cdr (cdr x)))
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-caaar"><span class="category">cxr library procedure: </span><span><strong>caaar</strong> <em><var>pair</var></em><a href='#index-caaar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-caadr"><span class="category">cxr library procedure: </span><span><strong>caadr</strong> <em><var>pair</var></em><a href='#index-caadr' class='copiable-anchor'> &para;</a></span></dt>
+</dl>
+<p>&hellip;
+</p><dl class="def">
+<dt id="index-cdddar"><span class="category">cxr library procedure: </span><span><strong>cdddar</strong> <em><var>pair</var></em><a href='#index-cdddar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-cddddr"><span class="category">cxr library procedure: </span><span><strong>cddddr</strong> <em><var>pair</var></em><a href='#index-cddddr' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These twenty-four procedures are further compositions of <code>car</code> and
+<code>cdr</code> on the same principles. For example, <code>caddr</code> could be
+defined by
+</p>
+<div class="example lisp">
+<pre class="lisp">(define caddr (lambda (x) (car (cdr (cdr x))))).
+</pre></div>
+
+<p>Arbitrary compositions up to four deep are provided.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-null_003f"><span class="category">procedure: </span><span><strong>null?</strong> <em>obj</em><a href='#index-null_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<span id="index-empty-list-6"></span>
+
+<p>Returns <code>#t</code> if <var>obj</var> is the empty list,
+otherwise returns <code>#f</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-list_003f"><span class="category">procedure: </span><span><strong>list?</strong> <em>obj</em><a href='#index-list_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>obj</var> is a list. Otherwise, it returns
+<code>#f</code>. By definition, all lists have finite length and are
+terminated by the empty list.
+</p>
+<div class="example lisp">
+<pre class="lisp">(list? '(a b c))     &rArr; #t
+(list? '())          &rArr; #t
+(list? '(a . b))     &rArr; #f
+(let ((x (list 'a)))
+  (set-cdr! x x)
+  (list? x))         &rArr; #f
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-make_002dlist"><span class="category">procedure: </span><span><strong>make-list</strong> <em>k</em><a href='#index-make_002dlist' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-make_002dlist-1"><span class="category">procedure: </span><span><strong>make-list</strong> <em>k fill</em><a href='#index-make_002dlist-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated list of <var>k</var> elements. If a second
+argument is given, then each element is initialized to <var>fill</var>.
+Otherwise the initial contents of each element is unspecified.
+</p>
+<div class="example lisp">
+<pre class="lisp">(make-list 2 3) &rArr; (3 3)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-list"><span class="category">procedure: </span><span><strong>list</strong> <em>obj &hellip;</em><a href='#index-list' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated list of its arguments.
+</p>
+<div class="example lisp">
+<pre class="lisp">(list 'a (+ 3 4) 'c) &rArr; (a 7 c)
+(list)               &rArr; ()
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-length"><span class="category">procedure: </span><span><strong>length</strong> <em>list</em><a href='#index-length' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the length of <var>list</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(length '(a b c))         &rArr; 3
+(length '(a (b) (c d e))) &rArr; 3
+(length '())              &rArr; 0
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-append"><span class="category">procedure: </span><span><strong>append</strong> <em>list&hellip;</em><a href='#index-append' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The last argument, if there is one, can be of any type.
+</p>
+<p>Returns a list consisting of the elements of the first <var>list</var>
+followed by the elements of the other <var>lists</var>. If there are no
+arguments, the empty list is returned. If there is exactly one
+argument, it is returned. Otherwise the resulting list is always newly
+allocated, except that it shares structure with the last argument. An
+improper list results if the last argument is not a proper list.
+</p>
+<div class="example lisp">
+<pre class="lisp">(append '(x) '(y))       &rArr; (x y)
+(append '(a) '(b c d))   &rArr; (a b c d)
+(append '(a (b)) '((c))) &rArr; (a (b) (c))
+
+(append '(a b) '(c . d)) &rArr; (a b c . d)
+(append '() 'a)          &rArr; a
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-reverse"><span class="category">procedure: </span><span><strong>reverse</strong> <em>list</em><a href='#index-reverse' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated list consisting of the elements of <var>list</var>
+in reverse order.
+</p>
+<div class="example lisp">
+<pre class="lisp">(reverse '(a b c))             &rArr; (c b a)
+(reverse '(a (b c) d (e (f)))) &rArr; ((e (f)) d (b c) a)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-list_002dtail"><span class="category">procedure: </span><span><strong>list-tail</strong> <em>list k</em><a href='#index-list_002dtail' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>list</var> has fewer than <var>k</var> elements.
+</p>
+<p>Returns the sublist of <var>list</var> obtained by omitting the first
+<var>k</var> elements. The <code>list-tail</code> procedure could be defined by
+</p>
+<div class="example lisp">
+<pre class="lisp">(define list-tail
+  (lambda (x k)
+    (if (zero? k)
+        x
+        (list-tail (cdr x) (- k 1)))))
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-list_002dref"><span class="category">procedure: </span><span><strong>list-ref</strong> <em>list k</em><a href='#index-list_002dref' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <var>list</var> argument can be circular, but it is an error if <var>list</var>
+has <var>k</var> or fewer elements.
+</p>
+<p>Returns the <var>k</var>th element of <var>list</var>. (This is the same as the
+car of <code>(list-tail </code><var>list</var> <var>k</var><code>)</code>.)
+</p>
+<div class="example lisp">
+<pre class="lisp">(list-ref '(a b c d) 2)                   &rArr; c
+(list-ref '(a b c d) (exact (round 1.8))) &rArr; c
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-list_002dset_0021"><span class="category">procedure: </span><span><strong>list-set!</strong> <em>list k obj</em><a href='#index-list_002dset_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>k</var> is not a valid index of <var>list</var>.
+</p>
+<p>The <code>list-set!</code> procedure stores <var>obj</var> in element <var>k</var> of
+<var>list</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((ls (list 'one 'two 'five!)))
+  (list-set! ls 2 'three)
+  ls) &rArr; (one two three)
+
+(list-set! '(0 1 2) 1 &quot;oops&quot;) &rArr; <span class="roman">error</span>  ; constant list
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-memq"><span class="category">procedure: </span><span><strong>memq</strong> <em>obj list</em><a href='#index-memq' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-memv"><span class="category">procedure: </span><span><strong>memv</strong> <em>obj list</em><a href='#index-memv' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-member"><span class="category">procedure: </span><span><strong>member</strong> <em>obj list</em><a href='#index-member' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-member-1"><span class="category">procedure: </span><span><strong>member</strong> <em>obj list compare</em><a href='#index-member-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return the first sublist of <var>list</var> whose car is
+<var>obj</var>, where the sublists of <var>list</var> are the non-empty lists
+returned by <code>(list-tail </code><var>list</var> <var>k</var><code>)</code> for <var>k</var>
+less than the length of <var>list</var>. If <var>obj</var> does not occur in
+<var>list</var>, then <code>#f</code> (not the empty list) is returned. The
+<code>memq</code> procedure uses <code>eq?</code> to compare <var>obj</var> with the
+elements of <var>list</var>, while <code>memv</code> uses <code>eqv?</code> and
+<code>member</code> uses <var>compare</var>, if given, and <code>equal?</code>
+otherwise.
+</p>
+<div class="example lisp">
+<pre class="lisp">(memq 'a '(a b c))          &rArr; (a b c)
+(memq 'b '(a b c))          &rArr; (b c)
+(memq 'a '(b c d))          &rArr; #f
+(memq (list 'a) '(b (a) c)) &rArr; #f
+(member (list 'a)
+        '(b (a) c))         &rArr; ((a) c)
+(member &quot;B&quot;
+        '(&quot;a&quot; &quot;b&quot; &quot;c&quot;)
+        string-ci=?)        &rArr; (&quot;b&quot; &quot;c&quot;)
+(memq 101 '(100 101 102))   &rArr; <span class="roman">unspecified</span>
+(memv 101 '(100 101 102))   &rArr; (101 102)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-assq"><span class="category">procedure: </span><span><strong>assq</strong> <em>obj alist</em><a href='#index-assq' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-assv"><span class="category">procedure: </span><span><strong>assv</strong> <em>obj alist</em><a href='#index-assv' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-assoc"><span class="category">procedure: </span><span><strong>assoc</strong> <em>obj alist</em><a href='#index-assoc' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-assoc-1"><span class="category">procedure: </span><span><strong>assoc</strong> <em>obj alist compare</em><a href='#index-assoc-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>alist</var> (for &ldquo;association list&rdquo;) is not a list
+of pairs.
+</p>
+<p>These procedures find the first pair in <var>alist</var> whose car field
+is <var>obj</var>, and returns that pair.  If no pair in <var>alist</var> has
+<var>obj</var> as its car, then <code>#f</code> (not the empty list) is returned.
+The <code>assq</code> procedure uses <code>eq?</code> to compare <var>obj</var> with the
+car fields of the pairs in <var>alist</var>, while <code>assv</code> uses <code>eqv?</code>
+and <code>assoc</code> uses <var>compare</var> if given and <code>equal?</code> otherwise.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define e '((a 1) (b 2) (c 3)))
+(assq 'a e)                            &rArr; (a 1)
+(assq 'b e)                            &rArr; (b 2)
+(assq 'd e)                            &rArr; #f
+(assq (list 'a) '(((a)) ((b)) ((c))))  &rArr; #f
+(assoc (list 'a) '(((a)) ((b)) ((c)))) &rArr; ((a))
+(assoc 2.0 '((1 1) (2 4) (3 9)) =)     &rArr; (2 4)
+(assq 5 '((2 3) (5 7) (11 13)))        &rArr; <span class="roman">unspecified</span>
+(assv 5 '((2 3) (5 7) (11 13)))        &rArr; (5 7)
+</pre></div>
+
+</dd></dl>
+
+<p>Although they are often used as predicates, <code>memq</code>, <code>memv</code>,
+<code>member</code>, <code>assq</code>, <code>assv</code>, and <code>assoc</code> do not have
+question marks in their names because they return potentially useful
+values rather than just <code>#t</code> or <code>#f</code>.
+</p>
+<dl class="def">
+<dt id="index-list_002dcopy"><span class="category">procedure: </span><span><strong>list-copy</strong> <em>obj</em><a href='#index-list_002dcopy' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated copy of the given <var>obj</var> if it is a list.
+Only the pairs themselves are copied; the cars of the result are the same
+(in the sense of <code>eqv?</code>) as the cars of <var>list</var>.  If <var>obj</var>
+is an improper list, so is the result, and the final cdrs are the same in
+the sense of <code>eqv?</code>.  An <var>obj</var> which is not a list is returned
+unchanged.  It is an error if <var>obj</var> is a circular list.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define a '(1 8 2 8)) ; a may be immutable
+(define b (list-copy a))
+(set-car! b 3)        ; b is mutable
+b &rArr; (3 8 2 8)
+a &rArr; (1 8 2 8)
+</pre></div>
+
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Symbols.html">Symbols</a>, Previous: <a href="Booleans.html">Booleans</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

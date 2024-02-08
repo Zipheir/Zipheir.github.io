@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Binding constructs (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Binding constructs (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Binding constructs (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Sequencing.html" rel="next" title="Sequencing">
+<link href="Conditionals-derived.html" rel="prev" title="Conditionals derived">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Binding-constructs">
+<div class="header">
+<p>
+Next: <a href="Sequencing.html" accesskey="n" rel="next">Sequencing</a>, Previous: <a href="Conditionals-derived.html" accesskey="p" rel="prev">Conditionals</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Binding-constructs-1"></span><h4 class="subsection">4.2.2 Binding constructs</h4>
+
+<span id="index-region-1"></span>
+
+<p>The binding constructs <code>let</code>, <code>let*</code>, <code>letrec</code>,
+<code>letrec*</code>, <code>let-values</code>, and <code>let*-values</code> give Scheme a
+block structure, like Algol 60. The syntax of the first four constructs is
+identical, but they differ in the regions they establish for their variable
+bindings. In a <code>let</code> expression, the initial values are computed before
+any of the variables become bound; in a <code>let*</code> expression, the bindings
+and evaluations are performed sequentially; while in <code>letrec</code> and
+<code>letrec*</code> expressions, all the bindings are in effect while their
+initial values are being computed, thus allowing mutually recursive
+definitions. The <code>let-values</code> and <code>let*-values</code> constructs are
+analogous to <code>let</code> and <code>let*</code> respectively, but are designed to
+handle multiple-valued expressions, binding different identifiers to the
+returned values.
+</p>
+<dl class="def">
+<dt id="index-let"><span class="category">syntax: </span><span><strong>let</strong> <em>&#x27e8;bindings&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-let' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Bindings&#x27e9; has the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;variable<sub>1</sub>&#x27e9; &#x27e8;init<sub>1</sub>&#x27e9;<code>)</code> &hellip;<code>)</code>,
+</pre></div>
+
+<p>where each &#x27e8;init&#x27e9; is an expression, and &#x27e8;body&#x27e9; is a sequence of
+zero or more definitions followed by a sequence of one or more expressions
+as described in <a href="Expressions.html">Expressions</a>. It is an error for a &#x27e8;variable&#x27e9; to
+appear more than once in the list of variables being bound.
+</p>
+<span id="index-region-2"></span>
+
+<p>Semantics: The &#x27e8;init&#x27e9;s are evaluated in the current environment (in
+some unspecified order), the &#x27e8;variable&#x27e9;s are bound to fresh locations
+holding the results, the &#x27e8;body&#x27e9; is evaluated in the extended
+environment, and the values of the last expression of &#x27e8;body&#x27e9; are
+returned. Each binding of a &#x27e8;variable&#x27e9; has &#x27e8;body&#x27e9; as its region.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((x 2) (y 3))
+  (* x y))           &rArr; 6
+
+(let ((x 2) (y 3))
+  (let ((x 7)
+        (z (+ x y)))
+    (* z x)))        &rArr; 35
+</pre></div>
+
+<p>See also &ldquo;named <code>let</code>,&rdquo; <a href="Iteration.html">Iteration</a>.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-let_002a"><span class="category">syntax: </span><span><strong>let*</strong> <em>&#x27e8;bindings&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-let_002a' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Bindings&#x27e9; has the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;variable1&#x27e9; &#x27e8;init<sub>1</sub>&#x27e9;) &hellip;<code>)</code>,
+</pre></div>
+
+<p>and &#x27e8;body&#x27e9; is a sequence of zero or more definitions followed by
+one or more expressions as described in <a href="Expressions.html">Expressions</a>.
+</p>
+<span id="index-region-3"></span>
+
+<p>Semantics: The <code>let*</code> binding construct is similar to <code>let</code>, but
+the bindings are performed sequentially from left to right, and the region
+of a binding indicated by <code>(</code>&#x27e8;variable&#x27e9; &#x27e8;init&#x27e9;<code>)</code> is
+that part of the <code>let*</code> expression to the right of the binding. Thus
+the second binding is done in an environment in which the first binding is
+visible, and so on. The &#x27e8;variable&#x27e9;s need not be distinct.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((x 2) (y 3))
+  (let* ((x 7)
+         (z (+ x y)))
+    (* z x)))         &rArr; 70
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-letrec"><span class="category">syntax: </span><span><strong>letrec</strong> <em>&#x27e8;bindings&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-letrec' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Bindings&#x27e9; has the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;variable<sub>1</sub>&#x27e9; &#x27e8;init<sub>1</sub>&#x27e9;<code>)</code> &hellip;<code>)</code>,
+</pre></div>
+
+<p>and &#x27e8;body&#x27e9; is a sequence of zero or more definitions followed by one or
+more expressions as described in <a href="Expressions.html">Expressions</a>. It is an error for a
+&#x27e8;variable&#x27e9; to appear more than once in the list of variables being
+bound.
+</p>
+<span id="index-region-4"></span>
+
+<p>Semantics: The &#x27e8;variable&#x27e9;s are bound to fresh locations holding
+unspecified values, the &#x27e8;init&#x27e9;s are evaluated in the resulting
+environment (in some unspecified order), each &#x27e8;variable&#x27e9; is assigned to
+the result of the corresponding &#x27e8;init&#x27e9;, the &#x27e8;body&#x27e9; is evaluated in
+the resulting environment, and the values of the last expression in
+&#x27e8;body&#x27e9; are returned. Each binding of a &#x27e8;variable&#x27e9; has the entire
+letrec expression as its region, making it possible to define mutually
+recursive procedures.
+</p>
+<div class="example lisp">
+<pre class="lisp">(letrec ((even?
+          (lambda (n)
+            (if (zero? n)
+                #t
+                (odd? (- n 1)))))
+         (odd?
+          (lambda (n)
+            (if (zero? n)
+                #f
+                (even? (- n 1))))))
+  (even? 88))
+&rArr; #t
+</pre></div>
+
+<p>One restriction on <code>letrec</code> is very important: if it is not possible to
+evaluate each &#x27e8;init&#x27e9; without assigning or referring to the value of any
+&#x27e8;variable&#x27e9;, it is an error. The restriction is necessary because
+<code>letrec</code> is defined in terms of a procedure call where a <code>lambda</code>
+expression binds the &#x27e8;variable&#x27e9;s to the values of the &#x27e8;init&#x27e9;s. In
+the most common uses of <code>letrec</code>, all the &#x27e8;init&#x27e9;s are
+<code>lambda</code> expressions and the restriction is satisfied automatically.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-letrec_002a"><span class="category">syntax: </span><span><strong>letrec*</strong> <em>&#x27e8;bindings&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-letrec_002a' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Bindings&#x27e9; has the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;variable<sub>1</sub>&#x27e9; &#x27e8;init<sub>1</sub>&#x27e9;<code>)</code> &hellip;<code>)</code>,
+</pre></div>
+
+<p>and &#x27e8;body&#x27e9;is a sequence of zero or more definitions followed by one or
+more expressions as described in <a href="Expressions.html">Expressions</a>. It is an error for a
+&#x27e8;variable&#x27e9; to appear more than once in the list of variables being
+bound.
+</p>
+<span id="index-region-5"></span>
+
+<p>Semantics: The &#x27e8;variable&#x27e9;s are bound to fresh locations, each
+&#x27e8;variable&#x27e9; is assigned in left-to-right order to the result of
+evaluating the corresponding &#x27e8;init&#x27e9; (interleaving evaluations and
+assignments), the &#x27e8;body&#x27e9; is evaluated in the resulting environment, and
+the values of the last expression in &#x27e8;body&#x27e9; are returned. Despite the
+left-to-right evaluation and assignment order, each binding of a
+&#x27e8;variable&#x27e9; has the entire <code>letrec*</code> expression as its region,
+making it possible to define mutually recursive procedures.
+</p>
+<p>If it is not possible to evaluate each &#x27e8;init&#x27e9; without assigning or
+referring to the value of the corresponding &#x27e8;variable&#x27e9; or the
+&#x27e8;variable&#x27e9; of any of the bindings that follow it in &#x27e8;bindings&#x27e9;, it
+is an error. Another restriction is that it is an error to invoke the
+continuation of an &#x27e8;init&#x27e9; more than once.
+</p>
+<div class="example lisp">
+<pre class="lisp">;; Returns the arithmetic, geometric, and
+;; harmonic means of a nested list of numbers
+(define (means ton)
+  (letrec*
+     ((mean
+        (lambda (f g)
+          (f (/ (sum g ton) n))))
+      (sum
+        (lambda (g ton)
+          (if (null? ton)
+            (+)
+            (if (number? ton)
+                (g ton)
+                (+ (sum g (car ton))
+                   (sum g (cdr ton)))))))
+      (n (sum (lambda (x) 1) ton)))
+    (values (mean values values)
+            (mean exp log)
+            (mean / /))))
+</pre></div>
+
+<p>Evaluating <code>(means '(3 (1 4)))</code> returns three values: 8/3,
+2.28942848510666 (approximately), and 36/19.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-let_002dvalues"><span class="category">syntax: </span><span><strong>let-values</strong> <em>&#x27e8;mv binding spec&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-let_002dvalues' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Mv binding spec&#x27e9; has the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;formals<sub>1</sub>&#x27e9; &#x27e8;init<sub>1</sub>&#x27e9;<code>)</code> &hellip;<code>)</code>,
+</pre></div>
+
+<p>where each &#x27e8;init&#x27e9; is an expression, and &#x27e8;body&#x27e9; is zero or more
+definitions followed by a sequence of one or more expressions as described in <a href="Expressions.html">Expressions</a>.
+It is an error for a variable to appear more than once in the set of &#x27e8;formals&#x27e9;.
+</p>
+<span id="index-region-6"></span>
+
+<p>Semantics:
+The &#x27e8;init&#x27e9;s are evaluated in the current environment (in some
+unspecified order) as if by invoking <code>call-with-values</code>, and the
+variables occurring in the &#x27e8;formals&#x27e9; are bound to fresh locations
+holding the values returned by the &#x27e8;init&#x27e9;s, where the
+&#x27e8;formals&#x27e9; are matched to the return values in the same way that
+the &#x27e8;formals&#x27e9; in a <code>lambda</code> expression are matched to the
+arguments in a procedure call.  Then, the &#x27e8;body&#x27e9; is evaluated in
+the extended environment, and the values of the last expression of
+&#x27e8;body&#x27e9; are returned.  Each binding of a &#x27e8;variable&#x27e9; has
+&#x27e8;body&#x27e9; as its region.
+</p>
+<p>It is an error if the &#x27e8;formals&#x27e9; do not match the number of values
+returned by the corresponding &#x27e8;init&#x27e9;.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let-values (((root rem) (exact-integer-sqrt 32)))
+  (* root rem)) &rArr; 35
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-let_002a_002dvalues"><span class="category">syntax: </span><span><strong>let*-values</strong> <em>&#x27e8;mv binding spec&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-let_002a_002dvalues' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Mv binding spec&#x27e9; has the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;formals&#x27e9; &#x27e8;init&#x27e9;<code>)</code> &hellip;<code>)</code>,
+</pre></div>
+
+<p>and &#x27e8;body&#x27e9; is a sequence of zero or more definitions followed by one or
+more expressions as described in <a href="Expressions.html">Expressions</a>. In each &#x27e8;formals&#x27e9;,
+it is an error if any variable appears more than once.
+</p>
+<span id="index-region-7"></span>
+
+<p>Semantics:
+The <code>let*-values</code> construct is similar to <code>let-values</code>, but the
+&#x27e8;init&#x27e9;s are evaluated and bindings created sequentially from left to
+right, with the region of the bindings of each &#x27e8;formals&#x27e9; including the
+&#x27e8;init&#x27e9;s to its right as well as &#x27e8;body&#x27e9;. Thus the second
+&#x27e8;init&#x27e9; is evaluated in an environment in which the first set of
+bindings is visible and initialized, and so on.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((a 'a) (b 'b) (x 'x) (y 'y))
+  (let*-values (((a b) (values x y))
+                ((x y) (values a b)))
+    (list a b x y))) &rArr; (x y x y)
+</pre></div>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Sequencing.html">Sequencing</a>, Previous: <a href="Conditionals-derived.html">Conditionals</a>, Up: <a href="Derived-expression-types.html">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

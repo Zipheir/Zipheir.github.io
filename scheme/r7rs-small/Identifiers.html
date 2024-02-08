@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Identifiers (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Identifiers (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Identifiers (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Lexical-conventions.html" rel="up" title="Lexical conventions">
+<link href="Whitespace-and-comments.html" rel="next" title="Whitespace and comments">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Identifiers">
+<div class="header">
+<p>
+Next: <a href="Whitespace-and-comments.html" accesskey="n" rel="next">Whitespace and comments</a>, Up: <a href="Lexical-conventions.html" accesskey="u" rel="up">Lexical conventions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Identifiers-1"></span><h3 class="section">2.1 Identifiers</h3>
+
+<p>An identifier is any sequence of letters, digits, and &ldquo;extended
+identifier characters&rdquo; provided that it does not have a prefix which
+is a valid number. However, the <code>.</code> token (a single period) used
+in the list syntax is not an identifier.
+</p>
+<p>All implementations of Scheme must support the following extended
+identifier characters:
+</p>
+<div class="example">
+<pre class="example">! $ % &amp; * + - . / : &lt; = &gt; ? &nbsp;^ _ ~
+</pre></div>
+
+<p>Alternatively, an identifier can be represented by a sequence of
+zero or more characters enclosed within vertical lines (&lsquo;<samp>|</samp>&rsquo;),
+analogous to string literals.  Any character, including whitespace
+characters, but excluding the backslash and vertical line characters,
+can appear verbatim in such an identifier. In addition, characters
+can be specified using either an &#x27e8;inline hex escape&#x27e9; or the same
+escapes available in strings.
+</p>
+<p>For example, the identifier <code>|H\x65;llo|</code> is the same identifier
+as <code>Hello</code>, and in an implementation that supports the
+appropriate Unicode character the identifier <code>|\x3BB;|</code> is the
+same as the identifier &#x03bb;. What is more, <code>|\t\t|</code>
+and <code>|\x9;\x9;|</code> are the same. Note that <code>||</code> is a valid
+identifier that is different from any other identifier.
+</p>
+<p>Here are some examples of identifiers:
+</p>
+<div class="example">
+<pre class="example">...                      +
++soup+                   &lt;=?
+-&gt;string                 a34kTMNs
+lambda                   list-&gt;vector
+q                        V17a
+|two words|              |two\x20;words|
+the-word-recursion-has-many-meanings
+</pre></div>
+
+<p>See <a href="Formal-syntax.html">Formal syntax</a> for the formal syntax of identifiers.
+</p>
+<p>Identifiers have two uses within Scheme programs:
+</p>
+<ul>
+<li> Any identifier can be used as a variable or as a syntactic keyword
+(see <a href="Variables-syntactic-keywords-and-regions.html">Variables, syntactic keywords, and regions</a>
+and <a href="Macros.html">Macros</a>).
+
+</li><li> When an identifier appears as a literal or within a literal (see
+<a href="Literal-expressions.html">Literal expressions</a>), it is being used to denote a <dfn>symbol</dfn>
+(see <a href="Symbols.html">Symbols</a>).
+
+</li></ul>
+
+<p>In contrast with earlier revisions of the report [<a href="References.html#R5RS">R5RS</a>], the syntax
+distinguishes between upper and lower case in identifiers and in
+characters specified using their names. However, it does not
+distinguish between upper and lower case in numbers, nor in
+&#x27e8;inline hex escapes&#x27e9; used in the syntax of identifiers,
+characters, or strings. None of the identifiers defined in this report
+contain upper-case characters, even when they appear to do so as a
+result of the English-language convention of capitalizing the first
+word of a sentence.
+</p>
+<p>The following directives give explicit control over case folding.
+</p>
+<div class="example lisp">
+<pre class="lisp">#!fold-case
+#!no-fold-case
+</pre></div>
+
+<p>These directives can appear anywhere comments are permitted (see
+<a href="Whitespace-and-comments.html">Whitespace and comments</a>) but must be followed by a delimiter.
+They are treated as comments, except that they affect the reading of
+subsequent data from the same port. The <code>#!fold-case</code> directive
+causes subsequent identifiers and character names to be case-folded as
+if by string-foldcase (see <a href="Strings.html">Strings</a>). It has no effect on
+character literals. The <code>#!no-fold-case</code> directive causes a return
+to the default, non-folding behavior.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Whitespace-and-comments.html">Whitespace and comments</a>, Up: <a href="Lexical-conventions.html">Lexical conventions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

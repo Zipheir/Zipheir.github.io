@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Ports (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Ports (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Ports (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Input-and-output.html" rel="up" title="Input and output">
+<link href="Input.html" rel="next" title="Input">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Ports">
+<div class="header">
+<p>
+Next: <a href="Input.html" accesskey="n" rel="next">Input</a>, Up: <a href="Input-and-output.html" accesskey="u" rel="up">Input and output</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Ports-1"></span><h4 class="subsection">6.13.1 Ports</h4>
+
+<span id="index-port"></span>
+
+<p>Ports represent input and output devices.  To Scheme, an input port is
+a Scheme object that can deliver data upon command, while an output
+port is a Scheme object that can accept data.  Whether the input and
+output port types are disjoint is implementation-dependent.
+</p>
+<p>Different <dfn>port types</dfn> operate on different data.  Scheme
+implementations are required to support <dfn>textual ports</dfn> and
+<dfn>binary ports</dfn>, but may also provide other port types.
+</p>
+<p>A textual port supports reading or writing of individual characters
+from or to a backing store containing characters using <code>read-char</code>
+and <code>write-char</code> below, and it supports operations defined in
+terms of characters, such as <code>read</code> and <code>write</code>.
+</p>
+<p>A binary port supports reading or writing of individual bytes
+from or to a backing store containing bytes using <code>read-u8</code>
+and <code>write-u8</code> below, as well as operations defined in terms
+of bytes.  Whether the textual and binary port types are disjoint
+is implementation-dependent.
+</p>
+<p>Ports can be used to access files, devices, and similar things on
+the host system on which the Scheme program is running.
+</p>
+<dl class="def">
+<dt id="index-call_002dwith_002dport"><span class="category">procedure: </span><span><strong>call-with-port</strong> <em>port proc</em><a href='#index-call_002dwith_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept one argument.
+</p>
+<p>The <code>call-with-port</code> procedure calls <var>proc</var> with <var>port</var>
+as an argument.  If <var>proc</var> returns, then the port is closed
+automatically and the values yielded by the <var>proc</var> are returned.
+If <var>proc</var> does not return, then the port must not be closed
+automatically unless it is possible to prove that the port will never
+again be used for a read or write operation.
+</p>
+<span id="Rationale_003a-6"></span><h4 class="subheading">Rationale:</h4>
+
+<p>Because Scheme&rsquo;s escape procedures have unlimited extent, it
+is possible to escape from the current continuation but later to
+resume it.  If implementations were permitted to close the port on any
+escape from the current continuation, then it would be impossible to
+write portable code using both <code>call-with-current-continuation</code>
+and <code>call-with-port</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-call_002dwith_002dinput_002dfile"><span class="category">file library procedure: </span><span><strong>call-with-input-file</strong> <em>string proc</em><a href='#index-call_002dwith_002dinput_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-call_002dwith_002doutput_002dfile"><span class="category">file library procedure: </span><span><strong>call-with-output-file</strong> <em>string proc</em><a href='#index-call_002dwith_002doutput_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept one argument.
+</p>
+<p>These procedures obtain a textual port obtained by opening the
+named file for input or output as if by <code>open-input-file</code> or
+<code>open-output-file</code>.  The port and <var>proc</var> are then passed to
+a procedure equivalent to <code>call-with-port</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-input_002dport_003f"><span class="category">procedure: </span><span><strong>input-port?</strong> <em>obj</em><a href='#index-input_002dport_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-output_002dport_003f"><span class="category">procedure: </span><span><strong>output-port?</strong> <em>obj</em><a href='#index-output_002dport_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-textual_002dport_003f"><span class="category">procedure: </span><span><strong>textual-port?</strong> <em>obj</em><a href='#index-textual_002dport_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-binary_002dport_003f"><span class="category">procedure: </span><span><strong>binary-port?</strong> <em>obj</em><a href='#index-binary_002dport_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-port_003f"><span class="category">procedure: </span><span><strong>port?</strong> <em>obj</em><a href='#index-port_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return <code>#t</code> if <var>obj</var> is an input port, output
+port, textual port, binary port, or any kind of port, respectively.
+Otherwise they return <code>#f</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-input_002dport_002dopen_003f"><span class="category">procedure: </span><span><strong>input-port-open?</strong> <em>port</em><a href='#index-input_002dport_002dopen_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-output_002dport_002dopen_003f"><span class="category">procedure: </span><span><strong>output-port-open?</strong> <em>port</em><a href='#index-output_002dport_002dopen_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>port</var> is still open and capable of performing
+input or output, respectively, and <code>#f</code> otherwise.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-current_002dinput_002dport"><span class="category">procedure: </span><span><strong>current-input-port</strong><a href='#index-current_002dinput_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-current_002doutput_002dport"><span class="category">procedure: </span><span><strong>current-output-port</strong><a href='#index-current_002doutput_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-current_002derror_002dport"><span class="category">procedure: </span><span><strong>current-error-port</strong><a href='#index-current_002derror_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the current default input port, output port, or error port (an
+output port), respectively. These procedures are parameter objects,
+which can be overridden with parameterize (see <a href="Dynamic-bindings.html">Dynamic bindings</a>).
+The initial bindings for these are implementation-defined textual
+ports.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-with_002dinput_002dfrom_002dfile"><span class="category">file library procedure: </span><span><strong>with-input-from-file</strong> <em>string thunk</em><a href='#index-with_002dinput_002dfrom_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-with_002doutput_002dto_002dfile"><span class="category">file library procedure: </span><span><strong>with-output-to-file</strong> <em>string thunk</em><a href='#index-with_002doutput_002dto_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The file is opened for input or output as if by <code>open-input-file</code>
+or <code>open-output-file</code>, and the new port is made to be the value
+returned by <code>current-input-port</code> or <code>current-output-port</code>
+(as used by <code>(read)</code>, <code>(write </code><var>obj</var><code>)</code>, and so
+forth).  The <var>thunk</var> is then called with no arguments.  When the
+<var>thunk</var> returns, the port is closed and the previous default
+is restored.  It is an error if <var>thunk</var> does not accept zero
+arguments.  Both procedures return the values yielded by <var>thunk</var>.
+If an escape procedure is used to escape from the continuation of
+these procedures, they behave exactly as if the current input or
+output port had been bound dynamically with <code>parameterize</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-open_002dinput_002dfile"><span class="category">file library procedure: </span><span><strong>open-input-file</strong> <em>string</em><a href='#index-open_002dinput_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-open_002dbinary_002dinput_002dfile"><span class="category">file library procedure: </span><span><strong>open-binary-input-file</strong> <em>string</em><a href='#index-open_002dbinary_002dinput_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Takes a <var>string</var> for an existing file and returns a textual input
+port or binary input port that is capable of delivering data from the
+file. If the file does not exist or cannot be opened, an error that
+satisfies <code>file-error?</code> is signaled.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-open_002doutput_002dfile"><span class="category">file library procedure: </span><span><strong>open-output-file</strong> <em>string</em><a href='#index-open_002doutput_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-open_002dbinary_002doutput_002dfile"><span class="category">file library procedure: </span><span><strong>open-binary-output-file</strong> <em>string</em><a href='#index-open_002dbinary_002doutput_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Takes a <var>string</var> naming an output file to be created and returns a
+textual output port or binary output port that is capable of writing
+data to a new file by that name. If a file with the given name already
+exists, the effect is unspecified. If the file cannot be opened, an
+error that satisfies <code>file-error?</code> is signaled.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-close_002dport"><span class="category">procedure: </span><span><strong>close-port</strong> <em>port</em><a href='#index-close_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-close_002dinput_002dport"><span class="category">procedure: </span><span><strong>close-input-port</strong> <em>port</em><a href='#index-close_002dinput_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-close_002doutput_002dport"><span class="category">procedure: </span><span><strong>close-output-port</strong> <em>port</em><a href='#index-close_002doutput_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Closes the resource associated with <var>port</var>, rendering the
+<var>port</var> incapable of delivering or accepting data. It is an error to
+apply the last two procedures to a port which is not an input or output
+port, respectively. Scheme implementations may provide ports which are
+simultaneously input and output ports, such as sockets; the
+<code>close-input-port</code> and <code>close-output-port</code> procedures can
+then be used to close the input and output sides of the port
+independently.
+</p>
+<p>These routines have no effect if the <var>port</var> has already been closed.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-open_002dinput_002dstring"><span class="category">procedure: </span><span><strong>open-input-string</strong> <em>string</em><a href='#index-open_002dinput_002dstring' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Takes a string and returns a textual input port that delivers
+characters from the string. If the <var>string</var> is modified, the effect
+is unspecified.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-open_002doutput_002dstring"><span class="category">procedure: </span><span><strong>open-output-string</strong><a href='#index-open_002doutput_002dstring' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a textual output port that will accumulate characters for
+retrieval by <code>get-output-string</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-get_002doutput_002dstring"><span class="category">procedure: </span><span><strong>get-output-string</strong> <em>port</em><a href='#index-get_002doutput_002dstring' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>port</var> was not created with
+<code>open-output-string</code>.
+</p>
+<p>Returns a string consisting of the characters that have been output to
+the port so far in the order they were output. If the result string is
+modified, the effect is unspecified.
+</p>
+<div class="example lisp">
+<pre class="lisp">(parameterize
+    ((current-output-port
+      (open-output-string)))
+    (display &quot;piece&quot;)
+    (display &quot; by piece &quot;)
+    (display &quot;by piece.&quot;)
+    (newline)
+    (get-output-string (current-output-port)))
+
+    &rArr; &quot;piece by piece by piece.\n&quot;
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-open_002dinput_002dbytevector"><span class="category">procedure: </span><span><strong>open-input-bytevector</strong> <em>bytevector</em><a href='#index-open_002dinput_002dbytevector' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Takes a <var>bytevector</var> and returns a binary input port that delivers
+bytes from the <var>bytevector</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-open_002doutput_002dbytevector"><span class="category">procedure: </span><span><strong>open-output-bytevector</strong><a href='#index-open_002doutput_002dbytevector' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a binary output port that will accumulate bytes for retrieval
+by <code>get-output-bytevector</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-get_002doutput_002dbytevector"><span class="category">procedure: </span><span><strong>get-output-bytevector</strong> <em>port</em><a href='#index-get_002doutput_002dbytevector' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>port</var> was not created with
+<code>open-output-bytevector</code>.
+</p>
+<p>Returns a bytevector consisting of the bytes that have been output to
+the <var>port</var> so far in the order they were output.
+</p>
+</dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Input.html">Input</a>, Up: <a href="Input-and-output.html">Input and output</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

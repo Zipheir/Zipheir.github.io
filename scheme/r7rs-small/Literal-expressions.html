@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Literal expressions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Literal expressions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Literal expressions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Primitive-expression-types.html" rel="up" title="Primitive expression types">
+<link href="Procedure-calls.html" rel="next" title="Procedure calls">
+<link href="Variable-references.html" rel="prev" title="Variable references">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Literal-expressions">
+<div class="header">
+<p>
+Next: <a href="Procedure-calls.html" accesskey="n" rel="next">Procedure calls</a>, Previous: <a href="Variable-references.html" accesskey="p" rel="prev">Variable references</a>, Up: <a href="Primitive-expression-types.html" accesskey="u" rel="up">Primitive expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Literal-expressions-1"></span><h4 class="subsection">4.1.2 Literal expressions</h4>
+
+<p>syntax: (quote &#x27e8;datum&#x27e9;)
+syntax: &rsquo;&#x27e8;datum&#x27e9;
+syntax: &#x27e8;constant&#x27e9;
+</p>
+<p><code>(quote</code> &#x27e8;datum&#x27e9;<code>)</code> evaluates to &#x27e8;datum&#x27e9;. &#x27e8;Datum&#x27e9; can be any
+external representation of a Scheme object
+(See <a href="External-representations-basic.html">External representations (basic)</a>). This notation is used to include
+literal constants in Scheme code.
+</p>
+<div class="example lisp">
+<pre class="lisp">(quote a)        &rArr; a
+(quote #(a b c)) &rArr; #(a b c)
+(quote (+ 1 2))  &rArr; (+ 1 2)
+</pre></div>
+
+<p><code>(quote</code> &#x27e8;datum&#x27e9;<code>)</code> can be abbreviated as <code>'</code>&#x27e8;datum&#x27e9;. The two
+notations are equivalent in all respects.
+</p>
+<div class="example lisp">
+<pre class="lisp">'a         &rArr; a
+'#(a b c)  &rArr; #(a b c)
+'()        &rArr; ()
+'(+ 1 2)   &rArr; (+ 1 2)
+'(quote a) &rArr; (quote a)
+''a        &rArr; (quote a)
+</pre></div>
+
+<p>Numerical constants, string constants, character constants, vector
+constants, bytevector constants, and boolean constants evaluate to
+themselves; they need not be quoted.
+</p>
+<div class="example lisp">
+<pre class="lisp">'145932     &rArr; 145932
+145932      &rArr; 145932
+'&quot;abc&quot;      &rArr; &quot;abc&quot;
+&quot;abc&quot;       &rArr; &quot;abc&quot;
+'#\a        &rArr; #\a
+#\a         &rArr; #\a
+'#(a 10)    &rArr; #(a 10)
+#(a 10)     &rArr; #(a 10)
+'#u8(64 65) &rArr; #u8(64 65)
+#u8(64 65)  &rArr; #u8(64 65)
+'#t         &rArr; #t
+#t          &rArr; #t
+</pre></div>
+
+<p>As noted in <a href="Storage-model.html">Storage model</a>, it is an error to attempt to alter a
+constant (i.e. the value of a literal expression) using a mutation
+procedure like <code>set-car!</code> or <code>string-set!</code>.
+</p>
+</div>
+
+
+
+</body>
+</html>

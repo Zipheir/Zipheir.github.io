@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Exception handling (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Exception handling (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Exception handling (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Quasiquotation.html" rel="next" title="Quasiquotation">
+<link href="Dynamic-bindings.html" rel="prev" title="Dynamic bindings">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Exception-handling">
+<div class="header">
+<p>
+Next: <a href="Quasiquotation.html" accesskey="n" rel="next">Quasiquotation</a>, Previous: <a href="Dynamic-bindings.html" accesskey="p" rel="prev">Dynamic bindings</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Exception-handling-1"></span><h4 class="subsection">4.2.7 Exception handling</h4>
+
+<dl class="def">
+<dt id="index-guard"><span class="category">syntax: </span><span><strong>guard</strong><a href='#index-guard' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<div class="display">
+<pre class="display"><code>(guard (</code>&#x27e8;variable&#x27e9;
+       &#x27e8;cond clause1&#x27e9; &#x27e8;cond clause2&#x27e9; &hellip;<code>)</code>
+   &#x27e8;body&#x27e9;<code>)</code>
+</pre></div>
+
+<p>Syntax: Each &#x27e8;cond clause&#x27e9; is as in the specification of cond.
+</p>
+<p>Semantics: The &#x27e8;body&#x27e9; is evaluated with an exception
+handler that binds the raised object (see <code>raise</code> in <a href="Exceptions.html">Exceptions</a>)
+to &#x27e8;variable&#x27e9; and, within the scope of
+that binding, evaluates the clauses as if they were the clauses of a
+<code>cond</code> expression. That implicit <code>cond</code> expression is evaluated with the
+continuation and dynamic environment of the <code>guard</code> expression. If every
+&#x27e8;cond clause&#x27e9;&rsquo;s &#x27e8;test&#x27e9; evaluates to <code>#f</code> and there
+is no else clause, then
+<code>raise-continuable</code> is invoked on the raised object within the dynamic
+environment of the original call to <code>raise</code>
+or <code>raise-continuable</code>, except that the current
+exception handler is that of the <code>guard</code> expression.
+</p>
+<p>See <a href="Exceptions.html">Exceptions</a> for a more complete discussion of exceptions.
+</p>
+<div class="example lisp">
+<pre class="lisp">(guard (condition
+         ((assq 'a condition) =&gt; cdr)
+         ((assq 'b condition)))
+  (raise (list (cons 'a 42))))
+&rArr; 42
+
+(guard (condition
+         ((assq 'a condition) =&gt; cdr)
+         ((assq 'b condition)))
+  (raise (list (cons 'b 23))))
+&rArr; (b . 23)
+</pre></div>
+
+</dd></dl>
+</div>
+
+
+
+</body>
+</html>

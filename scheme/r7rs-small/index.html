@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>top (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="top (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="top (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="#Top" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="../dir/index.html" rel="up" title="(dir)">
+<link href="Introduction.html" rel="next" title="Introduction">
+<link href="../dir/index.html" rel="prev" title="(dir)">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">Revised(7) Report on the Algorithmic Language Scheme</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="top" id="Top">
+<div class="header">
+<p>
+Next: <a href="Introduction.html" accesskey="n" rel="next">Introduction</a>, Previous: <a href="../dir/index.html" accesskey="p" rel="prev">(dir)</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Revised_00287_0029-Report-on-the-Algorithmic-Language-Scheme"></span><h1 class="top">Revised(7) Report on the Algorithmic Language Scheme</h1>
+
+<span id="Summary"></span><h2 class="majorheading">Summary</h2>
+
+<p>The report gives a defining description of the programming language
+Scheme. Scheme is a statically scoped and properly tail recursive
+dialect of the Lisp programming language [<a href="References.html#McCarthy">McCarthy</a>] invented by
+Guy Lewis Steele Jr. and Gerald Jay Sussman. It was designed to have
+exceptionally clear and simple semantics and few different ways to
+form expressions. A wide variety of programming paradigms, including
+imperative, functional, and object-oriented styles, find convenient
+expression in Scheme.
+</p>
+<p>The introduction offers a brief history of the language and of
+the report.
+</p>
+<p>The first three chapters present the fundamental ideas of the language
+and describe the notational conventions used for describing the
+language and for writing programs in the language.
+</p>
+<p><a href="Expressions.html">Expressions</a> and <a href="Program-structure.html">Program structure</a> describe the syntax
+and semantics of expressions, definitions, programs, and libraries.
+</p>
+<p><a href="Standard-procedures.html">Standard procedures</a> describes Scheme&rsquo;s built-in procedures,
+which include all of the language&rsquo;s data manipulation and input/output
+primitives.
+</p>
+<p><a href="Formal-syntax-and-semantics.html">Formal syntax and semantics</a> provides a formal syntax for
+Scheme written in extended BNF, along with a formal denotational
+semantics. An example of the use of the language follows the formal
+syntax and semantics.
+</p>
+<p><a href="Appendix-A.html">Appendix A</a> provides a list of the standard libraries
+and the identifiers that they export.
+</p>
+<p><a href="Appendix-B.html">Appendix B</a> provides a list of optional but
+standardized implementation feature names.
+</p>
+<p>The report concludes with a list of references and an alphabetic index.
+</p>
+<p>Note: The editors of the R<sup>5</sup>RS and R<sup>6</sup>RS reports are
+listed as authors of this report in recognition of the substantial
+portions of this report that are copied directly from R<sup>5</sup>RS
+and R<sup>6</sup>RS. There is no intended implication that those editors,
+individually or collectively, support or do not support this report.
+</p>
+
+<ul class="section-toc">
+<li><a href="Introduction.html" accesskey="1">Introduction</a></li>
+<li><a href="Overview-of-Scheme.html" accesskey="2">Overview of Scheme</a></li>
+<li><a href="Lexical-conventions.html" accesskey="3">Lexical conventions</a></li>
+<li><a href="Basic-concepts.html" accesskey="4">Basic concepts</a></li>
+<li><a href="Expressions.html" accesskey="5">Expressions</a></li>
+<li><a href="Program-structure.html" accesskey="6">Program structure</a></li>
+<li><a href="Standard-procedures.html" accesskey="7">Standard procedures</a></li>
+<li><a href="Formal-syntax-and-semantics.html" accesskey="8">Formal syntax and semantics</a></li>
+<li><a href="Appendices.html" accesskey="9">Appendices</a></li>
+<li><a href="Appendix-A.html">Standard Libraries</a></li>
+<li><a href="Appendix-B.html">Standard Feature Identifiers</a></li>
+<li><a href="Language-changes.html">Language changes</a></li>
+<li><a href="Additional-material.html">Additional material</a></li>
+<li><a href="Example.html">Example</a></li>
+<li><a href="References.html">References</a></li>
+<li><a href="Alphabetic-index.html">Alphabetic index of definitions of concepts, keywords, and procedures</a></li>
+</ul>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Introduction.html" accesskey="n" rel="next">Introduction</a>, Previous: <a href="../dir/index.html" accesskey="p" rel="prev">(dir)</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

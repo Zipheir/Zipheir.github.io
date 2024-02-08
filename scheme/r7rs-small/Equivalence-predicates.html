@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Equivalence predicates (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Equivalence predicates (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Equivalence predicates (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Numbers.html" rel="next" title="Numbers">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Equivalence-predicates">
+<div class="header">
+<p>
+Next: <a href="Numbers.html" accesskey="n" rel="next">Numbers</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Equivalence-predicates-1"></span><h3 class="section">6.1 Equivalence predicates</h3>
+
+<p>A <dfn>predicate</dfn> is a procedure that always returns a boolean value
+(<code>#t</code> or <code>#f</code>). An <dfn>equivalence predicate</dfn> is the
+computational analogue of a mathematical equivalence relation; it is
+symmetric, reflexive, and transitive. Of the equivalence predicates
+described in this section, <code>eq?</code> is the finest or most
+discriminating, <code>equal?</code> is the coarsest, and <code>eqv?</code> is
+slightly less discriminating than <code>eq?</code>.
+</p>
+<dl class="def">
+<dt id="index-eqv_003f"><span class="category">procedure: </span><span><strong>eqv?</strong> <em><var>obj<sub>1</sub></var> <var>obj<sub>2</sub></var></em><a href='#index-eqv_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>eqv?</code> procedure defines a useful equivalence relation on
+objects. Briefly, it returns <code>#t</code> if <var>obj<sub>1</sub></var> and
+<var>obj<sub>2</sub></var> are normally regarded as the same object. This
+relation is left slightly open to interpretation, but the following
+partial specification of <code>eqv?</code> holds for all implementations
+of Scheme.
+</p>
+<p>The <code>eqv?</code> procedure returns <code>#t</code> if:
+</p>
+<ul>
+<li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both <code>#t</code> or
+both <code>#f</code>.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both symbols and
+are the same symbol according to the <code>symbol=?</code> procedure
+(<a href="Symbols.html">Symbols</a>).
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both exact
+numbers and are numerically equal (in the sense of <code>=</code>).
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both inexact
+numbers such that they are numerically equal (in the sense of <code>=</code>)
+and they yield the same results (in the sense of <code>eqv?</code>) when
+passed as arguments to any other procedure that can be defined as a
+finite composition of Scheme&rsquo;s standard arithmetic procedures, provided
+it does not result in a NaN value.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both characters and are the
+same character according to the <code>char=?</code> procedure
+(<a href="Characters.html">Characters</a>).
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both the empty list.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are pairs, vectors, bytevectors,
+records, or strings that denote the same location in the store
+(<a href="Storage-model.html">Storage model</a>).
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are procedures whose location
+tags are equal (<a href="Procedures.html">Procedures</a>).
+
+</li></ul>
+
+<p>The <code>eqv?</code> procedure returns <code>#f</code> if:
+</p>
+<ul>
+<li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are of different types
+(<a href="Disjointness-of-types.html">Disjointness of types</a>).
+
+</li><li> one of <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> is <code>#t</code> but the other
+is <code>#f</code>.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are symbols but are not the same
+symbol according to the <code>symbol=?</code> procedure (<a href="Symbols.html">Symbols</a>).
+
+</li><li> one of <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> is an exact number but the
+other is an inexact number.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both exact numbers and are
+numerically unequal (in the sense of <code>=</code>).
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are both inexact numbers such
+that either they are numerically unequal (in the sense of <code>=</code>), or
+they do not yield the same results (in the sense of <code>eqv?</code>) when
+passed as arguments to any other procedure that can be defined as a
+finite composition of Scheme&rsquo;s standard arithmetic procedures, provided
+it does not result in a NaN value. As an exception, the behavior of
+<code>eqv?</code> is unspecified when both <var>obj<sub>1</sub></var> and
+<var>obj<sub>2</sub></var> are NaN.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are characters for which the
+<code>char=?</code> procedure returns <code>#f</code>.
+
+</li><li> one of <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> is the empty list but the
+other is not.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are pairs, vectors, bytevectors,
+records, or strings that denote distinct locations.
+
+</li><li> <var>obj<sub>1</sub></var> and <var>obj<sub>2</sub></var> are procedures that would behave
+differently (return different values or have different side effects)
+for some arguments.
+
+</li></ul>
+
+<div class="example lisp">
+<pre class="lisp">(eqv? 'a 'a)                 &rArr; #t
+(eqv? 'a 'b)                 &rArr; #f
+(eqv? 2 2)                   &rArr; #t
+(eqv? 2 2.0)                 &rArr; #f
+(eqv? '() '())               &rArr; #t
+(eqv? 100000000 100000000)   &rArr; #t
+(eqv? 0.0 +nan.0)            &rArr; #f
+(eqv? (cons 1 2) (cons 1 2)) &rArr; #f
+(eqv? (lambda () 1)
+      (lambda () 2))         &rArr; #f
+(let ((p (lambda (x) x)))
+  (eqv? p p))                &rArr; #t
+(eqv? #f 'nil)               &rArr; #f
+</pre></div>
+
+<p>The following examples illustrate cases in which the above rules do not
+fully specify the behavior of <code>eqv?</code>. All that can be said about
+such cases is that the value returned by <code>eqv?</code> must be a boolean.
+</p>
+<div class="example lisp">
+<pre class="lisp">(eqv? &quot;&quot; &quot;&quot;)          &rArr; <span class="roman">unspecified</span>
+(eqv? '#() '#())      &rArr; <span class="roman">unspecified</span>
+(eqv? (lambda (x) x)
+      (lambda (x) x)) &rArr; <span class="roman">unspecified</span>
+(eqv? (lambda (x) x)
+      (lambda (y) y)) &rArr; <span class="roman">unspecified</span>
+(eqv? 1.0e0 1.0f0)    &rArr; <span class="roman">unspecified</span>
+(eqv? +nan.0 +nan.0)  &rArr; <span class="roman">unspecified</span>
+</pre></div>
+
+<p>Note that <code>(eqv? 0.0 -0.0)</code> will return <code>#f</code> if negative zero
+is distinguished, and <code>#t</code> if negative zero is not distinguished.
+</p>
+<p>The next set of examples shows the use of <code>eqv?</code> with procedures
+that have local state. The <code>gen-counter</code> procedure must return a
+distinct procedure every time, since each procedure has its own
+internal counter. The <code>gen-loser</code> procedure, however, returns
+operationally equivalent procedures each time, since the local state
+does not affect the value or side effects of the procedures. However,
+<code>eqv?</code> may or may not detect this equivalence.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define gen-counter
+  (lambda ()
+    (let ((n 0))
+      (lambda () (set! n (+ n 1)) n))))
+
+(let ((g (gen-counter)))
+  (eqv? g g))           &rArr; #t
+
+(eqv? (gen-counter) (gen-counter))
+                        &rArr; #f
+(define gen-loser
+  (lambda ()
+    (let ((n 0))
+      (lambda () (set! n (+ n 1)) 27))))
+
+(let ((g (gen-loser)))
+  (eqv? g g))           &rArr; #t
+
+(eqv? (gen-loser) (gen-loser))
+                        &rArr; <span class="roman">unspecified</span>
+
+(letrec ((f (lambda () (if (eqv? f g) 'both 'f)))
+         (g (lambda () (if (eqv? f g) 'both 'g))))
+  (eqv? f g))
+                        &rArr; <span class="roman">unspecified</span>
+
+(letrec ((f (lambda () (if (eqv? f g) 'f 'both)))
+         (g (lambda () (if (eqv? f g) 'g 'both))))
+  (eqv? f g))
+                        &rArr; #f
+</pre></div>
+
+<p>Since it is an error to modify constant objects (those returned by
+literal expressions), implementations may share structure between
+constants where appropriate. Thus the value of <code>eqv?</code> on constants
+is sometimes implementation-dependent.
+</p>
+<div class="example lisp">
+<pre class="lisp">(eqv? '(a) '(a))         &rArr; <span class="roman">unspecified</span>
+(eqv? &quot;a&quot; &quot;a&quot;)           &rArr; <span class="roman">unspecified</span>
+(eqv? '(b) (cdr '(a b))) &rArr; <span class="roman">unspecified</span>
+(let ((x '(a)))
+  (eqv? x x))            &rArr; #t
+</pre></div>
+
+<p>The above definition of <code>eqv?</code> allows implementations latitude in
+their treatment of procedures and literals: implementations may either
+detect or fail to detect that two procedures or two literals are
+equivalent to each other, and can decide whether or not to merge
+representations of equivalent objects by using the same pointer or bit
+pattern to represent both.
+</p>
+<p>Note: If inexact numbers are represented as IEEE binary floating-point
+numbers, then an implementation of <code>eqv?</code> that simply compares
+equal-sized inexact numbers for bitwise equality is correct by the
+above definition.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-eq_003f"><span class="category">procedure: </span><span><strong>eq?</strong> <em><var>obj<sub>1</sub></var> <var>obj<sub>2</sub></var></em><a href='#index-eq_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>eq?</code> procedure is similar to <code>eqv?</code> except that in some
+cases it is capable of discerning distinctions finer than those
+detectable by <code>eqv?</code>. It must always return <code>#f</code> when
+<code>eqv?</code> also would, but may return <code>#f</code> in some cases where
+<code>eqv?</code> would return <code>#t</code>.
+</p>
+<p>On symbols, booleans, the empty list, pairs, and records, and also on
+non-empty strings, vectors, and bytevectors, <code>eq?</code> and <code>eqv?</code>
+are guaranteed to have the same behavior. On procedures, <code>eq?</code>
+must return true if the arguments&rsquo; location tags are equal. On numbers
+and characters, <code>eq?</code>&rsquo;s behavior is implementation-dependent, but
+it will always return either true or false. On empty strings, empty
+vectors, and empty bytevectors, <code>eq?</code> may also behave differently
+from <code>eqv?</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(eq? 'a 'a)               &rArr; #t
+(eq? '(a) '(a))           &rArr; <span class="roman">unspecified</span>
+(eq? (list 'a) (list 'a)) &rArr; #f
+(eq? &quot;a&quot; &quot;a&quot;)             &rArr; <span class="roman">unspecified</span>
+(eq? &quot;&quot; &quot;&quot;)               &rArr; <span class="roman">unspecified</span>
+(eq? '() '())             &rArr; #t
+(eq? 2 2)                 &rArr; <span class="roman">unspecified</span>
+(eq? #\A #\A)             &rArr; <span class="roman">unspecified</span>
+(eq? car car)             &rArr; #t
+(let ((n (+ 2 3)))
+  (eq? n n))              &rArr; <span class="roman">unspecified</span>
+(let ((x '(a)))
+  (eq? x x))              &rArr; #t
+(let ((x '#()))
+  (eq? x x))              &rArr; #t
+(let ((p (lambda (x) x)))
+  (eq? p p))              &rArr; #t
+</pre></div>
+
+<span id="Rationale_003a-2"></span><h4 class="subheading">Rationale:</h4>
+
+<p>It will usually be possible to implement <code>eq?</code> much
+more efficiently than <code>eqv?</code>, for example, as a simple pointer
+comparison instead of as some more complicated operation. One reason is
+that it is not always possible to compute <code>eqv?</code> of two numbers in
+constant time, whereas <code>eq?</code> implemented as pointer comparison
+will always finish in constant time.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-equal_003f"><span class="category">procedure: </span><span><strong>equal?</strong> <em><var>obj<sub>1</sub></var> <var>obj<sub>2</sub></var></em><a href='#index-equal_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>equal?</code> procedure, when applied to pairs, vectors, strings
+and bytevectors, recursively compares them, returning <code>#t</code> when
+the unfoldings of its arguments into (possibly infinite) trees are
+equal (in the sense of <code>equal?</code>) as ordered trees, and <code>#f</code>
+otherwise. It returns the same as <code>eqv?</code> when applied to booleans,
+symbols, numbers, characters, ports, procedures, and the empty list. If
+two objects are <code>eqv?</code>, they must be <code>equal?</code> as well. In all
+other cases, <code>equal?</code> may return either <code>#t</code> or <code>#f</code>.
+Even if its arguments are circular data structures, <code>equal?</code> must
+always terminate.
+</p>
+<div class="example lisp">
+<pre class="lisp">(equal? 'a 'a)               &rArr; #t
+(equal? '(a) '(a))           &rArr; #t
+(equal? '(a (b) c)
+        '(a (b) c))          &rArr; #t
+(equal? &quot;abc&quot; &quot;abc&quot;)         &rArr; #t
+(equal? 2 2)                 &rArr; #t
+(equal? (make-vector 5 'a)
+        (make-vector 5 'a))  &rArr; #t
+(equal? '#1=(a b . #1#)
+        '#2=(a b a b . #2#)) &rArr; #t
+(equal? (lambda (x) x)
+        (lambda (y) y))      &rArr; <span class="roman">unspecified</span>
+</pre></div>
+
+<p>Note: A rule of thumb is that objects are generally <code>equal?</code> if
+they print the same.
+</p>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Numbers.html">Numbers</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

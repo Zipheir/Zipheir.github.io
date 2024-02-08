@@ -1,0 +1,710 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Numerical operations (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Numerical operations (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Numerical operations (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Numbers.html" rel="up" title="Numbers">
+<link href="Numerical-input-and-output.html" rel="next" title="Numerical input and output">
+<link href="Syntax-of-numerical-constants.html" rel="prev" title="Syntax of numerical constants">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+<script type='text/javascript'>
+MathJax = {
+  options: {
+    skipHtmlTags: {'[-]': ['pre']},
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+};
+</script><script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+</head>
+
+<body lang="en" class="tex2jax_ignore">
+<div class="subsection" id="Numerical-operations">
+<div class="header">
+<p>
+Next: <a href="Numerical-input-and-output.html" accesskey="n" rel="next">Numerical input and output</a>, Previous: <a href="Syntax-of-numerical-constants.html" accesskey="p" rel="prev">Syntax of numerical constants</a>, Up: <a href="Numbers.html" accesskey="u" rel="up">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Numerical-operations-1"></span><h4 class="subsection">6.2.6 Numerical operations</h4>
+
+<p>The reader is referred to <a href="Error-situations-and-unspecified-behavior.html">Error situations and unspecified behavior</a> for a summary of the naming conventions used to specify
+restrictions on the types of arguments to numerical routines. The
+examples used in this section assume that any numerical constant
+written using an exact notation is indeed represented as an exact
+number. Some examples also assume that certain numerical constants
+written using an inexact notation can be represented without loss of
+accuracy; the inexact constants were chosen so that this is likely to
+be true in implementations that use IEEE binary doubles to represent
+inexact numbers.
+</p>
+<dl class="def">
+<dt id="index-number_003f"><span class="category">procedure: </span><span><strong>number?</strong> <em>obj</em><a href='#index-number_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-complex_003f"><span class="category">procedure: </span><span><strong>complex?</strong> <em>obj</em><a href='#index-complex_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-real_003f"><span class="category">procedure: </span><span><strong>real?</strong> <em>obj</em><a href='#index-real_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-rational_003f"><span class="category">procedure: </span><span><strong>rational?</strong> <em>obj</em><a href='#index-rational_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-integer_003f"><span class="category">procedure: </span><span><strong>integer?</strong> <em>obj</em><a href='#index-integer_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These numerical type predicates can be applied to any kind of argument,
+including non-numbers. They return <code>#t</code> if the object is of the
+named type, and otherwise they return <code>#f</code>.  In general, if a type
+predicate is true of a number then all higher type predicates are also
+true of that number. Consequently, if a type predicate is false of a
+number, then all lower type predicates are also false of that number.
+</p>
+<p>If <var>z</var> is a complex number, then <code>(real? </code><var>z</var><code>)</code> is
+true if and only if <code>(zero? (imag-part </code><var>z</var><code>))</code> is true. If
+<var>x</var> is an inexact real number, then <code>(integer? </code><var>x</var><code>)</code>
+is true if and only if <code>(= </code><var>x</var><code> (round </code><var>x</var><code>))</code>.
+</p>
+<p>The numbers <code>+inf.0</code>, <code>-inf.0</code>, and <code>+nan.0</code> are real
+but not rational.
+</p>
+<div class="example lisp">
+<pre class="lisp">(complex? 3+4i)    &rArr; #t
+(complex? 3)       &rArr; #t
+(real? 3)          &rArr; #t
+(real? -2.5+0i)    &rArr; #t
+(real? -2.5+0.0i)  &rArr; #f
+(real? #e1e10)     &rArr; #t
+(real? +inf.0)     &rArr; #t
+(real? +nan.0)     &rArr; #t
+(rational? -inf.0) &rArr; #f
+(rational? 3.5)    &rArr; #t
+(rational? 6/10)   &rArr; #t
+(rational? 6/3)    &rArr; #t
+(integer? 3+0i)    &rArr; #t
+(integer? 3.0)     &rArr; #t
+(integer? 8/4)     &rArr; #t
+</pre></div>
+
+<p>Note: The behavior of these type predicates on inexact numbers is
+unreliable, since any inaccuracy might affect the result.
+</p>
+<p>Note: In many implementations the <code>complex?</code> procedure will be the
+same as <code>number?</code>, but unusual implementations may represent some
+irrational numbers exactly or may extend the number system to support
+some kind of non-complex numbers.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-exact_003f"><span class="category">procedure: </span><span><strong>exact?</strong> <em>z</em><a href='#index-exact_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-inexact_003f"><span class="category">procedure: </span><span><strong>inexact?</strong> <em>z</em><a href='#index-inexact_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These numerical predicates provide tests for the exactness of a
+quantity. For any Scheme number, precisely one of these predicates is
+true.
+</p>
+<div class="example lisp">
+<pre class="lisp">(exact? 3.0)   &rArr; #f
+(exact? #e3.0) &rArr; #t
+(inexact? 3.)  &rArr; #t
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-exact_002dinteger_003f"><span class="category">procedure: </span><span><strong>exact-integer?</strong> <em>z</em><a href='#index-exact_002dinteger_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>z</var> is both exact and an integer; otherwise
+returns <code>#f</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(exact-integer? 32)   &rArr; #t
+(exact-integer? 32.0) &rArr; #f
+(exact-integer? 32/5) &rArr; #f
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-finite_003f"><span class="category">inexact library procedure: </span><span><strong>finite?</strong> <em>z</em><a href='#index-finite_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>finite?</code> procedure returns <code>#t</code> on all real numbers
+except <code>+inf.0</code>, <code>-inf.0</code>, and <code>+nan.0</code>, and on complex
+numbers if their real and imaginary parts are both finite. Otherwise it
+returns <code>#f</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(finite? 3)          &rArr; #t
+(finite? +inf.0)     &rArr; #f
+(finite? 3.0+inf.0i) &rArr; #f
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-infinite_003f"><span class="category">inexact library procedure: </span><span><strong>infinite?</strong> <em>z</em><a href='#index-infinite_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>infinite?</code> procedure returns <code>#t</code> on the real numbers
+<code>+inf.0</code> and <code>-inf.0</code>, and on complex numbers if their real
+or imaginary parts or both are infinite. Otherwise it returns
+<code>#f</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(infinite? 3)          &rArr; #f
+(infinite? +inf.0)     &rArr; #t
+(infinite? +nan.0)     &rArr; #f
+(infinite? 3.0+inf.0i) &rArr; #t
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-nan_003f"><span class="category">inexact library procedure: </span><span><strong>nan?</strong> <em>z</em><a href='#index-nan_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>nan?</code> procedure returns <code>#t</code> on <code>+nan.0</code>, and on
+complex numbers if their real or imaginary parts or both are
+<code>+nan.0</code>. Otherwise it returns <code>#f</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(nan? +nan.0)      &rArr; #t
+(nan? 32)          &rArr; #f
+(nan? +nan.0+5.0i) &rArr; #t
+(nan? 1+2i)        &rArr; #f
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-_003d"><span class="category">procedure: </span><span><strong>=</strong> <em>z<sub>1</sub> z<sub>2</sub> z<sub>3</sub>&hellip;</em><a href='#index-_003d' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_003c"><span class="category">procedure: </span><span><strong>&lt;</strong> <em>x<sub>1</sub> x<sub>2</sub> x<sub>3</sub>&hellip;</em><a href='#index-_003c' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_003e"><span class="category">procedure: </span><span><strong>&gt;</strong> <em>x<sub>1</sub> x<sub>2</sub> x<sub>3</sub>&hellip;</em><a href='#index-_003e' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_003c_003d"><span class="category">procedure: </span><span><strong>&lt;=</strong> <em>x<sub>1</sub> x<sub>2</sub> x<sub>3</sub>&hellip;</em><a href='#index-_003c_003d' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_003e_003d"><span class="category">procedure: </span><span><strong>&gt;=</strong> <em>x<sub>1</sub> x<sub>2</sub> x<sub>3</sub>&hellip;</em><a href='#index-_003e_003d' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return <code>#t</code> if their arguments are (respectively):
+equal, monotonically increasing, monotonically decreasing, monotonically
+non-decreasing, or monotonically non-increasing, and <code>#f</code> otherwise.
+If any of the arguments are <code>+nan.0</code>, all the predicates return
+<code>#f</code>.  They do not distinguish between inexact zero and inexact
+negative zero.
+</p>
+<p>These predicates are required to be transitive.
+</p>
+<p>Note: The implementation approach of converting all arguments to inexact
+numbers if any argument is inexact is not transitive.  For example, let
+<code>big</code> be <code>(expt 2 1000)</code>, and assume that <code>big</code> is exact
+and that inexact numbers are represented by 64-bit IEEE binary floating
+point numbers.  Then <code>(= (- big 1) (inexact big))</code> and <code>(=
+(inexact big) (+ big 1))</code> would both be true with this approach, because
+of the limitations of IEEE representations of large integers, whereas
+<code>(= (- big 1) (+ big 1))</code> is false.  Converting inexact values to
+exact numbers that are the same (in the sense of <code>=</code>) to them will
+avoid this problem, though special care must be taken with infinities.
+</p>
+<p>Note: While it is not an error to compare inexact numbers using these
+predicates, the results are unreliable because a small inaccuracy can
+affect the result; this is especially true of <code>=</code> and <code>zero?</code>.
+When in doubt, consult a numerical analyst.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-zero_003f"><span class="category">procedure: </span><span><strong>zero?</strong> <em>z</em><a href='#index-zero_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-positive_003f"><span class="category">procedure: </span><span><strong>positive?</strong> <em>x</em><a href='#index-positive_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-negative_003f"><span class="category">procedure: </span><span><strong>negative?</strong> <em>x</em><a href='#index-negative_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-odd_003f"><span class="category">procedure: </span><span><strong>odd?</strong> <em>n</em><a href='#index-odd_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-even_003f"><span class="category">procedure: </span><span><strong>even?</strong> <em>n</em><a href='#index-even_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These numerical predicates test a number for a particular property,
+returning <code>#t</code> or <code>#f</code>. See note above.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-max"><span class="category">procedure: </span><span><strong>max</strong> <em>x<sub>1</sub> x<sub>2</sub>&hellip;</em><a href='#index-max' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-min"><span class="category">procedure: </span><span><strong>min</strong> <em>x<sub>1</sub> x<sub>2</sub>&hellip;</em><a href='#index-min' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return the maximum or minimum of their arguments.
+</p>
+<div class="example lisp">
+<pre class="lisp">(max 3 4)   &rArr; 4    ; exact
+(max 3.9 4) &rArr; 4.0  ; inexact
+</pre></div>
+
+<p>Note: If any argument is inexact, then the result will also be inexact
+(unless the procedure can prove that the inaccuracy is not large enough to
+affect the result, which is possible only in unusual implementations). If
+<code>min</code> or <code>max</code> is used to compare numbers of mixed exactness,
+and the numerical value of the result cannot be represented as an inexact
+number without loss of accuracy, then the procedure may report a violation
+of an implementation restriction.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-_002b"><span class="category">procedure: </span><span><strong>+</strong> <em>z<sub>1</sub>&hellip;</em><a href='#index-_002b' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_002a"><span class="category">procedure: </span><span><strong>*</strong> <em>z<sub>1</sub>&hellip;</em><a href='#index-_002a' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return the sum or product of their arguments.
+</p>
+<div class="example lisp">
+<pre class="lisp">(+ 3 4) &rArr; 7
+(+ 3)   &rArr; 3
+(+)     &rArr; 0
+(* 4)   &rArr; 4
+(*)     &rArr; 1
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-_002d"><span class="category">procedure: </span><span><strong>-</strong> <em>z</em><a href='#index-_002d' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_002d-1"><span class="category">procedure: </span><span><strong>-</strong> <em>z<sub>1</sub> z<sub>2</sub>&hellip;</em><a href='#index-_002d-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_002f"><span class="category">procedure: </span><span><strong>/</strong> <em>z</em><a href='#index-_002f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_002f-1"><span class="category">procedure: </span><span><strong>/</strong> <em>z<sub>1</sub> z<sub>2</sub>&hellip;</em><a href='#index-_002f-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>With two or more arguments, these procedures return the difference or
+quotient of their arguments, associating to the left. With one argument,
+however, they return the additive or multiplicative inverse of their
+argument.
+</p>
+<p>It is an error if any argument of <code>/</code> other than the first is an
+exact zero. If the first argument is an exact zero, an implementation
+may return an exact zero unless one of the other arguments is a NaN.
+</p>
+<div class="example lisp">
+<pre class="lisp">(- 3 4)   &rArr; -1
+(- 3 4 5) &rArr; -6
+(- 3)     &rArr; -3
+(/ 3 4 5) &rArr; 3/20
+(/ 3)     &rArr; 1/3
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-abs"><span class="category">procedure: </span><span><strong>abs</strong> <em>x</em><a href='#index-abs' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The abs procedure returns the absolute value of its argument.
+</p>
+<div class="example lisp">
+<pre class="lisp">(abs -7) &rArr; 7
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-floor_002f"><span class="category">procedure: </span><span><strong>floor/</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-floor_002f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-floor_002dquotient"><span class="category">procedure: </span><span><strong>floor-quotient</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-floor_002dquotient' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-floor_002dremainder"><span class="category">procedure: </span><span><strong>floor-remainder</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-floor_002dremainder' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-truncate_002f"><span class="category">procedure: </span><span><strong>truncate/</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-truncate_002f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-truncate_002dquotient"><span class="category">procedure: </span><span><strong>truncate-quotient</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-truncate_002dquotient' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-truncate_002dremainder"><span class="category">procedure: </span><span><strong>truncate-remainder</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-truncate_002dremainder' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures implement number-theoretic (integer) division. It is
+an error if <var>n</var> is zero.  The procedures ending in <code>/</code> return
+two integers; the other procedures return an integer. All the procedures
+compute a quotient <var>n<sub>q</sub></var> and remainder <var>n<sub>r</sub></var> such that
+<var>n<sub>1</sub></var> = <var>n<sub>2</sub></var><var>n<sub>q</sub></var> + <var>n<sub>r</sub></var>. For each
+of the division operators, there are three procedures defined as follows:
+</p>
+<div class="example lisp">
+<pre class="lisp">(<span class="roman">&#x27e8;operator&#x27e9;</span>/ <span class="roman"><var>n<sub>1</sub></var> <var>n<sub>2</sub></var></span>) &rArr; <span class="roman"><var>n<sub>q</sub></var> <var>n<sub>r</sub></var></span>
+(<span class="roman">&#x27e8;operator&#x27e9;</span>-quotient <span class="roman"><var>n<sub>1</sub></var> <var>n<sub>2</sub></var></span>) &rArr; <span class="roman"><var>n<sub>q</sub></var></span>
+(<span class="roman">&#x27e8;operator&#x27e9;</span>-remainder <span class="roman"><var>n<sub>1</sub></var> <var>n<sub>2</sub></var></span>) &rArr; <span class="roman"><var>n<sub>r</sub></var></span>
+</pre></div>
+
+<p>The remainder <var>n<sub>r</sub></var> is determined by the choice of integer
+<var>n<sub>q</sub></var>: <var>n<sub>r</sub></var> = <var>n<sub>1</sub></var> -
+<var>n<sub>2</sub></var><var>n<sub>q</sub></var>. Each set of operators uses a different
+choice of <var>n<sub>q</sub></var>:
+</p>
+<dl compact="compact">
+<dt><span><code>floor</code></span></dt>
+<dd><p><em class='tex2jax_process'>\(n_q = \lfloor n_1 / n_2 \rfloor\)</em>
+</p>
+</dd>
+<dt><span><code>truncate</code></span></dt>
+<dd><p><em class='tex2jax_process'>\(n_q =\)</em> truncate<em class='tex2jax_process'>\((n_1 / n_2)\)</em>
+</p>
+</dd>
+</dl>
+
+<p>For any of the operators, and for integers <var>n<sub>1</sub></var> and
+<var>n<sub>2</sub></var> with <var>n<sub>2</sub></var> not equal to 0,
+</p>
+<div class="example lisp">
+<pre class="lisp">(= <span class="roman"><var>n<sub>1</sub></var></span>
+   (+ (* <span class="roman"><var>n<sub>2</sub></var></span> (<span class="roman">&#x27e8;operator&#x27e9;</span>-quotient <span class="roman"><var>n<sub>1</sub></var> <var>n<sub>2</sub></var></span>))
+      (<span class="roman">&#x27e8;operator&#x27e9;</span>-remainder <span class="roman"><var>n<sub>1</sub></var> <var>n<sub>2</sub></var></span>)))
+        &rArr; #t
+</pre></div>
+
+<p>provided all numbers involved in that computation are exact.
+</p>
+<p>Examples:
+</p>
+<div class="example lisp">
+<pre class="lisp">(floor/ 5 2)        &rArr;  2    1
+(floor/ -5 2)       &rArr; -3    1
+(floor/ 5 -2)       &rArr; -3   -1
+(floor/ -5 -2)      &rArr;  2   -1
+(truncate/ 5 2)     &rArr;  2    1
+(truncate/ -5 2)    &rArr; -2   -1
+(truncate/ 5 -2)    &rArr; -2    1
+(truncate/ -5 -2)   &rArr;  2   -1
+(truncate/ -5.0 -2) &rArr;  2.0 -1.0
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-quotient"><span class="category">procedure: </span><span><strong>quotient</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-quotient' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-remainder"><span class="category">procedure: </span><span><strong>remainder</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-remainder' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-modulo"><span class="category">procedure: </span><span><strong>modulo</strong> <em>n<sub>1</sub> n<sub>2</sub></em><a href='#index-modulo' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>quotient</code> and <code>remainder</code> procedures are equivalent to
+<code>truncate-quotient</code> and <code>truncate-remainder</code>, respectively,
+and <code>modulo</code> is equivalent to <code>floor-remainder</code>.
+</p>
+<p>Note: These procedures are provided for backward compatibility with
+earlier versions of this report.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-gcd"><span class="category">procedure: </span><span><strong>gcd</strong> <em>n<sub>1</sub>&hellip;</em><a href='#index-gcd' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-lcm"><span class="category">procedure: </span><span><strong>lcm</strong> <em>n<sub>1</sub>&hellip;</em><a href='#index-lcm' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return the greatest common divisor or least common
+multiple of their arguments. The result is always non-negative.
+</p>
+<div class="example lisp">
+<pre class="lisp">(gcd 32 -36)   &rArr; 4
+(gcd)          &rArr; 0
+(lcm 32 -36)   &rArr; 288
+(lcm 32.0 -36) &rArr; 288.0  ; inexact
+(lcm)          &rArr; 1
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-numerator"><span class="category">procedure: </span><span><strong>numerator</strong> <em>q</em><a href='#index-numerator' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-denominator"><span class="category">procedure: </span><span><strong>denominator</strong> <em>q</em><a href='#index-denominator' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return the numerator or denominator of their argument;
+the result is computed as if the argument was represented as a fraction
+in lowest terms. The denominator is always positive. The denominator of
+0 is defined to be 1.
+</p>
+<div class="example lisp">
+<pre class="lisp">(numerator (/ 6 4))   &rArr; 3
+(denominator (/ 6 4)) &rArr; 2
+(denominator
+  (inexact (/ 6 4)))  &rArr; 2.0
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-floor"><span class="category">procedure: </span><span><strong>floor</strong> <em>x</em><a href='#index-floor' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-ceiling"><span class="category">procedure: </span><span><strong>ceiling</strong> <em>x</em><a href='#index-ceiling' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-truncate"><span class="category">procedure: </span><span><strong>truncate</strong> <em>x</em><a href='#index-truncate' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-round"><span class="category">procedure: </span><span><strong>round</strong> <em>x</em><a href='#index-round' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return integers.  The <code>floor</code> procedure returns the
+largest integer not larger than <var>x</var>.  The <code>ceiling</code> procedure
+returns the smallest integer not smaller than <var>x</var>, <code>truncate</code>
+returns the integer closest to <var>x</var> whose absolute value is not larger
+than the absolute value of <var>x</var>, and <code>round</code> returns the closest
+integer to <var>x</var>, rounding to even when <var>x</var> is halfway between
+two integers.
+</p>
+<span id="Rationale_003a-3"></span><h4 class="subheading">Rationale:</h4>
+
+<p>The <code>round</code> procedure rounds to even for consistency with
+the default rounding mode specified by the IEEE 754 IEEE floating-point
+standard.
+</p>
+<p>Note: If the argument to one of these procedures is inexact, then the
+result will also be inexact. If an exact value is needed, the result can
+be passed to the <code>exact</code> procedure. If the argument is infinite or
+a NaN, then it is returned.
+</p>
+<div class="example lisp">
+<pre class="lisp">(floor -4.3)          &rArr; -5.0
+(ceiling -4.3)        &rArr; -4.0
+(truncate -4.3)       &rArr; -4.0
+(round -4.3)          &rArr; -4.0
+
+(floor 3.5)           &rArr; 3.0
+(ceiling 3.5)         &rArr; 4.0
+(truncate 3.5)        &rArr; 3.0
+(round 3.5)           &rArr; 4.0  ; inexact
+
+(round 7/2)           &rArr; 4    ; exact
+(round 7)             &rArr; 7
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-rationalize"><span class="category">procedure: </span><span><strong>rationalize</strong> <em>x y</em><a href='#index-rationalize' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<span id="index-simplest-rational"></span>
+
+<p>The <code>rationalize</code> procedure returns the <em>simplest</em> rational
+number differing from <var>x</var> by no more than <var>y</var>. A rational
+number <var>r<sub>1</sub></var> is <em>simpler</em> than another rational number
+<var>r<sub>2</sub></var> if <em class='tex2jax_process'>\(r_1 = p_1/q_1\)</em> and <em class='tex2jax_process'>\(r_2 = p_2/q_2\)</em> (in
+lowest terms) and <em class='tex2jax_process'>\(|p_1| \leq |p_2|\)</em> and <em class='tex2jax_process'>\(|q_1| \leq |q_2|\)</em>.
+Thus 3/5 is simpler than 4/7. Although not all rationals are comparable
+in this ordering (consider 2/7 and 3/5), any interval contains a
+rational number that is simpler than every other rational number in
+that interval (the simpler 2/5 lies between 2/7 and 3/5). Note that 0 =
+0/1 is the simplest rational of all.
+</p>
+<div class="example lisp">
+<pre class="lisp">(rationalize (exact .3) 1/10) &rArr; 1/3    ; exact
+(rationalize .3 1/10)         &rArr; #i1/3  ; inexact
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-exp"><span class="category">inexact library procedure: </span><span><strong>exp</strong> <em>z</em><a href='#index-exp' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-log"><span class="category">inexact library procedure: </span><span><strong>log</strong> <em>z</em><a href='#index-log' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-log-1"><span class="category">inexact library procedure: </span><span><strong>log</strong> <em>z<sub>1</sub> z<sub>2</sub></em><a href='#index-log-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-sin"><span class="category">inexact library procedure: </span><span><strong>sin</strong> <em>z</em><a href='#index-sin' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-cos"><span class="category">inexact library procedure: </span><span><strong>cos</strong> <em>z</em><a href='#index-cos' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-tan"><span class="category">inexact library procedure: </span><span><strong>tan</strong> <em>z</em><a href='#index-tan' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-asin"><span class="category">inexact library procedure: </span><span><strong>asin</strong> <em>z</em><a href='#index-asin' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-acos"><span class="category">inexact library procedure: </span><span><strong>acos</strong> <em>z</em><a href='#index-acos' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-atan"><span class="category">inexact library procedure: </span><span><strong>atan</strong> <em>z</em><a href='#index-atan' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-atan-1"><span class="category">inexact library procedure: </span><span><strong>atan</strong> <em>y x</em><a href='#index-atan-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures compute the usual transcendental functions. The
+<code>log</code> procedure computes the natural logarithm of <var>z</var> (not the
+base ten logarithm) if a single argument is given, or the
+base-<var>z<sub>2</sub></var> logarithm of <var>z<sub>1</sub></var> if two arguments are
+given. The <code>asin</code>, <code>acos</code>, and <code>atan</code> procedures compute
+arcsine (sin<sup>-1</sup>), arc-cosine (cos<sup>-1</sup>), and
+arctangent (tan<sup>-1</sup>), respectively. The two-argument variant
+of <code>atan</code> computes <code>(angle (make-rectangular <var>x</var>
+<var>y</var>))</code> (see below), even in implementations that don&rsquo;t support
+complex numbers.
+</p>
+<p>In general, the mathematical functions log, arcsine, arc-cosine, and
+arctangent are multiply defined. The value of log <var>z</var> is defined to
+be the one whose imaginary part lies in the range from -&#x03c0;
+(inclusive if <code>-0.0</code> is distinguished, exclusive otherwise) to
+&#x03c0; (inclusive). The value of log 0 is mathematically undefined.
+With log defined this way, the values of sin<sup>-1</sup> <var>z</var>,
+cos<sup>-1</sup> <var>z</var>, and tan<sup>-1</sup> <var>z</var> are
+according to the following formul&aelig;:
+</p>
+<div class="displaymath"><em class="tex2jax_process">\[\sin^{-1} z = -i \log (i z + \sqrt{1 - z^2})
+\]</em></div>
+<div class="displaymath"><em class="tex2jax_process">\[\cos^{-1} z = \pi / 2 - \sin^{-1} z
+\]</em></div>
+<div class="displaymath"><em class="tex2jax_process">\[\tan^{-1} z = (\log (1 + i z) - \log (1 - i z)) / (2 i)
+\]</em></div>
+<p>However, <code>(log 0.0)</code> returns <code>-inf.0</code> (and <code>(log -0.0)</code>
+returns <code>-inf.0+&#x03c0;i</code>) if the implementation supports
+infinities (and <code>-0.0</code>).
+</p>
+<p>The range of <code>(atan </code><var>y</var> <var>x</var><code>)</code> is as in the
+following table. The asterisk (*) indicates that the entry applies to
+implementations that distinguish minus zero.
+</p>
+<table>
+<thead><tr><th width="16%"></th><th width="24%"><var>y</var> condition</th><th width="24%"><var>x</var> condition</th><th width="36%">range of result <var>r</var></th></tr></thead>
+<tr><td width="16%"></td><td width="24%"><var>y</var> = 0.0</td><td width="24%"><var>x</var> &gt; 0.0</td><td width="36%">0.0</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = +0.0</td><td width="24%"><var>x</var> &gt; 0.0</td><td width="36%">+0.0</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = -0.0</td><td width="24%"><var>x</var> &gt; 0.0</td><td width="36%">-0.0</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> &gt; 0.0</td><td width="24%"><var>x</var> &gt; 0.0</td><td width="36%">0.0 &lt; <var>r</var> &lt; &#x03c0;/2</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> &gt; 0.0</td><td width="24%"><var>x</var> = 0.0</td><td width="36%">&#x03c0;/2</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> &gt; 0.0</td><td width="24%"><var>x</var> &lt; 0.0</td><td width="36%">&#x03c0;/2 &lt; <var>r</var> &lt; &#x03c0;</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> = 0.0</td><td width="24%"><var>x</var> &lt; 0</td><td width="36%">&#x03c0;</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = +0.0</td><td width="24%"><var>x</var> &lt; 0.0</td><td width="36%">&#x03c0;</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = -0.0</td><td width="24%"><var>x</var> &lt; 0.0</td><td width="36%">-&#x03c0;</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> &lt; 0.0</td><td width="24%"><var>x</var> &lt; 0.0</td><td width="36%">-&#x03c0; &lt; <var>r</var> &lt; -&#x03c0;/2</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> &lt; 0.0</td><td width="24%"><var>x</var> = 0.0</td><td width="36%">-&#x03c0;/2</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> &lt; 0.0</td><td width="24%"><var>x</var> &gt; 0.0</td><td width="36%">-&#x03c0;/2 &lt; <var>r</var>&lt; 0.0</td></tr>
+<tr><td width="16%"></td><td width="24%"><var>y</var> = 0.0</td><td width="24%"><var>x</var> = 0.0</td><td width="36%">undefined</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = +0.0</td><td width="24%"><var>x</var> = +0.0</td><td width="36%">+0.0</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = -0.0</td><td width="24%"><var>x</var> = +0.0</td><td width="36%">-0.0</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = +0.0</td><td width="24%"><var>x</var> = -0.0</td><td width="36%">&#x03c0;</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = -0.0</td><td width="24%"><var>x</var> = -0.0</td><td width="36%">-&#x03c0;</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = +0.0</td><td width="24%"><var>x</var> = 0</td><td width="36%">&#x03c0;/2</td></tr>
+<tr><td width="16%">*</td><td width="24%"><var>y</var> = -0.0</td><td width="24%"><var>x</var> = 0</td><td width="36%">-&#x03c0;/2</td></tr>
+</table>
+
+<p>The above specification follows [<a href="References.html#CLtL">CLtL</a>], which in turn cites [<a href="References.html#Penfield81">Penfield81</a>]; refer
+to these sources for more detailed discussion of branch cuts, boundary
+conditions, and implementation of these functions. When it is possible,
+these procedures produce a real result from a real argument.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-square"><span class="category">procedure: </span><span><strong>square</strong> <em>z</em><a href='#index-square' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the square of z. This is equivalent to
+<code>(* </code><var>z</var> <var>z</var><code>)</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(square 42)  &rArr; 1764
+(square 2.0) &rArr; 4.0
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-sqrt"><span class="category">inexact library procedure: </span><span><strong>sqrt</strong> <em>z</em><a href='#index-sqrt' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the principal square root of <var>z</var>. The result will have
+either a positive real part, or a zero real part and a non-negative
+imaginary part.
+</p>
+<div class="example lisp">
+<pre class="lisp">(sqrt 9)  &rArr; 3
+(sqrt -1) &rArr; +i
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-exact_002dinteger_002dsqrt"><span class="category">procedure: </span><span><strong>exact-integer-sqrt</strong> <em>k</em><a href='#index-exact_002dinteger_002dsqrt' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns two non-negative exact integers <var>s</var> and <var>r</var> where
+<var>k</var> = <var>s</var><sup>2</sup> + <var>r</var> and <var>k</var> &lt; (<var>s</var> + 1)<sup>2</sup>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(exact-integer-sqrt 4) &rArr; 2 0
+(exact-integer-sqrt 5) &rArr; 2 1
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-expt"><span class="category">procedure: </span><span><strong>expt</strong> <em>z<sub>1</sub> z<sub>2</sub></em><a href='#index-expt' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns z<sub>1</sub> raised to the power z<sub>2</sub>. For nonzero
+z<sub>1</sub>, this is
+</p>
+<div class="displaymath"><em class="tex2jax_process">\[{z_1}^{z_2} = e^{z_2 \log {z_1}}
+\]</em></div>
+<p>The value of 0<sup><var>z</var></sup> is 1 if <code>(zero? </code><var>z</var><code>)</code>, 0 if
+<code>(real-part </code><var>z</var><code>)</code> is positive, and an error otherwise.
+Similarly for 0.0<sup><var>z</var></sup>, with inexact results.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-make_002drectangular"><span class="category">complex library procedure: </span><span><strong>make-rectangular</strong> <em>x<sub>1</sub> x<sub>2</sub></em><a href='#index-make_002drectangular' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-make_002dpolar"><span class="category">complex library procedure: </span><span><strong>make-polar</strong> <em>x<sub>3</sub> x<sub>4</sub></em><a href='#index-make_002dpolar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-real_002dpart"><span class="category">complex library procedure: </span><span><strong>real-part</strong> <em>z</em><a href='#index-real_002dpart' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-imag_002dpart"><span class="category">complex library procedure: </span><span><strong>imag-part</strong> <em>z</em><a href='#index-imag_002dpart' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-magnitude"><span class="category">complex library procedure: </span><span><strong>magnitude</strong> <em>z</em><a href='#index-magnitude' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-angle"><span class="category">complex library procedure: </span><span><strong>angle</strong> <em>z</em><a href='#index-angle' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Let <var>x<sub>1</sub></var>, <var>x<sub>2</sub></var>, <var>x<sub>3</sub></var>, and <var>x<sub>4</sub></var>
+be real numbers and <var>z</var> be a complex number such that
+</p>
+<div class="displaymath"><em class="tex2jax_process">\[z = x_1 + x_{2}i = x_3 \cdot e^{i x_4}
+\]</em></div>
+<p>Then all of
+</p>
+<div class="example lisp">
+<pre class="lisp">(make-rectangular <span class="roman"><var>x<sub>1</sub></var> <var>x<sub>2</sub></var></span>) &rArr; z
+(make-polar <span class="roman"><var>x<sub>3</sub></var> <var>x<sub>4</sub></var></span>)       &rArr; z
+(real-part <span class="roman"><var>z</var></span>)                  &rArr; <span class="roman"><var>x<sub>1</sub></var></span>
+(imag-part <span class="roman"><var>z</var></span>)                  &rArr; <span class="roman"><var>x<sub>2</sub></var></span>
+(magnitude <span class="roman"><var>z</var></span>)                  &rArr; |<span class="roman"><var>x<sub>3</sub></var></span>|
+(angle <span class="roman"><var>z</var></span>)                      &rArr; <span class="roman"><var>x</var><sub>angle</sub></span>
+</pre></div>
+
+<p>are true, where -&#x03c0; &le; <var>x<sub>angle</sub></var> &le;
+&#x03c0; with <var>x<sub>angle</sub></var> = <var>x<sub>4</sub></var> + 2&#x03c0;<var>n</var>
+for some integer <var>n</var>.
+</p>
+<p>The <code>make-polar</code> procedure may return an inexact complex
+number even if its arguments are exact. The <code>real-part</code> and
+<code>imag-part</code> procedures may return exact real numbers when applied
+to an inexact complex number if the corresponding argument passed to
+<code>make-rectangular</code> was exact.
+</p>
+<p>The <code>magnitude</code> procedure is the same as <code>abs</code> for a real
+argument, but <code>abs</code> is in the base library, whereas <code>magnitude</code>
+is in the optional complex library.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-inexact"><span class="category">procedure: </span><span><strong>inexact</strong> <em>z</em><a href='#index-inexact' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-exact"><span class="category">procedure: </span><span><strong>exact</strong> <em>z</em><a href='#index-exact' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The procedure <code>inexact</code> returns an inexact representation of <var>z</var>.
+The value returned is the inexact number that is numerically closest
+to the argument.  For inexact arguments, the result is the same as the
+argument. For exact complex numbers, the result is a complex number
+whose real and imaginary parts are the result of applying <code>inexact</code>
+to the real and imaginary parts of the argument, respectively.  If an
+exact argument has no reasonably close inexact equivalent (in the sense
+of <code>=</code>), then a violation of an implementation restriction may
+be reported.
+</p>
+<p>The procedure <code>exact</code> returns an exact representation of <var>z</var>. The
+value returned is the exact number that is numerically closest to
+the argument.  For exact arguments, the result is the same as the
+argument. For inexact non-integral real arguments, the implementation
+may return a rational approximation, or may report an implementation
+violation. For inexact complex arguments, the result is a complex number
+whose real and imaginary parts are the result of applying <code>exact</code>
+to the real and imaginary parts of the argument, respectively.  If an
+inexact argument has no reasonably close exact equivalent, (in the
+sense of <code>=</code>), then a violation of an implementation restriction
+may be reported.
+</p>
+<p>These procedures implement the natural one-to-one correspondence between
+exact and inexact integers throughout an implementation-dependent
+range. See <a href="Implementation-restrictions.html">Implementation restrictions</a>.
+</p>
+<p>Note: These procedures were known in R<sup>5</sup>RS as <code>exact-&gt;inexact</code>
+and <code>inexact-&gt;exact</code>, respectively, but they have always accepted
+arguments of any exactness.  The new names are clearer and shorter,
+as well as being compatible with R<sup>6</sup>RS.
+</p>
+</dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Numerical-input-and-output.html">Numerical input and output</a>, Previous: <a href="Syntax-of-numerical-constants.html">Syntax of numerical constants</a>, Up: <a href="Numbers.html">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+<a href='js_licenses.html' rel='jslicense'><small>JavaScript license information</small></a>
+</body>
+</html>

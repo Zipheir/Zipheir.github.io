@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Variables syntactic keywords and regions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Variables syntactic keywords and regions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Variables syntactic keywords and regions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Basic-concepts.html" rel="up" title="Basic concepts">
+<link href="Disjointness-of-types.html" rel="next" title="Disjointness of types">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Variables-syntactic-keywords-and-regions">
+<div class="header">
+<p>
+Next: <a href="Disjointness-of-types.html" accesskey="n" rel="next">Disjointness of types</a>, Up: <a href="Basic-concepts.html" accesskey="u" rel="up">Basic concepts</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Variables_002c-syntactic-keywords_002c-and-regions"></span><h3 class="section">3.1 Variables, syntactic keywords, and regions</h3>
+
+<span id="index-identifier"></span>
+<span id="index-syntactic-keyword"></span>
+<span id="index-variable"></span>
+<span id="index-binding"></span>
+<span id="index-global-environment"></span>
+
+<p>An identifier can name either a type of syntax or a location where
+a value can be stored. An identifier that names a type of syntax is
+called a <dfn>syntactic keyword</dfn> and is said to be <dfn>bound</dfn> to
+a transformer for that syntax. An identifier that names a location
+is called a <dfn>variable</dfn> and is said to be <dfn>bound</dfn> to that
+location. The set of all visible bindings in effect at some point
+in a program is known as the <dfn>environment</dfn> in effect at that
+point. The value stored in the location to which a variable is bound
+is called the variable&rsquo;s value. By abuse of terminology, the variable
+is sometimes said to name the value or to be bound to the value. This
+is not quite accurate, but confusion rarely results from this practice.
+</p>
+<span id="index-binding-construct"></span>
+
+<p>Certain expression types are used to create new kinds of syntax and to
+bind syntactic keywords to those new syntaxes, while other expression
+types create new locations and bind variables to those locations. These
+expression types are called <dfn>binding constructs</dfn>. Those
+that bind syntactic keywords are listed in <a href="Macros.html">Macros</a>. The most
+fundamental of the variable binding constructs is the <code>lambda</code>
+expression, because all other variable binding constructs (except
+top-level bindings) can be explained in terms of <code>lambda</code>
+expressions. The other variable binding constructs are <code>let</code>,
+<code>let*</code>, <code>letrec</code>, <code>letrec*</code>, <code>let-values</code>,
+<code>let*-values</code>, and <code>do</code> expressions (see <a href="Procedures.html">Procedures</a>,
+<a href="Binding-constructs.html">Binding constructs</a>, and <a href="Iteration.html">Iteration</a>).
+</p>
+<span id="index-bound"></span>
+
+<p>Scheme is a language with block structure. To each place where an
+identifier is bound in a program there corresponds a <dfn>region</dfn>
+of the program text within which the binding is visible. The region
+is determined by the particular binding construct that establishes
+the binding; if the binding is established by a <code>lambda</code>
+expression, for example, then its region is the entire <code>lambda</code>
+expression. Every mention of an identifier refers to the binding
+of the identifier that established the innermost of the regions
+containing the use. If there is no binding of the identifier whose
+region contains the use, then the use refers to the binding for the
+variable in the global environment, if any (<a href="Expressions.html">Expressions</a> and
+<a href="Standard-procedures.html">Standard procedures</a>); if there is no binding for the identifier,
+it is said to be <dfn>unbound</dfn>.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Disjointness-of-types.html">Disjointness of types</a>, Up: <a href="Basic-concepts.html">Basic concepts</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

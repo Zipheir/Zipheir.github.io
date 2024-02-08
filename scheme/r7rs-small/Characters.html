@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Characters (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Characters (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Characters (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Strings.html" rel="next" title="Strings">
+<link href="Symbols.html" rel="prev" title="Symbols">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Characters">
+<div class="header">
+<p>
+Next: <a href="Strings.html" accesskey="n" rel="next">Strings</a>, Previous: <a href="Symbols.html" accesskey="p" rel="prev">Symbols</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Characters-1"></span><h3 class="section">6.6 Characters</h3>
+
+<p>Characters are objects that represent printed characters such as
+letters and digits. All Scheme implementations must support at least the
+ASCII character repertoire: that is, Unicode characters U+0000 through
+U+007F. Implementations may support any other Unicode characters they
+see fit, and may also support non-Unicode characters as well.  Except
+as otherwise specified, the result of applying any of the following
+procedures to a non-Unicode character is implementation-dependent.
+</p>
+<p>Characters are written using the notation <code>#\</code>&#x27e8;character&#x27e9;
+or <code>#\</code>&#x27e8;character name&#x27e9; or <code>#\x</code>&#x27e8;hex scalar value&#x27e9;.
+</p>
+<p>The following character names must be supported by all implementations
+with the given values. Implementations may add other names provided they
+cannot be interpreted as hex scalar values preceded by <code>x</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">#\alarm      <span class="roman">; U+0007</span>
+#\backspace  <span class="roman">; U+0008</span>
+#\delete     <span class="roman">; U+007F</span>
+#\escape     <span class="roman">; U+001B</span>
+#\newline    <span class="roman">; the linefeed character, U+000A</span>
+#\null       <span class="roman">; the null character, U+0000</span>
+#\return     <span class="roman">; the return character, U+000D</span>
+#\space      <span class="roman">; the preferred way to write a space</span>
+#\tab        <span class="roman">; the tab character, U+0009</span>
+</pre></div>
+
+<p>Here are some additional examples:
+</p>
+<div class="example lisp">
+<pre class="lisp">#\a      <span class="roman">; lower case letter</span>
+#\A      <span class="roman">; upper case letter</span>
+#\(      <span class="roman">; left parenthesis</span>
+#\       <span class="roman">; the space character</span>
+#\x03BB  <span class="roman">; &#x03bb; (if character is supported)</span>
+#\iota   <span class="roman">; &#x03b9; (if character and name are supported)</span>
+</pre></div>
+
+<p>Case is significant in <code>#\</code>&#x27e8;character&#x27e9;, and in
+<code>#\</code>⟨character name⟩, but not in <code>#\x</code>&#x27e8;hex scalar
+value&#x27e9;. If &#x27e8;character&#x27e9; in <code>#\</code>&#x27e8;character&#x27e9; is alphabetic,
+then any character immediately following &#x27e8;character&#x27e9; cannot be
+one that can appear in an identifier. This rule resolves the ambiguous
+case where, for example, the sequence of characters &lsquo;<samp>#\space</samp>&rsquo;
+could be taken to be either a representation of the space character or a
+representation of the character <code>#\s</code> followed by a representation
+of the symbol <code>pace</code>.
+</p>
+<p>Characters written in the <code>#\</code> notation are self-evaluating. That
+is, they do not have to be quoted in programs.
+</p>
+<p>Some of the procedures that operate on characters ignore the difference
+between upper case and lower case. The procedures that ignore case have
+&lsquo;<samp>-ci</samp>&rsquo; (for &ldquo;case insensitive&rdquo;) embedded in their names.
+</p>
+<dl class="def">
+<dt id="index-char_003f"><span class="category">procedure: </span><span><strong>char?</strong> <em>obj</em><a href='#index-char_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>obj</var> is a character, otherwise returns
+<code>#f</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-char_003d_003f"><span class="category">procedure: </span><span><strong>char=?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_003c_003f"><span class="category">procedure: </span><span><strong>char&lt;?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_003c_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_003e_003f"><span class="category">procedure: </span><span><strong>char&gt;?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_003e_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_003c_003d_003f"><span class="category">procedure: </span><span><strong>char&lt;=?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_003c_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_003e_003d_003f"><span class="category">procedure: </span><span><strong>char&gt;=?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_003e_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return <code>#t</code> if the results of passing their
+arguments to <code>char-&gt;integer</code> are respectively equal, monotonically
+increasing, monotonically decreasing, monotonically non-decreasing, or
+monotonically non-increasing.
+</p>
+<p>These predicates are required to be transitive.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-char_002dci_003d_003f"><span class="category">char library procedure: </span><span><strong>char-ci=?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_002dci_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dci_003c_003f"><span class="category">char library procedure: </span><span><strong>char-ci&lt;?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_002dci_003c_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dci_003e_003f"><span class="category">char library procedure: </span><span><strong>char-ci&gt;?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_002dci_003e_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dci_003c_003d_003f"><span class="category">char library procedure: </span><span><strong>char-ci&lt;=?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_002dci_003c_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dci_003e_003d_003f"><span class="category">char library procedure: </span><span><strong>char-ci&gt;=?</strong> <em><var>char<sub>1</sub></var> <var>char<sub>2</sub></var> <var>char<sub>3</sub></var>&hellip;</em><a href='#index-char_002dci_003e_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures are similar to <code>char=?</code> et cetera, but they treat
+upper case and lower case letters as the same. For example,
+<code>(char-ci=? #\A #\a)</code> returns <code>#t</code>.
+</p>
+<p>Specifically, these procedures behave as if <code>char-foldcase</code> were
+applied to their arguments before they were compared.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-char_002dalphabetic_003f"><span class="category">char library procedure: </span><span><strong>char-alphabetic?</strong> <em>char</em><a href='#index-char_002dalphabetic_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dnumeric_003f"><span class="category">char library procedure: </span><span><strong>char-numeric?</strong> <em>char</em><a href='#index-char_002dnumeric_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dwhitespace_003f"><span class="category">char library procedure: </span><span><strong>char-whitespace?</strong> <em>char</em><a href='#index-char_002dwhitespace_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dupper_002dcase_003f"><span class="category">char library procedure: </span><span><strong>char-upper-case?</strong> <em>letter</em><a href='#index-char_002dupper_002dcase_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dlower_002dcase_003f"><span class="category">char library procedure: </span><span><strong>char-lower-case?</strong> <em>letter</em><a href='#index-char_002dlower_002dcase_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return <code>#t</code> if their arguments are alphabetic,
+numeric, whitespace, upper case, or lower case characters, respectively,
+otherwise they return <code>#f</code>.
+</p>
+<p>Specifically, they must return <code>#t</code> when applied to characters with
+the Unicode properties Alphabetic, Numeric_Type=Decimal, White_Space,
+Uppercase, and Lowercase respectively, and <code>#f</code> when applied to
+any other Unicode characters. Note that many Unicode characters are
+alphabetic but neither upper nor lower case.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-digit_002dvalue"><span class="category">char library procedure: </span><span><strong>digit-value</strong> <em>char</em><a href='#index-digit_002dvalue' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>This procedure returns the numeric value (0 to 9) of its argument if it
+is a numeric digit (that is, if <code>char-numeric?</code> returns
+<code>#t</code>), or <code>#f</code> on any other character.
+</p>
+<div class="example lisp">
+<pre class="lisp">(digit-value #\3)     &rArr; 3
+(digit-value #\x0664) &rArr; 4
+(digit-value #\x0AE6) &rArr; 0
+(digit-value #\x0EA6) &rArr; #f
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-char_002d_003einteger"><span class="category">procedure: </span><span><strong>char-&gt;integer</strong> <em>char</em><a href='#index-char_002d_003einteger' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-integer_002d_003echar"><span class="category">procedure: </span><span><strong>integer-&gt;char</strong> <em>n</em><a href='#index-integer_002d_003echar' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Given a Unicode character, <code>char-&gt;integer</code> returns an exact
+integer between 0 and <code>#xD7FF</code> or between <code>#xE000</code> and
+<code>#x10FFFF</code> which is equal to the Unicode scalar value of that
+character. Given a non-Unicode character, it returns an exact integer
+greater than <code>#x10FFFF</code>. This is true independent of whether the
+implementation uses the Unicode representation internally.
+</p>
+<p>Given an exact integer that is the value returned by a character when
+<code>char-&gt;integer</code> is applied to it, <code>integer-&gt;char</code> returns
+that character.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-char_002dupcase"><span class="category">char library procedure: </span><span><strong>char-upcase</strong> <em>char</em><a href='#index-char_002dupcase' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002ddowncase"><span class="category">char library procedure: </span><span><strong>char-downcase</strong> <em>char</em><a href='#index-char_002ddowncase' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-char_002dfoldcase"><span class="category">char library procedure: </span><span><strong>char-foldcase</strong> <em>char</em><a href='#index-char_002dfoldcase' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>char-upcase</code> procedure, given an argument that is the lowercase
+part of a Unicode casing pair, returns the uppercase member of the pair,
+provided that both characters are supported by the Scheme implementation.
+Note that language-sensitive casing pairs are not used.  If the argument
+is not the lowercase member of such a pair, it is returned.
+</p>
+<p>The <code>char-downcase</code> procedure, given an argument that is
+the uppercase part of a Unicode casing pair, returns the lowercase
+member of the pair, provided that both characters are supported by the
+Scheme implementation.  Note that language-sensitive casing pairs are
+not used.  If the argument is not the uppercase member of such a pair,
+it is returned.
+</p>
+<p>The <code>char-foldcase</code> procedure applies the Unicode simple
+case-folding algorithm to its argument and returns the result.  Note that
+language-sensitive folding is not used. If the character that results
+from folding is not supported by the implementation, the argument is
+returned.
+See UAX #29 [<a href="References.html#uax29">uax29</a>] (part of the Unicode Standard)
+for details.
+</p>
+<p>Note that many Unicode lowercase characters do not have uppercase
+equivalents.
+</p>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Strings.html">Strings</a>, Previous: <a href="Symbols.html">Symbols</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Entry format (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Entry format (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Entry format (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Notation-and-terminology.html" rel="up" title="Notation and terminology">
+<link href="Evaluation-examples.html" rel="next" title="Evaluation examples">
+<link href="Error-situations-and-unspecified-behavior.html" rel="prev" title="Error situations and unspecified behavior">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Entry-format">
+<div class="header">
+<p>
+Next: <a href="Evaluation-examples.html" accesskey="n" rel="next">Evaluation examples</a>, Previous: <a href="Error-situations-and-unspecified-behavior.html" accesskey="p" rel="prev">Error situations and unspecified behavior</a>, Up: <a href="Notation-and-terminology.html" accesskey="u" rel="up">Notation and terminology</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Entry-format-1"></span><h4 class="subsection">1.3.3 Entry format</h4>
+
+<p><strong>This section is incomplete. The Texinfo entry format differs
+from that of the R<sup>7</sup>RS PDF, and may be described here when the
+format is stable.</strong>
+</p>
+<p>Chapters <a href="Expressions.html">Expressions</a> and <a href="Standard-procedures.html">Standard procedures</a> are organized
+into entries. Each entry describes one language feature or a group of
+related features, where a feature is either a syntactic construct or a
+procedure.
+</p>
+<p>[&hellip;]
+</p>
+<p>It is an error for a procedure to be presented with an argument
+that it is not specified to handle. For succinctness, we follow
+the convention that if an argument name is also the name of a type
+listed in <a href="Disjointness-of-types.html">Disjointness of types</a>, then it is an error if that
+argument is not of the named type. For example, the header line for
+<code>vector-ref</code> given above dictates that the first argument to
+<code>vector-ref</code> is a vector. The following naming conventions also
+imply type restrictions:
+</p>
+<dl compact="compact">
+<dt><span><var>alist</var></span></dt>
+<dd><p>association list (list of pairs)
+</p>
+</dd>
+<dt><span><var>boolean</var></span></dt>
+<dd><p>boolean value (<code>#t</code> or <code>#f</code>)
+</p>
+</dd>
+<dt><span><var>byte</var></span></dt>
+<dd><p>exact integer 0 &le; <var>byte</var> &lt; 256
+</p>
+</dd>
+<dt><span><var>bytevector</var></span></dt>
+<dd><p>bytevector
+</p>
+</dd>
+<dt><span><var>char</var></span></dt>
+<dd><p>character
+</p>
+</dd>
+<dt><span><var>end</var></span></dt>
+<dd><p>exact non-negative integer
+</p>
+</dd>
+<dt><span><var>k</var>, <var>k<sub>1</sub></var>, &hellip; <var>k<sub>j</sub></var>, &hellip;</span></dt>
+<dd><p>exact non-negative integer
+</p>
+</dd>
+<dt><span><var>letter</var></span></dt>
+<dd><p>alphabetic character
+</p>
+</dd>
+<dt><span><var>list</var>, <var>list<sub>1</sub></var>, &hellip; <var>list<sub>j</sub></var>, &hellip;</span></dt>
+<dd><p>list (see <a href="Pairs-and-lists.html">Pairs and lists</a>)
+</p>
+</dd>
+<dt><span><var>n</var>, <var>n<sub>1</sub></var>, &hellip; <var>n<sub>j</sub></var>, &hellip;</span></dt>
+<dd><p>integer
+</p>
+</dd>
+<dt><span><var>obj</var></span></dt>
+<dd><p>any object
+</p>
+</dd>
+<dt><span><var>pair</var></span></dt>
+<dd><p>pair
+</p>
+</dd>
+<dt><span><var>port</var></span></dt>
+<dd><p>port
+</p>
+</dd>
+<dt><span><var>proc</var></span></dt>
+<dd><p>procedure
+</p>
+</dd>
+<dt><span><var>q</var>, <var>q<sub>1</sub></var>, &hellip; <var>q<sub>j</sub></var>, &hellip;</span></dt>
+<dd><p>rational number
+</p>
+</dd>
+<dt><span><var>start</var></span></dt>
+<dd><p>exact non-negative integer
+</p>
+</dd>
+<dt><span><var>string</var></span></dt>
+<dd><p>string
+</p>
+</dd>
+<dt><span><var>symbol</var></span></dt>
+<dd><p>symbol
+</p>
+</dd>
+<dt><span><var>thunk</var></span></dt>
+<dd><p>zero-argument procedure
+</p>
+</dd>
+<dt><span><var>vector</var></span></dt>
+<dd><p>vector
+</p>
+</dd>
+<dt><span><var>x</var>, <var>x<sub>1</sub></var>, &hellip; <var>x<sub>j</sub></var>, &hellip;</span></dt>
+<dd><p>real number
+</p>
+</dd>
+<dt><span><var>y</var>, <var>y<sub>1</sub></var>, &hellip; <var>y<sub>j</sub></var>, &hellip;</span></dt>
+<dd><p>real number
+</p>
+</dd>
+<dt><span><var>z</var>, <var>z<sub>1</sub></var>, &hellip; <var>z<sub>j</sub></var>, &hellip;</span></dt>
+<dd><p>complex number
+</p></dd>
+</dl>
+
+<p>The names <var>start</var> and <var>end</var> are used as indexes into strings,
+vectors, and bytevectors. Their use implies the following:
+</p>
+<ul>
+<li> It is an error if <var>start</var> is greater than <var>end</var>.
+
+</li><li> It is an error if <var>end</var> is greater than the length of the string,
+vector, or bytevector.
+
+</li><li> If <var>start</var> is omitted, it is assumed to be zero.
+
+</li><li> If <var>end</var> is omitted, it assumed to be the length of the string,
+vector, or bytevector.
+
+</li><li> The index <var>start</var> is always inclusive and the index <var>end</var> is
+always exclusive. As an example, consider a string. If <var>start</var> and
+<var>end</var> are the same, an empty substring is referred to, and if
+<var>start</var> is zero and <var>end</var> is the length of string, then the
+entire string is referred to.
+
+</li></ul>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Evaluation-examples.html">Evaluation examples</a>, Previous: <a href="Error-situations-and-unspecified-behavior.html">Error situations and unspecified behavior</a>, Up: <a href="Notation-and-terminology.html">Notation and terminology</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

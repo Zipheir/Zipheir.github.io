@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Proper tail recursion (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Proper tail recursion (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Proper tail recursion (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Basic-concepts.html" rel="up" title="Basic concepts">
+<link href="Storage-model.html" rel="prev" title="Storage model">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Proper-tail-recursion">
+<div class="header">
+<p>
+Previous: <a href="Storage-model.html" accesskey="p" rel="prev">Storage model</a>, Up: <a href="Basic-concepts.html" accesskey="u" rel="up">Basic concepts</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Proper-tail-recursion-1"></span><h3 class="section">3.5 Proper tail recursion</h3>
+
+<span id="index-proper-tail-recursion"></span>
+<span id="index-tail-call"></span>
+
+<p>Implementations of Scheme are required to be <dfn>properly
+tail-recursive</dfn>.  Procedure calls that occur in certain syntactic
+contexts defined below are <dfn>tail calls</dfn>. A Scheme implementation
+is properly tail-recursive if it supports an unbounded number of active
+tail calls. A call is <dfn>active</dfn> if the called procedure might still
+return. Note that this includes calls that might be returned from
+either by the current continuation or by continuations captured earlier
+by <code>call-with-current-continuation</code> that are later invoked. In
+the absence of captured continuations, calls could return at most
+once and the active calls would be those that had not yet returned. A
+formal definition of proper tail recursion can be found in [<a href="References.html#propertailrecursion">propertailrecursion</a>].
+</p>
+<span id="Rationale_003a-1"></span><h4 class="subheading">Rationale:</h4>
+
+<p>Intuitively, no space is needed for an active tail call because the
+continuation that is used in the tail call has the same semantics as
+the continuation passed to the procedure containing the call. Although
+an improper implementation might use a new continuation in the call,
+a return to this new continuation would be followed immediately by
+a return to the continuation passed to the procedure. A properly
+tail-recursive implementation returns to that continuation directly.
+</p>
+<p>Proper tail recursion was one of the central ideas in Steele and
+Sussman&rsquo;s original version of Scheme. Their first Scheme interpreter
+implemented both functions and actors. Control flow was expressed
+using actors, which differed from functions in that they passed their
+results on to another actor instead of returning to a caller. In the
+terminology of this section, each actor finished with a tail call to
+another actor.
+</p>
+<p>Steele and Sussman later observed that in their interpreter the code
+for dealing with actors was identical to that for functions and thus
+there was no need to include both in the language.
+</p>
+<p>A <dfn>tail call</dfn> is a procedure call that occurs in a <dfn>tail
+context</dfn>. Tail contexts are defined inductively. Note that a tail
+context is always determined with respect to a particular lambda
+expression.
+</p>
+<ul>
+<li> The last expression within the body of a lambda expression, shown as
+&lt;tail expression&gt; below, occurs in a tail context. The same is true of
+all the bodies of <code>case-lambda</code> expressions.
+
+<div class="example lisp">
+<pre class="lisp">(lambda &#x27e8;formals&#x27e9;
+  &#x27e8;definition&#x27e9;* &#x27e8;expression&#x27e9;* &#x27e8;tail expression&#x27e9;)
+
+(case-lambda (&#x27e8;formals&#x27e9; &#x27e8;tail body&#x27e9;)*)
+</pre></div>
+
+</li><li> If one of the following expressions is in a tail context, then the
+subexpressions shown as &#x27e8;tail expression&#x27e9; are in a tail context.
+These were derived from rules in the grammar given in <a href="Formal-syntax-and-semantics.html">Formal syntax and semantics</a> by replacing some occurrences of &#x27e8;body&#x27e9; with
+&#x27e8;tail body&#x27e9;, some occurrences of &#x27e8;expression&#x27e9; with &#x27e8;tail
+expression&#x27e9;, and some occurrences of &#x27e8;sequence&#x27e9; with &#x27e8;tail
+sequence&#x27e9;. Only those rules that contain tail contexts are shown here.
+
+<div class="example lisp">
+<pre class="lisp">(if <span class="roman">&#x27e8;expression&#x27e9;</span> <span class="roman">&#x27e8;tail expression&#x27e9;</span> <span class="roman">&#x27e8;tail expression&#x27e9;</span>)
+(if <span class="roman">&#x27e8;expression&#x27e9;</span> <span class="roman">&#x27e8;tail expression&#x27e9;</span>)
+
+(cond <span class="roman">&#x27e8;cond clause&#x27e9;</span><sup><span class="roman">+</span></sup>)
+(cond <span class="roman">&#x27e8;cond clause&#x27e9;</span><span class="roman">*</span> (else <span class="roman">&#x27e8;tail sequence&#x27e9;</span>))
+
+(case <span class="roman">&#x27e8;expression&#x27e9;</span>
+  <span class="roman">&#x27e8;case clause&#x27e9;</span><sup>+</sup>)
+(case <span class="roman">&#x27e8;expression&#x27e9;</span>
+  <span class="roman">&#x27e8;case clause&#x27e9;</span><span class="roman">*</span>
+  (else <span class="roman">&#x27e8;tail sequence&#x27e9;</span>))
+
+(and <span class="roman">&#x27e8;expression&#x27e9;</span><span class="roman">*</span> <span class="roman">&#x27e8;tail expression&#x27e9;</span>)
+(or <span class="roman">&#x27e8;expression&#x27e9;</span><span class="roman">*</span> <span class="roman">&#x27e8;tail expression&#x27e9;</span>)
+
+(when <span class="roman">&#x27e8;test&#x27e9;</span> <span class="roman">&#x27e8;tail sequence&#x27e9;</span>)
+(unless <span class="roman">&#x27e8;test&#x27e9;</span> <span class="roman">&#x27e8;tail sequence&#x27e9;</span>)
+
+(let (<span class="roman">&#x27e8;binding spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+(let <span class="roman">&#x27e8;variable&#x27e9;</span> (<span class="roman">&#x27e8;binding spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+(let* (<span class="roman">&#x27e8;binding spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+(letrec (<span class="roman">&#x27e8;binding spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+(letrec* (<span class="roman">&#x27e8;binding spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+(let-values (<span class="roman">&#x27e8;mv binding spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+(let*-values (<span class="roman">&#x27e8;mv binding spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+
+(let-syntax (<span class="roman">&#x27e8;syntax spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+(letrec-syntax (<span class="roman">&#x27e8;syntax spec&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail body&#x27e9;</span>)
+
+(begin <span class="roman">&#x27e8;tail sequence&#x27e9;</span>)
+
+(do (<span class="roman">&#x27e8;iteration spec&#x27e9;</span><span class="roman">*</span>)
+    (<span class="roman">&#x27e8;test&#x27e9;</span> <span class="roman">&#x27e8;tail sequence&#x27e9;</span>)
+  <span class="roman">&#x27e8;expression&#x27e9;</span><span class="roman">*</span>)
+</pre></div>
+
+<p>where
+</p>
+<div class="example lisp">
+<pre class="lisp"><span class="roman">&#x27e8;cond clause&#x27e9;</span> &rarr; (<span class="roman">&#x27e8;test&#x27e9;</span> <span class="roman">&#x27e8;tail sequence&#x27e9;</span>)
+<span class="roman">&#x27e8;case clause&#x27e9;</span> &rarr; ((<span class="roman">&#x27e8;datum&#x27e9;</span><span class="roman">*</span>) <span class="roman">&#x27e8;tail sequence&#x27e9;</span>)
+<span class="roman">&#x27e8;tail body&#x27e9;</span> &rarr; <span class="roman">&#x27e8;definition&#x27e9;</span><span class="roman">*</span> <span class="roman">&#x27e8;tail sequence&#x27e9;</span>
+<span class="roman">&#x27e8;tail sequence&#x27e9;</span> &rarr; <span class="roman">&#x27e8;expression&#x27e9;</span><span class="roman">*</span> <span class="roman">&#x27e8;tail expression&#x27e9;</span>
+</pre></div>
+
+</li><li> If a <code>cond</code> or <code>case</code> expression is in a tail context, and
+has a clause of the form <code>(</code>&#x27e8;expression<sub>1</sub>&#x27e9; <code>=&gt;</code>
+&#x27e8;expression<sub>2</sub>&#x27e9;<code>)</code> then the (implied) call to the
+procedure that results from the evaluation of &#x27e8;expression&#x27e9; is in a
+tail context. &#x27e8;expression&#x27e9; itself is not in a tail context.
+
+</li></ul>
+
+<p>Certain procedures defined in this report are also required to
+perform tail calls. The first argument passed to <code>apply</code> and to
+<code>call-with-current-continuation</code>, and the second argument passed
+to <code>call-with-values</code>, must be called via a tail call. Similarly,
+<code>eval</code> must evaluate its first argument as if it were in tail
+position within the <code>eval</code> procedure.
+</p>
+<p>In the following example the only tail call is the call to
+<code>f</code>. None of the calls to <code>g</code> or <code>h</code> are tail calls. The
+reference to <code>x</code> is in a tail context, but it is not a call and
+thus is not a tail call.
+</p>
+<div class="example lisp">
+<pre class="lisp">(lambda ()
+  (if (g)
+      (let ((x (h)))
+        x)
+      (and (g) (f))))
+</pre></div>
+
+<p>Note: Implementations may recognize that some non-tail calls, such
+as the call to <code>h</code> above, can be evaluated as though they were
+tail calls. In the example above, the <code>let</code> expression could be
+compiled as a tail call to <code>h</code>. (The possibility of <code>h</code>
+returning an unexpected number of values can be ignored, because
+in that case the effect of the <code>let</code> is explicitly unspecified
+and implementation-dependent.)
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Storage-model.html">Storage model</a>, Up: <a href="Basic-concepts.html">Basic concepts</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

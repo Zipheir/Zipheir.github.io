@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Sequencing (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Sequencing (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Sequencing (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Iteration.html" rel="next" title="Iteration">
+<link href="Binding-constructs.html" rel="prev" title="Binding constructs">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Sequencing">
+<div class="header">
+<p>
+Next: <a href="Iteration.html" accesskey="n" rel="next">Iteration</a>, Previous: <a href="Binding-constructs.html" accesskey="p" rel="prev">Binding constructs</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Sequencing-1"></span><h4 class="subsection">4.2.3 Sequencing</h4>
+
+<p>Both of Scheme&rsquo;s sequencing constructs are named <code>begin</code>, but the two have slightly
+different forms and uses:
+</p>
+<dl class="def">
+<dt id="index-begin"><span class="category">syntax: </span><span><strong>begin</strong> <em>&#x27e8;expression or definition&#x27e9;&hellip;</em><a href='#index-begin' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>This form of begin can appear as part of a &#x27e8;body&#x27e9;, or at the outermost level of a
+&#x27e8;program&#x27e9;, or at the REPL, or directly nested in a <code>begin</code> that is itself of this form. It causes
+the contained expressions and definitions to be evaluated exactly as if the enclosing <code>begin</code>
+construct were not present.
+</p>
+<p>Rationale: This form is commonly used in the output of macros (See <a href="Macros.html">Macros</a>) which
+need to generate multiple definitions and splice them into the context in which they
+are expanded.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-begin-1"><span class="category">syntax: </span><span><strong>begin</strong> <em>&#x27e8;expression<sub>1</sub>&#x27e9; &#x27e8;expression<sub>2</sub>&#x27e9;&hellip;</em><a href='#index-begin-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>This form of <code>begin</code> can be used as an ordinary expression. The &#x27e8;expression&#x27e9;s are
+evaluated sequentially from left to right, and the values of the last &#x27e8;expression&#x27e9; are
+returned. This expression type is used to sequence side effects such as assignments or
+input and output.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define x 0)
+
+(and (= x 0)
+     (begin (set! x 5)
+            (+ x 1))) &rArr; 6
+
+(begin (display &quot;4 plus 1 equals &quot;)
+       (display (+ 4 1)))
+       &rArr; <span class="roman">unspecified</span>
+-| 4 plus 1 equals 5
+</pre></div>
+
+</dd></dl>
+
+<p>Note that there is a third form of <code>begin</code> used as a library declaration.
+See <a href="Library-syntax.html">Library syntax</a>
+</p></div>
+
+
+
+</body>
+</html>

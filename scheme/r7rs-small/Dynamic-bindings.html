@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Dynamic bindings (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Dynamic bindings (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Dynamic bindings (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Exception-handling.html" rel="next" title="Exception handling">
+<link href="Delayed-evaluation.html" rel="prev" title="Delayed evaluation">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Dynamic-bindings">
+<div class="header">
+<p>
+Next: <a href="Exception-handling.html" accesskey="n" rel="next">Exception handling</a>, Previous: <a href="Delayed-evaluation.html" accesskey="p" rel="prev">Delayed evaluation</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Dynamic-bindings-1"></span><h4 class="subsection">4.2.6 Dynamic bindings</h4>
+
+<p>The dynamic extent of a procedure call is the time between when it is initiated and when it
+returns. In Scheme, call-with-current-continuation (section 6.10) allows reentering a
+dynamic extent after its procedure call has returned. Thus, the dynamic extent of a call
+might not be a single, continuous time period.
+</p>
+<p>This sections introduces parameter objects, which can be bound to new values for the
+duration of a dynamic extent. The set of all parameter bindings at a given time is called
+the dynamic environment.
+</p>
+<dl class="def">
+<dt id="index-make_002dparameter"><span class="category">procedure: </span><span><strong>make-parameter</strong> <em>init</em><a href='#index-make_002dparameter' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-make_002dparameter-1"><span class="category">procedure: </span><span><strong>make-parameter</strong> <em>init converter</em><a href='#index-make_002dparameter-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated parameter object, which is a procedure that accepts zero
+arguments and returns the value associated with the parameter object. Initially, this value
+is the value of <code>(<var>converter</var> <var>init</var>)</code>, or of
+<var>init</var> if the conversion procedure
+<var>converter</var> is not specified. The associated value can be temporarily changed using
+parameterize, which is described below.
+</p>
+<p>The effect of passing arguments to a parameter object is implementation-dependent.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-parameterize"><span class="category">syntax: </span><span><strong>parameterize</strong> <em>(&#x27e8;param<sub>1</sub>&#x27e9; &#x27e8;value<sub>1</sub>&#x27e9;)&hellip; &#x27e8;body&#x27e9;</em><a href='#index-parameterize' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: Both &#x27e8;param<sub>1</sub>&#x27e9; and &#x27e8;value<sub>1</sub>&#x27e9; are expressions.
+</p>
+<p>It is an error if the value of any &#x27e8;param&#x27e9; expression is not a parameter object.
+</p>
+<p>Semantics:
+A <code>parameterize</code> expression is used to change the values returned by
+specified parameter objects during the evaluation of the body.
+</p>
+<p>The &#x27e8;param&#x27e9; and &#x27e8;value&#x27e9; expressions
+are evaluated in an unspecified order.  The &#x27e8;body&#x27e9; is
+evaluated in a dynamic environment in which calls to the
+parameters return the results of passing the corresponding values
+to the conversion procedure specified when the parameters were created.
+Then the previous values of the parameters are restored without passing
+them to the conversion procedure.
+The results of the last
+expression in the &#x27e8;body&#x27e9; are returned as the results of the entire
+<code>parameterize</code> expression.
+</p>
+<p>Note: If the conversion procedure is not idempotent, the results of
+<code>(parameterize ((x (x))) &hellip;)</code>,
+which appears to bind the parameter <var>x</var> to its current value,
+might not be what the user expects.
+</p>
+<p>If an implementation supports multiple threads of execution, then
+<code>parameterize</code> must not change the associated values of any parameters
+in any thread other than the current thread and threads created
+inside &#x27e8;body&#x27e9;.
+</p>
+<p>Parameter objects can be used to specify configurable settings for a
+computation without the need to pass the value to every
+procedure in the call chain explicitly.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define radix
+  (make-parameter
+   10
+   (lambda (x)
+     (if (and (exact-integer? x) (&lt;= 2 x 16))
+         x
+         (error &quot;invalid radix&quot;)))))
+
+(define (f n) (number-&gt;string n (radix)))
+
+(f 12)                    &rArr; &quot;12&quot;
+(parameterize ((radix 2))
+  (f 12))                 &rArr; &quot;1100&quot;
+(f 12)                    &rArr; &quot;12&quot;
+
+(radix 16)                &rArr; <span class="roman">unspecified</span>
+
+(parameterize ((radix 0))
+  (f 12))                 &rArr; <span class="roman">error</span>
+</pre></div>
+
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Exception-handling.html">Exception handling</a>, Previous: <a href="Delayed-evaluation.html">Delayed evaluation</a>, Up: <a href="Derived-expression-types.html">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

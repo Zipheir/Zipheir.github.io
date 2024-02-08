@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Multiple value definitions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Multiple value definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Multiple value definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Variable-definitions.html" rel="up" title="Variable definitions">
+<link href="Internal-definitions.html" rel="prev" title="Internal definitions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Multiple-value-definitions">
+<div class="header">
+<p>
+Previous: <a href="Internal-definitions.html" accesskey="p" rel="prev">Internal definitions</a>, Up: <a href="Variable-definitions.html" accesskey="u" rel="up">Variable definitions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Multiple_002dvalue-definitions"></span><h4 class="subsection">5.3.3 Multiple-value definitions</h4>
+
+<p>Another kind of definition is provided by <code>define-values</code>, which
+creates multiple definitions from a single expression returning multiple
+values. It is allowed wherever define is allowed.
+</p>
+<dl class="def">
+<dt id="index-define_002dvalues"><span class="category">syntax: </span><span><strong>define-values</strong> <em>&#x27e8;formals&#x27e9; &#x27e8;expression&#x27e9;</em><a href='#index-define_002dvalues' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if a variable appears more than once in the set of
+&#x27e8;formals&#x27e9;.
+</p>
+<p>Semantics: &#x27e8;Expression&#x27e9; is evaluated, and the &#x27e8;formals&#x27e9; are
+bound to the return values in the same way that the &#x27e8;formals&#x27e9; in a
+<code>lambda</code> expression are matched to the arguments in a procedure call.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define-values (x y) (exact-integer-sqrt 17))
+(list x y) &rArr; (4 1)
+
+(let ()
+  (define-values (x y) (values 1 2))
+  (+ x y)) &rArr; 3
+</pre></div>
+
+</dd></dl>
+
+</div>
+
+
+
+</body>
+</html>

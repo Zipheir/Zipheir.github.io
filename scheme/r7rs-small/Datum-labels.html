@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Datum labels (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Datum labels (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Datum labels (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Lexical-conventions.html" rel="up" title="Lexical conventions">
+<link href="Other-notations.html" rel="prev" title="Other notations">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Datum-labels">
+<div class="header">
+<p>
+Previous: <a href="Other-notations.html" accesskey="p" rel="prev">Other notations</a>, Up: <a href="Lexical-conventions.html" accesskey="u" rel="up">Lexical conventions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Datum-labels-1"></span><h3 class="section">2.4 Datum labels</h3>
+
+<dl class="def">
+<dt id="index-_002327e8n27e9_003d27e8datum27e9"><span class="category">lexical syntax: </span><span><strong>#&#x27e8;n&#x27e9;=&#x27e8;datum&#x27e9;</strong><a href='#index-_002327e8n27e9_003d27e8datum27e9' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_002327e8n27e9_0023"><span class="category">lexical syntax: </span><span><strong>#&#x27e8;n&#x27e9;#</strong><a href='#index-_002327e8n27e9_0023' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The lexical syntax <code>#</code>&#x27e8;n&#x27e9;<code>=</code>&#x27e8;datum&#x27e9; reads the same
+as &#x27e8;datum&#x27e9;, but also results in &#x27e8;datum&#x27e9; being labelled by
+&#x27e8;n&#x27e9;. It is an error if &#x27e8;n&#x27e9; is not a sequence of digits.
+</p>
+<p>The lexical syntax <code>#</code>&#x27e8;n&#x27e9;<code>#</code> serves as a reference to
+some object labelled by <code>#</code>&#x27e8;n&#x27e9;<code>=</code>; the result is the
+same object as the <code>#</code>&#x27e8;n&#x27e9;<code>=</code> (see
+<a href="Equivalence-predicates.html">Equivalence predicates</a>). Together, these syntaxes permit the
+notation of structures with shared or circular substructure.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((x (list 'a 'b 'c)))
+  (set-cdr! (cddr x) x)
+  x) &rArr; #0=(a b c . #0#)
+</pre></div>
+
+<p>The scope of a datum label is the portion of the outermost datum in
+which it appears that is to the right of the label. Consequently, a
+reference <code>#</code>&#x27e8;n&#x27e9;<code>#</code> can occur only after a label
+<code>#</code>&#x27e8;n&#x27e9;<code>=</code>; it is an error to attempt a forward
+reference. In addition, it is an error if the reference appears as the
+labelled object itself (as in <code>#</code>&#x27e8;n&#x27e9;<code>=</code>
+<code>#</code>&#x27e8;n&#x27e9;<code>#</code>), because the object labelled by
+<code>#</code>&#x27e8;n&#x27e9;<code>=</code> is not well defined in this case.
+</p>
+<p>It is an error for a &#x27e8;program&#x27e9; or &#x27e8;library&#x27e9; to include
+circular references except in literals. In particular, it is an error
+for quasiquote (<a href="Quasiquotation.html">Quasiquotation</a>) to contain them.
+</p>
+<div class="example lisp">
+<pre class="lisp">#1=(begin (display #\x) #1#) &rArr; <span class="roman">error</span>
+</pre></div>
+</dd></dl>
+
+</div>
+
+
+
+</body>
+</html>

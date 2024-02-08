@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Assignments (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Assignments (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Assignments (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Primitive-expression-types.html" rel="up" title="Primitive expression types">
+<link href="Inclusion.html" rel="next" title="Inclusion">
+<link href="Conditionals-primitive.html" rel="prev" title="Conditionals primitive">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Assignments">
+<div class="header">
+<p>
+Next: <a href="Inclusion.html" accesskey="n" rel="next">Inclusion</a>, Previous: <a href="Conditionals-primitive.html" accesskey="p" rel="prev">Conditionals</a>, Up: <a href="Primitive-expression-types.html" accesskey="u" rel="up">Primitive expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Assignments-1"></span><h4 class="subsection">4.1.6 Assignments</h4>
+
+<span id="index-region"></span>
+
+<dl class="def">
+<dt id="index-set_0021"><span class="category">syntax: </span><span><strong>set!</strong> <em>&#x27e8;variable&#x27e9; &#x27e8;expression&#x27e9;</em><a href='#index-set_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Semantics: &#x27e8;Expression&#x27e9; is evaluated, and the resulting value is stored
+in the location to which &#x27e8;variable&#x27e9; is bound. It is an error if
+&#x27e8;variable&#x27e9; is not bound either in some regionenclosing the set!
+expression or else globally. The result of the <code>set!</code> expression is
+unspecified.
+</p></dd></dl>
+
+<div class="example lisp">
+<pre class="lisp">(define x 2)
+(+ x 1)      &rArr; 3
+(set! x 4)   &rArr; <span class="roman">unspecified</span>
+(+ x 1)      &rArr; 5
+</pre></div>
+
+</div>
+
+
+
+</body>
+</html>

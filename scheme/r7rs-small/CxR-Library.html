@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>CxR Library (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="CxR Library (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="CxR Library (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Appendix-A.html" rel="up" title="Appendix A">
+<link href="Eval-Library.html" rel="next" title="Eval Library">
+<link href="Complex-Library.html" rel="prev" title="Complex Library">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="appendixsec" id="CxR-Library">
+<div class="header">
+<p>
+Next: <a href="Eval-Library.html" accesskey="n" rel="next">Eval Library</a>, Previous: <a href="Complex-Library.html" accesskey="p" rel="prev">Complex Library</a>, Up: <a href="Appendix-A.html" accesskey="u" rel="up">Standard Libraries</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="CxR-Library-1"></span><h3 class="appendixsec">A.5 CxR Library</h3>
+
+<p>The <code>(scheme cxr)</code> library exports twenty-four procedures which
+are the compositions of from three to four <code>car</code> and <code>cdr</code>
+operations. For example <code>caddar</code> could be defined by
+</p>
+<div class="example lisp">
+<pre class="lisp">(define caddar
+  (lambda (x) (car (cdr (cdr (car x)))))).
+</pre></div>
+
+<p>The procedures <code>car</code> and <code>cdr</code> themselves and the four
+two-level compositions are included in the base library.
+See <a href="Pairs-and-lists.html">Pairs and lists</a>.
+</p>
+<ul class="no-bullet">
+<li><!-- /@w --> <code>caaaar</code>
+
+</li><li><!-- /@w --> <code>caaadr</code>
+
+</li><li><!-- /@w --> <code>caaar</code>
+
+</li><li><!-- /@w --> <code>caadar</code>
+
+</li><li><!-- /@w --> <code>caaddr</code>
+
+</li><li><!-- /@w --> <code>caadr</code>
+
+</li><li><!-- /@w --> <code>cadaar</code>
+
+</li><li><!-- /@w --> <code>cadadr</code>
+
+</li><li><!-- /@w --> <code>cadar</code>
+
+</li><li><!-- /@w --> <code>caddar</code>
+
+</li><li><!-- /@w --> <code>cadddr</code>
+
+</li><li><!-- /@w --> <code>caddr</code>
+
+</li><li><!-- /@w --> <code>cdaaar</code>
+
+</li><li><!-- /@w --> <code>cdaadr</code>
+
+</li><li><!-- /@w --> <code>cdaar</code>
+
+</li><li><!-- /@w --> <code>cdadar</code>
+
+</li><li><!-- /@w --> <code>cdaddr</code>
+
+</li><li><!-- /@w --> <code>cdadr</code>
+
+</li><li><!-- /@w --> <code>cddaar</code>
+
+</li><li><!-- /@w --> <code>cddadr</code>
+
+</li><li><!-- /@w --> <code>cddar</code>
+
+</li><li><!-- /@w --> <code>cdddar</code>
+
+</li><li><!-- /@w --> <code>cddddr</code>
+
+</li><li><!-- /@w --> <code>cdddr</code>
+
+</li></ul>
+
+</div>
+
+
+
+</body>
+</html>

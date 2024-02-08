@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Programs (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Programs (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Programs (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Program-structure.html" rel="up" title="Program structure">
+<link href="Import-declarations.html" rel="next" title="Import declarations">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Programs">
+<div class="header">
+<p>
+Next: <a href="Import-declarations.html" accesskey="n" rel="next">Import declarations</a>, Up: <a href="Program-structure.html" accesskey="u" rel="up">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Programs-1"></span><h3 class="section">5.1 Programs</h3>
+
+<p>A Scheme program consists of one or more import declarations followed
+by a sequence of expressions and definitions. Import declarations
+specify the libraries on which a program or library depends; a subset
+of the identifiers exported by the libraries are made available to the
+program. Expressions are described in <a href="Expressions.html">Expressions</a>. Definitions
+are either variable definitions, syntax definitions, or record-type
+definitions, all of which are explained in this chapter. They are
+valid in some, but not all, contexts where expressions are allowed,
+specifically at the outermost level of a &#x27e8;program&#x27e9; and at the
+beginning of a &#x27e8;body&#x27e9;.
+</p>
+<p>At the outermost level of a program, <code>(begin </code>&#x27e8;expression
+or definition<sub>1</sub>&#x27e9; &hellip;<code>)</code> is equivalent to the sequence of
+expressions and definitions in the begin. Similarly, in a &#x27e8;body&#x27e9;,
+(begin &#x27e8;definition<sub>1</sub>&#x27e9; &hellip;) is equivalent to the sequence
+&#x27e8;definition<sub>1</sub>&#x27e9; &hellip;. Macros can expand into such begin
+forms. For the formal definition, see <a href="Sequencing.html">Sequencing</a>.
+</p>
+<p>Import declarations and definitions cause bindings to be created in the
+global environment or modify the value of existing global bindings. The
+initial environment of a program is empty, so at least one import
+declaration is needed to introduce initial bindings.
+</p>
+<p>Expressions occurring at the outermost level of a program do not create
+any bindings. They are executed in order when the program is invoked
+or loaded, and typically perform some kind of initialization.
+</p>
+<p>Programs and libraries are typically stored in files, although in
+some implementations they can be entered interactively into a running
+Scheme system. Other paradigms are possible. Implementations which store
+libraries in files should document the mapping from the name of a library
+to its location in the file system.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Import-declarations.html">Import declarations</a>, Up: <a href="Program-structure.html">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

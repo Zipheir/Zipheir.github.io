@@ -1,0 +1,548 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Base Library (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Base Library (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Base Library (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Appendix-A.html" rel="up" title="Appendix A">
+<link href="Case_002dLambda-Library.html" rel="next" title="Case-Lambda Library">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="appendixsec" id="Base-Library">
+<div class="header">
+<p>
+Next: <a href="Case_002dLambda-Library.html" accesskey="n" rel="next">Case-Lambda Library</a>, Up: <a href="Appendix-A.html" accesskey="u" rel="up">Standard Libraries</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Base-Library-1"></span><h3 class="appendixsec">A.1 Base Library</h3>
+
+<p>The <code>(scheme base)</code> library exports many of the procedures and
+syntax bindings that are traditionally associated with Scheme. The
+division between the base library and the other standard libraries
+is based on use, not on construction. In particular, some facilities
+that are typically implemented as primitives by a compiler or the
+run-time system rather than in terms of other standard procedures or
+syntax are not part of the base library, but are defined in separate
+libraries. By the same token, some exports of the base library are
+implementable in terms of other exports. They are redundant in the
+strict sense of the word, but they capture common patterns of usage,
+and are therefore provided as convenient abbreviations.
+</p>
+<ul class="no-bullet">
+<li><!-- /@w --> <code>*</code>
+
+</li><li><!-- /@w --> <code>+</code>
+
+</li><li><!-- /@w --> <code>-</code>
+
+</li><li><!-- /@w --> <code>&hellip;</code>
+
+</li><li><!-- /@w --> <code>/</code>
+
+</li><li><!-- /@w --> <code>&lt;</code>
+
+</li><li><!-- /@w --> <code>&lt;=</code>
+
+</li><li><!-- /@w --> <code>=</code>
+
+</li><li><!-- /@w --> <code>=&gt;</code>
+
+</li><li><!-- /@w --> <code>&gt;</code>
+
+</li><li><!-- /@w --> <code>&gt;=</code>
+
+</li><li><!-- /@w --> <code>_</code>
+
+</li><li><!-- /@w --> <code>abs</code>
+
+</li><li><!-- /@w --> <code>and</code>
+
+</li><li><!-- /@w --> <code>append</code>
+
+</li><li><!-- /@w --> <code>apply</code>
+
+</li><li><!-- /@w --> <code>assoc</code>
+
+</li><li><!-- /@w --> <code>assq</code>
+
+</li><li><!-- /@w --> <code>assv</code>
+
+</li><li><!-- /@w --> <code>begin</code>
+
+</li><li><!-- /@w --> <code>binary-port?</code>
+
+</li><li><!-- /@w --> <code>boolean=?</code>
+
+</li><li><!-- /@w --> <code>boolean?</code>
+
+</li><li><!-- /@w --> <code>bytevector</code>
+
+</li><li><!-- /@w --> <code>bytevector-append</code>
+
+</li><li><!-- /@w --> <code>bytevector-copy</code>
+
+</li><li><!-- /@w --> <code>bytevector-copy!</code>
+
+</li><li><!-- /@w --> <code>bytevector-length</code>
+
+</li><li><!-- /@w --> <code>bytevector-u8-ref</code>
+
+</li><li><!-- /@w --> <code>bytevector-u8-set!</code>
+
+</li><li><!-- /@w --> <code>bytevector?</code>
+
+</li><li><!-- /@w --> <code>caar</code>
+
+</li><li><!-- /@w --> <code>call-with-port</code>
+
+</li><li><!-- /@w --> <code>call-with-values</code>
+
+</li><li><!-- /@w --> <code>call/cc</code>
+
+</li><li><!-- /@w --> <code>car</code>
+
+</li><li><!-- /@w --> <code>case</code>
+
+</li><li><!-- /@w --> <code>cdar</code>
+
+</li><li><!-- /@w --> <code>cddr</code>
+
+</li><li><!-- /@w --> <code>cdr</code>
+
+</li><li><!-- /@w --> <code>ceiling</code>
+
+</li><li><!-- /@w --> <code>char-&gt;integer</code>
+
+</li><li><!-- /@w --> <code>char-ready?</code>
+
+</li><li><!-- /@w --> <code>char&lt;=?</code>
+
+</li><li><!-- /@w --> <code>char&lt;?</code>
+
+</li><li><!-- /@w --> <code>char=?</code>
+
+</li><li><!-- /@w --> <code>char&gt;=?</code>
+
+</li><li><!-- /@w --> <code>char&gt;?</code>
+
+</li><li><!-- /@w --> <code>char?</code>
+
+</li><li><!-- /@w --> <code>close-input-port</code>
+
+</li><li><!-- /@w --> <code>close-output-port</code>
+
+</li><li><!-- /@w --> <code>close-port</code>
+
+</li><li><!-- /@w --> <code>complex?</code>
+
+</li><li><!-- /@w --> <code>cond</code>
+
+</li><li><!-- /@w --> <code>cond-expand</code>
+
+</li><li><!-- /@w --> <code>cons</code>
+
+</li><li><!-- /@w --> <code>current-error-port</code>
+
+</li><li><!-- /@w --> <code>current-input-port</code>
+
+</li><li><!-- /@w --> <code>current-output-port</code>
+
+</li><li><!-- /@w --> <code>define</code>
+
+</li><li><!-- /@w --> <code>define-record-type</code>
+
+</li><li><!-- /@w --> <code>define-syntax</code>
+
+</li><li><!-- /@w --> <code>define-values</code>
+
+</li><li><!-- /@w --> <code>denominator</code>
+
+</li><li><!-- /@w --> <code>do</code>
+
+</li><li><!-- /@w --> <code>dynamic-wind</code>
+
+</li><li><!-- /@w --> <code>else</code>
+
+</li><li><!-- /@w --> <code>eof-object</code>
+
+</li><li><!-- /@w --> <code>eof-object?</code>
+
+</li><li><!-- /@w --> <code>eq?</code>
+
+</li><li><!-- /@w --> <code>equal?</code>
+
+</li><li><!-- /@w --> <code>eqv?</code>
+
+</li><li><!-- /@w --> <code>error</code>
+
+</li><li><!-- /@w --> <code>error-object-irritants</code>
+
+</li><li><!-- /@w --> <code>error-object-message</code>
+
+</li><li><!-- /@w --> <code>error-object?</code>
+
+</li><li><!-- /@w --> <code>even?</code>
+
+</li><li><!-- /@w --> <code>exact</code>
+
+</li><li><!-- /@w --> <code>exact-integer-sqrt</code>
+
+</li><li><!-- /@w --> <code>exact-integer?</code>
+
+</li><li><!-- /@w --> <code>exact?</code>
+
+</li><li><!-- /@w --> <code>expt</code>
+
+</li><li><!-- /@w --> <code>features</code>
+
+</li><li><!-- /@w --> <code>file-error?</code>
+
+</li><li><!-- /@w --> <code>floor</code>
+
+</li><li><!-- /@w --> <code>floor-quotient</code>
+
+</li><li><!-- /@w --> <code>floor-remainder</code>
+
+</li><li><!-- /@w --> <code>floor/</code>
+
+</li><li><!-- /@w --> <code>flush-output-port</code>
+
+</li><li><!-- /@w --> <code>for-each</code>
+
+</li><li><!-- /@w --> <code>gcd</code>
+
+</li><li><!-- /@w --> <code>get-output-bytevector</code>
+
+</li><li><!-- /@w --> <code>get-output-string</code>
+
+</li><li><!-- /@w --> <code>guard</code>
+
+</li><li><!-- /@w --> <code>if</code>
+
+</li><li><!-- /@w --> <code>include</code>
+
+</li><li><!-- /@w --> <code>include-ci</code>
+
+</li><li><!-- /@w --> <code>inexact</code>
+
+</li><li><!-- /@w --> <code>inexact?</code>
+
+</li><li><!-- /@w --> <code>input-port-open?</code>
+
+</li><li><!-- /@w --> <code>input-port?</code>
+
+</li><li><!-- /@w --> <code>integer-&gt;char</code>
+
+</li><li><!-- /@w --> <code>integer?</code>
+
+</li><li><!-- /@w --> <code>lambda</code>
+
+</li><li><!-- /@w --> <code>lcm</code>
+
+</li><li><!-- /@w --> <code>length</code>
+
+</li><li><!-- /@w --> <code>let</code>
+
+</li><li><!-- /@w --> <code>let*</code>
+
+</li><li><!-- /@w --> <code>let*-values</code>
+
+</li><li><!-- /@w --> <code>let-syntax</code>
+
+</li><li><!-- /@w --> <code>let-values</code>
+
+</li><li><!-- /@w --> <code>letrec</code>
+
+</li><li><!-- /@w --> <code>letrec*</code>
+
+</li><li><!-- /@w --> <code>letrec-syntax</code>
+
+</li><li><!-- /@w --> <code>list</code>
+
+</li><li><!-- /@w --> <code>list-&gt;string</code>
+
+</li><li><!-- /@w --> <code>list-&gt;vector</code>
+
+</li><li><!-- /@w --> <code>list-copy</code>
+
+</li><li><!-- /@w --> <code>list-ref</code>
+
+</li><li><!-- /@w --> <code>list-set!</code>
+
+</li><li><!-- /@w --> <code>list-tail</code>
+
+</li><li><!-- /@w --> <code>list?</code>
+
+</li><li><!-- /@w --> <code>make-bytevector</code>
+
+</li><li><!-- /@w --> <code>make-list</code>
+
+</li><li><!-- /@w --> <code>make-parameter</code>
+
+</li><li><!-- /@w --> <code>make-string</code>
+
+</li><li><!-- /@w --> <code>make-vector</code>
+
+</li><li><!-- /@w --> <code>map</code>
+
+</li><li><!-- /@w --> <code>max</code>
+
+</li><li><!-- /@w --> <code>member</code>
+
+</li><li><!-- /@w --> <code>memq</code>
+
+</li><li><!-- /@w --> <code>memv</code>
+
+</li><li><!-- /@w --> <code>min</code>
+
+</li><li><!-- /@w --> <code>modulo</code>
+
+</li><li><!-- /@w --> <code>negative?</code>
+
+</li><li><!-- /@w --> <code>newline</code>
+
+</li><li><!-- /@w --> <code>not</code>
+
+</li><li><!-- /@w --> <code>null?</code>
+
+</li><li><!-- /@w --> <code>number-&gt;string</code>
+
+</li><li><!-- /@w --> <code>number?</code>
+
+</li><li><!-- /@w --> <code>numerator</code>
+
+</li><li><!-- /@w --> <code>odd?</code>
+
+</li><li><!-- /@w --> <code>open-input-bytevector</code>
+
+</li><li><!-- /@w --> <code>open-input-string</code>
+
+</li><li><!-- /@w --> <code>open-output-bytevector</code>
+
+</li><li><!-- /@w --> <code>open-output-string</code>
+
+</li><li><!-- /@w --> <code>or</code>
+
+</li><li><!-- /@w --> <code>output-port-open?</code>
+
+</li><li><!-- /@w --> <code>output-port?</code>
+
+</li><li><!-- /@w --> <code>pair?</code>
+
+</li><li><!-- /@w --> <code>parameterize</code>
+
+</li><li><!-- /@w --> <code>peek-char</code>
+
+</li><li><!-- /@w --> <code>peek-u8</code>
+
+</li><li><!-- /@w --> <code>port?</code>
+
+</li><li><!-- /@w --> <code>positive?</code>
+
+</li><li><!-- /@w --> <code>procedure?</code>
+
+</li><li><!-- /@w --> <code>quasiquote</code>
+
+</li><li><!-- /@w --> <code>quote</code>
+
+</li><li><!-- /@w --> <code>quotient</code>
+
+</li><li><!-- /@w --> <code>raise</code>
+
+</li><li><!-- /@w --> <code>raise-continuable</code>
+
+</li><li><!-- /@w --> <code>rational?</code>
+
+</li><li><!-- /@w --> <code>rationalize</code>
+
+</li><li><!-- /@w --> <code>read-bytevector</code>
+
+</li><li><!-- /@w --> <code>read-bytevector!</code>
+
+</li><li><!-- /@w --> <code>read-char</code>
+
+</li><li><!-- /@w --> <code>read-error?</code>
+
+</li><li><!-- /@w --> <code>read-line</code>
+
+</li><li><!-- /@w --> <code>read-string</code>
+
+</li><li><!-- /@w --> <code>read-u8</code>
+
+</li><li><!-- /@w --> <code>real?</code>
+
+</li><li><!-- /@w --> <code>remainder</code>
+
+</li><li><!-- /@w --> <code>reverse</code>
+
+</li><li><!-- /@w --> <code>round</code>
+
+</li><li><!-- /@w --> <code>set!</code>
+
+</li><li><!-- /@w --> <code>set-car!</code>
+
+</li><li><!-- /@w --> <code>set-cdr!</code>
+
+</li><li><!-- /@w --> <code>square</code>
+
+</li><li><!-- /@w --> <code>string</code>
+
+</li><li><!-- /@w --> <code>string-&gt;list</code>
+
+</li><li><!-- /@w --> <code>string-&gt;number</code>
+
+</li><li><!-- /@w --> <code>string-&gt;symbol</code>
+
+</li><li><!-- /@w --> <code>string-&gt;utf8</code>
+
+</li><li><!-- /@w --> <code>string-&gt;vector</code>
+
+</li><li><!-- /@w --> <code>string-append</code>
+
+</li><li><!-- /@w --> <code>string-copy</code>
+
+</li><li><!-- /@w --> <code>string-copy!</code>
+
+</li><li><!-- /@w --> <code>string-fill!</code>
+
+</li><li><!-- /@w --> <code>string-for-each</code>
+
+</li><li><!-- /@w --> <code>string-length</code>
+
+</li><li><!-- /@w --> <code>string-map</code>
+
+</li><li><!-- /@w --> <code>string-ref</code>
+
+</li><li><!-- /@w --> <code>string-set!</code>
+
+</li><li><!-- /@w --> <code>string&lt;=?</code>
+
+</li><li><!-- /@w --> <code>string&lt;?</code>
+
+</li><li><!-- /@w --> <code>string=?</code>
+
+</li><li><!-- /@w --> <code>string&gt;=?</code>
+
+</li><li><!-- /@w --> <code>string&gt;?</code>
+
+</li><li><!-- /@w --> <code>string?</code>
+
+</li><li><!-- /@w --> <code>substring</code>
+
+</li><li><!-- /@w --> <code>symbol-&gt;string</code>
+
+</li><li><!-- /@w --> <code>symbol=?</code>
+
+</li><li><!-- /@w --> <code>symbol?</code>
+
+</li><li><!-- /@w --> <code>syntax-error</code>
+
+</li><li><!-- /@w --> <code>syntax-rules</code>
+
+</li><li><!-- /@w --> <code>textual-port?</code>
+
+</li><li><!-- /@w --> <code>truncate</code>
+
+</li><li><!-- /@w --> <code>truncate-quotient</code>
+
+</li><li><!-- /@w --> <code>truncate-remainder</code>
+
+</li><li><!-- /@w --> <code>truncate/</code>
+
+</li><li><!-- /@w --> <code>u8-ready?</code>
+
+</li><li><!-- /@w --> <code>unless</code>
+
+</li><li><!-- /@w --> <code>unquote</code>
+
+</li><li><!-- /@w --> <code>unquote-splicing</code>
+
+</li><li><!-- /@w --> <code>utf8-&gt;string</code>
+
+</li><li><!-- /@w --> <code>values</code>
+
+</li><li><!-- /@w --> <code>vector</code>
+
+</li><li><!-- /@w --> <code>vector-&gt;list</code>
+
+</li><li><!-- /@w --> <code>vector-&gt;string</code>
+
+</li><li><!-- /@w --> <code>vector-append</code>
+
+</li><li><!-- /@w --> <code>vector-copy</code>
+
+</li><li><!-- /@w --> <code>vector-copy!</code>
+
+</li><li><!-- /@w --> <code>vector-fill!</code>
+
+</li><li><!-- /@w --> <code>vector-for-each</code>
+
+</li><li><!-- /@w --> <code>vector-length</code>
+
+</li><li><!-- /@w --> <code>vector-map</code>
+
+</li><li><!-- /@w --> <code>vector-ref</code>
+
+</li><li><!-- /@w --> <code>vector-set!</code>
+
+</li><li><!-- /@w --> <code>vector?</code>
+
+</li><li><!-- /@w --> <code>when</code>
+
+</li><li><!-- /@w --> <code>with-exception-handler</code>
+
+</li><li><!-- /@w --> <code>write-bytevector</code>
+
+</li><li><!-- /@w --> <code>write-char</code>
+
+</li><li><!-- /@w --> <code>write-string</code>
+
+</li><li><!-- /@w --> <code>write-u8</code>
+
+</li><li><!-- /@w --> <code>zero?</code>
+
+</li></ul>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Case_002dLambda-Library.html">Case-Lambda Library</a>, Up: <a href="Appendix-A.html">Standard Libraries</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

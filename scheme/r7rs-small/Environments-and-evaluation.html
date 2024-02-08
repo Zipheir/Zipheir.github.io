@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Environments and evaluation (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Environments and evaluation (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Environments and evaluation (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Input-and-output.html" rel="next" title="Input and output">
+<link href="Exceptions.html" rel="prev" title="Exceptions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Environments-and-evaluation">
+<div class="header">
+<p>
+Next: <a href="Input-and-output.html" accesskey="n" rel="next">Input and output</a>, Previous: <a href="Exceptions.html" accesskey="p" rel="prev">Exceptions</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Environments-and-evaluation-1"></span><h3 class="section">6.12 Environments and evaluation</h3>
+
+<dl class="def">
+<dt id="index-environment"><span class="category">eval library procedure: </span><span><strong>environment</strong> <em><var>list<sub>1</sub></var>&hellip;</em><a href='#index-environment' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>This procedure returns a specifier for the environment that results
+by starting with an empty environment and then importing each
+<var>list</var>, considered as an import set, into it. (See <a href="Libraries.html">Libraries</a>
+for a description of import sets.)  The bindings of the environment
+represented by the specifier are immutable, as is the environment
+itself.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-scheme_002dreport_002denvironment"><span class="category">r5rs library procedure: </span><span><strong>scheme-report-environment</strong> <em>version</em><a href='#index-scheme_002dreport_002denvironment' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>If <var>version</var> is equal to <code>5</code>, corresponding to R<sup>5</sup>RS,
+<code>scheme-report-environment</code> returns a specifier for an environment
+that contains only the bindings defined in the R<sup>5</sup>RS library.
+Implementations must support this value of <var>version</var>.
+</p>
+<p>Implementations may also support other values of <var>version</var>,
+in which case they return a specifier for an environment containing
+bindings corresponding to the specified version of the report. If
+<var>version</var> is neither <code>5</code> nor another value supported by the
+implementation, an error is signaled.
+</p>
+<p>The effect of defining or assigning (through the use of <code>eval</code>)
+an identifier bound in a <code>null-environment</code> (for example
+<code>car</code>) is unspecified.  Thus both the environment and the bindings
+it contains may be immutable.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-null_002denvironment"><span class="category">r5rs library procedure: </span><span><strong>null-environment</strong> <em>version</em><a href='#index-null_002denvironment' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>If <var>version</var> is equal to <code>5</code>, corresponding to R<sup>5</sup>RS,
+the null-environment procedure returns a specifier for an environment
+that contains only the bindings for all syntactic keywords defined
+in the R<sup>5</sup>RS library. Implementations must support this value
+of <var>version</var>.
+</p>
+<p>Implementations may also support other values of <var>version</var>, in
+which case they return a specifier for an environment containing
+appropriate bindings corresponding to the specified version of
+the report. If <var>version</var> is neither <code>5</code> nor another value
+supported by the implementation, an error is signaled.
+</p>
+<p>The effect of defining or assigning (through the use of <code>eval</code>)
+an identifier bound in a <code>scheme-report-environment</code> (for example
+<code>car</code>) is unspecified.  Thus both the environment and the bindings
+it contains may be immutable.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-interaction_002denvironment"><span class="category">repl library procedure: </span><span><strong>interaction-environment</strong><a href='#index-interaction_002denvironment' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>This procedure returns a specifier for a mutable environment that
+contains an implementation-defined set of bindings, typically a
+superset of those exported by <code>(scheme base)</code>.  The intent is that
+this procedure will return the environment in which the implementation
+would evaluate expressions entered by the user into a REPL.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-eval"><span class="category">eval library procedure: </span><span><strong>eval</strong> <em>expr-or-def environment-specifier</em><a href='#index-eval' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>If <var>expr-or-def</var> is an expression, it is evaluated in the specified
+environment and its values are returned.  If it is a definition,
+the specified identifier(s) are defined in the specified environment,
+provided the environment is not immutable.  Implementations may extend
+<code>eval</code> to allow other objects.
+</p>
+<div class="example lisp">
+<pre class="lisp">(eval '(* 7 3) (environment '(scheme base))) &rArr;  21
+
+(let ((f (eval '(lambda (f x) (f x x))
+               (null-environment 5))))
+  (f + 10))
+    &rArr;  20
+(eval '(define foo 32)
+      (environment '(scheme base)))
+    &rArr; <span class="roman">error is signaled</span>
+</pre></div>
+
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Input-and-output.html">Input and output</a>, Previous: <a href="Exceptions.html">Exceptions</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

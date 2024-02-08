@@ -1,0 +1,516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>R5RS Library (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="R5RS Library (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="R5RS Library (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Appendix-A.html" rel="up" title="Appendix A">
+<link href="Write-Library.html" rel="prev" title="Write Library">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="appendixsec" id="R5RS-Library">
+<div class="header">
+<p>
+Previous: <a href="Write-Library.html" accesskey="p" rel="prev">Write Library</a>, Up: <a href="Appendix-A.html" accesskey="u" rel="up">Standard Libraries</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="R5RS-Library-1"></span><h3 class="appendixsec">A.16 R5RS Library</h3>
+
+<p>The <code>(scheme r5rs)</code> library provides the identifiers defined by
+R<sup>5</sup>RS, except that <code>transcript-on</code> and <code>transcript-off</code>
+are not present.  Note that the <code>exact</code> and <code>inexact</code>
+procedures appear under their R<sup>5</sup>RS names <code>inexact-&gt;exact</code>
+and <code>exact-&gt;inexact</code> respectively.  However, if an implementation
+does not provide a particular library such as the complex library,
+the corresponding identifiers will not appear in this library either.
+</p>
+<ul class="no-bullet">
+<li><!-- /@w --> <code>*</code>
+
+</li><li><!-- /@w --> <code>+</code>
+
+</li><li><!-- /@w --> <code>-</code>
+
+</li><li><!-- /@w --> <code>&hellip;</code>
+
+</li><li><!-- /@w --> <code>/</code>
+
+</li><li><!-- /@w --> <code>&lt;</code>
+
+</li><li><!-- /@w --> <code>&lt;=</code>
+
+</li><li><!-- /@w --> <code>=</code>
+
+</li><li><!-- /@w --> <code>=&gt;</code>
+
+</li><li><!-- /@w --> <code>&gt;</code>
+
+</li><li><!-- /@w --> <code>&gt;=</code>
+
+</li><li><!-- /@w --> <code>_</code>
+
+</li><li><!-- /@w --> <code>abs</code>
+
+</li><li><!-- /@w --> <code>acos</code>
+
+</li><li><!-- /@w --> <code>and</code>
+
+</li><li><!-- /@w --> <code>angle</code>
+
+</li><li><!-- /@w --> <code>append</code>
+
+</li><li><!-- /@w --> <code>apply</code>
+
+</li><li><!-- /@w --> <code>asin</code>
+
+</li><li><!-- /@w --> <code>assoc</code>
+
+</li><li><!-- /@w --> <code>assq</code>
+
+</li><li><!-- /@w --> <code>assv</code>
+
+</li><li><!-- /@w --> <code>atan</code>
+
+</li><li><!-- /@w --> <code>begin</code>
+
+</li><li><!-- /@w --> <code>boolean?</code>
+
+</li><li><!-- /@w --> <code>caaaar</code>
+
+</li><li><!-- /@w --> <code>caaadr</code>
+
+</li><li><!-- /@w --> <code>caaar</code>
+
+</li><li><!-- /@w --> <code>caadar</code>
+
+</li><li><!-- /@w --> <code>caaddr</code>
+
+</li><li><!-- /@w --> <code>caadr</code>
+
+</li><li><!-- /@w --> <code>caar</code>
+
+</li><li><!-- /@w --> <code>cadaar</code>
+
+</li><li><!-- /@w --> <code>cadadr</code>
+
+</li><li><!-- /@w --> <code>cadar</code>
+
+</li><li><!-- /@w --> <code>caddar</code>
+
+</li><li><!-- /@w --> <code>cadddr</code>
+
+</li><li><!-- /@w --> <code>caddr</code>
+
+</li><li><!-- /@w --> <code>cadr</code>
+
+</li><li><!-- /@w --> <code>call-with-current-continuation</code>
+
+</li><li><!-- /@w --> <code>call-with-input-file</code>
+
+</li><li><!-- /@w --> <code>call-with-output-file</code>
+
+</li><li><!-- /@w --> <code>call-with-values</code>
+
+</li><li><!-- /@w --> <code>car</code>
+
+</li><li><!-- /@w --> <code>case</code>
+
+</li><li><!-- /@w --> <code>cdaaar</code>
+
+</li><li><!-- /@w --> <code>cdaadr</code>
+
+</li><li><!-- /@w --> <code>cdaar</code>
+
+</li><li><!-- /@w --> <code>cdadar</code>
+
+</li><li><!-- /@w --> <code>cdaddr</code>
+
+</li><li><!-- /@w --> <code>cdadr</code>
+
+</li><li><!-- /@w --> <code>cdar</code>
+
+</li><li><!-- /@w --> <code>cddaar</code>
+
+</li><li><!-- /@w --> <code>cddadr</code>
+
+</li><li><!-- /@w --> <code>cddar</code>
+
+</li><li><!-- /@w --> <code>cdddar</code>
+
+</li><li><!-- /@w --> <code>cddddr</code>
+
+</li><li><!-- /@w --> <code>cdddr</code>
+
+</li><li><!-- /@w --> <code>cddr</code>
+
+</li><li><!-- /@w --> <code>cdr</code>
+
+</li><li><!-- /@w --> <code>ceiling</code>
+
+</li><li><!-- /@w --> <code>char-&gt;integer</code>
+
+</li><li><!-- /@w --> <code>char-alphabetic?</code>
+
+</li><li><!-- /@w --> <code>char-ci&lt;=?</code>
+
+</li><li><!-- /@w --> <code>char-ci&lt;?</code>
+
+</li><li><!-- /@w --> <code>char-ci=?</code>
+
+</li><li><!-- /@w --> <code>char-ci&gt;=?</code>
+
+</li><li><!-- /@w --> <code>char-ci&gt;?</code>
+
+</li><li><!-- /@w --> <code>char-downcase</code>
+
+</li><li><!-- /@w --> <code>char-lower-case?</code>
+
+</li><li><!-- /@w --> <code>char-numeric?</code>
+
+</li><li><!-- /@w --> <code>char-ready?</code>
+
+</li><li><!-- /@w --> <code>char-upcase</code>
+
+</li><li><!-- /@w --> <code>char-upper-case?</code>
+
+</li><li><!-- /@w --> <code>char-whitespace?</code>
+
+</li><li><!-- /@w --> <code>char&lt;=?</code>
+
+</li><li><!-- /@w --> <code>char&lt;?</code>
+
+</li><li><!-- /@w --> <code>char=?</code>
+
+</li><li><!-- /@w --> <code>char&gt;=?</code>
+
+</li><li><!-- /@w --> <code>char&gt;?</code>
+
+</li><li><!-- /@w --> <code>char?</code>
+
+</li><li><!-- /@w --> <code>close-input-port</code>
+
+</li><li><!-- /@w --> <code>close-output-port</code>
+
+</li><li><!-- /@w --> <code>complex?</code>
+
+</li><li><!-- /@w --> <code>cond</code>
+
+</li><li><!-- /@w --> <code>cons</code>
+
+</li><li><!-- /@w --> <code>cos</code>
+
+</li><li><!-- /@w --> <code>current-input-port</code>
+
+</li><li><!-- /@w --> <code>current-output-port</code>
+
+</li><li><!-- /@w --> <code>define</code>
+
+</li><li><!-- /@w --> <code>define-syntax</code>
+
+</li><li><!-- /@w --> <code>delay</code>
+
+</li><li><!-- /@w --> <code>denominator</code>
+
+</li><li><!-- /@w --> <code>display</code>
+
+</li><li><!-- /@w --> <code>do</code>
+
+</li><li><!-- /@w --> <code>dynamic-wind</code>
+
+</li><li><!-- /@w --> <code>else</code>
+
+</li><li><!-- /@w --> <code>eof-object?</code>
+
+</li><li><!-- /@w --> <code>eq?</code>
+
+</li><li><!-- /@w --> <code>equal?</code>
+
+</li><li><!-- /@w --> <code>eqv?</code>
+
+</li><li><!-- /@w --> <code>eval</code>
+
+</li><li><!-- /@w --> <code>even?</code>
+
+</li><li><!-- /@w --> <code>exact-&gt;inexact</code>
+
+</li><li><!-- /@w --> <code>exact?</code>
+
+</li><li><!-- /@w --> <code>exp</code>
+
+</li><li><!-- /@w --> <code>expt</code>
+
+</li><li><!-- /@w --> <code>floor</code>
+
+</li><li><!-- /@w --> <code>for-each</code>
+
+</li><li><!-- /@w --> <code>force</code>
+
+</li><li><!-- /@w --> <code>gcd</code>
+
+</li><li><!-- /@w --> <code>if</code>
+
+</li><li><!-- /@w --> <code>imag-part</code>
+
+</li><li><!-- /@w --> <code>inexact-&gt;exact</code>
+
+</li><li><!-- /@w --> <code>inexact?</code>
+
+</li><li><!-- /@w --> <code>input-port?</code>
+
+</li><li><!-- /@w --> <code>integer-&gt;char</code>
+
+</li><li><!-- /@w --> <code>integer?</code>
+
+</li><li><!-- /@w --> <code>interaction-environment</code>
+
+</li><li><!-- /@w --> <code>lambda</code>
+
+</li><li><!-- /@w --> <code>lcm</code>
+
+</li><li><!-- /@w --> <code>length</code>
+
+</li><li><!-- /@w --> <code>let</code>
+
+</li><li><!-- /@w --> <code>let*</code>
+
+</li><li><!-- /@w --> <code>let-syntax</code>
+
+</li><li><!-- /@w --> <code>letrec</code>
+
+</li><li><!-- /@w --> <code>letrec-syntax</code>
+
+</li><li><!-- /@w --> <code>list</code>
+
+</li><li><!-- /@w --> <code>list-&gt;string</code>
+
+</li><li><!-- /@w --> <code>list-&gt;vector</code>
+
+</li><li><!-- /@w --> <code>list-ref</code>
+
+</li><li><!-- /@w --> <code>list-tail</code>
+
+</li><li><!-- /@w --> <code>list?</code>
+
+</li><li><!-- /@w --> <code>load</code>
+
+</li><li><!-- /@w --> <code>log</code>
+
+</li><li><!-- /@w --> <code>magnitude</code>
+
+</li><li><!-- /@w --> <code>make-polar</code>
+
+</li><li><!-- /@w --> <code>make-rectangular</code>
+
+</li><li><!-- /@w --> <code>make-string</code>
+
+</li><li><!-- /@w --> <code>make-vector</code>
+
+</li><li><!-- /@w --> <code>map</code>
+
+</li><li><!-- /@w --> <code>max</code>
+
+</li><li><!-- /@w --> <code>member</code>
+
+</li><li><!-- /@w --> <code>memq</code>
+
+</li><li><!-- /@w --> <code>memv</code>
+
+</li><li><!-- /@w --> <code>min</code>
+
+</li><li><!-- /@w --> <code>modulo</code>
+
+</li><li><!-- /@w --> <code>negative?</code>
+
+</li><li><!-- /@w --> <code>newline</code>
+
+</li><li><!-- /@w --> <code>not</code>
+
+</li><li><!-- /@w --> <code>null-environment</code>
+
+</li><li><!-- /@w --> <code>null?</code>
+
+</li><li><!-- /@w --> <code>number-&gt;string</code>
+
+</li><li><!-- /@w --> <code>number?</code>
+
+</li><li><!-- /@w --> <code>numerator</code>
+
+</li><li><!-- /@w --> <code>odd?</code>
+
+</li><li><!-- /@w --> <code>open-input-file</code>
+
+</li><li><!-- /@w --> <code>open-output-file</code>
+
+</li><li><!-- /@w --> <code>or</code>
+
+</li><li><!-- /@w --> <code>output-port?</code>
+
+</li><li><!-- /@w --> <code>pair?</code>
+
+</li><li><!-- /@w --> <code>peek-char</code>
+
+</li><li><!-- /@w --> <code>positive?</code>
+
+</li><li><!-- /@w --> <code>procedure?</code>
+
+</li><li><!-- /@w --> <code>quasiquote</code>
+
+</li><li><!-- /@w --> <code>quote</code>
+
+</li><li><!-- /@w --> <code>quotient</code>
+
+</li><li><!-- /@w --> <code>rational?</code>
+
+</li><li><!-- /@w --> <code>rationalize</code>
+
+</li><li><!-- /@w --> <code>read</code>
+
+</li><li><!-- /@w --> <code>read-char</code>
+
+</li><li><!-- /@w --> <code>real-part</code>
+
+</li><li><!-- /@w --> <code>real?</code>
+
+</li><li><!-- /@w --> <code>remainder</code>
+
+</li><li><!-- /@w --> <code>reverse</code>
+
+</li><li><!-- /@w --> <code>round</code>
+
+</li><li><!-- /@w --> <code>scheme-report-environment</code>
+
+</li><li><!-- /@w --> <code>set!</code>
+
+</li><li><!-- /@w --> <code>set-car!</code>
+
+</li><li><!-- /@w --> <code>set-cdr!</code>
+
+</li><li><!-- /@w --> <code>sin</code>
+
+</li><li><!-- /@w --> <code>sqrt</code>
+
+</li><li><!-- /@w --> <code>string</code>
+
+</li><li><!-- /@w --> <code>string-&gt;list</code>
+
+</li><li><!-- /@w --> <code>string-&gt;number</code>
+
+</li><li><!-- /@w --> <code>string-&gt;symbol</code>
+
+</li><li><!-- /@w --> <code>string-append</code>
+
+</li><li><!-- /@w --> <code>string-ci&lt;=?</code>
+
+</li><li><!-- /@w --> <code>string-ci&lt;?</code>
+
+</li><li><!-- /@w --> <code>string-ci=?</code>
+
+</li><li><!-- /@w --> <code>string-ci&gt;=?</code>
+
+</li><li><!-- /@w --> <code>string-ci&gt;?</code>
+
+</li><li><!-- /@w --> <code>string-copy</code>
+
+</li><li><!-- /@w --> <code>string-fill!</code>
+
+</li><li><!-- /@w --> <code>string-length</code>
+
+</li><li><!-- /@w --> <code>string-ref</code>
+
+</li><li><!-- /@w --> <code>string-set!</code>
+
+</li><li><!-- /@w --> <code>string&lt;=?</code>
+
+</li><li><!-- /@w --> <code>string&lt;?</code>
+
+</li><li><!-- /@w --> <code>string=?</code>
+
+</li><li><!-- /@w --> <code>string&gt;=?</code>
+
+</li><li><!-- /@w --> <code>string&gt;?</code>
+
+</li><li><!-- /@w --> <code>string?</code>
+
+</li><li><!-- /@w --> <code>substring</code>
+
+</li><li><!-- /@w --> <code>symbol-&gt;string</code>
+
+</li><li><!-- /@w --> <code>symbol?</code>
+
+</li><li><!-- /@w --> <code>syntax-rules</code>
+
+</li><li><!-- /@w --> <code>tan</code>
+
+</li><li><!-- /@w --> <code>truncate</code>
+
+</li><li><!-- /@w --> <code>values</code>
+
+</li><li><!-- /@w --> <code>vector</code>
+
+</li><li><!-- /@w --> <code>vector-&gt;list</code>
+
+</li><li><!-- /@w --> <code>vector-fill!</code>
+
+</li><li><!-- /@w --> <code>vector-length</code>
+
+</li><li><!-- /@w --> <code>vector-ref</code>
+
+</li><li><!-- /@w --> <code>vector-set!</code>
+
+</li><li><!-- /@w --> <code>vector?</code>
+
+</li><li><!-- /@w --> <code>with-input-from-file</code>
+
+</li><li><!-- /@w --> <code>with-output-to-file</code>
+
+</li><li><!-- /@w --> <code>write</code>
+
+</li><li><!-- /@w --> <code>write-char</code>
+
+</li><li><!-- /@w --> <code>zero?</code>
+
+</li></ul>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Write-Library.html">Write Library</a>, Up: <a href="Appendix-A.html">Standard Libraries</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

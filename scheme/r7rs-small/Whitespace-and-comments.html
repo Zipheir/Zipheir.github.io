@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Whitespace and comments (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Whitespace and comments (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Whitespace and comments (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Lexical-conventions.html" rel="up" title="Lexical conventions">
+<link href="Other-notations.html" rel="next" title="Other notations">
+<link href="Identifiers.html" rel="prev" title="Identifiers">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Whitespace-and-comments">
+<div class="header">
+<p>
+Next: <a href="Other-notations.html" accesskey="n" rel="next">Other notations</a>, Previous: <a href="Identifiers.html" accesskey="p" rel="prev">Identifiers</a>, Up: <a href="Lexical-conventions.html" accesskey="u" rel="up">Lexical conventions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Whitespace-and-comments-1"></span><h3 class="section">2.2 Whitespace and comments</h3>
+
+<p><dfn>Whitespace</dfn> characters include the space, tab, and newline
+characters. (Implementations may provide additional whitespace
+characters such as page break.) Whitespace is used for improved
+readability and as necessary to separate tokens from each other,
+a token being an indivisible lexical unit such as an identifier or
+number, but is otherwise insignificant. Whitespace can occur between
+any two tokens, but not within a token. Whitespace occurring inside
+a string or inside a symbol delimited by vertical lines is significant.
+</p>
+<p>The lexical syntax includes several comment forms. Comments are
+treated exactly like whitespace.
+</p>
+<p>A semicolon (&lsquo;<samp>;</samp>&rsquo;) indicates the start of a line comment. The
+comment continues to the end of the line on which the semicolon
+appears.
+</p>
+<span id="index-_003b_0023_003b"></span>
+
+<p>Another way to indicate a comment is to prefix a &#x27e8;datum&#x27e9;
+(cf. <a href="External-representations-formal.html">External representations</a>) with <code>#;</code> and
+optional &#x27e8;whitespace&#x27e9;. The comment consists of the comment prefix
+<code>#;</code>, the space, and the &#x27e8;datum&#x27e9; together. This notation
+is useful for &ldquo;commenting out&rdquo; sections of code.
+</p>
+<p>Block comments are indicated with properly nested <code>#|</code> and
+<code>|#</code> pairs.
+</p>
+<div class="example lisp">
+<pre class="lisp">#|
+   The FACT procedure computes the factorial
+   of a non-negative integer.
+|#
+(define fact
+  (lambda (n)
+    (if (= n 0)
+        #;(= n 1)
+        1        ;Base case: return 1
+        (* n (fact (- n 1))))))
+</pre></div>
+
+</div>
+
+
+
+</body>
+</html>

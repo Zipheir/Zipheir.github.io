@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Pattern language (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Pattern language (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Pattern language (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Macros.html" rel="up" title="Macros">
+<link href="Signaling-errors-in-macro-transformers.html" rel="next" title="Signaling errors in macro transformers">
+<link href="Binding-constructs-for-syntactic-keywords.html" rel="prev" title="Binding constructs for syntactic keywords">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Pattern-language">
+<div class="header">
+<p>
+Next: <a href="Signaling-errors-in-macro-transformers.html" accesskey="n" rel="next">Signaling errors in macro transformers</a>, Previous: <a href="Binding-constructs-for-syntactic-keywords.html" accesskey="p" rel="prev">Binding constructs for syntactic keywords</a>, Up: <a href="Macros.html" accesskey="u" rel="up">Macros</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Pattern-language-1"></span><h4 class="subsection">4.3.2 Pattern language</h4>
+
+<dl class="def">
+<dt id="index-syntax_002drules"><span class="category">syntax: </span><span><strong>syntax-rules</strong><a href='#index-syntax_002drules' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_005f"><span class="category">auxiliary syntax: </span><span><strong>_</strong><a href='#index-_005f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_2026"><span class="category">auxiliary syntax: </span><span><strong>&hellip;</strong><a href='#index-_2026' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>A &#x27e8;transformer spec&#x27e9; has one of the following forms:
+</p>
+<div class="display">
+<pre class="display"><code>(syntax-rules (</code>&#x27e8;pattern literal&#x27e9; &hellip;<code>)</code>
+  &#x27e8;syntax rule&#x27e9; &hellip;<code>)</code>
+<code>(syntax-rules </code>&#x27e8;ellipsis&#x27e9; <code>(</code>&#x27e8;pattern literal&#x27e9; &hellip;<code>)</code>
+  &#x27e8;syntax rule&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>Syntax: It is an error if any of the &#x27e8;pattern literal&#x27e9;s, or the
+&#x27e8;ellipsis&#x27e9; in the second form, is not an identifier. It is also an
+error if &#x27e8;syntax rule&#x27e9; is not of the form
+</p>
+<div class="display">
+<pre class="display">(&#x27e8;pattern&#x27e9; &#x27e8;template&#x27e9;)
+</pre></div>
+
+<p>The &#x27e8;pattern&#x27e9; in a &#x27e8;syntax rule&#x27e9; is a list &#x27e8;pattern&#x27e9; whose
+first element is an identifier.
+</p>
+<p>A &#x27e8;pattern&#x27e9; is either an identifier, a constant, or one of the following
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;pattern&#x27e9; &hellip;<code>)</code>
+<code>(</code>&#x27e8;pattern&#x27e9; &#x27e8;pattern&#x27e9; &hellip; <code>.</code> &#x27e8;pattern&#x27e9;<code>)</code>
+<code>(</code>&#x27e8;pattern&#x27e9; &hellip; &#x27e8;pattern&#x27e9; &#x27e8;ellipsis&#x27e9; &#x27e8;pattern&#x27e9; &hellip;<code>)</code>
+<code>(</code>&#x27e8;pattern&#x27e9; &hellip; &#x27e8;pattern&#x27e9; &#x27e8;ellipsis&#x27e9; &#x27e8;pattern&#x27e9; &hellip;
+  <code>.</code> &#x27e8;pattern&#x27e9;<code>)</code>
+<code>#(</code>&#x27e8;pattern&#x27e9; &hellip;<code>)</code>
+<code>#(</code>&#x27e8;pattern&#x27e9; &hellip; &#x27e8;pattern&#x27e9; &#x27e8;ellipsis&#x27e9; &#x27e8;pattern&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>and a &#x27e8;template&#x27e9; is either an identifier, a constant, or one of the
+following
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;element&#x27e9; &hellip;<code>)</code>
+<code>(</code>&#x27e8;element&#x27e9; &#x27e8;element&#x27e9; &hellip; <code>.</code> &#x27e8;template&#x27e9;<code>)</code>
+<code>(</code>&#x27e8;ellipsis&#x27e9; &#x27e8;template&#x27e9;<code>)</code>
+<code>#(</code>&#x27e8;element&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>where an &#x27e8;element&#x27e9; is a &#x27e8;template&#x27e9; optionally followed by
+an &#x27e8;ellipsis&#x27e9;.  An &#x27e8;ellipsis&#x27e9; is the identifier specified
+in the second form of <code>syntax-rules</code>, or the default identifier
+<code>&hellip;</code> (three consecutive periods) otherwise.
+</p>
+<p>Semantics: An instance of <code>syntax-rules</code> produces a new macro
+transformer by specifying a sequence of hygienic rewrite rules. A use
+of a macro whose keyword is associated with a transformer specified by
+<code>syntax-rules</code> is matched against the patterns contained in the
+&#x27e8;syntax rule&#x27e9;s, beginning with the leftmost &#x27e8;syntax rule&#x27e9;. When
+a match is found, the macro use is transcribed hygienically according
+to the template.
+</p>
+<p>An identifier appearing within a &#x27e8;pattern&#x27e9; can be an underscore
+(<code>_</code>), a literal identifier listed in the list of &#x27e8;pattern
+literal&#x27e9;s, or the &#x27e8;ellipsis&#x27e9;. All other identifiers appearing within
+a &#x27e8;pattern&#x27e9; are <dfn>pattern variables</dfn>.
+</p>
+<p>The keyword at the beginning of the pattern in a &#x27e8;syntax rule&#x27e9;
+is not involved in the matching and is considered neither a pattern
+variable nor a literal identifier.
+</p>
+<p>Pattern variables match arbitrary input elements and are used to refer
+to elements of the input in the template. It is an error for the same
+pattern variable to appear more than once in a &#x27e8;pattern&#x27e9;.
+</p>
+<p>Underscores also match arbitrary input elements but are not pattern
+variables and so cannot be used to refer to those elements. If an
+underscore appears in the &#x27e8;pattern literal&#x27e9;s list, then that
+takes precedence and underscores in the &#x27e8;pattern&#x27e9; match as
+literals. Multiple underscores can appear in a &#x27e8;pattern&#x27e9;.
+</p>
+<p>Identifiers that appear in <code>(</code>&#x27e8;pattern literal&#x27e9; &hellip;<code>)</code>
+are interpreted as literal identifiers to be matched against corresponding
+elements of the input. An element in the input matches a literal
+identifier if and only if it is an identifier and either both its
+occurrence in the macro expression and its occurrence in the macro
+definition have the same lexical binding, or the two identifiers are
+the same and both have no lexical binding.
+</p>
+<p>A subpattern followed by &#x27e8;ellipsis&#x27e9; can match zero or more elements
+of the input, unless &#x27e8;ellipsis&#x27e9; appears in the &#x27e8;pattern
+literal&#x27e9;s, in which case it is matched as a literal.
+</p>
+<p>More formally, an input expression <var>E</var> matches a pattern <var>P</var>
+if and only if:
+</p>
+<ul>
+<li> <var>P</var> is an underscore (<code>_</code>).
+
+</li><li> <var>P</var> is a non-literal identifier; or
+
+</li><li> <var>P</var> is a literal identifier and <var>E</var> is an identifier with the
+same binding; or
+
+</li><li> <var>P</var> is a list <code>(</code><var>P<sub>1</sub></var> &hellip; <var>P<sub>n</sub></var><code>)</code>
+and <var>E</var> is a list of <var>n</var> elements that match <var>P<sub>1</sub></var>
+through <var>P<sub>n</sub></var>, respectively; or
+
+</li><li> <var>P</var> is an improper list
+<code>(</code><var>P<sub>1</sub></var> <var>P<sub>2</sub></var> &hellip; <var>P<sub>n</sub></var> <code>.</code>
+<var>P<sub>n+1</sub></var><code>)</code> and <var>E</var> is a list or
+improper list of <var>n</var> or more elements that match <var>P<sub>1</sub></var>
+through <var>P<sub>n</sub></var> respectively, and whose <var>n</var>th tail matches
+<var>P<sub>n+1</sub></var>; or
+
+</li><li> 
+<var>P</var> is of the form
+<code>(</code><var>P<sub>1</sub></var> &hellip; <var>P<sub>k</sub></var> <var>P<sub>e</sub></var>
+&#x27e8;ellipsis&#x27e9; <var>P<sub>m+1</sub></var> &hellip; <var>P<sub>n</sub></var><code>)</code>
+where <var>E</var> is a proper list of <var>n</var> elements, the first <var>k</var>
+of which match <var>P<sub>1</sub></var> through <var>P<sub>k</sub></var>, respectively,
+whose next <var>m</var> - <var>k</var> elements each match <var>P<sub>e</sub></var>,
+whose remaining <var>n</var> - <var>m</var> elements match <var>P<sub>m+1</sub></var>
+through <var>P<sub>n</sub></var>; or
+
+</li><li> <var>P</var> is of the form
+<code>(</code><var>P<sub>1</sub></var> &hellip; <var>P<sub>k</sub></var> <var>P<sub>e</sub></var>
+&#x27e8;ellipsis&#x27e9; <var>P<sub>m+1</sub></var> &hellip; <var>P<sub>n</sub></var> <code>.</code>
+<var>P<sub>x</sub></var><code>)</code> where <var>E</var> is a list or improper list of
+<var>n</var> elements, the first <var>k</var> of which match <var>P<sub>1</sub></var> through
+<var>P<sub>k</sub></var>, whose next <var>m</var> - <var>k</var> elements each match
+<var>P<sub>e</sub></var>, whose remaining <var>n</var> - <var>m</var> elements match
+<var>P<sub>m+1</sub></var> through <var>P<sub>n</sub></var>, and whose <var>n</var>th and final cdr
+matches <var>P<sub>x</sub></var>; or
+
+</li><li> <var>P</var> is a vector of the form <code>#(</code><var>P<sub>1</sub></var> &hellip;
+<var>P<sub>n</sub></var><code>)</code> and <var>E</var> is a vector of <var>n</var> elements that
+match <var>P<sub>1</sub></var> through <var>P<sub>n</sub></var>; or
+
+</li><li> <var>P</var> is of the form <code>#(</code><var>P<sub>1</sub></var> &hellip; <var>P<sub>k</sub></var>
+<var>P<sub>e</sub></var> &#x27e8;ellipsis&#x27e9; <var>P<sub>m+1</sub></var> &hellip;
+<var>P<sub>n</sub></var><code>)</code> where <var>E</var> is a vector of <var>n</var> elements the
+first <var>k</var> of which match <var>P<sub>1</sub></var> through <var>P<sub>k</sub></var>, whose
+next <var>m</var> - <var>k</var> elements each match <var>P<sub>e</sub></var>, and
+whose remaining <var>n</var> - <var>m</var> elements match <var>P<sub>m+1</sub></var>
+through <var>P<sub>n</sub></var>; or
+
+</li><li> <var>P</var> is a constant and <var>E</var> is equal to <var>P</var> in the sense of
+the <code>equal?</code> procedure.
+
+</li></ul>
+
+<p>It is an error to use a macro keyword, within the scope of its binding,
+in an expression that does not match any of the patterns.
+</p>
+<p>When a macro use is transcribed according to the template of the matching
+&#x27e8;syntax rule&#x27e9;, pattern variables that occur in the template are
+replaced by the elements they match in the input. Pattern variables that
+occur in subpatterns followed by one or more instances of the identifier
+&#x27e8;ellipsis&#x27e9; are allowed only in subtemplates that are followed by
+as many instances of &#x27e8;ellipsis&#x27e9;. They are replaced in the output by
+all of the elements they match in the input, distributed as indicated. It
+is an error if the output cannot be built up as specified.
+</p>
+<p>Identifiers that appear in the template but are not pattern variables or
+the identifier &#x27e8;ellipsis&#x27e9; are inserted into the output as literal
+identifiers. If a literal identifier is inserted as a free identifier
+then it refers to the binding of that identifier within whose scope
+the instance of <code>syntax-rules</code> appears. If a literal identifier is
+inserted as a bound identifier then it is in effect renamed to prevent
+inadvertent captures of free identifiers.
+</p>
+<p>A template of the form <code>(</code>&#x27e8;ellipsis&#x27e9; &#x27e8;template&#x27e9;<code>)</code>
+is identical to &#x27e8;template&#x27e9;, except that ellipses within the
+template have no special meaning. That is, any ellipses contained within
+&#x27e8;template&#x27e9; are treated as ordinary identifiers. In particular,
+the template <code>(</code>&#x27e8;ellipsis&#x27e9; &#x27e8;ellipsis&#x27e9;&#x27e8;)&#x27e9; produces
+a single &#x27e8;ellipsis&#x27e9;. This allows syntactic abstractions to expand
+into code containing ellipses.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define-syntax be-like-begin
+  (syntax-rules ()
+    ((be-like-begin name)
+     (define-syntax name
+       (syntax-rules ()
+         ((name expr (... ...))
+          (begin expr (... ...))))))))
+
+(be-like-begin sequence)
+(sequence 1 2 3 4) &rArr; 4
+</pre></div>
+
+<p>As an example, if <code>let</code> and <code>cond</code> are defined as in
+<a href="Derived-expression-types-formal.html">Derived expression types</a> then they are hygienic (as
+required) and the following is not an error.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((=&gt; #f))
+  (cond (#t =&gt; 'ok))) &rArr; ok
+</pre></div>
+
+<p>The macro transformer for <code>cond</code> recognizes <code>=&gt;</code> as a local
+variable, and hence an expression, and not as the base identifier
+<code>=&gt;</code>, which the macro transformer treats as a syntactic keyword. Thus
+the example expands into
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((=&gt; #f))
+  (if #t (begin =&gt; 'ok)))
+</pre></div>
+
+<p>instead of
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((=&gt; #f))
+  (let ((temp #t))
+    (if temp ('ok temp))))
+</pre></div>
+
+<p>which would result in an invalid procedure call.
+</p>
+</dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Signaling-errors-in-macro-transformers.html">Signaling errors in macro transformers</a>, Previous: <a href="Binding-constructs-for-syntactic-keywords.html">Binding constructs for syntactic keywords</a>, Up: <a href="Macros.html">Macros</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

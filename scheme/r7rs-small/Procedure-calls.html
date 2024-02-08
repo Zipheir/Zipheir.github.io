@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Procedure calls (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Procedure calls (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Procedure calls (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Primitive-expression-types.html" rel="up" title="Primitive expression types">
+<link href="Procedures.html" rel="next" title="Procedures">
+<link href="Literal-expressions.html" rel="prev" title="Literal expressions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Procedure-calls">
+<div class="header">
+<p>
+Next: <a href="Procedures.html" accesskey="n" rel="next">Procedures</a>, Previous: <a href="Literal-expressions.html" accesskey="p" rel="prev">Literal expressions</a>, Up: <a href="Primitive-expression-types.html" accesskey="u" rel="up">Primitive expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Procedure-calls-1"></span><h4 class="subsection">4.1.3 Procedure calls</h4>
+
+<span id="index-call"></span>
+<span id="index-procedure-call"></span>
+
+<p>syntax: (&#x27e8;operator&#x27e9; &#x27e8;operand<sub>1</sub>&#x27e9; &hellip;)
+</p>
+<p>A procedure call is written by enclosing in parentheses an expression for
+the procedure to be called followed by expressions for the arguments to be
+passed to it. The operator and operand expressions are evaluated (in an
+unspecified order) and the resulting procedure is passed the resulting
+arguments.
+</p>
+<div class="example lisp">
+<pre class="lisp">(+ 3 4)           &rArr; 7
+((if #f + *) 3 4) &rArr; 12
+</pre></div>
+
+<p>The procedures in this document are available as the values of variables
+exported by the standard libraries. For example, the addition and
+multiplication procedures in the above examples are the values of the
+variables <code>+</code> and <code>*</code> in the base library. New procedures are
+created by evaluating lambda expressions (See <a href="Procedures.html">Procedures</a>).
+</p>
+<p>Procedure calls can return any number of values (see values in <a href="Control-features.html">Control features</a>). Most of the procedures defined in this report return one value
+or, for procedures such as apply, pass on the values returned by a call to
+one of their arguments. Exceptions are noted in the individual descriptions.
+</p>
+<p>Note: In contrast to other dialects of Lisp, the order of evaluation is
+unspecified, and the operator expression and the operand expressions are
+always evaluated with the same evaluation rules.
+</p>
+<p>Note: Although the order of evaluation is otherwise unspecified, the effect
+of any concurrent evaluation of the operator and operand expressions is
+constrained to be consistent with some sequential order of evaluation. The
+order of evaluation may be chosen differently for each procedure call.
+</p>
+<p>Note: In many dialects of Lisp, the empty list, <code>()</code>, is a legitimate
+expression evaluating to itself. In Scheme, it is an error.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Procedures.html">Procedures</a>, Previous: <a href="Literal-expressions.html">Literal expressions</a>, Up: <a href="Primitive-expression-types.html">Primitive expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

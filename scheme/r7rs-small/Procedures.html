@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Procedures (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Procedures (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Procedures (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Primitive-expression-types.html" rel="up" title="Primitive expression types">
+<link href="Conditionals-primitive.html" rel="next" title="Conditionals primitive">
+<link href="Procedure-calls.html" rel="prev" title="Procedure calls">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Procedures">
+<div class="header">
+<p>
+Next: <a href="Conditionals-primitive.html" accesskey="n" rel="next">Conditionals</a>, Previous: <a href="Procedure-calls.html" accesskey="p" rel="prev">Procedure calls</a>, Up: <a href="Primitive-expression-types.html" accesskey="u" rel="up">Primitive expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Procedures-1"></span><h4 class="subsection">4.1.4 Procedures</h4>
+
+<dl class="def">
+<dt id="index-lambda"><span class="category">syntax: </span><span><strong>lambda</strong> <em>&#x27e8;formals&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-lambda' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Formals&#x27e9; is a formal arguments list as described below, and
+&#x27e8;body&#x27e9; is a sequence of zero or more definitions followed by one or
+more expressions.
+</p>
+<p>Semantics: A <code>lambda</code> expression evaluates to a procedure. The
+environment in effect when the <code>lambda</code> expression was evaluated is
+remembered as part of the procedure. When the procedure is later called with
+some actual arguments, the environment in which the <code>lambda</code> expression
+was evaluated will be extended by binding the variables in the formal
+argument list to fresh locations, and the corresponding actual argument
+values will be stored in those locations. (A <dfn>fresh</dfn> location is one
+that is distinct from every previously existing location.) Next, the
+expressions in the body of the <code>lambda</code> expression (which, if it
+contains definitions, represents a <code>letrec*</code> form&mdash;See <a href="Binding-constructs.html">Binding constructs</a>) will be evaluated sequentially in the extended environment. The
+results of the last expression in the body will be returned as the results
+of the procedure call.
+</p>
+<div class="example lisp">
+<pre class="lisp">((lambda (x) (+ x x)) &rArr; <span class="roman">a procedure</span>
+((lambda (x) (+ x x)) 4) &rArr; 8
+</pre></div>
+
+<div class="example lisp">
+<pre class="lisp">(define reverse-subtract
+  (lambda (x y) (- y x)))
+(reverse-subtract 7 10) &rArr; 3
+
+(define add4
+  (let ((x 4))
+    (lambda (y) (+ x y))))
+(add4 6) &rArr; 10
+</pre></div>
+
+<p>&#x27e8;Formals&#x27e9; have one of the following forms:
+</p>
+<ul>
+<li> <code>(</code>&#x27e8;variable<sub>1</sub>&#x27e9; &hellip;<code>)</code>: The procedure takes a fixed
+number of arguments; when the procedure is called, the arguments will be
+stored in fresh locations that are bound to the corresponding variables.
+
+</li><li> &#x27e8;variable&#x27e9;: The procedure takes any number of arguments; when the
+procedure is called, the sequence of actual arguments is converted into a
+newly allocated list, and the list is stored in a fresh location that is
+bound to &#x27e8;variable&#x27e9;.
+
+</li><li> <code>(</code>&#x27e8;variable<sub>1</sub>&#x27e9; &hellip; &#x27e8;variable<sub>n</sub>&#x27e9; .
+&#x27e8;variable<sub>n+1</sub>&#x27e9;<code>)</code>: If a space-delimited period precedes the
+last variable, then the procedure takes <var>n</var> or more arguments, where
+<var>n</var> is the number of formal arguments before the period (it is an error
+if there is not at least one). The value stored in the binding of the last
+variable will be a newly allocated list of the actual arguments left over
+after all the other actual arguments have been matched up against the other
+formal arguments.
+
+</li></ul>
+
+<p>It is an error for a &#x27e8;variable&#x27e9; to appear more than once in &#x27e8;formals&#x27e9;.
+</p>
+<div class="example lisp">
+<pre class="lisp">((lambda x x) 3 4 5 6) &rArr; (3 4 5 6)
+((lambda (x y . z) z)
+ 3 4 5 6)              &rArr; (5 6)
+</pre></div>
+
+<p>Each procedure created as the result of evaluating a <code>lambda</code>
+expression is (conceptually) tagged with a storage location, in order to
+make <code>eqv?</code> and <code>eq?</code> work on procedures (See <a href="Equivalence-predicates.html">Equivalence predicates</a>).
+</p></dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Conditionals-primitive.html">Conditionals</a>, Previous: <a href="Procedure-calls.html">Procedure calls</a>, Up: <a href="Primitive-expression-types.html">Primitive expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

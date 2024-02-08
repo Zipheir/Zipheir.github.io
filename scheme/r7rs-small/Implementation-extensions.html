@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Implementation extensions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Implementation extensions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Implementation extensions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Numbers.html" rel="up" title="Numbers">
+<link href="Syntax-of-numerical-constants.html" rel="next" title="Syntax of numerical constants">
+<link href="Implementation-restrictions.html" rel="prev" title="Implementation restrictions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Implementation-extensions">
+<div class="header">
+<p>
+Next: <a href="Syntax-of-numerical-constants.html" accesskey="n" rel="next">Syntax of numerical constants</a>, Previous: <a href="Implementation-restrictions.html" accesskey="p" rel="prev">Implementation restrictions</a>, Up: <a href="Numbers.html" accesskey="u" rel="up">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Implementation-extensions-1"></span><h4 class="subsection">6.2.4 Implementation extensions</h4>
+
+<p>Implementations may provide more than one representation of floating-point
+numbers with differing precisions. In an implementation which does so, an
+inexact result must be represented with at least as much precision as is
+used to express any of the inexact arguments to that operation. Although
+it is desirable for potentially inexact operations such as <code>sqrt</code>
+to produce exact answers when applied to exact arguments, if an exact
+number is operated upon so as to produce an inexact result, then the
+most precise representation available must be used. For example, the
+value of <code>(sqrt 4)</code> should be <code>2</code>, but in an implementation
+that provides both single and double precision floating point numbers
+it may be the latter but must not be the former.
+</p>
+<p>It is the programmer&rsquo;s responsibility to avoid using inexact number
+objects with magnitude or significand too large to be represented in
+the implementation.
+</p>
+<p>In addition, implementations may distinguish special numbers called
+positive infinity, negative infinity, NaN, and negative zero.
+</p>
+<p>Positive infinity is regarded as an inexact real (but not rational)
+number that represents an indeterminate value greater than the numbers
+represented by all rational numbers.  Negative infinity is regarded as an
+inexact real (but not rational) number that represents an indeterminate
+value less than the numbers represented by all rational numbers.
+</p>
+<p>Adding or multiplying an infinite value by any finite real value results
+in an appropriately signed infinity; however, the sum of positive and
+negative infinities is a NaN. Positive infinity is the reciprocal of zero,
+and negative infinity is the reciprocal of negative zero.  The behavior
+of the transcendental functions is sensitive to infinity in accordance
+with IEEE 754.
+</p>
+<p>A NaN is regarded as an inexact real (but not rational) number so
+indeterminate that it might represent any real value, including positive
+or negative infinity, and might even be greater than positive infinity
+or less than negative infinity. An implementation that does not support
+non-real numbers may use NaN to represent non-real values like
+<code>(sqrt -1.0)</code> and <code>(asin 2.0)</code>.
+</p>
+<p>A NaN always compares false to any number, including a NaN. An arithmetic
+operation where one operand is NaN returns NaN, unless the implementation
+can prove that the result would be the same if the NaN were replaced by
+any rational number. Dividing zero by zero results in NaN unless both
+zeros are exact.
+</p>
+<p>Negative zero is an inexact real value written <code>-0.0</code> and is distinct
+(in the sense of <code>eqv?</code>) from <code>0.0</code>. A Scheme implementation
+is not required to distinguish negative zero. If it does, however, the
+behavior of the transcendental functions is sensitive to the distinction
+in accordance with IEEE 754. Specifically, in a Scheme implementing
+both complex numbers and negative zero, the branch cut of the complex
+logarithm function is such that <code>(imag-part (log -1.0-0.0i))</code>
+is -&#x03c0; rather than &#x03c0;.
+</p>
+<p>Furthermore, the negation of negative zero is ordinary zero and vice
+versa. This implies that the sum of two or more negative zeros is
+negative, and the result of subtracting (positive) zero from a negative
+zero is likewise negative. However, numerical comparisons treat negative
+zero as equal to zero.
+</p>
+<p>Note that both the real and the imaginary parts of a complex number can
+be infinities, NaNs, or negative zero.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Syntax-of-numerical-constants.html">Syntax of numerical constants</a>, Previous: <a href="Implementation-restrictions.html">Implementation restrictions</a>, Up: <a href="Numbers.html">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

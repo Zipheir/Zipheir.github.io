@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Internal definitions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Internal definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Internal definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Variable-definitions.html" rel="up" title="Variable definitions">
+<link href="Multiple-value-definitions.html" rel="next" title="Multiple value definitions">
+<link href="Top-level-definitions.html" rel="prev" title="Top level definitions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Internal-definitions">
+<div class="header">
+<p>
+Next: <a href="Multiple-value-definitions.html" accesskey="n" rel="next">Multiple-value definitions</a>, Previous: <a href="Top-level-definitions.html" accesskey="p" rel="prev">Top level definitions</a>, Up: <a href="Variable-definitions.html" accesskey="u" rel="up">Variable definitions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Internal-definitions-1"></span><h4 class="subsection">5.3.2 Internal definitions</h4>
+
+<p>Definitions can occur at the beginning of a &#x27e8;body&#x27e9; (that is,
+the body of a <code>lambda</code>, <code>let</code>, <code>let*</code>, <code>letrec</code>,
+<code>letrec*</code>, <code>let-values</code>, <code>let*-values</code>, <code>let-syntax</code>,
+<code>letrec-syntax</code>, <code>parameterize</code>, <code>guard</code>, or
+<code>case-lambda</code>). Note that such a body might not be apparent
+until after expansion of other syntax. Such definitions are known as
+<dfn>internal definitions</dfn> as opposed to the global definitions described
+above. The variables defined by internal definitions are local to the
+&#x27e8;body&#x27e9;. That is, &#x27e8;variable&#x27e9; is bound rather than assigned,
+and the region of the binding is the entire &#x27e8;body&#x27e9;. For example,
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((x 5))
+  (define foo (lambda (y) (bar x y)))
+  (define bar (lambda (a b) (+ (* a b) a)))
+  (foo (+ x 3))) &rArr; 45
+</pre></div>
+
+<p>An expanded &#x27e8;body&#x27e9; containing internal definitions can always be
+converted into a completely equivalent <code>letrec*</code> expression. For
+example, the <code>let</code> expression in the above example is equivalent to
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((x 5))
+  (letrec* ((foo (lambda (y) (bar x y)))
+            (bar (lambda (a b) (+ (* a b) a))))
+    (foo (+ x 3))))
+</pre></div>
+
+<p>Just as for the equivalent <code>letrec*</code> expression, it is an error if
+it is not possible to evaluate each &#x27e8;expression&#x27e9; of every internal
+definition in a &#x27e8;body&#x27e9; without assigning or referring to the value
+of the corresponding &#x27e8;variable&#x27e9; or the &#x27e8;variable&#x27e9; of any of
+the definitions that follow it in &#x27e8;body&#x27e9;.
+</p>
+<p>It is an error to define the same identifier more than once in the
+same &#x27e8;body&#x27e9;.
+</p>
+<p>Wherever an internal definition can occur,
+<code>(begin </code>&#x27e8;definition<sub>1</sub>&#x27e9; &hellip;<code>)</code> is equivalent
+to the sequence of definitions that form the body of the <code>begin</code>.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Multiple-value-definitions.html">Multiple-value definitions</a>, Previous: <a href="Top-level-definitions.html">Top level definitions</a>, Up: <a href="Variable-definitions.html">Variable definitions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

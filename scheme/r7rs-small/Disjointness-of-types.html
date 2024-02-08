@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Disjointness of types (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Disjointness of types (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Disjointness of types (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Basic-concepts.html" rel="up" title="Basic concepts">
+<link href="External-representations-basic.html" rel="next" title="External representations basic">
+<link href="Variables-syntactic-keywords-and-regions.html" rel="prev" title="Variables syntactic keywords and regions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Disjointness-of-types">
+<div class="header">
+<p>
+Next: <a href="External-representations-basic.html" accesskey="n" rel="next">External representations (basic)</a>, Previous: <a href="Variables-syntactic-keywords-and-regions.html" accesskey="p" rel="prev">Variables, syntactic keywords, and regions</a>, Up: <a href="Basic-concepts.html" accesskey="u" rel="up">Basic concepts</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Disjointness-of-types-1"></span><h3 class="section">3.2 Disjointness of types</h3>
+
+<span id="index-type"></span>
+
+<p>No object satisfies more than one of the following predicates:
+</p>
+<ul>
+<li> <code>boolean?</code>
+
+</li><li> <code>bytevector?</code>
+
+</li><li> <code>char?</code>
+
+</li><li> <code>eof-object?</code>
+
+</li><li> <code>null?</code>
+
+</li><li> <code>number?</code>
+
+</li><li> <code>pair?</code>
+
+</li><li> <code>port?</code>
+
+</li><li> <code>procedure?</code>
+
+</li><li> <code>string?</code>
+
+</li><li> <code>symbol?</code>
+
+</li><li> <code>vector?</code>
+
+</li></ul>
+
+<p>and all predicates created by <code>define-record-type</code>.
+</p>
+<span id="index-empty-list"></span>
+
+<p>These predicates define the types <dfn>boolean</dfn>, <dfn>bytevector</dfn>,
+<dfn>character</dfn>, the empty list object, <dfn>eof-object</dfn>, <dfn>number</dfn>,
+<dfn>pair</dfn>, <dfn>port</dfn>, <dfn>procedure</dfn>, <dfn>string</dfn>, <dfn>symbol</dfn>,
+<dfn>vector</dfn>, and all record types.
+</p>
+<span id="index-true"></span>
+<span id="index-false"></span>
+
+<p>Although there is a separate boolean type, any Scheme value can be used
+as a boolean value for the purpose of a conditional test. As explained
+in <a href="Booleans.html">Booleans</a>, all values count as true in such a test except for
+<code>#f</code>. This report uses the word &ldquo;true&rdquo; to refer to any Scheme
+value except <code>#f</code>, and the word &ldquo;false&rdquo; to refer to <code>#f</code>.
+</p>
+</div>
+
+
+
+</body>
+</html>

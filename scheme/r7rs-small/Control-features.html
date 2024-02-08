@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Control features (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Control features (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Control features (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Exceptions.html" rel="next" title="Exceptions">
+<link href="Bytevectors.html" rel="prev" title="Bytevectors">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Control-features">
+<div class="header">
+<p>
+Next: <a href="Exceptions.html" accesskey="n" rel="next">Exceptions</a>, Previous: <a href="Bytevectors.html" accesskey="p" rel="prev">Bytevectors</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Control-features-1"></span><h3 class="section">6.10 Control features</h3>
+
+<p>This section describes various primitive procedures which control
+the flow of program execution in special ways. Procedures in this
+section that invoke procedure arguments always do so in the same
+dynamic environment as the call of the original procedure. The
+<code>procedure?</code> predicate is also described here.
+</p>
+<dl class="def">
+<dt id="index-procedure_003f"><span class="category">procedure: </span><span><strong>procedure?</strong> <em>obj</em><a href='#index-procedure_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if
+<var>obj</var> is a procedure, otherwise returns <code>#f</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(procedure? car)       &rArr; #t
+(procedure? 'car)      &rArr; #f
+(procedure? (lambda (x) (* x x)))
+                       &rArr; #t
+(procedure? '(lambda (x) (* x x)))
+                       &rArr; #f
+(call-with-current-continuation procedure?)
+                       &rArr; #t
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-apply"><span class="category">procedure: </span><span><strong>apply</strong> <em>proc <var>arg<sub>1</sub></var>&hellip; args</em><a href='#index-apply' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>apply</code> procedure calls <var>proc</var> with the elements of the
+list <code>(append (list </code><var>arg<sub>1</sub></var> &hellip;<code>) args)</code> as the
+actual arguments.
+</p>
+<div class="example lisp">
+<pre class="lisp">(apply + (list 3 4)) &rArr; 7
+
+(define compose
+  (lambda (f g)
+    (lambda args
+      (f (apply g args)))))
+
+((compose sqrt *) 12 75) &rArr; 30
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-map"><span class="category">procedure: </span><span><strong>map</strong> <em>proc <var>list<sub>1</sub></var> <var>list<sub>2</sub></var>&hellip;</em><a href='#index-map' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept as many arguments as
+there are <var>list</var>s and return a single value.
+</p>
+<p>The <code>map</code> procedure applies <var>proc</var> element-wise to the
+elements of the <var>list</var>s and returns a list of the results, in
+order.  If more than one <var>list</var> is given and not all lists have
+the same length, <code>map</code> terminates when the shortest list runs out.
+The <var>list</var>s can be circular, but it is an error if all of them are
+circular.  It is an error for <var>proc</var> to mutate any of the lists.
+The dynamic order in which <var>proc</var> is applied to the elements
+of the <var>list</var>s is unspecified.  If multiple returns occur from
+<code>map</code>, the values returned by earlier returns are not mutated.
+</p>
+<div class="example lisp">
+<pre class="lisp">(map cadr '((a b) (d e) (g h))) &rArr; (b e h)
+
+(map (lambda (n) (expt n n))
+     '(1 2 3 4 5))
+    &rArr; (1 4 27 256 3125)
+
+(map + '(1 2 3) '(4 5 6 7)) &rArr; (5 7 9)
+
+(let ((count 0))
+  (map (lambda (ignored)
+         (set! count (+ count 1))
+         count)
+       '(a b)))
+    &rArr; (1 2) <span class="roman">or</span> (2 1)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dmap"><span class="category">procedure: </span><span><strong>string-map</strong> <em>proc <var>string<sub>1</sub></var> <var>string<sub>2</sub></var>&hellip;</em><a href='#index-string_002dmap' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept as many arguments as
+there are <var>string</var>s and return a single character.
+</p>
+<p>The <code>string-map</code> procedure applies <var>proc</var> element-wise to
+the elements of the <var>string</var>s and returns a string of the results,
+in order.  If more than one <var>string</var> is given and not all strings
+have the same length, <code>string-map</code> terminates when the shortest
+string runs out.  The dynamic order in which <var>proc</var> is applied
+to the elements of the <var>string</var>s is unspecified.  If multiple
+returns occur from <code>string-map</code>, the values returned by earlier
+returns are not mutated.
+</p>
+<div class="example lisp">
+<pre class="lisp">(string-map char-foldcase &quot;AbdEgH&quot;) &rArr; &quot;abdegh&quot;
+
+(string-map
+ (lambda (c)
+   (integer-&gt;char (+ 1 (char-&gt;integer c))))
+ &quot;HAL&quot;)
+    &rArr; &quot;IBM&quot;
+
+(string-map
+ (lambda (c k)
+   ((if (eqv? k #\u) char-upcase char-downcase)
+    c))
+ &quot;studlycaps xxx&quot;
+ &quot;ululululul&quot;)
+    &rArr; &quot;StUdLyCaPs&quot;
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-vector_002dmap"><span class="category">procedure: </span><span><strong>vector-map</strong> <em>proc <var>vector<sub>1</sub></var> <var>vector<sub>2</sub></var>&hellip;</em><a href='#index-vector_002dmap' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept as many arguments as
+there are <var>vector</var>s and return a single value.
+</p>
+<p>The <code>vector-map</code> procedure applies <var>proc</var> element-wise to
+the elements of the <var>vector</var>s and returns a vector of the results,
+in order.  If more than one <var>vector</var> is given and not all vectors
+have the same length, <code>vector-map</code> terminates when the shortest
+vector runs out.  The dynamic order in which <var>proc</var> is applied
+to the elements of the <var>vector</var>s is unspecified.  If multiple
+returns occur from <code>vector-map</code>, the values returned by earlier
+returns are not mutated.
+</p>
+<div class="example lisp">
+<pre class="lisp">(vector-map cadr '#((a b) (d e) (g h))) &rArr; #(b e h)
+
+(vector-map (lambda (n) (expt n n))
+            '#(1 2 3 4 5))
+    &rArr; #(1 4 27 256 3125)
+
+(vector-map + '#(1 2 3) '#(4 5 6 7)) &rArr; #(5 7 9)
+
+(let ((count 0))
+  (vector-map
+   (lambda (ignored)
+     (set! count (+ count 1))
+     count)
+   '#(a b)))
+    &rArr; #(1 2) <span class="roman">or</span> #(2 1)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-for_002deach"><span class="category">procedure: </span><span><strong>for-each</strong> <em>proc <var>list<sub>1</sub></var> <var>list<sub>2</sub></var>&hellip;</em><a href='#index-for_002deach' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept as many arguments as
+there are <var>list</var>s.
+</p>
+<p>The arguments to <code>for-each</code> are like the arguments to <code>map</code>,
+but <code>for-each</code> calls <var>proc</var> for its side effects rather than
+for its values.  Unlike <code>map</code>, <code>for-each</code> is guaranteed
+to call <var>proc</var> on the elements of the <var>list</var>s in order
+from the first element(s) to the last, and the value returned by
+<code>for-each</code> is unspecified.  If more than one <var>list</var> is given
+and not all lists have the same length, <code>for-each</code> terminates
+when the shortest list runs out.  The <var>list</var>s can be circular,
+but it is an error if all of them are circular.
+</p>
+<p>It is an error for <var>proc</var> to mutate any of the lists.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((v (make-vector 5)))
+  (for-each (lambda (i)
+              (vector-set! v i (* i i)))
+            '(0 1 2 3 4))
+  v)
+    &rArr; #(0 1 4 9 16)
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dfor_002deach"><span class="category">procedure: </span><span><strong>string-for-each</strong> <em>proc string1 string2&hellip;</em><a href='#index-string_002dfor_002deach' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept as many arguments as
+there are <var>string</var>s.
+</p>
+<p>The arguments to <code>string-for-each</code> are like the arguments to
+<code>string-map</code>, but <code>string-for-each</code> calls <var>proc</var> for its
+side effects rather than for its values.  Unlike <code>string-map</code>,
+<code>string-for-each</code> is guaranteed to call <var>proc</var> on the elements
+of the <var>string</var>s in order from the first element(s) to the last,
+and the value returned by <code>string-for-each</code> is unspecified.
+If more than one <var>string</var> is given and not all strings have the
+same length, <code>string-for-each</code> terminates when the shortest string
+runs out.  It is an error for <var>proc</var> to mutate any of the strings.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((v '()))
+  (string-for-each
+   (lambda (c) (set! v (cons (char-&gt;integer c) v)))
+   &quot;abcde&quot;)
+  v)
+    &rArr; (101 100 99 98 97)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-vector_002dfor_002deach"><span class="category">procedure: </span><span><strong>vector-for-each</strong> <em>proc <var>vector<sub>1</sub></var> <var>vector<sub>2</sub></var>&hellip;</em><a href='#index-vector_002dfor_002deach' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept as many arguments as
+there are <var>vector</var>s.
+</p>
+<p>The arguments to <code>vector-for-each</code> are like the arguments to
+<code>vector-map</code>, but <code>vector-for-each</code> calls <var>proc</var> for its
+side effects rather than for its values.  Unlike <code>vector-map</code>,
+<code>vector-for-each</code> is guaranteed to call <var>proc</var> on the elements
+of the <var>vector</var>s in order from the first element(s) to the last,
+and the value returned by <code>vector-for-each</code> is unspecified.
+If more than one <var>vector</var> is given and not all vectors have the
+same length, <code>vector-for-each</code> terminates when the shortest vector
+runs out.  It is an error for <var>proc</var> to mutate any of the vectors.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((v (make-list 5)))
+  (vector-for-each
+   (lambda (i) (list-set! v i (* i i)))
+   '#(0 1 2 3 4))
+  v)
+    &rArr; (0 1 4 9 16)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-call_002dwith_002dcurrent_002dcontinuation"><span class="category">procedure: </span><span><strong>call-with-current-continuation</strong> <em>proc</em><a href='#index-call_002dwith_002dcurrent_002dcontinuation' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-call_002fcc"><span class="category">procedure: </span><span><strong>call/cc</strong> <em>proc</em><a href='#index-call_002fcc' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>proc</var> does not accept one
+argument.
+</p>
+<span id="index-escape-procedure"></span>
+
+<p>The procedure <code>call-with-current-continuation</code> (or its equivalent
+abbreviation <code>call/cc</code>) packages the current continuation (see
+the rationale below) as an &ldquo;escape procedure&rdquo; and passes it as an
+argument to <var>proc</var>.  The escape procedure is a Scheme procedure
+that, if it is later called, will abandon whatever continuation is in
+effect at that later time and will instead use the continuation that
+was in effect when the escape procedure was created.  Calling the
+escape procedure will cause the invocation of <var>before</var> and
+<var>after</var> thunks installed using <code>dynamic-wind</code>.
+</p>
+<p>The escape procedure accepts the same number of
+arguments as the continuation to the original call to
+<code>call-with-current-continuation</code>.  Most continuations take only
+one value.  Continuations created by the <code>call-with-values</code>
+procedure (including the initialization expressions of
+<code>define-values</code>, <code>let-values</code>, and <code>let*-values</code>
+expressions), take the number of values that the consumer expects.
+The continuations of all non-final expressions within a sequence
+of expressions, such as in <code>lambda</code>, <code>case-lambda</code>,
+<code>begin</code>, <code>let</code>, <code>let*</code>, <code>letrec</code>, <code>letrec*</code>,
+<code>let-values</code>, <code>let*-values</code>, <code>let-syntax</code>,
+<code>letrec-syntax</code>, <code>parameterize</code>, <code>guard</code>, <code>case</code>,
+<code>cond</code>, <code>when</code>, and <code>unless</code> expressions, take an
+arbitrary number of values because they discard the values passed to
+them in any event.  The effect of passing no values or more than one
+value to continuations that were not created in one of these ways
+is unspecified.
+</p>
+<p>The escape procedure that is passed to <var>proc</var> has unlimited
+extent just like any other procedure in Scheme.  It can be stored
+in variables or data structures and can be called as many times as
+desired.  However, like the <code>raise</code> and <code>error</code> procedures,
+it never returns to its caller.
+</p>
+<p>The following examples show only the simplest ways in which
+<code>call-with-current-continuation</code> is used.  If all real uses were
+as simple as these examples, there would be no need for a procedure
+with the power of <code>call-with-current-continuation</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(call-with-current-continuation
+  (lambda (exit)
+    (for-each (lambda (x)
+                (if (negative? x)
+                    (exit x)))
+              '(54 0 37 -3 245 19))
+    #t))
+    &rArr; -3
+
+(define list-length
+  (lambda (obj)
+    (call-with-current-continuation
+      (lambda (return)
+        (letrec ((r
+                  (lambda (obj)
+                    (cond ((null? obj) 0)
+                          ((pair? obj)
+                           (+ (r (cdr obj)) 1))
+                          (else (return #f))))))
+          (r obj))))))
+
+(list-length '(1 2 3 4)) &rArr; 4
+
+(list-length '(a b . c)) &rArr; #f
+</pre></div>
+
+<span id="Rationale_003a-5"></span><h4 class="subheading">Rationale:</h4>
+
+<p>A common use of <code>call-with-current-continuation</code> is for
+structured, non-local exits from loops or procedure bodies, but in
+fact <code>call-with-current-continuation</code> is useful for implementing a
+wide variety of advanced control structures.  In fact, <code>raise</code> and
+<code>guard</code> provide a more structured mechanism for non-local exits.
+</p>
+<p>Whenever a Scheme expression is evaluated there is a <dfn>continuation</dfn>
+wanting the result of the expression.  The continuation represents
+an entire (default) future for the computation.  If the expression is
+evaluated at the REPL, for example, then the continuation might take
+the result, print it on the screen, prompt for the next input, evaluate
+it, and so on forever.  Most of the time the continuation includes
+actions specified by user code, as in a continuation that will take
+the result, multiply it by the value stored in a local variable, add
+seven, and give the answer to the REPL&rsquo;s continuation to be printed.
+Normally these ubiquitous continuations are hidden behind the scenes
+and programmers do not think much about them.  On rare occasions,
+however, a programmer needs to deal with continuations explicitly.
+The <code>call-with-current-continuation</code> procedure allows Scheme
+programmers to do that by creating a procedure that acts just like
+the current continuation.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-values"><span class="category">procedure: </span><span><strong>values</strong> <em>obj&hellip;</em><a href='#index-values' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Delivers all of its arguments to its continuation. The <code>values</code>
+procedure might be defined as follows:
+</p>
+<div class="example lisp">
+<pre class="lisp">(define (values . things)
+  (call-with-current-continuation
+    (lambda (cont) (apply cont things))))
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-call_002dwith_002dvalues"><span class="category">procedure: </span><span><strong>call-with-values</strong> <em>producer consumer</em><a href='#index-call_002dwith_002dvalues' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Calls its <var>producer</var> argument with no arguments and a continuation
+that, when passed some values, calls the <var>consumer</var> procedure with
+those values as arguments. The continuation for the call to
+<var>consumer</var> is the continuation of the call to
+<code>call-with-values</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(call-with-values (lambda () (values 4 5))
+                  (lambda (a b) b))
+    &rArr; 5
+
+(call-with-values * -) &rArr; -1
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-dynamic_002dwind"><span class="category">procedure: </span><span><strong>dynamic-wind</strong> <em>before thunk after</em><a href='#index-dynamic_002dwind' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Calls <var>thunk</var> without arguments, returning the result(s) of this
+call.  <var>Before</var> and <var>after</var> are called, also without arguments,
+as required by the following rules.  Note that, in the absence of calls
+to continuations captured using <code>call-with-current-continuation</code>,
+the three arguments are called once each, in order.  <var>Before</var>
+is called whenever execution enters the dynamic extent of the
+call to <var>thunk</var> and <var>after</var> is called whenever it exits
+that dynamic extent.  The dynamic extent of a procedure call is
+the period between when the call is initiated and when it returns.
+The <var>before</var> and <var>after</var> thunks are called in the same dynamic
+environment as the call to <code>dynamic-wind</code>.  In Scheme, because of
+<code>call-with-current-continuation</code>, the dynamic extent of a call is
+not always a single, connected time period.  It is defined as follows:
+</p>
+<ul>
+<li> The dynamic extent is entered when execution of the body of the
+called procedure begins.
+
+</li><li> The dynamic extent is also entered when execution is not within
+the dynamic extent and a continuation is invoked that was captured
+(using <code>call-with-current-continuation</code>) during the dynamic
+extent.
+
+</li><li> It is exited when the called procedure returns.
+
+</li><li> It is also exited when execution is within the dynamic extent and a
+continuation is invoked that was captured while not within the dynamic
+extent.
+
+</li></ul>
+
+<p>If a second call to <code>dynamic-wind</code> occurs within the dynamic
+extent of the call to <var>thunk</var> and then a continuation is invoked
+in such a way that the <var>after</var>s from these two invocations of
+<code>dynamic-wind</code> are both to be called, then the <var>after</var>
+associated with the second (inner) call to <code>dynamic-wind</code> is
+called first.
+</p>
+<p>If a second call to <code>dynamic-wind</code> occurs within the dynamic
+extent of the call to <var>thunk</var> and then a continuation is invoked
+in such a way that the <var>before</var>s from these two invocations of
+<code>dynamic-wind</code> are both to be called, then the <var>before</var>
+associated with the first (outer) call to <code>dynamic-wind</code> is
+called first.
+</p>
+<p>If invoking a continuation requires calling the <var>before</var> from
+one call to <code>dynamic-wind</code> and the <var>after</var> from another,
+then the <var>after</var> is called first.
+</p>
+<p>The effect of using a captured continuation to enter or exit the
+dynamic extent of a call to <var>before</var> or <var>after</var> is unspecified.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((path '())
+      (c #f))
+  (let ((add (lambda (s)
+               (set! path (cons s path)))))
+    (dynamic-wind
+      (lambda () (add 'connect))
+      (lambda ()
+        (add (call-with-current-continuation
+               (lambda (c0)
+                 (set! c c0)
+                 'talk1))))
+      (lambda () (add 'disconnect)))
+    (if (&lt; (length path) 4)
+        (c 'talk2)
+        (reverse path))))
+
+    &rArr; (connect talk1 disconnect
+               connect talk2 disconnect)
+</pre></div>
+
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Exceptions.html">Exceptions</a>, Previous: <a href="Bytevectors.html">Bytevectors</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

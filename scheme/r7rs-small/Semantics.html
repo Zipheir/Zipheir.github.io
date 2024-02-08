@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Semantics (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Semantics (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Semantics (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Overview-of-Scheme.html" rel="up" title="Overview of Scheme">
+<link href="Syntax.html" rel="next" title="Syntax">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Semantics">
+<div class="header">
+<p>
+Next: <a href="Syntax.html" accesskey="n" rel="next">Syntax</a>, Up: <a href="Overview-of-Scheme.html" accesskey="u" rel="up">Overview of Scheme</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Semantics-1"></span><h3 class="section">1.1 Semantics</h3>
+
+<p>This section gives an overview of Scheme&rsquo;s semantics. A detailed
+informal semantics is the subject of chapters <a href="Basic-concepts.html">Basic concepts</a>
+through <a href="Standard-procedures.html">Standard procedures</a>. For reference purposes,
+<a href="Formal-semantics.html">Formal semantics</a> provides a formal semantics of Scheme.
+</p>
+<p>Scheme is a statically scoped programming language. After macros are
+expanded, each use of a
+variable is associated with a lexically apparent binding of that
+variable.
+</p>
+<p>Scheme is a dynamically typed language. Types are associated with
+values (also called objects) rather than with variables. Statically
+typed languages, by contrast, associate types with variables and
+expressions as well as with values.
+</p>
+<p>All objects created in the course of a Scheme computation, including
+procedures and continuations, have unlimited extent. No Scheme object
+is ever destroyed. The reason that implementations of Scheme do not
+(usually!) run out of storage is that they are permitted to reclaim
+the storage occupied by an object if they can prove that the object
+cannot possibly matter to any future computation. Implementations
+of Scheme are required to be properly tail-recursive. This allows
+the execution of an iterative computation in constant space, even if
+the iterative computation is described by a syntactically recursive
+procedure. Thus with a properly tail-recursive implementation,
+iteration can be expressed using the ordinary procedure-call mechanics,
+so that special iteration constructs are useful only as syntactic
+sugar. See <a href="Proper-tail-recursion.html">Proper tail recursion</a>.
+</p>
+<p>Scheme procedures are objects in their own right. Procedures can be
+created dynamically, stored in data structures, returned as results of
+procedures, and so on. One distinguishing feature of Scheme is that
+continuations, which in most other languages only operate behind the
+scenes, also have &ldquo;first-class&rdquo; status. Continuations are useful for
+implementing a wide variety of advanced control constructs, including
+non-local exits, backtracking, and coroutines. See <a href="Control-features.html">Control features</a>.
+</p>
+<p>Arguments to Scheme procedures are always passed by value, which
+means that the actual argument expressions are evaluated before
+the procedure gains control, regardless of whether the procedure
+needs the result of the evaluation. Scheme&rsquo;s model of arithmetic is
+designed to remain as independent as possible of the particular ways
+in which numbers are represented within a computer. In Scheme, every
+integer is a rational number, every rational is a real, and every real
+is a complex number. Thus the distinction between integer and real
+arithmetic, so important to many programming languages, does not appear
+in Scheme. In its place is a distinction between exact arithmetic,
+which corresponds to the mathematical ideal, and inexact arithmetic
+on approximations. Exact arithmetic is not limited to integers.
+72
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Syntax.html">Syntax</a>, Up: <a href="Overview-of-Scheme.html">Overview of Scheme</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Output (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Output (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Output (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Input-and-output.html" rel="up" title="Input and output">
+<link href="Input.html" rel="prev" title="Input">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Output">
+<div class="header">
+<p>
+Previous: <a href="Input.html" accesskey="p" rel="prev">Input</a>, Up: <a href="Input-and-output.html" accesskey="u" rel="up">Input and output</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Output-1"></span><h4 class="subsection">6.13.3 Output</h4>
+
+<p>If <var>port</var> is omitted from any output procedure, it defaults to the
+value returned by <code>(current-output-port)</code>. It is an error to
+attempt an output operation on a closed port.
+</p>
+<dl class="def">
+<dt id="index-write"><span class="category">write library procedure: </span><span><strong>write</strong> <em>obj</em><a href='#index-write' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write-1"><span class="category">write library procedure: </span><span><strong>write</strong> <em>obj port</em><a href='#index-write-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Writes a representation of <var>obj</var> to the given textual output
+<var>port</var>.  Strings that appear in the written representation are
+enclosed in quotation marks, and within those strings backslash and
+quotation mark characters are escaped by backslashes.  Symbols that
+contain non-ASCII characters are escaped with vertical lines.
+Character objects are written using the <code>#\</code> notation.
+</p>
+<p>If <var>obj</var> contains cycles which would cause an infinite loop
+using the normal written representation, then at least the objects
+that form part of the cycle must be represented using datum labels
+as described in <a href="Datum-labels.html">Datum labels</a>.  Datum labels must not be used
+if there are no cycles.
+</p>
+<p>Implementations may support extended syntax to represent record types
+or other types that do not have datum representations.
+</p>
+<p>The <code>write</code> procedure returns an unspecified value.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-write_002dshared"><span class="category">write library procedure: </span><span><strong>write-shared</strong> <em>obj</em><a href='#index-write_002dshared' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dshared-1"><span class="category">write library procedure: </span><span><strong>write-shared</strong> <em>obj port</em><a href='#index-write_002dshared-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>write-shared</code> procedure is the same as <code>write</code>, except
+that shared structure must be represented using datum labels for all
+pairs and vectors that appear more than once in the output.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-write_002dsimple"><span class="category">write library procedure: </span><span><strong>write-simple</strong> <em>obj</em><a href='#index-write_002dsimple' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dsimple-1"><span class="category">write library procedure: </span><span><strong>write-simple</strong> <em>obj port</em><a href='#index-write_002dsimple-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>write-simple</code> procedure is the same as <code>write</code>, except
+that shared structure is never represented using datum labels. This can
+cause <code>write-simple</code> not to terminate if <var>obj</var> contains
+circular structure.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-display"><span class="category">write library procedure: </span><span><strong>display</strong> <em>obj</em><a href='#index-display' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-display-1"><span class="category">write library procedure: </span><span><strong>display</strong> <em>obj port</em><a href='#index-display-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Writes a representation of <var>obj</var> to the given textual output
+<var>port</var>.  Strings that appear in the written representation are
+output as if by <code>write-string</code> instead of by <code>write</code>.
+Symbols are not escaped.  Character objects appear in the
+representation as if written by <code>write-char</code> instead of by
+<code>write</code>.
+</p>
+<p>The <code>display</code> representation of other objects is unspecified.
+However, <code>display</code> must not loop forever on self-referencing
+pairs, vectors, or records.  Thus if the normal <code>write</code>
+representation is used, datum labels are needed to represent cycles
+as in <code>write</code>.
+</p>
+<p>Implementations may support extended syntax to represent record types
+or other types that do not have datum representations.
+</p>
+<p>The <code>display</code> procedure returns an unspecified value.
+</p>
+<span id="Rationale_003a-8"></span><h4 class="subheading">Rationale:</h4>
+
+<p>The <code>write</code> procedure is intended for producing machine-readable
+output and <code>display</code> for producing human-readable output.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-newline"><span class="category">procedure: </span><span><strong>newline</strong><a href='#index-newline' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-newline-1"><span class="category">procedure: </span><span><strong>newline</strong> <em>port</em><a href='#index-newline-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Writes an end of line to textual output <var>port</var>. Exactly how this is
+done differs from one operating system to another. Returns an
+unspecified value.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-write_002dchar"><span class="category">procedure: </span><span><strong>write-char</strong> <em>char</em><a href='#index-write_002dchar' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dchar-1"><span class="category">procedure: </span><span><strong>write-char</strong> <em>char port</em><a href='#index-write_002dchar-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Writes the character <var>char</var> (not an external representation of the
+character) to the given textual output <var>port</var> and returns an
+unspecified value.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-write_002dstring"><span class="category">procedure: </span><span><strong>write-string</strong> <em>string</em><a href='#index-write_002dstring' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dstring-1"><span class="category">procedure: </span><span><strong>write-string</strong> <em>string port</em><a href='#index-write_002dstring-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dstring-2"><span class="category">procedure: </span><span><strong>write-string</strong> <em>string port start</em><a href='#index-write_002dstring-2' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dstring-3"><span class="category">procedure: </span><span><strong>write-string</strong> <em>string port start end</em><a href='#index-write_002dstring-3' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Writes the characters of <var>string</var> from <var>start</var> to <var>end</var> in
+left-to-right order to the textual output <var>port</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-write_002du8"><span class="category">procedure: </span><span><strong>write-u8</strong> <em>byte</em><a href='#index-write_002du8' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002du8-1"><span class="category">procedure: </span><span><strong>write-u8</strong> <em>byte port</em><a href='#index-write_002du8-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Writes the <var>byte</var> to the given binary output <var>port</var> and returns
+an unspecified value.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-write_002dbytevector"><span class="category">procedure: </span><span><strong>write-bytevector</strong> <em>bytevector</em><a href='#index-write_002dbytevector' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dbytevector-1"><span class="category">procedure: </span><span><strong>write-bytevector</strong> <em>bytevector port</em><a href='#index-write_002dbytevector-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dbytevector-2"><span class="category">procedure: </span><span><strong>write-bytevector</strong> <em>bytevector port start</em><a href='#index-write_002dbytevector-2' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-write_002dbytevector-3"><span class="category">procedure: </span><span><strong>write-bytevector</strong> <em>bytevector port start end</em><a href='#index-write_002dbytevector-3' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Writes the bytes of <var>bytevector</var> from <var>start</var> to <var>end</var> in
+left-to-right order to the binary output <var>port</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-flush_002doutput_002dport"><span class="category">procedure: </span><span><strong>flush-output-port</strong><a href='#index-flush_002doutput_002dport' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-flush_002doutput_002dport-1"><span class="category">procedure: </span><span><strong>flush-output-port</strong> <em>port</em><a href='#index-flush_002doutput_002dport-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Flushes any buffered output from the buffer of <var>port</var> to the
+underlying file or device and returns an unspecified value.
+</p>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Input.html">Input</a>, Up: <a href="Input-and-output.html">Input and output</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

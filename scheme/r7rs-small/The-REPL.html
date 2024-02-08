@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>The REPL (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="The REPL (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="The REPL (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Program-structure.html" rel="up" title="Program structure">
+<link href="Libraries.html" rel="prev" title="Libraries">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="The-REPL">
+<div class="header">
+<p>
+Previous: <a href="Libraries.html" accesskey="p" rel="prev">Libraries</a>, Up: <a href="Program-structure.html" accesskey="u" rel="up">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="The-REPL-1"></span><h3 class="section">5.7 The REPL</h3>
+
+<p>Implementations may provide an interactive session called a <dfn>REPL</dfn>
+(Read-Eval-Print Loop), where import declarations, expressions and
+definitions can be entered and evaluated one at a time. For convenience
+and ease of use, the global Scheme environment in a REPL must not be
+empty, but must start out with at least the bindings provided by the base
+library. This library includes the core syntax of Scheme and generally
+useful procedures that manipulate data. For example, the variable
+<code>abs</code> is bound to a procedure of one argument that computes the
+absolute value of a number, and the variable <code>+</code> is bound to a
+procedure that computes sums. The full list of <code>(scheme base)</code>
+bindings can be found in <a href="Appendix-A.html">Standard Libraries</a>.
+</p>
+<p>Implementations may provide an initial REPL environment which behaves as
+if all possible variables are bound to locations, most of which contain
+unspecified values. Top level REPL definitions in such an implementation
+are truly equivalent to assignments, unless the identifier is defined
+as a syntax keyword.
+</p>
+<p>An implementation may provide a mode of operation in which the REPL
+reads its input from a file. Such a file is not, in general, the same
+as a program, because it can contain import declarations in places other
+than the beginning.
+</p>
+</div>
+
+
+
+</body>
+</html>

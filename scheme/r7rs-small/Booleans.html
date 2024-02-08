@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Booleans (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Booleans (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Booleans (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Pairs-and-lists.html" rel="next" title="Pairs and lists">
+<link href="Numbers.html" rel="prev" title="Numbers">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Booleans">
+<div class="header">
+<p>
+Next: <a href="Pairs-and-lists.html" accesskey="n" rel="next">Pairs and lists</a>, Previous: <a href="Numbers.html" accesskey="p" rel="prev">Numbers</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Booleans-1"></span><h3 class="section">6.3 Booleans</h3>
+
+<span id="index-true-3"></span>
+<span id="index-false-1"></span>
+<span id="index-t_0023t"></span>
+<span id="index-f_0023f"></span>
+<span id="index-true_0023true"></span>
+<span id="index-false_0023false"></span>
+
+<p>The standard boolean objects for true and false are written as <code>#t</code>
+and <code>#f</code>.  Alternatively, they can be written <code>#true</code> and
+<code>#false</code>, respectively.  What really matters, though, are the
+objects that the Scheme conditional expressions (<code>if</code>, <code>cond</code>,
+<code>and</code>, <code>or</code>, <code>when</code>, <code>unless</code>, <code>do</code>) treat as
+true or false.  The phrase &ldquo;a true value&rdquo; (or sometimes just &ldquo;true&rdquo;)
+means any object treated as true by the conditional expressions, and
+the phrase &ldquo;a false value&rdquo; (or &ldquo;false&rdquo;) means any object treated as
+false by the conditional expressions.
+</p>
+<p>Of all the Scheme values, only <code>#f</code> counts as false in conditional
+expressions.  All other Scheme values, including <code>#t</code>, count as true.
+</p>
+<span id="index-empty-list-1"></span>
+
+<p>Note: Unlike some other dialects of Lisp, Scheme distinguishes <code>#f</code>
+and the empty list empty list from each other and from the symbol
+<code>nil</code>.
+</p>
+<p>Boolean constants evaluate to themselves, so they do not need to be
+quoted in programs.
+</p>
+<div class="example lisp">
+<pre class="lisp">#t  &rArr; #t
+#f  &rArr; #f
+'#f &rArr; #f
+</pre></div>
+
+<dl class="def">
+<dt id="index-not"><span class="category">procedure: </span><span><strong>not</strong> <em>obj</em><a href='#index-not' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>not</code> procedure returns <code>#t</code> if <var>obj</var> is false, and
+returns <code>#f</code> otherwise.
+</p>
+<div class="example lisp">
+<pre class="lisp">(not #t)       &rArr; #f
+(not 3)        &rArr; #f
+(not (list 3)) &rArr; #f
+(not #f)       &rArr; #t
+(not '())      &rArr; #f
+(not (list))   &rArr; #f
+(not 'nil)     &rArr; #f
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-boolean_003f"><span class="category">procedure: </span><span><strong>boolean?</strong> <em>obj</em><a href='#index-boolean_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>boolean?</code> predicate returns <code>#t</code> if <var>obj</var> is either
+<code>#t</code> or <code>#f</code> and returns <code>#f</code> otherwise.
+</p>
+<div class="example lisp">
+<pre class="lisp">(boolean? #f)  &rArr; #t
+(boolean? 0)   &rArr; #f
+(boolean? '()) &rArr; #f
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-boolean_003d_003f"><span class="category">procedure: </span><span><strong>boolean=?</strong> <em>boolean1 boolean2 boolean3 &hellip;</em><a href='#index-boolean_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if all the arguments are
+<code>#t</code> or all are <code>#f</code>.
+</p>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Pairs-and-lists.html">Pairs and lists</a>, Previous: <a href="Numbers.html">Numbers</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

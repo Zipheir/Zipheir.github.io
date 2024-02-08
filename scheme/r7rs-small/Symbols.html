@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Symbols (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Symbols (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Symbols (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Characters.html" rel="next" title="Characters">
+<link href="Pairs-and-lists.html" rel="prev" title="Pairs and lists">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Symbols">
+<div class="header">
+<p>
+Next: <a href="Characters.html" accesskey="n" rel="next">Characters</a>, Previous: <a href="Pairs-and-lists.html" accesskey="p" rel="prev">Pairs and lists</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Symbols-1"></span><h3 class="section">6.5 Symbols</h3>
+
+<p>Symbols are objects whose usefulness rests on the fact that two symbols
+are identical (in the sense of <code>eqv?</code>) if and only if their names are
+spelled the same way. For instance, they can be used the way enumerated
+values are used in other languages.
+</p>
+<p>The rules for writing a symbol are exactly the same as the rules for
+writing an identifier; see <a href="Identifiers.html">Identifiers</a> and <a href="Lexical-structure.html">Lexical structure</a>.
+</p>
+<p>It is guaranteed that any symbol that has been returned as part of a
+literal expression, or read using the read procedure, and subsequently
+written out using the write procedure, will read back in as the identical
+symbol (in the sense of <code>eqv?</code>).
+</p>
+<p>Note: Some implementations have values known as &ldquo;uninterned symbols,&rdquo;
+which defeat write/read invariance, and also violate the rule that two
+symbols are the same if and only if their names are spelled the same. This
+report does not specify the behavior of implementation-dependent
+extensions.
+</p>
+<dl class="def">
+<dt id="index-symbol_003f"><span class="category">procedure: </span><span><strong>symbol?</strong> <em>obj</em><a href='#index-symbol_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>obj</var> is a symbol, otherwise returns <code>#f</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(symbol? 'foo)         &rArr; #t
+(symbol? (car '(a b))) &rArr; #t
+(symbol? &quot;bar&quot;)        &rArr; #f
+(symbol? 'nil)         &rArr; #t
+(symbol? '())          &rArr; #f
+(symbol? #f)           &rArr; #f
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-symbol_003d_003f"><span class="category">procedure: </span><span><strong>symbol=?</strong> <em><var>symbol<sub>1</sub></var> <var>symbol<sub>2</sub></var> <var>symbol<sub>3</sub></var>&hellip;</em><a href='#index-symbol_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if all the arguments all have the same names in the
+sense of <code>string=?</code>.
+</p>
+<p>Note: The definition above assumes that none of the arguments are
+uninterned symbols.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-symbol_002d_003estring"><span class="category">procedure: </span><span><strong>symbol-&gt;string</strong> <em>symbol</em><a href='#index-symbol_002d_003estring' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the name of <var>symbol</var> as a string, but without adding
+escapes. It is an error to apply mutation procedures like
+<code>string-set!</code> to strings returned by this procedure.
+</p>
+<div class="example lisp">
+<pre class="lisp">(symbol-&gt;string 'flying-fish) &rArr; &quot;flying-fish&quot;
+(symbol-&gt;string 'Martin)      &rArr; &quot;Martin&quot;
+(symbol-&gt;string
+ (string-&gt;symbol &quot;Malvina&quot;))
+                              &rArr; &quot;Malvina&quot;
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002d_003esymbol"><span class="category">procedure: </span><span><strong>string-&gt;symbol</strong> <em>string</em><a href='#index-string_002d_003esymbol' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the symbol whose name is <var>string</var>. This procedure can
+create symbols with names containing special characters that would
+require escaping when written, but does not interpret escapes in its
+input.
+</p>
+<div class="example lisp">
+<pre class="lisp">(string-&gt;symbol &quot;mISSISSIppi&quot;)      &rArr; mISSISSIppi
+(eqv? 'bitBlt
+      (string-&gt;symbol &quot;bitBlt&quot;))    &rArr; #t
+(eqv? 'LollyPop
+     (string-&gt;symbol
+       (symbol-&gt;string 'LollyPop)))
+                                    &rArr; #t
+(string=? &quot;K. Harper, M.D.&quot;
+          (symbol-&gt;string
+            (string-&gt;symbol &quot;K. Harper, M.D.&quot;)))
+                                    &rArr; #t
+</pre></div>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Characters.html">Characters</a>, Previous: <a href="Pairs-and-lists.html">Pairs and lists</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

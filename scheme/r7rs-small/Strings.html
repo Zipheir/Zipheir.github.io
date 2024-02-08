@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Strings (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Strings (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Strings (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Vectors.html" rel="next" title="Vectors">
+<link href="Characters.html" rel="prev" title="Characters">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Strings">
+<div class="header">
+<p>
+Next: <a href="Vectors.html" accesskey="n" rel="next">Vectors</a>, Previous: <a href="Characters.html" accesskey="p" rel="prev">Characters</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Strings-1"></span><h3 class="section">6.7 Strings</h3>
+
+<span id="index-escape-sequence"></span>
+
+<p>Strings are sequences of characters. Strings are written as sequences
+of characters enclosed within quotation marks (<code>&quot;</code>). Within a
+string literal, various escape sequences represent characters other
+than themselves. Escape sequences always start with a backslash
+(<code>\</code>):
+</p>
+<ul>
+<li> <code>\a</code> : alarm, U+0007
+
+</li><li> <code>\b</code> : backspace, U+0008
+
+</li><li> <code>\t</code> : character tabulation, U+0009
+
+</li><li> <code>\n</code> : linefeed, U+000A
+
+</li><li> <code>\r</code> : return, U+000D
+
+</li><li> <code>\&quot;</code> : double quote, U+0022
+
+</li><li> <code>\\</code> : backslash, U+005C
+
+</li><li> <code>\|</code> : vertical line, U+007C
+
+</li><li> <code>\</code>&#x27e8;intraline whitespace&#x27e9;*&#x27e8;line ending&#x27e9;
+&#x27e8;intraline whitespace&#x27e9;* : nothing
+
+</li><li> <code>\x</code>&#x27e8;hex scalar value&#x27e9;<code>;</code> : specified character
+(note the terminating semi-colon).
+
+</li></ul>
+
+<p>The result is unspecified if any other character in a string occurs
+after a backslash.
+</p>
+<p>Except for a line ending, any character outside of an escape sequence
+stands for itself in the string literal. A line ending which is
+preceded by <code>\</code>&#x27e8;intraline whitespace&#x27e9; expands to nothing
+(along with any trailing intraline whitespace), and can be used to
+indent strings for improved legibility. Any other line ending has the
+same effect as inserting a <code>\n</code> character into the string.
+</p>
+<p>Examples:
+</p>
+<div class="example">
+<pre class="example">&quot;The word \&quot;recursion\&quot; has many meanings.&quot;
+&quot;Another example:\ntwo lines of text&quot;
+&quot;Here's text \
+   containing just one line&quot;
+&quot;\x03B1; is named GREEK SMALL LETTER ALPHA.&quot;
+</pre></div>
+
+<span id="index-valid-indexes"></span>
+
+<p>The <dfn>length</dfn> of a string is the number of characters that it
+contains. This number is an exact, non-negative integer that is fixed
+when the string is created. The <dfn>valid indexes</dfn> of a string are the
+exact non-negative integers less than the length of the string. The
+first character of a string has index 0, the second has index 1, and so
+on.
+</p>
+<p>Some of the procedures that operate on strings ignore the difference
+between upper and lower case. The names of the versions that ignore
+case end with &lsquo;<samp>-ci</samp>&rsquo; (for &ldquo;case insensitive&rdquo;).
+</p>
+<p>Implementations may forbid certain characters from appearing in
+strings. However, with the exception of <code>#\null</code>, ASCII characters
+must not be forbidden. For example, an implementation might support the
+entire Unicode repertoire, but only allow characters U+0001 to U+00FF
+(the Latin-1 repertoire without <code>#\null</code>) in strings.
+</p>
+<p>It is an error to pass such a forbidden character to
+<code>make-string</code>, <code>string</code>, <code>string-set!</code>, or
+<code>string-fill!</code>, as part of the list passed to <code>list-&gt;string</code>,
+or as part of the vector passed to <code>vector-&gt;string</code> (see
+<a href="Vectors.html">Vectors</a>), or in UTF-8 encoded form within a bytevector passed to
+<code>utf8-&gt;string</code> (see <a href="Bytevectors.html">Bytevectors</a>). It is also an error for a
+procedure passed to <code>string-map</code> (see <a href="Control-features.html">Control features</a>) to
+return a forbidden character, or for <code>read-string</code> (see
+<a href="Input.html">Input</a>) to attempt to read one.
+</p>
+<dl class="def">
+<dt id="index-string_003f"><span class="category">procedure: </span><span><strong>string?</strong> <em>obj</em><a href='#index-string_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>obj</var> is a string, otherwise returns <code>#f</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-make_002dstring"><span class="category">procedure: </span><span><strong>make-string</strong> <em>k</em><a href='#index-make_002dstring' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-make_002dstring-1"><span class="category">procedure: </span><span><strong>make-string</strong> <em>k char</em><a href='#index-make_002dstring-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>make-string</code> procedure returns a newly allocated string of
+length <var>k</var>. If <var>char</var> is given, then all the characters of the
+string are initialized to <var>char</var>, otherwise the contents of the
+string are unspecified.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string"><span class="category">procedure: </span><span><strong>string</strong> <em>char&hellip;</em><a href='#index-string' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated string composed of the arguments. It is
+analogous to <code>list</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dlength"><span class="category">procedure: </span><span><strong>string-length</strong> <em>string</em><a href='#index-string_002dlength' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the number of characters in the given <var>string</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dref"><span class="category">procedure: </span><span><strong>string-ref</strong> <em>string k</em><a href='#index-string_002dref' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>k</var> is not a valid index of <var>string</var>.
+</p>
+<p>The <code>string-ref</code> procedure returns character <var>k</var> of
+<var>string</var> using zero-origin indexing.
+</p>
+<p>There is no requirement for this procedure to execute in constant time.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dset_0021"><span class="category">procedure: </span><span><strong>string-set!</strong> <em>string k char</em><a href='#index-string_002dset_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>k</var> is not a valid index of <var>string</var>.
+</p>
+<p>The <code>string-set!</code> procedure stores <var>char</var> in element <var>k</var>
+of <var>string</var>. There is no requirement for this procedure to execute
+in constant time.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define (f) (make-string 3 #\*))
+(define (g) &quot;***&quot;)
+(string-set! (f) 0 #\?) &rArr; <span class="roman">unspecified</span>
+(string-set! (g) 0 #\?) &rArr; <span class="roman">error</span>
+(string-set! (symbol-&gt;string 'immutable)
+             0
+             #\?) &rArr; <span class="roman">error</span>
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_003d_003f"><span class="category">procedure: </span><span><strong>string=?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if all the <var>string</var>s are the same length and
+contain exactly the same characters in the same positions, otherwise
+returns <code>#f</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dci_003d_003f"><span class="category">char library procedure: </span><span><strong>string-ci=?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_002dci_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if, after case-folding, all the <var>string</var>s are the
+same length and contain the same characters in the same positions,
+otherwise returns <code>#f</code>. Specifically, these procedures behave as
+if <code>string-foldcase</code> were applied to their arguments before
+comparing them.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_003c_003f"><span class="category">procedure: </span><span><strong>string&lt;?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_003c_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dci_003c_003f"><span class="category">char library procedure: </span><span><strong>string-ci&lt;?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_002dci_003c_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_003e_003f"><span class="category">procedure: </span><span><strong>string&gt;?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_003e_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dci_003e_003f"><span class="category">char library procedure: </span><span><strong>string-ci&gt;?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_002dci_003e_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_003c_003d_003f"><span class="category">procedure: </span><span><strong>string&lt;=?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_003c_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dci_003c_003d_003f"><span class="category">char library procedure: </span><span><strong>string-ci&lt;=?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_002dci_003c_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_003e_003d_003f"><span class="category">procedure: </span><span><strong>string&gt;=?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_003e_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dci_003e_003d_003f"><span class="category">char library procedure: </span><span><strong>string-ci&gt;=?</strong> <em><var>string<sub>1</sub></var> <var>string<sub>2</sub></var> <var>string<sub>3</sub></var>&hellip;</em><a href='#index-string_002dci_003e_003d_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures return <code>#t</code> if their arguments are (respectively):
+monotonically increasing, monotonically decreasing, monotonically
+non-decreasing, or monotonically non-increasing.
+</p>
+<p>These predicates are required to be transitive.
+</p>
+<p>These procedures compare strings in an implementation-defined way.
+One approach is to make them the lexicographic extensions to strings of
+the corresponding orderings on characters.  In that case, <code>string&lt;?</code>
+would be the lexicographic ordering on strings induced by the ordering
+<code>char&lt;?</code> on characters, and if the two strings differ in length but
+are the same up to the length of the shorter string, the shorter string
+would be considered to be lexicographically less than the longer string.
+However, it is also permitted to use the natural ordering imposed by the
+implementation&rsquo;s internal representation of strings, or a more complex
+locale-specific ordering.
+</p>
+<p>In all cases, a pair of strings must satisfy exactly one of
+<code>string&lt;?</code>, <code>string=?</code>, and <code>string&gt;?</code>, and must satisfy
+<code>string&lt;=?</code> if and only if they do not satisfy <code>string&gt;?</code>
+and <code>string&gt;=?</code> if and only if they do not satisfy <code>string&lt;?</code>.
+</p>
+<p>The &lsquo;<samp>-ci</samp>&rsquo; procedures behave as if they applied <code>string-foldcase</code>
+to their arguments before invoking the corresponding procedures without
+&lsquo;<samp>-ci</samp>&rsquo;.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dupcase"><span class="category">char library procedure: </span><span><strong>string-upcase</strong> <em>string</em><a href='#index-string_002dupcase' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002ddowncase"><span class="category">char library procedure: </span><span><strong>string-downcase</strong> <em>string</em><a href='#index-string_002ddowncase' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dfoldcase"><span class="category">char library procedure: </span><span><strong>string-foldcase</strong> <em>string</em><a href='#index-string_002dfoldcase' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>These procedures apply the Unicode full string uppercasing, lowercasing,
+and case-folding algorithms to their arguments and return the result.
+In certain cases, the result differs in length from the argument.
+If the result is equal to the argument in the sense of <code>string=?</code>,
+the argument may be returned.  Note that language-sensitive mappings
+and foldings are not used.
+</p>
+<p>The Unicode Standard prescribes special treatment of the Greek letter
+&#x03a3;, whose normal lower-case form is &#x03c3;
+but which becomes &#x03c2; at the end of a word.  See UAX #44
+[<a href="References.html#uax44">uax44</a>]
+(part of the Unicode Standard) for details.  However, implementations of
+<code>string-downcase</code> are not required to provide this behavior, and may
+choose to change &#x03a3; to &#x03c3; in all cases.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-substring"><span class="category">procedure: </span><span><strong>substring</strong> <em>string start end</em><a href='#index-substring' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>substring</code> procedure returns a newly allocated string formed
+from the characters of <var>string</var> beginning with index <var>start</var>
+and ending with index <var>end</var>. This is equivalent to calling
+<code>string-copy</code> with the same arguments, but is provided for
+backward compatibility and stylistic flexibility.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dappend"><span class="category">procedure: </span><span><strong>string-append</strong> <em>string&hellip;</em><a href='#index-string_002dappend' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated string whose characters are the concatenation
+of the characters in the given <var>string</var>s.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002d_003elist"><span class="category">procedure: </span><span><strong>string-&gt;list</strong> <em>string</em><a href='#index-string_002d_003elist' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002d_003elist-1"><span class="category">procedure: </span><span><strong>string-&gt;list</strong> <em>string start</em><a href='#index-string_002d_003elist-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002d_003elist-2"><span class="category">procedure: </span><span><strong>string-&gt;list</strong> <em>string start end</em><a href='#index-string_002d_003elist-2' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-list_002d_003estring"><span class="category">procedure: </span><span><strong>list-&gt;string</strong> <em>list</em><a href='#index-list_002d_003estring' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if any element of <var>list</var> is not a character.
+</p>
+<p>The <code>string-&gt;list</code> procedure returns a newly allocated list of
+the characters of <var>string</var> between <var>start</var> and <var>end</var>.
+<code>list-&gt;string</code> returns a newly allocated string formed from the
+elements in the list <var>list</var>.  In both procedures, order is preserved.
+<code>string-&gt;list</code> and <code>list-&gt;string</code> are inverses so far as
+<code>equal?</code> is concerned.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dcopy"><span class="category">procedure: </span><span><strong>string-copy</strong> <em>string</em><a href='#index-string_002dcopy' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dcopy-1"><span class="category">procedure: </span><span><strong>string-copy</strong> <em>string start</em><a href='#index-string_002dcopy-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dcopy-2"><span class="category">procedure: </span><span><strong>string-copy</strong> <em>string start end</em><a href='#index-string_002dcopy-2' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated copy of the part of the given <var>string</var>
+between <var>start</var> and <var>end</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dcopy_0021"><span class="category">procedure: </span><span><strong>string-copy!</strong> <em>to at from</em><a href='#index-string_002dcopy_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dcopy_0021-1"><span class="category">procedure: </span><span><strong>string-copy!</strong> <em>to at from start</em><a href='#index-string_002dcopy_0021-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dcopy_0021-2"><span class="category">procedure: </span><span><strong>string-copy!</strong> <em>to at from start end</em><a href='#index-string_002dcopy_0021-2' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>at</var> is less than zero or greater than the length of
+<var>to</var>.  It is also an error if <code>(- (string-length </code><var>to</var><code>)
+</code><var>at</var><code>)</code> is less than <code>(- </code><var>end</var> <var>start</var><code>)</code>.
+</p>
+<p>Copies the characters of string <var>from</var> between <var>start</var> and
+<var>end</var> to string <var>to</var>, starting at <var>at</var>.  The order in
+which characters are copied is unspecified, except that if the source
+and destination overlap, copying takes place as if the source is first
+copied into a temporary string and then into the destination.  This can
+be achieved without allocating storage by making sure to copy in the
+correct direction in such circumstances.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define a &quot;12345&quot;)
+(define b (string-copy &quot;abcde&quot;))
+(string-copy! b 1 a 0 2)
+b &rArr; &quot;a12de&quot;
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002dfill_0021"><span class="category">procedure: </span><span><strong>string-fill!</strong> <em>string fill</em><a href='#index-string_002dfill_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dfill_0021-1"><span class="category">procedure: </span><span><strong>string-fill!</strong> <em>string fill start</em><a href='#index-string_002dfill_0021-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002dfill_0021-2"><span class="category">procedure: </span><span><strong>string-fill!</strong> <em>string fill start end</em><a href='#index-string_002dfill_0021-2' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>fill</var> is not a character.
+</p>
+<p>The <code>string-fill!</code> procedure stores <var>fill</var> in the elements of
+<var>string</var> between <var>start</var> and <var>end</var>.
+</p>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Vectors.html">Vectors</a>, Previous: <a href="Characters.html">Characters</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

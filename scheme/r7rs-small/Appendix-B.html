@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Appendix B (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Appendix B (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Appendix B (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="index.html" rel="up" title="top">
+<link href="Language-changes.html" rel="next" title="Language changes">
+<link href="Appendix-A.html" rel="prev" title="Appendix A">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="appendix" id="Appendix-B">
+<div class="header">
+<p>
+Next: <a href="Language-changes.html" accesskey="n" rel="next">Language changes</a>, Previous: <a href="Appendix-A.html" accesskey="p" rel="prev">Standard Libraries</a>, Up: <a href="index.html" accesskey="u" rel="up">Revised(7) Report on the Algorithmic Language Scheme</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Standard-Feature-Identifiers"></span><h2 class="appendix">Appendix B Standard Feature Identifiers</h2>
+
+<p>An implementation may provide any or all of the feature identifiers
+listed below for use by <code>cond-expand</code> and features, but must not
+provide a feature identifier if it does not provide the corresponding
+feature.
+</p>
+<dl compact="compact">
+<dt><span><code>r7rs</code></span></dt>
+<dd><p>All R<sup>7</sup>RS Scheme implementations have this feature.
+</p>
+</dd>
+<dt><span><code>exact-closed</code></span></dt>
+<dd><p>The algebraic operations <code>+</code>, <code>-</code>, <code>*</code>, and <code>expt</code>
+where the second argument is a non-negative integer produce exact
+values given exact inputs.
+</p>
+</dd>
+<dt><span><code>exact-complex</code></span></dt>
+<dd><p>Exact complex numbers are provided.
+</p>
+</dd>
+<dt><span><code>ieee-float</code></span></dt>
+<dd><p>Inexact numbers are IEEE 754 binary floating point values.
+</p>
+</dd>
+<dt><span><code>full-unicode</code></span></dt>
+<dd><p>All Unicode characters present in Unicode version 6.0 are supported as
+Scheme characters.
+</p>
+</dd>
+<dt><span><code>ratios</code></span></dt>
+<dd><p><code>/</code> with exact arguments produces an exact result when the divisor
+is nonzero.
+</p>
+</dd>
+<dt><span><code>posix</code></span></dt>
+<dd><p>This implementation is running on a POSIX system.
+</p>
+</dd>
+<dt><span><code>windows</code></span></dt>
+<dd><p>This implementation is running on Windows.
+</p>
+</dd>
+<dt><span><code>unix, darwin, gnu-linux, bsd, freebsd, solaris, &hellip;</code></span></dt>
+<dd><p>Operating system flags (perhaps more than one).
+</p>
+</dd>
+<dt><span><code>i386, x86-64, ppc, sparc, jvm, clr, llvm, &hellip;</code></span></dt>
+<dd><p>CPU architecture flags.
+</p>
+</dd>
+<dt><span><code>ilp32, lp64, ilp64, &hellip;</code></span></dt>
+<dd><p>C memory model flags.
+</p>
+</dd>
+<dt><span><code>big-endian, little-endian</code></span></dt>
+<dd><p>Byte order flags.
+</p>
+</dd>
+<dt><span>&#x27e8;name&#x27e9;</span></dt>
+<dd><p>The name of this implementation.
+</p>
+</dd>
+<dt><span>&#x27e8;name-version&#x27e9;</span></dt>
+<dd><p>The name and version of this implementation.
+</p>
+</dd>
+</dl>
+
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Introduction (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Introduction (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Introduction (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="index.html" rel="up" title="top">
+<link href="Overview-of-Scheme.html" rel="next" title="Overview of Scheme">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="unnumbered" id="Introduction">
+<div class="header">
+<p>
+Next: <a href="Overview-of-Scheme.html" accesskey="n" rel="next">Overview of Scheme</a>, Up: <a href="index.html" accesskey="u" rel="up">Revised(7) Report on the Algorithmic Language Scheme</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Introduction-1"></span><h2 class="unnumbered">Introduction</h2>
+
+<p>Programming languages should be designed not by piling feature on top
+of feature, but by removing the weaknesses and restrictions that make
+additional features appear necessary. Scheme demonstrates that a very
+small number of rules for forming expressions, with no restrictions
+on how they are composed, suffice to form a practical and efficient
+programming language that is flexible enough to support most of the
+major programming paradigms in use today.
+</p>
+<p>Scheme was one of the first programming languages to incorporate
+first-class procedures as in the lambda calculus, thereby proving the
+usefulness of static scope rules and block structure in a dynamically
+typed language. Scheme was the first major dialect of Lisp to
+distinguish procedures from lambda expressions and symbols, to use
+a single lexical environment for all variables, and to evaluate the
+operator position of a procedure call in the same way as an operand
+position. By relying entirely on procedure calls to express iteration,
+Scheme emphasized the fact that tail-recursive procedure calls are
+essentially GOTOs that pass arguments, thus allowing a programming
+style that is both coherent and efficient. Scheme was the first widely
+used programming language to embrace first-class escape procedures,
+from which all previously known sequential control structures can be
+synthesized. A subsequent version of Scheme introduced the concept
+of exact and inexact numbers, an extension of Common Lisp&rsquo;s generic
+arithmetic. More recently, Scheme became the first programming
+language to support hygienic macros, which permit the syntax of a
+block-structured language to be extended in a consistent and reliable
+manner.
+</p>
+<span id="Background"></span><h3 class="heading">Background</h3>
+
+<p>The first description of Scheme was written in 1975 [<a href="References.html#Scheme75">Scheme75</a>]. A
+revised report [<a href="References.html#Scheme78">Scheme78</a>] appeared in 1978, which described
+the evolution of the language as its MIT implementation was upgraded
+to support an innovative compiler [<a href="References.html#Rabbit">Rabbit</a>]. Three distinct
+projects began in 1981 and 1982 to use variants of Scheme for courses
+at MIT, Yale, and Indiana University [<a href="References.html#Rees82">Rees82</a>, <a href="References.html#MITScheme">MITScheme</a>,
+<a href="References.html#Scheme311">Scheme311</a>] An introductory computer science textbook using
+Scheme was published in 1984 [<a href="References.html#SICP">SICP</a>].
+</p>
+<p>As Scheme became more widespread, local dialects began to diverge
+until students and researchers occasionally found it difficult to
+understand code written at other sites.  Fifteen representatives of
+the major implementations of Scheme therefore met in October 1984 to
+work toward a better and more widely accepted standard for Scheme.
+Their report, the RRRS [<a href="References.html#RRRS">RRRS</a>], was published at MIT and Indiana
+University in the summer of 1985. Further revision took place in
+the spring of 1986, resulting in the R3RS [<a href="References.html#R3RS">R3RS</a>]. Work in the
+spring of 1988 resulted in R4RS [<a href="References.html#R4RS">R4RS</a>], which became the basis
+for the IEEE Standard for the Scheme Programming Language in 1991
+[<a href="References.html#IEEEScheme">IEEEScheme</a>]. In 1998, several additions to the IEEE standard,
+including high-level hygienic macros, multiple return values, and eval,
+were finalized as the R<sup>5</sup>RS [<a href="References.html#R5RS">R5RS</a>].
+</p>
+<p>In the fall of 2006, work began on a more ambitious standard, including
+many new improvements and stricter requirements made in the interest
+of improved portability. The resulting standard, the R<sup>6</sup>RS, was
+completed in August 2007 [<a href="References.html#R6RS">R6RS</a>], and was organized as a
+core language and set of mandatory standard libraries. Several new
+implementations of Scheme conforming to it were created. However,
+most existing R<sup>5</sup>RS implementations (even excluding those which
+are essentially unmaintained) did not adopt R<sup>6</sup>RS, or adopted
+only selected parts of it.
+</p>
+<p>In consequence, the Scheme Steering Committee decided in August 2009
+to divide the standard into two separate but compatible languages&mdash;a
+&ldquo;small&rdquo; language, suitable for educators, researchers, and users
+of embedded languages, focused on R<sup>5</sup>RS compatibility, and a
+&ldquo;large&rdquo; language focused on the practical needs of mainstream
+software development, intended to become a replacement for
+R<sup>6</sup>RS. The present report describes the &ldquo;small&rdquo; language of
+that effort: therefore it cannot be considered in isolation as the
+successor to R<sup>6</sup>RS.
+</p>
+<p>We intend this report to belong to the entire Scheme community, and
+so we grant permission to copy it in whole or in part without fee. In
+particular, we encourage implementers of Scheme to use this report
+as a starting point for manuals and other documentation, modifying
+it as necessary.
+</p>
+<span id="Acknowledgments"></span><h3 class="heading">Acknowledgments</h3>
+
+<p>We would like to thank the members of the Steering Committee, William
+Clinger, Marc Feeley, Chris Hanson, Jonathan Rees, and Olin Shivers,
+for their support and guidance.
+</p>
+<p>This report is very much a community effort, and we&rsquo;d like to
+thank everyone who provided comments and feedback, including
+the following people: David Adler, Eli Barzilay, Taylan Ulrich
+Bayirli/Kammer, Marco Benelli, Pierpaolo Bernardi,
+Peter Bex, Per Bothner, John Boyle, Taylor Campbell, Raffael Cavallaro,
+Ray Dillinger, Biep Durieux, Sztefan Edwards, Helmut Eller, Justin
+Ethier, Jay Reynolds Freeman, Tony Garnock-Jones, Alan Manuel
+Gloria, Steve Hafner, Sven Hartrumpf, Brian Harvey, Moritz Heidkamp,
+Jean-Michel Hufflen, Aubrey Jaffer, Takashi Kato, Shiro Kawai,
+Richard Kelsey, Oleg Kiselyov, Pjotr Kourzanov, Jonathan Kraut,
+Daniel Krueger, Christian Stigen Larsen, Noah Lavine, Stephen Leach,
+Larry D. Lee, Kun Liang, Thomas Lord, Vincent Stewart Manis, Perry
+Metzger, Michael Montague, Mikael More, Vitaly Magerya, Vincent Manis,
+Vassil Nikolov, Joseph Wayne Norton, Yuki Okumura, Daichi Oohashi,
+Jeronimo Pellegrini, Jussi Piitulainen, Alex Queiroz, Jim Rees, Grant
+Rettke, Andrew Robbins, Devon Schudy, Bakul Shah, Robert Smith, Arthur
+Smyles, Michael Sperber, John David Stone, Jay Sulzberger, Malcolm
+Tredinnick, Sam Tobin-Hochstadt, Andre van Tonder, Daniel Villeneuve,
+Denis Washington, Alan Watson, Mark H. Weaver, G&ouml;ran Weinholt,
+David A. Wheeler, Andy Wingo, James Wise, J&ouml;rg F. Wittenberger,
+Kevin A. Wortman, Sascha Ziemann.
+</p>
+<p>In addition we would like to thank all the past editors, and the people
+who helped them in turn: Hal Abelson, Norman Adams, David Bartley, Alan
+Bawden, Michael Blair, Gary Brooks, George Carrette, Andy Cromarty,
+Pavel Curtis, Jeff Dalton, Olivier Danvy, Ken Dickey, Betty Dexter, Bruce Duba,
+Robert Findler, Andy Freeman, Richard Gabriel, Yekta G&uuml;rsel, Ken
+Haase, Robert Halstead, Robert Hieb, Paul Hudak, Morry Katz, Eugene
+Kohlbecker, Chris Lindblad, Jacob Matthews, Mark Meyer, Jim Miller,
+Don Oxley, Jim Philbin, Kent Pitman, John Ramsdell, Guillermo Rozas,
+Mike Shaff, Jonathan Shapiro, Guy Steele, Julie Sussman, Perry Wagle,
+Mitchel Wand, Daniel Weise, Henry Wu, and Ozan Yigit. We thank Carol
+Fessenden, Daniel Friedman, and Christopher Haynes for permission
+to use text from the Scheme 311 version 4 reference manual. We
+thank Texas Instruments, Inc. for permission to use text from the
+TI Scheme Language Reference Manual [<a href="References.html#TImanual85">TImanual85</a>]. We gladly
+acknowledge the influence of manuals for MIT Scheme [<a href="References.html#MITScheme">MITScheme</a>],
+T [<a href="References.html#Rees84">Rees84</a>], Scheme 84 [<a href="References.html#Scheme84">Scheme84</a>], Common Lisp [<a href="References.html#CLtL">CLtL</a>],
+and Algol 60 [<a href="References.html#Naur63">Naur63</a>], as well as the following SRFIs: 0, 1,
+4, 6, 9, 11, 13, 16, 30, 34, 39, 43, 46, 62, and 87, all of which
+are available at <a href="http://srfi.schemers.org">http://srfi.schemers.org</a>.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Overview-of-Scheme.html">Overview of Scheme</a>, Up: <a href="index.html">Revised(7) Report on the Algorithmic Language Scheme</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

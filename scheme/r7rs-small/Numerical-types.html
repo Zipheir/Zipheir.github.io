@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Numerical types (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Numerical types (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Numerical types (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Numbers.html" rel="up" title="Numbers">
+<link href="Exactness.html" rel="next" title="Exactness">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Numerical-types">
+<div class="header">
+<p>
+Next: <a href="Exactness.html" accesskey="n" rel="next">Exactness</a>, Up: <a href="Numbers.html" accesskey="u" rel="up">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Numerical-types-1"></span><h4 class="subsection">6.2.1 Numerical types</h4>
+
+<p>Mathematically, numbers are arranged into a tower of subtypes in which
+each level is a subset of the level above it:
+</p>
+<div class="display">
+<pre class="display">number
+complex number
+real number
+rational number
+integer
+</pre></div>
+
+<p>For example, 3 is an integer. Therefore 3 is also a rational, a real, and
+a complex number. The same is true of the Scheme numbers that model 3. For
+Scheme numbers, these types are defined by the predicates <code>number?</code>,
+<code>complex?</code>, <code>real?</code>, <code>rational?</code>, and <code>integer?</code>.
+</p>
+<p>There is no simple relationship between a number&rsquo;s type and its
+representation inside a computer. Although most implementations of Scheme
+will offer at least two different representations of 3, these different
+representations denote the same integer.
+</p>
+<p>Scheme&rsquo;s numerical operations treat numbers as abstract data,
+as independent of their representation as possible. Although an
+implementation of Scheme may use multiple internal representations of
+numbers, this ought not to be apparent to a casual programmer writing
+simple programs.
+</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Iteration (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Iteration (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Iteration (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Delayed-evaluation.html" rel="next" title="Delayed evaluation">
+<link href="Sequencing.html" rel="prev" title="Sequencing">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Iteration">
+<div class="header">
+<p>
+Next: <a href="Delayed-evaluation.html" accesskey="n" rel="next">Delayed evaluation</a>, Previous: <a href="Sequencing.html" accesskey="p" rel="prev">Sequencing</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Iteration-1"></span><h4 class="subsection">4.2.4 Iteration</h4>
+
+<dl class="def">
+<dt id="index-do"><span class="category">syntax: </span><span><strong>do</strong><a href='#index-do' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<div class="format">
+<pre class="format"><code>(do ((</code>&#x27e8;variable<sub>1</sub>&#x27e9; &#x27e8;init<sub>1</sub>&#x27e9; &#x27e8;step<sub>1</sub>&#x27e9;<code>)</code>
+     &hellip;<code>)</code>
+    <code>(</code>&#x27e8;test&#x27e9; &#x27e8;expression&#x27e9; &hellip;<code>)</code>
+  &#x27e8;command&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>Syntax: All of &#x27e8;init&#x27e9;, &#x27e8;step&#x27e9;, &#x27e8;test&#x27e9;, and &#x27e8;command&#x27e9; are expressions.
+</p>
+<p>Semantics:
+A <code>do</code> expression is an iteration construct.  It specifies a set of variables to
+be bound, how they are to be initialized at the start, and how they are
+to be updated on each iteration.  When a termination condition is met,
+the loop exits after evaluating the &#x27e8;expression&#x27e9;s.
+</p>
+<p>A <code>do</code> expression is evaluated as follows:
+The &#x27e8;init&#x27e9; expressions are evaluated (in some unspecified order),
+the &#x27e8;variable&#x27e9;s are bound to fresh locations, the results of the
+&#x27e8;init&#x27e9; expressions are stored in the bindings of the
+&#x27e8;variable&#x27e9;s, and then the iteration phase begins.
+</p>
+<p>Each iteration begins by evaluating &#x27e8;test&#x27e9;; if the result is
+false (See <a href="Booleans.html">Booleans</a>), then the &#x27e8;command&#x27e9;
+expressions are evaluated in order for effect, the &#x27e8;step&#x27e9;
+expressions are evaluated in some unspecified order, the
+&#x27e8;variable&#x27e9;s are bound to fresh locations, the results of the
+&#x27e8;step&#x27e9;s are stored in the bindings of the
+&#x27e8;variable&#x27e9;s, and the next iteration begins.
+</p>
+<p>If &#x27e8;test&#x27e9; evaluates to a true value, then the
+&#x27e8;expression&#x27e9;s are evaluated from left to right and the values of
+the last &#x27e8;expression&#x27e9; are returned.  If no &#x27e8;expression&#x27e9;s
+are present, then the value of the <code>do</code> expression is unspecified.
+</p>
+<p>The region of the binding of a &#x27e8;variable&#x27e9;
+consists of the entire <code>do</code> expression except for the &#x27e8;init&#x27e9;s.
+It is an error for a &#x27e8;variable&#x27e9; to appear more than once in the
+list of <code>do</code> variables.
+</p>
+<p>A &#x27e8;step&#x27e9; can be omitted, in which case the effect is the
+same as if <code>(</code>&#x27e8;variable&#x27e9; &#x27e8;init&#x27e9; &#x27e8;variable&#x27e9;<code>)</code> had
+been written instead of <code>(</code>&#x27e8;variable&#x27e9; &#x27e8;init&#x27e9;<code>)</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(do ((vec (make-vector 5))
+     (i 0 (+ i 1)))
+    ((= i 5) vec)
+  (vector-set! vec i i)) &rArr; #(0 1 2 3 4)
+
+(let ((x '(1 3 5 7 9)))
+  (do ((x x (cdr x))
+       (sum 0 (+ sum (car x))))
+      ((null? x) sum))) &rArr; 25
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-let-1"><span class="category">syntax: </span><span><strong>let</strong> <em>&#x27e8;variable&#x27e9; &#x27e8;bindings&#x27e9; &#x27e8;body&#x27e9;</em><a href='#index-let-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>&ldquo;Named <code>let</code>&rdquo; is a variant on the syntax of <code>let</code> which provides
+a more general looping construct than <code>do</code> and can also be used to express
+recursion.
+It has the same syntax and semantics as ordinary <code>let</code>
+except that &#x27e8;variable&#x27e9; is bound within &#x27e8;body&#x27e9; to a procedure
+whose formal arguments are the bound variables and whose body is
+&#x27e8;body&#x27e9;. Thus the execution of &#x27e8;body&#x27e9; can be repeated by
+invoking the procedure named by &#x27e8;variable&#x27e9;.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let loop ((numbers '(3 -2 1 6 -5))
+           (nonneg '())
+           (neg '()))
+  (cond ((null? numbers) (list nonneg neg))
+        ((&gt;= (car numbers) 0)
+         (loop (cdr numbers)
+               (cons (car numbers) nonneg)
+               neg))
+        ((&lt; (car numbers) 0)
+         (loop (cdr numbers)
+               nonneg
+               (cons (car numbers) neg)))))
+          &rArr; ((6 1 3) (-5 -2))
+</pre></div>
+
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Delayed-evaluation.html">Delayed evaluation</a>, Previous: <a href="Sequencing.html">Sequencing</a>, Up: <a href="Derived-expression-types.html">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

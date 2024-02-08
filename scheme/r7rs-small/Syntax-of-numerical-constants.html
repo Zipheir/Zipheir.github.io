@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Syntax of numerical constants (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Syntax of numerical constants (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Syntax of numerical constants (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Numbers.html" rel="up" title="Numbers">
+<link href="Numerical-operations.html" rel="next" title="Numerical operations">
+<link href="Implementation-extensions.html" rel="prev" title="Implementation extensions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+<script type='text/javascript'>
+MathJax = {
+  options: {
+    skipHtmlTags: {'[-]': ['pre']},
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+};
+</script><script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+</head>
+
+<body lang="en" class="tex2jax_ignore">
+<div class="subsection" id="Syntax-of-numerical-constants">
+<div class="header">
+<p>
+Next: <a href="Numerical-operations.html" accesskey="n" rel="next">Numerical operations</a>, Previous: <a href="Implementation-extensions.html" accesskey="p" rel="prev">Implementation extensions</a>, Up: <a href="Numbers.html" accesskey="u" rel="up">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Syntax-of-numerical-constants-1"></span><h4 class="subsection">6.2.5 Syntax of numerical constants</h4>
+
+<p>The syntax of the written representations for numbers is described
+formally in <a href="Formal-syntax.html">Formal syntax</a>.  Note that case is not significant in
+numerical constants.
+</p>
+<span id="index-b_0023b"></span>
+<span id="index-o_0023o"></span>
+<span id="index-d_0023d"></span>
+<span id="index-x_0023x"></span>
+
+<p>A number can be written in binary, octal, decimal, or hexadecimal by
+the use of a radix prefix. The radix prefixes are <code>#b</code> (binary),
+<code>#o</code> (octal), <code>#d</code> (decimal), and <code>#x</code> (hexadecimal). With
+no radix prefix, a number is assumed to be expressed in decimal.
+</p>
+<span id="index-e_0023e"></span>
+<span id="index-i_0023i"></span>
+
+<p>A numerical constant can be specified to be either exact or inexact
+by a prefix. The prefixes are <code>#e</code> for exact, and <code>#i</code> for
+inexact. An exactness prefix can appear before or after any radix prefix
+that is used. If the written representation of a number has no exactness
+prefix, the constant is inexact if it contains a decimal point or an
+exponent. Otherwise, it is exact.
+</p>
+<p>In systems with inexact numbers of varying precisions it can be useful to
+specify the precision of a constant. For this purpose, implementations
+may accept numerical constants written with an exponent marker that
+indicates the desired precision of the inexact representation. If so, the
+letter <code>s</code>, <code>f</code>, <code>d</code>, or <code>l</code>, meaning <dfn>short</dfn>,
+<dfn>single</dfn>, <dfn>double</dfn>, or <dfn>long</dfn> precision, respectively, can
+be used in place of <code>e</code>. The default precision has at least as much
+precision as double, but implementations may allow this default to be
+set by the user.
+</p>
+<div class="display">
+<pre class="display"><code>3.14159265358979F0</code>
+        Round to single &mdash; <code>3.141593</code>
+<code>0.6L0</code>
+        Extend to long &mdash; <code>.600000000000000</code>
+</pre></div>
+
+<p>The numbers positive infinity, negative infinity, and NaN are written
+<code>+inf.0</code>, <code>-inf.0</code> and <dfn>+nan.0</dfn> respectively. NaN may
+also be written <code>-nan.0</code>. The use of signs in the written
+representation does not necessarily reflect the underlying sign of the
+NaN value, if any. Implementations are not required to support these
+numbers, but if they do, they must do so in general conformance with
+IEEE 754. However, implementations are not required to support
+signaling NaNs, nor to provide a way to distinguish between different
+NaNs.
+</p>
+<p>There are two notations provided for non-real complex numbers: the
+<dfn>rectangular notation</dfn> <var>a</var><code>+</code><var>b</var><code>i</code>, where
+<var>a</var> is the real part and <var>b</var> is the imaginary part; and the
+<dfn>polar notation</dfn> <var>r</var><code>@</code><var>&#x03b8;</var> where <var>r</var>
+is the magnitude and <var>&#x03b8;</var> is the phase (angle) in
+radians. These are related by the equation
+<em class='tex2jax_process'>\(a + bi = r \cos\theta + (r \sin\theta)i\)</em>. All of <var>a</var>,
+<var>b</var>, <var>r</var>, and <var>&#x03b8;</var> are real numbers.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Numerical-operations.html">Numerical operations</a>, Previous: <a href="Implementation-extensions.html">Implementation extensions</a>, Up: <a href="Numbers.html">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+<a href='js_licenses.html' rel='jslicense'><small>JavaScript license information</small></a>
+</body>
+</html>

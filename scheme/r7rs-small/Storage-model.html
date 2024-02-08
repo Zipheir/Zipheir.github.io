@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Storage model (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Storage model (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Storage model (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Basic-concepts.html" rel="up" title="Basic concepts">
+<link href="Proper-tail-recursion.html" rel="next" title="Proper tail recursion">
+<link href="External-representations-basic.html" rel="prev" title="External representations basic">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Storage-model">
+<div class="header">
+<p>
+Next: <a href="Proper-tail-recursion.html" accesskey="n" rel="next">Proper tail recursion</a>, Previous: <a href="External-representations-basic.html" accesskey="p" rel="prev">External representations (basic)</a>, Up: <a href="Basic-concepts.html" accesskey="u" rel="up">Basic concepts</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Storage-model-1"></span><h3 class="section">3.4 Storage model</h3>
+
+<span id="index-location"></span>
+
+<p>Variables and objects such as pairs, strings, vectors, and bytevectors
+implicitly denote locations or sequences of locations. A string,
+for example, denotes as many locations as there are characters in the
+string. A new value can be stored into one of these locations using
+the <code>string-set!</code> procedure, but the string continues to denote
+the same locations as before.
+</p>
+<p>An object fetched from a location, by a variable reference or by a
+procedure such as <code>car</code>, <code>vector-ref</code>, or <code>string-ref</code>,
+is equivalent in the sense of <code>eqv?</code> (<a href="Equivalence-predicates.html">Equivalence predicates</a>) to the object last stored in the location before the
+fetch.
+</p>
+<p>Every location is marked to show whether it is in use. No variable
+or object ever refers to a location that is not in use.
+</p>
+<p>Whenever this report speaks of storage being newly allocated for
+a variable or object, what is meant is that an appropriate number
+of locations are chosen from the set of locations that are not in
+use, and the chosen locations are marked to indicate that they
+are now in use before the variable or object is made to denote
+them. Notwithstanding this, it is understood that the empty list
+cannot be newly allocated, because it is a unique object. It is also
+understood that empty strings, empty vectors, and empty bytevectors,
+which contain no locations, may or may not be newly allocated.
+</p>
+<span id="index-mutable"></span>
+<span id="index-immutable"></span>
+
+<p>Every object that denotes locations is either mutable
+or immutable. Literal constants, the strings returned by
+<code>symbol-&gt;string</code>, and possibly the environment returned by
+<code>scheme-report-environment</code> are immutable objects. All objects
+created by the other procedures listed in this report are mutable. It
+is an error to attempt to store a new value into a location that is
+denoted by an immutable object.
+</p>
+<p>These locations are to be understood as conceptual, not
+physical. Hence, they do not necessarily correspond to memory
+addresses, and even if they do, the memory address might not be
+constant.
+</p>
+<span id="Rationale_003a"></span><h4 class="subheading">Rationale:</h4>
+<span id="index-constant"></span>
+
+<p>In many systems it is desirable for constants (i.e. the values
+of literal expressions) to reside in read-only memory. Making it
+an error to alter constants permits this implementation strategy,
+while not requiring other systems to distinguish between mutable and
+immutable objects.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Proper-tail-recursion.html">Proper tail recursion</a>, Previous: <a href="External-representations-basic.html">External representations (basic)</a>, Up: <a href="Basic-concepts.html">Basic concepts</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

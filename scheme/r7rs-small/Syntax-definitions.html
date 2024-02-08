@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Syntax definitions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Syntax definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Syntax definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Program-structure.html" rel="up" title="Program structure">
+<link href="Record-type-definitions.html" rel="next" title="Record type definitions">
+<link href="Variable-definitions.html" rel="prev" title="Variable definitions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Syntax-definitions">
+<div class="header">
+<p>
+Next: <a href="Record-type-definitions.html" accesskey="n" rel="next">Record-type definitions</a>, Previous: <a href="Variable-definitions.html" accesskey="p" rel="prev">Variable definitions</a>, Up: <a href="Program-structure.html" accesskey="u" rel="up">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Syntax-definitions-1"></span><h3 class="section">5.4 Syntax definitions</h3>
+
+<p>Syntax definitions have this form:
+</p>
+<div class="example lisp">
+<pre class="lisp">(define-syntax <span class="roman">&#x27e8;keyword&#x27e9; &#x27e8;transformer spec&#x27e9;</span>)
+</pre></div>
+
+<p>&#x27e8;Keyword&#x27e9; is an identifier, and the &#x27e8;transformer spec&#x27e9; is
+an instance of <code>syntax-rules</code>. Like variable definitions, syntax
+definitions can appear at the outermost level or nested within a body.
+</p>
+<p>If the <code>define-syntax</code> occurs at the outermost level, then the global
+syntactic environment is extended by binding the &#x27e8;keyword&#x27e9; to the
+specified transformer, but previous expansions of any global binding
+for &#x27e8;keyword&#x27e9; remain unchanged. Otherwise, it is an <dfn>internal
+syntax definition</dfn>, and is local to the &#x27e8;body&#x27e9; in which it is
+defined. Any use of a syntax keyword before its corresponding definition
+is an error. In particular, a use that precedes an inner definition will
+not apply an outer definition.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((x 1) (y 2))
+  (define-syntax swap!
+    (syntax-rules ()
+      ((swap! a b)
+       (let ((tmp a))
+         (set! a b)
+         (set! b tmp)))))
+  (swap! x y)
+  (list x y)) &rArr; (2 1)
+</pre></div>
+
+<p>Macros can expand into definitions in any context that permits
+them. However, it is an error for a definition to define an identifier
+whose binding has to be known in order to determine the meaning of the
+definition itself, or of any preceding definition that belongs to the
+same group of internal definitions. Similarly, it is an error for an
+internal definition to define an identifier whose binding has to be known
+in order to determine the boundary between the internal definitions and
+the expressions of the body it belongs to. For example, the following
+are errors:
+</p>
+<div class="example lisp">
+<pre class="lisp">(define define 3)
+
+(begin (define begin list))
+
+(let-syntax
+    ((foo (syntax-rules ()
+            ((foo (proc args ...) body ...)
+             (define proc
+               (lambda (args ...)
+                 body ...))))))
+  (let ((x 3))
+    (foo (plus x y) (+ x y))
+    (define foo x)
+    (plus foo x)))
+</pre></div>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Record-type-definitions.html">Record-type definitions</a>, Previous: <a href="Variable-definitions.html">Variable definitions</a>, Up: <a href="Program-structure.html">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

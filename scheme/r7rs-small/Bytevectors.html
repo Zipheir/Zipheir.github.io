@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bytevectors (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Bytevectors (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Bytevectors (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Control-features.html" rel="next" title="Control features">
+<link href="Vectors.html" rel="prev" title="Vectors">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Bytevectors">
+<div class="header">
+<p>
+Next: <a href="Control-features.html" accesskey="n" rel="next">Control features</a>, Previous: <a href="Vectors.html" accesskey="p" rel="prev">Vectors</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Bytevectors-1"></span><h3 class="section">6.9 Bytevectors</h3>
+
+<p><dfn>Bytevectors</dfn> represent blocks of binary data.  They are fixed-length
+sequences of bytes, where a <dfn>byte</dfn> is an exact integer in the range
+from 0 to 255 inclusive.  A bytevector is typically more space-efficient
+than a vector containing the same values.
+</p>
+<span id="index-valid-indexes-1"></span>
+
+<p>The <dfn>length</dfn> of a bytevector is the number of elements that it
+contains.  This number is a non-negative integer that is fixed when
+the bytevector is created.  The <dfn>valid indexes</dfn> of a bytevector are
+the exact non-negative integers less than the length of the bytevector,
+starting at index zero as with vectors.
+</p>
+<p>Bytevectors are written using the notation <code>#u8(</code><var>byte</var>
+&hellip;<code>)</code>.  For example, a bytevector of length 3 containing the
+byte 0 in element 0, the byte 10 in element 1, and the byte 5 in element
+2 can be written as follows:
+</p>
+<div class="example lisp">
+<pre class="lisp">#u8(0 10 5)
+</pre></div>
+
+<p>Bytevector constants are self-evaluating, so they do not need to be
+quoted in programs.
+</p>
+<dl class="def">
+<dt id="index-bytevector_003f"><span class="category">procedure: </span><span><strong>bytevector?</strong> <em>obj</em><a href='#index-bytevector_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>obj</var> is a bytevector. Otherwise, <code>#f</code> is
+returned.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-make_002dbytevector"><span class="category">procedure: </span><span><strong>make-bytevector</strong> <em>k</em><a href='#index-make_002dbytevector' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-make_002dbytevector-1"><span class="category">procedure: </span><span><strong>make-bytevector</strong> <em>k byte</em><a href='#index-make_002dbytevector-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>The <code>make-bytevector</code> procedure returns a newly allocated
+bytevector of length <var>k</var>. If <var>byte</var> is given, then all elements
+of the bytevector are initialized to <var>byte</var>, otherwise the contents
+of each element are unspecified.
+</p>
+<div class="example lisp">
+<pre class="lisp">(make-bytevector 2 12) &rArr; #u8(12 12)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-bytevector"><span class="category">procedure: </span><span><strong>bytevector</strong> <em>byte&hellip;</em><a href='#index-bytevector' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated bytevector containing its arguments.
+</p>
+<div class="example lisp">
+<pre class="lisp">(bytevector 1 3 5 1 3 5) &rArr; #u8(1 3 5 1 3 5)
+(bytevector)             &rArr; #u8()
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-bytevector_002dlength"><span class="category">procedure: </span><span><strong>bytevector-length</strong> <em>bytevector</em><a href='#index-bytevector_002dlength' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the length of <var>bytevector</var> in bytes as an exact integer.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-bytevector_002du8_002dref"><span class="category">procedure: </span><span><strong>bytevector-u8-ref</strong> <em>bytevector k</em><a href='#index-bytevector_002du8_002dref' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>k</var> is not a valid index of <var>bytevector</var>.
+</p>
+<p>Returns the <var>k</var>th byte of <var>bytevector</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(bytevector-u8-ref '#u8(1 1 2 3 5 8 13 21)
+            5)
+    &rArr;  8
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-bytevector_002du8_002dset_0021"><span class="category">procedure: </span><span><strong>bytevector-u8-set!</strong> <em>bytevector k byte</em><a href='#index-bytevector_002du8_002dset_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>k</var> is not a valid index of <var>bytevector</var>.
+</p>
+<p>Stores <var>byte</var> as the <var>k</var>th byte of <var>bytevector</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((bv (bytevector 1 2 3 4)))
+  (bytevector-u8-set! bv 1 3)
+  bv)
+    &rArr; #u8(1 3 3 4)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-bytevector_002dcopy"><span class="category">procedure: </span><span><strong>bytevector-copy</strong> <em>bytevector</em><a href='#index-bytevector_002dcopy' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-bytevector_002dcopy-1"><span class="category">procedure: </span><span><strong>bytevector-copy</strong> <em>bytevector start</em><a href='#index-bytevector_002dcopy-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-bytevector_002dcopy-2"><span class="category">procedure: </span><span><strong>bytevector-copy</strong> <em>bytevector start end</em><a href='#index-bytevector_002dcopy-2' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated bytevector containing the bytes in
+<var>bytevector</var> between <var>start</var> and <var>end</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define a #u8(1 2 3 4 5))
+(bytevector-copy a 2 4)) &rArr; #u8(3 4)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-bytevector_002dcopy_0021"><span class="category">procedure: </span><span><strong>bytevector-copy!</strong> <em>to at from</em><a href='#index-bytevector_002dcopy_0021' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-bytevector_002dcopy_0021-1"><span class="category">procedure: </span><span><strong>bytevector-copy!</strong> <em>to at from start</em><a href='#index-bytevector_002dcopy_0021-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-bytevector_002dcopy_0021-2"><span class="category">procedure: </span><span><strong>bytevector-copy!</strong> <em>to at from start end</em><a href='#index-bytevector_002dcopy_0021-2' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>at</var> is less than zero or greater than the length
+of <var>to</var>.  It is also an error if
+<code>(- (bytevector-length </code><var>to</var><code>)</code> <var>at</var><code>)</code> is less
+than <code>(- </code><var>end</var> <var>start</var><code>)</code>.
+</p>
+<p>Copies the bytes of bytevector <var>from</var> between <var>start</var> and
+<var>end</var> to bytevector <var>to</var>, starting at <var>at</var>.  The order in
+which bytes are copied is unspecified, except that if the source and
+destination overlap, copying takes place as if the source is first
+copied into a temporary bytevector and then into the destination.
+This can be achieved without allocating storage by making sure to
+copy in the correct direction in such circumstances.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define a (bytevector 1 2 3 4 5))
+(define b (bytevector 10 20 30 40 50))
+(bytevector-copy! b 1 a 0 2)
+b &rArr; #u8(10 1 2 40 50)
+</pre></div>
+
+<p>Note: This procedure appears in R<sup>6</sup>RS, but places the source
+before the destination, contrary to other such procedures in Scheme.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-bytevector_002dappend"><span class="category">procedure: </span><span><strong>bytevector-append</strong> <em>bytevector&hellip;</em><a href='#index-bytevector_002dappend' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a newly allocated bytevector whose elements are the concatenation of the
+elements in the given <var>bytevector</var>s.
+</p>
+<div class="example lisp">
+<pre class="lisp">(bytevector-append #u8(0 1 2) #u8(3 4 5))
+    &rArr; #u8(0 1 2 3 4 5)
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-utf8_002d_003estring"><span class="category">procedure: </span><span><strong>utf8-&gt;string</strong> <em>bytevector</em><a href='#index-utf8_002d_003estring' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-utf8_002d_003estring-1"><span class="category">procedure: </span><span><strong>utf8-&gt;string</strong> <em>bytevector start</em><a href='#index-utf8_002d_003estring-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-utf8_002d_003estring-2"><span class="category">procedure: </span><span><strong>utf8-&gt;string</strong> <em>bytevector start end</em><a href='#index-utf8_002d_003estring-2' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002d_003eutf8"><span class="category">procedure: </span><span><strong>string-&gt;utf8</strong> <em>string</em><a href='#index-string_002d_003eutf8' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002d_003eutf8-1"><span class="category">procedure: </span><span><strong>string-&gt;utf8</strong> <em>string start</em><a href='#index-string_002d_003eutf8-1' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002d_003eutf8-2"><span class="category">procedure: </span><span><strong>string-&gt;utf8</strong> <em>string start end</em><a href='#index-string_002d_003eutf8-2' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error for <var>bytevector</var> to contain invalid UTF-8 byte
+sequences.
+</p>
+<p>These procedures translate between strings and bytevectors that encode
+those strings using the UTF-8 encoding.  The <code>utf8-&gt;string</code>
+procedure decodes the bytes of a bytevector between <var>start</var> and
+<var>end</var> and returns the corresponding string; the <code>string-&gt;utf8</code>
+procedure encodes the characters of a string between <var>start</var>
+and <var>end</var> and returns the corresponding bytevector.
+</p>
+<div class="example lisp">
+<pre class="lisp">(utf8-&gt;string #u8(#x41))        &rArr; &quot;A&quot;
+(string-&gt;utf8 &quot;&#x03bb;&quot;) &rArr; #u8(#xCE #xBB)
+</pre></div>
+
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Control-features.html">Control features</a>, Previous: <a href="Vectors.html">Vectors</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

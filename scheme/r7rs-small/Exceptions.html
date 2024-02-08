@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Exceptions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Exceptions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Exceptions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Environments-and-evaluation.html" rel="next" title="Environments and evaluation">
+<link href="Control-features.html" rel="prev" title="Control features">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Exceptions">
+<div class="header">
+<p>
+Next: <a href="Environments-and-evaluation.html" accesskey="n" rel="next">Environments and evaluation</a>, Previous: <a href="Control-features.html" accesskey="p" rel="prev">Control features</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Exceptions-1"></span><h3 class="section">6.11 Exceptions</h3>
+
+<p>This section describes Scheme&rsquo;s exception-handling and
+exception-raising procedures.  For the concept of Scheme exceptions,
+see <a href="Error-situations-and-unspecified-behavior.html">Error situations and unspecified behavior</a>.  See also
+<a href="Exception-handling.html">Exception handling</a> for the <code>guard</code> syntax.
+</p>
+<p><dfn>Exception handlers</dfn> are one-argument procedures that determine
+the action the program takes when an exceptional situation is
+signaled. The system implicitly maintains a current exception handler
+in the dynamic environment.
+</p>
+<span id="index-current-exception-handler"></span>
+
+<p>The program raises an exception by invoking the current exception
+handler, passing it an object encapsulating information about the
+exception. Any procedure accepting one argument can serve as an
+exception handler and any object can be used to represent an exception.
+</p>
+<dl class="def">
+<dt id="index-with_002dexception_002dhandler"><span class="category">procedure: </span><span><strong>with-exception-handler</strong> <em>handler thunk</em><a href='#index-with_002dexception_002dhandler' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>handler</var> does not accept one argument.  It is
+also an error if <var>thunk</var> does not accept zero arguments.
+</p>
+<p>The <code>with-exception-handler</code> procedure returns the results of
+invoking <var>thunk</var>.  <var>Handler</var> is installed as the current
+exception handler in the dynamic environment used for the invocation
+of <var>thunk</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(call-with-current-continuation
+ (lambda (k)
+  (with-exception-handler
+   (lambda (x)
+    (display &quot;condition: &quot;)
+    (write x)
+    (newline)
+    (k 'exception))
+   (lambda ()
+    (+ 1 (raise 'an-error))))))
+        &rArr; <span class="roman">exception</span>
+  -| condition: an-error
+
+(with-exception-handler
+ (lambda (x)
+  (display &quot;something went wrong\n&quot;))
+ (lambda ()
+  (+ 1 (raise 'an-error))))
+    -| something went wrong
+</pre></div>
+
+<p>After printing,the second example then raises another exception.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-raise"><span class="category">procedure: </span><span><strong>raise</strong> <em>obj</em><a href='#index-raise' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Raises an exception by invoking the current exception handler on
+<var>obj</var>. The handler is called with the same dynamic environment as
+that of the call to <code>raise</code>, except that the current exception
+handler is the one that was in place when the handler being called was
+installed.  If the handler returns, a secondary exception is raised
+in the same dynamic environment as the handler.  The relationship
+between <var>obj</var> and the object raised by the secondary exception
+is unspecified.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-raise_002dcontinuable"><span class="category">procedure: </span><span><strong>raise-continuable</strong> <em>obj</em><a href='#index-raise_002dcontinuable' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Raises an exception by invoking the current exception handler on
+<var>obj</var>. The handler is called with the same dynamic environment
+as the call to <code>raise-continuable</code>, except that: (1) the current
+exception handler is the one that was in place when the handler being
+called was installed, and (2) if the handler being called returns,
+then it will again become the current exception handler.  If the
+handler returns, the values it returns become the values returned by
+the call to <code>raise-continuable</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(with-exception-handler
+  (lambda (con)
+    (cond
+      ((string? con)
+       (display con))
+      (else
+       (display &quot;a warning has been issued&quot;)))
+    42)
+  (lambda ()
+    (+ (raise-continuable &quot;should be a number&quot;)
+       23)))
+    -| should be a number
+        &rArr; 65
+</pre></div>
+
+</dd></dl>
+
+<dl class="def">
+<dt id="index-error"><span class="category">procedure: </span><span><strong>error</strong> <em>message obj&hellip;</em><a href='#index-error' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p><var>Message</var> should be a string.
+</p>
+<p>Raises an exception as if by calling <code>raise</code> on a newly
+allocated implementation-defined object which encapsulates the
+information provided by <var>message</var>, as well as any <var>obj</var>s,
+known as the <dfn>irritants</dfn>.  The procedure <code>error-object?</code>
+must return <code>#t</code> on such objects.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define (null-list? l)
+  (cond ((pair? l) #f)
+        ((null? l) #t)
+        (else
+          (error
+            &quot;null-list?: argument out of domain&quot;
+            l))))
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-error_002dobject_003f"><span class="category">procedure: </span><span><strong>error-object?</strong> <em>obj</em><a href='#index-error_002dobject_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns <code>#t</code> if <var>obj</var> is an object created by <code>error</code>
+or one of an implementation-defined set of objects.  Otherwise, it
+returns <code>#f</code>.  The objects used to signal errors, including those
+which satisfy the predicates <code>file-error?</code> and <code>read-error?</code>,
+may or may not satisfy <code>error-object?</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-error_002dobject_002dmessage"><span class="category">procedure: </span><span><strong>error-object-message</strong> <em>error-object</em><a href='#index-error_002dobject_002dmessage' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the message encapsulated by <var>error-object</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-error_002dobject_002dirritants"><span class="category">procedure: </span><span><strong>error-object-irritants</strong> <em>error-object</em><a href='#index-error_002dobject_002dirritants' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a list of the irritants encapsulated by <var>error-object</var>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-read_002derror_003f"><span class="category">procedure: </span><span><strong>read-error?</strong> <em>obj</em><a href='#index-read_002derror_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-file_002derror_003f"><span class="category">procedure: </span><span><strong>file-error?</strong> <em>obj</em><a href='#index-file_002derror_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Error type predicates.  Returns <code>#t</code> if <var>obj</var> is an object
+raised by the <code>read</code> procedure or by the inability to open an
+input or output port on a file, respectively.  Otherwise, it returns
+<code>#f</code>.
+</p>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Environments-and-evaluation.html">Environments and evaluation</a>, Previous: <a href="Control-features.html">Control features</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

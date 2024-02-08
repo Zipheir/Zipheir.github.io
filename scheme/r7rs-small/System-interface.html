@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>System interface (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="System interface (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="System interface (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Standard-procedures.html" rel="up" title="Standard procedures">
+<link href="Input-and-output.html" rel="prev" title="Input and output">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="System-interface">
+<div class="header">
+<p>
+Previous: <a href="Input-and-output.html" accesskey="p" rel="prev">Input and output</a>, Up: <a href="Standard-procedures.html" accesskey="u" rel="up">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="System-interface-1"></span><h3 class="section">6.14 System interface</h3>
+
+<p>Questions of system interface generally fall outside of the domain of
+this report. However, the following operations are important enough to
+deserve description here.
+</p>
+<dl class="def">
+<dt id="index-load"><span class="category">load library procedure: </span><span><strong>load</strong> <em>filename</em><a href='#index-load' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-load-1"><span class="category">load library procedure: </span><span><strong>load</strong> <em>filename environment-specifier</em><a href='#index-load-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>filename</var> is not a string.
+</p>
+<p>An implementation-dependent operation is used to
+transform <var>filename</var> into the name of an existing
+file containing Scheme source code.  The <code>load</code>
+procedure reads expressions and definitions from the file and
+evaluates them sequentially in the environment specified by
+<var>environment-specifier</var>.  If <var>environment-specifier</var> is
+omitted, <code>(interaction-environment)</code> is assumed.
+</p>
+<p>It is unspecified whether the results of the expressions are printed.
+The <code>load</code> procedure does not affect the values returned by
+<code>current-input-port</code> and <code>current-output-port</code>.  It returns
+an unspecified value.
+</p>
+<span id="Rationale_003a-9"></span><h4 class="subheading">Rationale:</h4>
+
+<p>For portability, <code>load</code> must operate on source files.
+Its operation on other kinds of files necessarily varies among
+implementations.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-file_002dexists_003f"><span class="category">file library procedure: </span><span><strong>file-exists?</strong> <em>filename</em><a href='#index-file_002dexists_003f' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>filename</var> is not a string.
+</p>
+<p>The <code>file-exists?</code> procedure returns <code>#t</code> if the named file
+exists at the time the procedure is called, and <code>#f</code> otherwise.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-delete_002dfile"><span class="category">file library procedure: </span><span><strong>delete-file</strong> <em>filename</em><a href='#index-delete_002dfile' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if <var>filename</var> is not a string.
+</p>
+<p>The <code>delete-file</code> procedure deletes the named file if it
+exists and can be deleted, and returns an unspecified value.  If the
+file does not exist or cannot be deleted, an error that satisfies
+<code>file-error?</code> is signaled.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-command_002dline"><span class="category">process-context library procedure: </span><span><strong>command-line</strong><a href='#index-command_002dline' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the command line passed to the process as a list of
+strings. The first string corresponds to the command name, and is
+implementation-dependent. It is an error to mutate any of these
+strings.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-exit"><span class="category">process-context library procedure: </span><span><strong>exit</strong><a href='#index-exit' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-exit-1"><span class="category">process-context library procedure: </span><span><strong>exit</strong> <em>obj</em><a href='#index-exit-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Runs all outstanding dynamic-wind <var>after</var> procedures, terminates
+the running program, and communicates an exit value to the operating
+system.  If no argument is supplied, or if <var>obj</var> is <code>#t</code>,
+the <code>exit</code> procedure should communicate to the operating system
+that the program exited normally.  If <var>obj</var> is <code>#f</code>, the
+<code>exit</code> procedure should communicate to the operating system
+that the program exited abnormally.  Otherwise, <code>exit</code> should
+translate <var>obj</var> into an appropriate exit value for the operating
+system, if possible.
+</p>
+<p>The <code>exit</code> procedure must not signal an exception or return to
+its continuation.
+</p>
+<p>Note: Because of the requirement to run handlers, this procedure is
+not just the operating system&rsquo;s exit procedure.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-emergency_002dexit"><span class="category">process-context library procedure: </span><span><strong>emergency-exit</strong><a href='#index-emergency_002dexit' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-emergency_002dexit-1"><span class="category">process-context library procedure: </span><span><strong>emergency-exit</strong> <em>obj</em><a href='#index-emergency_002dexit-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Terminates the program without running any outstanding dynamic-wind
+<var>after</var> procedures and communicates an exit value to the operating
+system in the same manner as <code>exit</code>.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-get_002denvironment_002dvariable"><span class="category">process-context library procedure: </span><span><strong>get-environment-variable</strong> <em>name</em><a href='#index-get_002denvironment_002dvariable' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Many operating systems provide each running process with an
+<dfn>environment</dfn> consisting of <dfn>environment variables</dfn>.  (This
+environment is not to be confused with the Scheme environments that
+can be passed to <code>eval</code>: see <a href="Environments-and-evaluation.html">Environments and evaluation</a>.)
+Both the name and value of an environment variable are strings.
+The procedure <code>get-environment-variable</code> returns the value of the
+environment variable <var>name</var>, or <code>#f</code> if the named environment
+variable is not found.  It may use locale information to encode the
+name and decode the value of the environment variable.  It is an
+error if <code>get-environment-variable</code> can&rsquo;t decode the value.
+It is also an error to mutate the resulting string.
+</p>
+<div class="example lisp">
+<pre class="lisp">(get-environment-variable &quot;PATH&quot;)
+    &rArr; &quot;/usr/local/bin:/usr/bin:/bin&quot;
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-get_002denvironment_002dvariables"><span class="category">process-context library procedure: </span><span><strong>get-environment-variables</strong><a href='#index-get_002denvironment_002dvariables' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the names and values of all the environment variables as an
+alist, where the car of each entry is the name of an environment
+variable and the cdr is its value, both as strings. The order of the
+list is unspecified. It is an error to mutate any of these strings or
+the alist itself.
+</p>
+<div class="example lisp">
+<pre class="lisp">(get-environment-variables)
+    &rArr; ((&quot;USER&quot; . &quot;root&quot;) (&quot;HOME&quot; . &quot;/&quot;))
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-current_002dsecond"><span class="category">time library procedure: </span><span><strong>current-second</strong><a href='#index-current_002dsecond' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns an inexact number representing the current time on the
+International Atomic Time (TAI) scale. The value 0.0 represents
+midnight on January 1, 1970 TAI (equivalent to 8.000082 seconds before
+midnight Universal Time) and the value 1.0 represents one TAI second
+later. Neither high accuracy nor high precision are required; in
+particular, returning Coordinated Universal Time plus a suitable
+constant might be the best an implementation can do.
+</p>
+<p>As of 2018, a TAI-UTC offset table can be found at [<a href="References.html#TAI">TAI</a>].
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-current_002djiffy"><span class="category">time library procedure: </span><span><strong>current-jiffy</strong><a href='#index-current_002djiffy' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns the number of <dfn>jiffies</dfn> as an exact integer that have
+elapsed since an arbitrary, implementation-defined epoch. A jiffy is an
+implementation-defined fraction of a second which is defined by the
+return value of the <code>jiffies-per-second</code> procedure. The starting
+epoch is guaranteed to be constant during a run of the program, but may
+vary between runs.
+</p>
+<span id="Rationale_003a-10"></span><h4 class="subheading">Rationale:</h4>
+
+<p>Jiffies are allowed to be implementation-dependent so that
+<code>current-jiffy</code> can execute with minimum overhead. It should be
+very likely that a compactly represented integer will suffice as the
+returned value. Any particular jiffy size will be inappropriate for
+some implementations: a microsecond is too long for a very fast
+machine, while a much smaller unit would force many implementations to
+return integers which have to be allocated for most calls, rendering
+<code>current-jiffy</code> less useful for accurate timing measurements.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-jiffies_002dper_002dsecond"><span class="category">time library procedure: </span><span><strong>jiffies-per-second</strong><a href='#index-jiffies_002dper_002dsecond' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns an exact integer representing the number of jiffies per SI
+second. This value is an implementation-specified constant.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define (time-length)
+  (let ((list (make-list 100000))
+        (start (current-jiffy)))
+    (length list)
+    (/ (- (current-jiffy) start)
+       (jiffies-per-second))))
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-features"><span class="category">procedure: </span><span><strong>features</strong><a href='#index-features' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a list of the feature identifiers which cond-expand treats as
+true. It is an error to modify this list. Here is an example of what
+<code>features</code> might return:
+</p>
+<div class="example lisp">
+<pre class="lisp">(features) &rArr;
+  (r7rs ratios exact-complex full-unicode
+   gnu-linux little-endian
+   fantastic-scheme
+   fantastic-scheme-1.0
+   space-ship-control-system)
+</pre></div>
+</dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Input-and-output.html">Input and output</a>, Up: <a href="Standard-procedures.html">Standard procedures</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

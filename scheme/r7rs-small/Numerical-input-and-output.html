@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Numerical input and output (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Numerical input and output (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Numerical input and output (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Numbers.html" rel="up" title="Numbers">
+<link href="Numerical-operations.html" rel="prev" title="Numerical operations">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Numerical-input-and-output">
+<div class="header">
+<p>
+Previous: <a href="Numerical-operations.html" accesskey="p" rel="prev">Numerical operations</a>, Up: <a href="Numbers.html" accesskey="u" rel="up">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Numerical-input-and-output-1"></span><h4 class="subsection">6.2.7 Numerical input and output</h4>
+
+<dl class="def">
+<dt id="index-number_002d_003estring"><span class="category">procedure: </span><span><strong>number-&gt;string</strong> <em>z</em><a href='#index-number_002d_003estring' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-number_002d_003estring-1"><span class="category">procedure: </span><span><strong>number-&gt;string</strong> <em>z radix</em><a href='#index-number_002d_003estring-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>It is an error if
+<var>radix</var> is not one of 2, 8, 10, or 16.
+</p>
+<p>The procedure <code>number-&gt;string</code> takes a number and a radix and
+returns as a string an external representation of the given number in
+the given radix such that
+</p>
+<div class="example lisp">
+<pre class="lisp">(let ((number number)
+      (radix radix))
+  (eqv? number
+        (string-&gt;number (number-&gt;string number
+                                        radix)
+                        radix)))
+</pre></div>
+
+<p>is true. It is an error if no possible result makes this expression
+true. If omitted, <var>radix</var> defaults to 10.
+</p>
+<p>If <var>z</var> is inexact, the radix is 10, and the above expression can be
+satisfied by a result that contains a decimal point, then the result
+contains a decimal point and is expressed using the minimum number
+of digits (exclusive of exponent and trailing zeroes) needed to make
+the above expression true [<a href="References.html#howtoprint">howtoprint</a>, <a href="References.html#howtoread">howtoread</a>]; otherwise the format of the result
+is unspecified.
+</p>
+<p>The result returned by <code>number-&gt;string</code> never contains an explicit
+radix prefix.
+</p>
+<p>Note: The error case can occur only when <var>z</var> is not a complex number
+or is a complex number with a non-rational real or imaginary part.
+</p>
+<span id="Rationale_003a-4"></span><h4 class="subheading">Rationale:</h4>
+
+<p>If <var>z</var> is an inexact number and the radix is 10, then
+the above expression is normally satisfied by a result containing a
+decimal point. The unspecified case allows for infinities, NaNs, and
+unusual representations.
+</p>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-string_002d_003enumber"><span class="category">procedure: </span><span><strong>string-&gt;number</strong> <em>string</em><a href='#index-string_002d_003enumber' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-string_002d_003enumber-1"><span class="category">procedure: </span><span><strong>string-&gt;number</strong> <em>string radix</em><a href='#index-string_002d_003enumber-1' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Returns a number of the maximally precise representation expressed by the
+given <var>string</var>.  It is an error if <var>radix</var> is not 2, 8, 10, or 16.
+</p>
+<p>If supplied, <var>radix</var> is a default radix that will be overridden if an
+explicit radix prefix is present in string (e.g. <code>&quot;#o177&quot;</code>). If
+<var>radix</var> is not supplied, then the default radix is 10. If
+<var>string</var> is not a syntactically valid notation for a number, or
+would result in a number that the implementation cannot represent, then
+<code>string-&gt;number</code> returns <code>#f</code>. An error is never signaled due
+to the content of <var>string</var>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(string-&gt;number &quot;100&quot;)    &rArr; 100
+(string-&gt;number &quot;100&quot; 16) &rArr; 256
+(string-&gt;number &quot;1e2&quot;)    &rArr; 100.0
+</pre></div>
+
+<p>Note: The domain of <code>string-&gt;number</code> may be restricted by
+implementations in the following ways.  If all numbers supported by an
+implementation are real, then <code>string-&gt;number</code> is permitted to
+return <code>#f</code> whenever <var>string</var> uses the polar or rectangular
+notations for complex numbers. If all numbers are integers, then
+<code>string-&gt;number</code> may return <code>#f</code> whenever the fractional
+notation is used. If all numbers are exact, then <code>string-&gt;number</code> may
+return <code>#f</code> whenever an exponent marker or explicit exactness prefix
+is used.  If all inexact numbers are integers, then <code>string-&gt;number</code>
+may return <code>#f</code> whenever a decimal point is used.
+</p>
+<p>The rules used by a particular implementation for <code>string-&gt;number</code>
+must also be applied to <code>read</code> and to the routine that reads
+programs, in order to maintain consistency between internal numeric
+processing, I/O, and the processing of programs.  As a consequence,
+the R<sup>5</sup>RS permission to return <code>#f</code> when <var>string</var> has an
+explicit radix prefix has been withdrawn.
+</p>
+</dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Numerical-operations.html">Numerical operations</a>, Up: <a href="Numbers.html">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

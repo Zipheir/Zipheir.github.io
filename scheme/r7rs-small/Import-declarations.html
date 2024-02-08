@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Import declarations (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Import declarations (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Import declarations (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Program-structure.html" rel="up" title="Program structure">
+<link href="Variable-definitions.html" rel="next" title="Variable definitions">
+<link href="Programs.html" rel="prev" title="Programs">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Import-declarations">
+<div class="header">
+<p>
+Next: <a href="Variable-definitions.html" accesskey="n" rel="next">Variable definitions</a>, Previous: <a href="Programs.html" accesskey="p" rel="prev">Programs</a>, Up: <a href="Program-structure.html" accesskey="u" rel="up">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Import-declarations-1"></span><h3 class="section">5.2 Import declarations</h3>
+
+<p>An import declaration takes the following form:
+</p>
+<div class="example lisp">
+<pre class="lisp">(import <span class="roman">&#x27e8;import-set&#x27e9; &hellip;</span>)
+</pre></div>
+
+<p>An import declaration provides a way to import identifiers exported by a
+library. Each &#x27e8;import set&#x27e9; names a set of bindings from a library and
+possibly specifies local names for the imported bindings. It takes one of
+the following forms:
+</p>
+<ul>
+<li> &#x27e8;library name&#x27e9;
+
+</li><li> <code>(only </code>&#x27e8;import set&#x27e9; &#x27e8;identifier&#x27e9; &hellip;<code>)</code>
+
+</li><li> <code>(except </code>&#x27e8;import set&#x27e9; &#x27e8;identifier&#x27e9; &hellip;)
+
+</li><li> <code>(prefix </code>&#x27e8;import set&#x27e9; &#x27e8;identifier&#x27e9;)
+
+</li><li> <code>(rename </code>&#x27e8;import set&#x27e9;
+<code>(</code>&#x27e8;identifier<sub>1</sub>&#x27e9; &#x27e8;identifier<sub>2</sub>&#x27e9;<code>)</code>
+&hellip;<code>)</code>
+
+</li></ul>
+
+<p>In the first form, all of the identifiers in the named library&rsquo;s export
+clauses are imported with the same names (or the exported names if
+exported with rename). The additional &#x27e8;import set&#x27e9; forms modify this
+set as follows:
+</p>
+<ul>
+<li> <code>only</code> produces a subset of the given &#x27e8;import set&#x27e9; including
+only the listed identifiers (after any renaming). It is an error if any of
+the listed identifiers are not found in the original set.
+
+</li><li> <code>except</code> produces a subset of the given &#x27e8;import set&#x27e9;, excluding
+the listed identifiers (after any renaming). It is an error if any of the
+listed identifiers are not found in the original set.
+
+</li><li> <code>rename</code> modifies the given &#x27e8;import set&#x27e9;, replacing each
+instance of &#x27e8;identifier<sub>1</sub>&#x27e9; with &#x27e8;identifier<sub>2</sub>&#x27e9;. It is
+an error if any of the listed &#x27e8;identifier<sub>1</sub>&#x27e9;s are not found in
+the original set.
+
+</li><li> <code>prefix</code> automatically renames all identifiers in the given
+&#x27e8;import set&#x27e9;, prefixing each with the specified &#x27e8;identifier&#x27e9;.
+
+</li></ul>
+
+<p>In a program or library declaration, it is an error to import the same
+identifier more than once with different bindings, or to redefine or
+mutate an imported binding with a definition or with <code>set!</code>, or to
+refer to an identifier before it is imported. However, a REPL should
+permit these actions.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Variable-definitions.html">Variable definitions</a>, Previous: <a href="Programs.html">Programs</a>, Up: <a href="Program-structure.html">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

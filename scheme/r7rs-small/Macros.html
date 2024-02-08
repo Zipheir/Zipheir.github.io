@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Macros (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Macros (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Macros (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Expressions.html" rel="up" title="Expressions">
+<link href="Derived-expression-types.html" rel="prev" title="Derived expression types">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Macros">
+<div class="header">
+<p>
+Previous: <a href="Derived-expression-types.html" accesskey="p" rel="prev">Derived expression types</a>, Up: <a href="Expressions.html" accesskey="u" rel="up">Expressions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Macros-1"></span><h3 class="section">4.3 Macros</h3>
+
+<p>Scheme programs can define and use new derived expression types, called
+<dfn>macros</dfn>. Program-defined expression types have the syntax
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;keyword&#x27e9; &#x27e8;datum&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<span id="index-syntactic-keyword-1"></span>
+<span id="index-keyword"></span>
+<span id="index-macro-keyword"></span>
+
+<p>where &#x27e8;keyword&#x27e9; is an identifier that uniquely determines the
+expression type. This identifier is called the <dfn>syntactic keyword</dfn>, or
+simply <dfn>keyword</dfn>, of the macro. The number of the &#x27e8;datum&#x27e9;s, and
+their syntax, depends on the expression type.
+</p>
+<span id="index-macro-use"></span>
+<span id="index-macro-transformer"></span>
+
+<p>Each instance of a macro is called a <dfn>use</dfn> of the macro. The set of
+rules that specifies how a use of a macro is transcribed into a more
+primitive expression is called the <dfn>transformer</dfn> of the macro.
+</p>
+<p>The macro definition facility consists of two parts:
+</p>
+<ul>
+<li> A set of expressions used to establish that certain identifiers are macro
+keywords, associate them with macro transformers, and control the scope
+within which a macro is defined, and
+
+</li><li> a pattern language for specifying macro transformers.
+
+</li></ul>
+
+<span id="index-syntactic-keyword-2"></span>
+<span id="index-keyword-1"></span>
+
+<p>The syntactic keyword of a macro can shadow variable bindings, and local
+variable bindings can shadow syntactic bindings. Two mechanisms are
+provided to prevent unintended conflicts:
+</p>
+<ul>
+<li> If a macro transformer inserts a binding for an identifier (variable or
+keyword), the identifier will in effect be renamed throughout its scope to
+avoid conflicts with other identifiers. Note that a global variable
+definition may or may not introduce a binding; See <a href="Variable-definitions.html">Variable definitions</a>.
+
+</li><li> If a macro transformer inserts a free reference to an identifier, the
+reference refers to the binding that was visible where the transformer was
+specified, regardless of any local bindings that surround the use of the
+macro.
+
+</li></ul>
+
+<span id="index-hygienic"></span>
+<span id="index-referentially-transparent"></span>
+
+<p>In consequence, all macros defined using the pattern language are
+&ldquo;hygienic&rdquo; and &ldquo;referentially transparent&rdquo; and thus preserve Scheme&rsquo;s
+lexical scoping. [<a href="References.html#Kohlbecker86">Kohlbecker86</a>, <a href="References.html#hygienic">hygienic</a>, <a href="References.html#Bawden88">Bawden88</a>,
+<a href="References.html#macrosthatwork">macrosthatwork</a>, <a href="References.html#syntacticabstraction">syntacticabstraction</a>]
+</p>
+<p>Implementations may provide macro facilities of other types.
+</p>
+
+<ul class="section-toc">
+<li><a href="Binding-constructs-for-syntactic-keywords.html" accesskey="1">Binding constructs for syntactic keywords</a></li>
+<li><a href="Pattern-language.html" accesskey="2">Pattern language</a></li>
+<li><a href="Signaling-errors-in-macro-transformers.html" accesskey="3">Signaling errors in macro transformers</a></li>
+</ul>
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Derived-expression-types.html">Derived expression types</a>, Up: <a href="Expressions.html">Expressions</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

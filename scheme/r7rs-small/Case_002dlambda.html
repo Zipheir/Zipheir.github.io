@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Case-lambda (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Case-lambda (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Case-lambda (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Quasiquotation.html" rel="prev" title="Quasiquotation">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Case_002dlambda">
+<div class="header">
+<p>
+Previous: <a href="Quasiquotation.html" accesskey="p" rel="prev">Quasiquotation</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Case_002dlambda-1"></span><h4 class="subsection">4.2.9 Case-lambda</h4>
+
+<dl class="def">
+<dt id="index-case_002dlambda"><span class="category">library syntax: </span><span><strong>case-lambda</strong> <em>&#x27e8;clause&#x27e9;&hellip;</em><a href='#index-case_002dlambda' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: Each &#x27e8;clause&#x27e9; is of the form
+<code>(</code>&#x27e8;formals&#x27e9; &#x27e8;body&#x27e9;<code>)</code>, where &#x27e8;formals&#x27e9; and &#x27e8;body&#x27e9;
+have the same syntax as in a <code>lambda</code> expression.
+</p>
+<p>Semantics: A <code>case-lambda</code> expression evaluates to a procedure that accepts a variable
+number of arguments and is lexically scoped in the same manner as a procedure resulting
+from a <code>lambda</code> expression. When the procedure is called, the first &#x27e8;clause&#x27e9; for which the
+arguments agree with &#x27e8;formals&#x27e9; is selected, where agreement is specified as for the
+&#x27e8;formals&#x27e9; of a lambda expression. The variables of &#x27e8;formals&#x27e9; are bound to fresh
+locations, the values of the arguments are stored in those locations, the &#x27e8;body&#x27e9; is
+evaluated in the extended environment, and the results of &#x27e8;body&#x27e9; are returned as the
+results of the procedure call.
+</p>
+<p>It is an error for the arguments not to agree with the &#x27e8;formals&#x27e9; of any &#x27e8;clause&#x27e9;.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define range
+  (case-lambda
+   ((e) (range 0 e))
+   ((b e) (do ((r '() (cons e r))
+               (e (- e 1) (- e 1)))
+              ((&lt; e b) r)))))
+
+(range 3)    &rArr; (0 1 2)
+(range 3 5)  &rArr; (3 4)
+</pre></div>
+
+</dd></dl>
+
+</div>
+
+
+
+</body>
+</html>

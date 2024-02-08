@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Implementation restrictions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Implementation restrictions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Implementation restrictions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Numbers.html" rel="up" title="Numbers">
+<link href="Implementation-extensions.html" rel="next" title="Implementation extensions">
+<link href="Exactness.html" rel="prev" title="Exactness">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Implementation-restrictions">
+<div class="header">
+<p>
+Next: <a href="Implementation-extensions.html" accesskey="n" rel="next">Implementation extensions</a>, Previous: <a href="Exactness.html" accesskey="p" rel="prev">Exactness</a>, Up: <a href="Numbers.html" accesskey="u" rel="up">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Implementation-restrictions-1"></span><h4 class="subsection">6.2.3 Implementation restrictions</h4>
+
+<p>Implementations of Scheme are not required to implement the whole tower
+of subtypes given in <a href="Numerical-types.html">Numerical types</a>, but they must implement a
+coherent subset consistent with both the purposes of the implementation
+and the spirit of the Scheme language. For example, implementations
+in which all numbers are real, or in which non-real numbers are always
+inexact, or in which exact numbers are always integer, are still quite
+useful.
+</p>
+<p>Implementations may also support only a limited range of numbers of any
+type, subject to the requirements of this section. The supported range
+for exact numbers of any type may be different from the supported range
+for inexact numbers of that type. For example, an implementation that uses
+IEEE binary double-precision floating-point numbers to represent all its
+inexact real numbers may also support a practically unbounded range of
+exact integers and rationals while limiting the range of inexact reals
+(and therefore the range of inexact integers and rationals) to the dynamic
+range of the IEEE binary double format. Furthermore, the gaps between the
+representable inexact integers and rationals are likely to be very large
+in such an implementation as the limits of this range are approached.
+</p>
+<p>An implementation of Scheme must support exact integers throughout the
+range of numbers permitted as indexes of lists, vectors, bytevectors, and
+strings or that result from computing the length of one of these. The
+<code>length</code>, <code>vector-length</code>, <code>bytevector-length</code>, and
+<code>string-length</code> procedures must return an exact integer, and it is
+an error to use anything but an exact integer as an index. Furthermore,
+any integer constant within the index range, if expressed by an exact
+integer syntax, must be read as an exact integer, regardless of any
+implementation restrictions that apply outside this range. Finally, the
+procedures listed below will always return exact integer results provided
+all their arguments are exact integers and the mathematically expected
+results are representable as exact integers within the implementation:
+</p>
+<ul class="no-bullet">
+<li><!-- /@w --> <code>-</code>
+
+</li><li><!-- /@w --> <code>*</code>
+
+</li><li><!-- /@w --> <code>+</code>
+
+</li><li><!-- /@w --> <code>abs</code>
+
+</li><li><!-- /@w --> <code>ceiling</code>
+
+</li><li><!-- /@w --> <code>denominator</code>
+
+</li><li><!-- /@w --> <code>exact-integer-sqrt</code>
+
+</li><li><!-- /@w --> <code>expt</code>
+
+</li><li><!-- /@w --> <code>floor</code>
+
+</li><li><!-- /@w --> <code>floor/</code>
+
+</li><li><!-- /@w --> <code>floor-quotient</code>
+
+</li><li><!-- /@w --> <code>floor-remainder</code>
+
+</li><li><!-- /@w --> <code>gcd</code>
+
+</li><li><!-- /@w --> <code>lcm</code>
+
+</li><li><!-- /@w --> <code>max</code>
+
+</li><li><!-- /@w --> <code>min</code>
+
+</li><li><!-- /@w --> <code>modulo</code>
+
+</li><li><!-- /@w --> <code>numerator</code>
+
+</li><li><!-- /@w --> <code>quotient</code>
+
+</li><li><!-- /@w --> <code>rationalize</code>
+
+</li><li><!-- /@w --> <code>remainder</code>
+
+</li><li><!-- /@w --> <code>round</code>
+
+</li><li><!-- /@w --> <code>square</code>
+
+</li><li><!-- /@w --> <code>truncate</code>
+
+</li><li><!-- /@w --> <code>truncate/</code>
+
+</li><li><!-- /@w --> <code>truncate-quotient</code>
+
+</li><li><!-- /@w --> <code>truncate-remainder</code>
+
+</li></ul>
+
+<p>It is recommended, but not required, that implementations support
+exact integers and exact rationals of practically unlimited size and
+precision, and to implement the above procedures and the <code>/</code>
+procedure in such a way that they always return exact results when
+given exact arguments. If one of these procedures is unable to deliver
+an exact result when given exact arguments, then it may either report
+a violation of an implementation restriction or it may silently coerce
+its result to an inexact number; such a coercion can cause an error
+later. Nevertheless, implementations that do not provide exact rational
+numbers should return inexact rational numbers rather than reporting an
+implementation restriction.
+</p>
+<p>An implementation may use floating-point and other approximate
+representation strategies for inexact numbers. This report recommends,
+but does not require, that implementations that use floating-point
+representations follow the IEEE 754 standard, and that implementations
+using other representations should match or exceed the precision
+achievable using these floating-point standards [<a href="References.html#IEEE">IEEE</a>]. In particular,
+the description of transcendental functions in IEEE 754-2008 should be
+followed by such implementations, particularly with respect to infinities
+and NaNs.
+</p>
+<p>Although Scheme allows a variety of written notations for numbers, any
+particular implementation may support only some of them. For example,
+an implementation in which all numbers are real need not support the
+rectangular and polar notations for complex numbers. If an implementation
+encounters an exact numerical constant that it cannot represent as an
+exact number, then it may either report a violation of an implementation
+restriction or it may silently represent the constant by an inexact
+number.
+</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Implementation-extensions.html">Implementation extensions</a>, Previous: <a href="Exactness.html">Exactness</a>, Up: <a href="Numbers.html">Numbers</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Signaling errors in macro transformers (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Signaling errors in macro transformers (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Signaling errors in macro transformers (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Macros.html" rel="up" title="Macros">
+<link href="Pattern-language.html" rel="prev" title="Pattern language">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Signaling-errors-in-macro-transformers">
+<div class="header">
+<p>
+Previous: <a href="Pattern-language.html" accesskey="p" rel="prev">Pattern language</a>, Up: <a href="Macros.html" accesskey="u" rel="up">Macros</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Signaling-errors-in-macro-transformers-1"></span><h4 class="subsection">4.3.3 Signaling errors in macro transformers</h4>
+
+<dl class="def">
+<dt id="index-syntax_002derror"><span class="category">syntax: </span><span><strong>syntax-error</strong> <em>&#x27e8;message&#x27e9; &#x27e8;args&#x27e9;&hellip;</em><a href='#index-syntax_002derror' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>syntax-error behaves similarly to error (<a href="Exceptions.html">Exceptions</a>) except that
+implementations with an expansion pass separate from evaluation should
+signal an error as soon as <code>syntax-error</code> is expanded. This can be
+used as a <code>syntax-rules</code> &#x27e8;template&#x27e9; for a &#x27e8;pattern&#x27e9; that is
+an invalid use of the macro, which can provide more descriptive error
+messages. &#x27e8;message&#x27e9; is a string literal, and &#x27e8;args&#x27e9; arbitrary
+expressions providing additional information. Applications cannot count on
+being able to catch syntax errors with exception handlers or guards.
+</p>
+<div class="example lisp">
+<pre class="lisp">(define-syntax simple-let
+  (syntax-rules ()
+    ((simple-let ((x . y) val) body1 body2 ...)
+     (syntax-error &quot;expected an identifier&quot; (x . y)))
+    ((simple-let (name val) body1 body2 ...)
+</pre></div>
+
+</dd></dl>
+
+</div>
+
+
+
+</body>
+</html>

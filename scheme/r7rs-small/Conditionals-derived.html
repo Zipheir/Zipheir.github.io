@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Conditionals derived (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Conditionals derived (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Conditionals derived (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Derived-expression-types.html" rel="up" title="Derived expression types">
+<link href="Binding-constructs.html" rel="next" title="Binding constructs">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Conditionals-derived">
+<div class="header">
+<p>
+Next: <a href="Binding-constructs.html" accesskey="n" rel="next">Binding constructs</a>, Up: <a href="Derived-expression-types.html" accesskey="u" rel="up">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Conditionals-1"></span><h4 class="subsection">4.2.1 Conditionals</h4>
+
+<dl class="def">
+<dt id="index-cond"><span class="category">syntax: </span><span><strong>cond</strong> <em>&#x27e8;clause<sub>1</sub>&#x27e9; &#x27e8;clause<sub>2</sub>&#x27e9;&hellip;</em><a href='#index-cond' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-else"><span class="category">auxiliary syntax: </span><span><strong>else</strong><a href='#index-else' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-_003d_003e"><span class="category">auxiliary syntax: </span><span><strong>=&gt;</strong><a href='#index-_003d_003e' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<span id="index-true-2"></span>
+
+<p>Syntax: &#x27e8;Clauses&#x27e9; take one of two forms, either
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;test&#x27e9; &#x27e8;expression<sub>1</sub>&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>where &#x27e8;test&#x27e9; is any expression, or
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;test&#x27e9;<code> =&gt; </code>&#x27e8;expression&#x27e9;<code>)</code>
+</pre></div>
+
+<p>The last &#x27e8;clause&#x27e9; can be an &ldquo;else clause,&rdquo; which has the form
+</p>
+<div class="display">
+<pre class="display"><code>(else </code>&#x27e8;expression<sub>1</sub>&#x27e9; &#x27e8;expression<sub>2</sub>&#x27e9; &hellip;<code>)</code>.
+</pre></div>
+
+<p>Semantics: A <code>cond</code> expression is evaluated by evaluating the
+&#x27e8;test&#x27e9; expressions of successive &#x27e8;clause&#x27e9;s in order until one of
+them evaluates to a true value (See <a href="Booleans.html">Booleans</a>). When a &#x27e8;test&#x27e9;
+evaluates to a true value, the remaining &#x27e8;expression&#x27e9;s in its
+&#x27e8;clause&#x27e9; are evaluated in order, and the results of the last
+&#x27e8;expression&#x27e9; in the &#x27e8;clause&#x27e9; are returned as the results of the
+entire cond expression.
+</p>
+<p>If the selected &#x27e8;clause&#x27e9; contains only the &#x27e8;test&#x27e9; and no
+&#x27e8;expression&#x27e9;s, then the value of the &#x27e8;test&#x27e9; is returned as the
+result. If the selected &#x27e8;clause&#x27e9; uses the <code>=&gt;</code> alternate form,
+then the &#x27e8;expression&#x27e9; is evaluated. It is an error if its value is not
+a procedure that accepts one argument. This procedure is then called on the
+value of the &#x27e8;test&#x27e9; and the values returned by this procedure are
+returned by the <code>cond</code> expression.
+</p>
+<p>If all &#x27e8;test&#x27e9;s evaluate to <code>#f</code>, and there is no else clause, then
+the result of the conditional expression is unspecified; if there is an else
+clause, then its &#x27e8;expression&#x27e9;s are evaluated in order, and the values
+of the last one are returned.
+</p></dd></dl>
+
+<div class="example lisp">
+<pre class="lisp">(cond ((&gt; 3 2) 'greater)
+      ((&lt; 3 2) 'less))   &rArr; greater
+
+(cond ((&gt; 3 3) 'greater)
+      ((&lt; 3 3) 'less)
+      (else 'equal))     &rArr; equal
+
+(cond ((assv 'b '((a 1) (b 2))) =&gt; cadr)
+      (else #f))         &rArr; 2
+</pre></div>
+
+<dl class="def">
+<dt id="index-case"><span class="category">syntax: </span><span><strong>case</strong> <em>&#x27e8;key&#x27e9; &#x27e8;clause<sub>1</sub>&#x27e9; &#x27e8;clause<sub>2</sub>&#x27e9;&hellip;</em><a href='#index-case' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;Key&#x27e9; can be any expression. Each &#x27e8;clause&#x27e9; has the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;datum<sub>1</sub>&#x27e9; &hellip;<code>) </code>&#x27e8;expression<sub>1</sub>&#x27e9; &#x27e8;expression<sub>2</sub>&#x27e9; &hellip;<code>)</code>,
+</pre></div>
+
+<p>where each &#x27e8;datum&#x27e9; is an external representation of some object. It is
+an error if any of the &#x27e8;datum&#x27e9;s are the same anywhere in the
+expression. Alternatively, a &#x27e8;clause&#x27e9; can be of the form
+</p>
+<div class="display">
+<pre class="display"><code>((</code>&#x27e8;datum<sub>1</sub>&#x27e9; &hellip;)<code> =&gt; </code>&#x27e8;expression&#x27e9;<code>)</code>
+</pre></div>
+
+<p>The last &#x27e8;clause&#x27e9; can be an &ldquo;else clause,&rdquo; which has one of the forms
+</p>
+<div class="display">
+<pre class="display"><code>(else </code>&#x27e8;expression<sub>1</sub>&#x27e9; &#x27e8;expression<sub>2</sub>&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>or
+</p>
+<div class="display">
+<pre class="display"><code>(else =&gt; </code>&#x27e8;expression&#x27e9;<code>)</code>.
+</pre></div>
+
+<p>Semantics: A <code>case</code> expression is evaluated as follows. &#x27e8;Key&#x27e9; is
+evaluated and its result is compared against each &#x27e8;datum&#x27e9;. If the
+result of evaluating &#x27e8;key&#x27e9; is the same (in the sense of <code>eqv?</code>;
+See <a href="Equivalence-predicates.html">Equivalence predicates</a>) to a &#x27e8;datum&#x27e9;, then the expressions in
+the corresponding &#x27e8;clause&#x27e9; are evaluated in order and the results of
+the last expression in the &#x27e8;clause&#x27e9; are returned as the results of the
+<code>case</code> expression.
+</p>
+<p>If the result of evaluating &#x27e8;key&#x27e9; is different from every &#x27e8;datum&#x27e9;,
+then if there is an else clause, its expressions are evaluated and the
+results of the last are the results of the <code>case</code> expression; otherwise
+the result of the case expression is unspecified.
+</p>
+<p>If the selected &#x27e8;clause&#x27e9; or else clause uses the <code>=&gt;</code> alternate
+form, then the &#x27e8;expression&#x27e9; is evaluated. It is an error if its value
+is not a procedure accepting one argument. This procedure is then called on
+the value of the &#x27e8;key&#x27e9; and the values returned by this procedure are
+returned by the <code>case</code> expression.
+</p></dd></dl>
+
+<div class="example lisp">
+<pre class="lisp">(case (* 2 3)
+  ((2 3 5 7) 'prime)
+  ((1 4 6 8 9) 'composite))     &rArr;  composite
+(case (car '(c d))
+  ((a) 'a)
+  ((b) 'b))                     &rArr;  unspecified
+(case (car '(c d))
+  ((a e i o u) 'vowel)
+  ((w y) 'semivowel)
+  (else =&gt; (lambda (x) x)))     &rArr;  c
+</pre></div>
+
+<dl class="def">
+<dt id="index-and"><span class="category">syntax: </span><span><strong>and</strong> <em>&#x27e8;test<sub>1</sub>&#x27e9;&hellip;</em><a href='#index-and' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Semantics: The &#x27e8;test&#x27e9; expressions are evaluated from left to right, and
+if any expression evaluates to <code>#f</code> (See <a href="Booleans.html">Booleans</a>), then <code>#f</code>
+is returned. Any remaining expressions are not evaluated. If all the
+expressions evaluate to true values, the values of the last expression are
+returned. If there are no expressions, then <code>#t</code> is returned.
+</p></dd></dl>
+
+<div class="example lisp">
+<pre class="lisp">(and (= 2 2) (&gt; 2 1))           &rArr;  #t
+(and (= 2 2) (&lt; 2 1))           &rArr;  #f
+(and 1 2 'c '(f g))             &rArr;  (f g)
+(and)                           &rArr;  #t
+</pre></div>
+
+<dl class="def">
+<dt id="index-or"><span class="category">syntax: </span><span><strong>or</strong> <em>&#x27e8;test<sub>1</sub>&#x27e9;&hellip;</em><a href='#index-or' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Semantics: The &#x27e8;test&#x27e9; expressions are evaluated from left to right, and
+the value of the first expression that evaluates to a true value
+(See <a href="Booleans.html">Booleans</a>) is returned. Any remaining expressions are not evaluated.
+If all expressions evaluate to <code>#f</code> or if there are no expressions,
+then <code>#f</code> is returned.
+</p></dd></dl>
+
+<div class="example lisp">
+<pre class="lisp">(or (= 2 2) (&gt; 2 1))            &rArr;  #t
+(or (= 2 2) (&lt; 2 1))            &rArr;  #t
+(or #f #f #f) &rArr;  #f
+(or (memq 'b '(a b c))
+    (/ 3 0))                    &rArr;  (b c)
+</pre></div>
+
+<dl class="def">
+<dt id="index-when"><span class="category">syntax: </span><span><strong>when</strong> <em>&#x27e8;test&#x27e9; &#x27e8;expression<sub>1</sub>&#x27e9; &#x27e8;expression<sub>2</sub>&#x27e9;&hellip;</em><a href='#index-when' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: The &#x27e8;test&#x27e9; is an expression.
+</p>
+<p>Semantics: The test is evaluated, and if it evaluates to a true value, the
+expressions are evaluated in order. The result of the <code>when</code> expression
+is unspecified.
+</p></dd></dl>
+
+<div class="example lisp">
+<pre class="lisp">(when (= 1 1.0)
+  (display &quot;1&quot;)
+  (display &quot;2&quot;)) &rArr; <span class="roman">unspecified</span>
+-| 12
+</pre></div>
+
+<dl class="def">
+<dt id="index-unless"><span class="category">syntax: </span><span><strong>unless</strong> <em>&#x27e8;test&#x27e9; &#x27e8;expression<sub>1</sub>&#x27e9; &#x27e8;expression<sub>2</sub>&#x27e9;&hellip;</em><a href='#index-unless' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: The &#x27e8;test&#x27e9; is an expression.
+</p>
+<p>Semantics: The test is evaluated, and if it evaluates to <code>#f</code>, the
+expressions are evaluated in order. The result of the <code>unless</code>
+expression is unspecified.
+</p></dd></dl>
+
+<div class="display">
+<pre class="display">
+
+(unless (= 1 1.0)
+  (display &quot;1&quot;)
+  (display &quot;2&quot;)) &rArr; <span class="roman">unspecified</span>
+-| <span class="roman">nothing</span>
+
+</pre></div>
+
+<dl class="def">
+<dt id="index-cond_002dexpand"><span class="category">syntax: </span><span><strong>cond-expand</strong> <em>&#x27e8;ce-clause<sub>1</sub>&#x27e9; &#x27e8;ce-clause<sub>2</sub>&#x27e9;&hellip;</em><a href='#index-cond_002dexpand' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: The <code>cond-expand</code> expression type provides a way to statically
+expand different expressions depending on the implementation. A
+&#x27e8;ce-clause&#x27e9; takes the following form:
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;feature requirement&#x27e9; &#x27e8;expression&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>The last clause can be an &ldquo;else clause,&rdquo; which has the form
+</p>
+<div class="display">
+<pre class="display"><code>(else </code>&#x27e8;expression&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>A &#x27e8;feature requirement&#x27e9; takes one of the following forms:
+</p>
+<ul>
+<li> &#x27e8;feature identifier&#x27e9;
+
+</li><li> <code>(library </code>&#x27e8;library name&#x27e9;<code>)</code>
+
+</li><li> <code>(and </code>&#x27e8;feature requirement&#x27e9; &hellip;<code>)</code>
+
+</li><li> <code>(or </code>&#x27e8;feature requirement&#x27e9; &hellip;<code>)</code>
+
+</li><li> <code>(not </code>&#x27e8;feature requirement&#x27e9;<code>)</code>
+
+</li></ul>
+
+<p>Semantics: Each implementation maintains a list of feature identifiers which
+are present, as well as a list of libraries which can be imported. The value
+of a &#x27e8;feature requirement&#x27e9; is determined by replacing each
+&#x27e8;feature identifier&#x27e9; and <code>(library </code>&#x27e8;library name&#x27e9;<code>)</code> on
+the implementation&rsquo;s lists with <code>#t</code>, and all other feature identifiers
+and library names with <code>#f</code>, then evaluating the resulting expression
+as a Scheme boolean expression under the normal interpretation of
+<code>and</code>, <code>or</code>, and <code>not</code>.
+</p>
+<p>A <code>cond-expand</code> is then expanded by evaluating the &#x27e8;feature
+requirement&#x27e9;s of successive &#x27e8;ce-clause&#x27e9;s in order until one of them
+returns <code>#t</code>. When a true clause is found, the corresponding
+&#x27e8;expression&#x27e9;s are expanded to a <code>begin</code>, and the remaining clauses
+are ignored. If none of the &#x27e8;feature requirement&#x27e9;s evaluate to
+<code>#t</code>, then if there is an else clause, its &#x27e8;expression&#x27e9;s are
+included. Otherwise, the behavior of the <code>cond-expand</code> is unspecified.
+Unlike <code>cond</code>, <code>cond-expand</code> does not depend on the value of any
+variables.
+</p>
+<p>The exact features provided are implementation-defined, but for portability
+a core set of features is given in appendix B.
+</p></dd></dl>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Binding-constructs.html">Binding constructs</a>, Up: <a href="Derived-expression-types.html">Derived expression types</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

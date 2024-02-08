@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Naming conventions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Naming conventions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Naming conventions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Notation-and-terminology.html" rel="up" title="Notation and terminology">
+<link href="Evaluation-examples.html" rel="prev" title="Evaluation examples">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="Naming-conventions">
+<div class="header">
+<p>
+Previous: <a href="Evaluation-examples.html" accesskey="p" rel="prev">Evaluation examples</a>, Up: <a href="Notation-and-terminology.html" accesskey="u" rel="up">Notation and terminology</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Naming-conventions-1"></span><h4 class="subsection">1.3.5 Naming conventions</h4>
+
+<p>By convention, &lsquo;<samp>?</samp>&rsquo; is the final character of the names of
+procedures that always return a boolean value. Such procedures are
+called <dfn>predicates</dfn>. Predicates are generally understood to be
+side-effect free, except that they may raise an exception when passed
+the wrong type of argument.
+</p>
+<p>Similarly, &lsquo;<samp>!</samp>&rsquo; is the final character of the names of procedures
+that store values into previously allocated locations (<a href="Storage-model.html">Storage model</a>). Such procedures are called <dfn>mutation procedures</dfn>. The
+value returned by a mutation procedure is unspecified.
+</p>
+<p>By convention, &lsquo;<samp>-&gt;</samp>&rsquo; appears within the names of procedures that
+take an object of one type and return an analogous object of another
+type. For example, <code>list-&gt;vector</code> takes a list and returns a
+vector whose elements are the same as those of the list.
+</p>
+<p>A <dfn>command</dfn> is a procedure that does not return useful values to
+its continuation.
+</p>
+<p>A <dfn>thunk</dfn> is a procedure that does not accept arguments.
+</p>
+</div>
+
+
+
+</body>
+</html>

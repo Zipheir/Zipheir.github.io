@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Record type definitions (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Record type definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Record type definitions (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Program-structure.html" rel="up" title="Program structure">
+<link href="Libraries.html" rel="next" title="Libraries">
+<link href="Syntax-definitions.html" rel="prev" title="Syntax definitions">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Record-type-definitions">
+<div class="header">
+<p>
+Next: <a href="Libraries.html" accesskey="n" rel="next">Libraries</a>, Previous: <a href="Syntax-definitions.html" accesskey="p" rel="prev">Syntax definitions</a>, Up: <a href="Program-structure.html" accesskey="u" rel="up">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Record_002dtype-definitions"></span><h3 class="section">5.5 Record-type definitions</h3>
+
+<p><dfn>Record-type definitions</dfn> are used to introduce new data types, called
+<dfn>record types</dfn>. Like other definitions, they can appear either at the
+outermost level or in a body. The values of a record type are called
+<dfn>records</dfn> and are aggregations of zero or more <dfn>fields</dfn>, each of
+which holds a single location. A predicate, a constructor, and field
+accessors and mutators are defined for each record type.
+</p>
+<dl class="def">
+<dt id="index-define_002drecord_002dtype"><span class="category">syntax: </span><span><strong>define-record-type</strong> <em>&#x27e8;name&#x27e9; &#x27e8;constructor&#x27e9; &#x27e8;pred&#x27e9; &#x27e8;field&#x27e9;&hellip;</em><a href='#index-define_002drecord_002dtype' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
+<p>Syntax: &#x27e8;name&#x27e9; and &#x27e8;pred&#x27e9; are identifiers. The &#x27e8;constructor&#x27e9; is of the form
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;constructor name&#x27e9; &#x27e8;field name&#x27e9; &hellip;<code>)</code>
+</pre></div>
+
+<p>and each &#x27e8;field&#x27e9; is either of the form
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;field name&#x27e9; &#x27e8;accessor name&#x27e9;<code>)</code>
+</pre></div>
+
+<p>or of the form
+</p>
+<div class="display">
+<pre class="display"><code>(</code>&#x27e8;field name&#x27e9; &#x27e8;accessor name&#x27e9; &#x27e8;modifier name&#x27e9;<code>)</code>
+</pre></div>
+
+<p>It is an error for the same identifier to occur more than once as a
+field name. It is also an error for the same identifier to occur more
+than once as an accessor or mutator name.
+</p>
+<p>The <code>define-record-type</code> construct is generative: each use creates
+a new record type that is distinct from all existing types, including
+Scheme&rsquo;s predefined types and other record types&mdash;even record types of
+the same name or structure.
+</p>
+<p>An instance of <code>define-record-type</code> is equivalent to the following
+definitions:
+</p>
+<ul>
+<li> &#x27e8;name&#x27e9; is bound to a representation of the record type itself. This
+may be a run-time object or a purely syntactic representation. The
+representation is not utilized in this report, but it serves as a means to
+identify the record type for use by further language extensions.
+
+</li><li> &#x27e8;constructor name&#x27e9; is bound to a procedure that takes as many
+arguments as there are &#x27e8;field name&#x27e9;s in the <code>(</code>&#x27e8;constructor
+name&#x27e9; &hellip;<code>)</code> subexpression and returns a new record of type
+&#x27e8;name&#x27e9;. Fields whose names are listed with &#x27e8;constructor name&#x27e9;
+have the corresponding argument as their initial value. The initial values
+of all other fields are unspecified. It is an error for a field name to
+appear in &#x27e8;constructor&#x27e9; but not as a &lt;field name&gt;.
+
+</li><li> &#x27e8;pred&#x27e9; is bound to a predicate that returns <code>#t</code> when given a
+value returned by the procedure bound to &#x27e8;constructor name&#x27e9; and
+<code>#f</code> for everything else.
+
+</li><li> Each &#x27e8;accessor name&#x27e9; is bound to a procedure that takes a record of
+type &#x27e8;name&#x27e9; and returns the current value of the corresponding field.
+It is an error to pass an accessor a value which is not a record of the
+appropriate type.
+
+</li><li> Each &#x27e8;modifier name&#x27e9; is bound to a procedure that takes a record of
+type &#x27e8;name&#x27e9; and a value which becomes the new value of the
+corresponding field; an unspecified value is returned. It is an error to
+pass a modifier a first argument which is not a record of the appropriate
+type.
+
+</li></ul>
+
+<p>For instance, the following record-type definition
+</p>
+<div class="example lisp">
+<pre class="lisp">(define-record-type &#x27e8;pare&#x27e9;
+  (kons x y)
+  pare?
+  (x kar set-kar!)
+  (y kdr))
+</pre></div>
+
+<p>defines <code>kons</code> to be a constructor, <code>kar</code> and <code>kdr</code>
+to be accessors, <code>set-kar!</code> to be a modifier, and <code>pare?</code>
+to be a predicate for instances of <code>&lt;pare&gt;</code>.
+</p>
+<div class="example lisp">
+<pre class="lisp">(pare? (kons 1 2))        &rArr; #t
+  (pare? (cons 1 2))        &rArr; #f
+  (kar (kons 1 2))          &rArr; 1
+  (kdr (kons 1 2))          &rArr; 2
+  (let ((k (kons 1 2)))
+    (set-kar! k 3)
+    (kar k))                &rArr; 3
+</pre></div>
+
+</dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Libraries.html">Libraries</a>, Previous: <a href="Syntax-definitions.html">Syntax definitions</a>, Up: <a href="Program-structure.html">Program structure</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

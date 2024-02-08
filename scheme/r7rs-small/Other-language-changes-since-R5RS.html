@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Other language changes since R5RS (Revised(7) Report on the Algorithmic Language Scheme)</title>
+
+<meta name="description" content="Other language changes since R5RS (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="keywords" content="Other language changes since R5RS (Revised(7) Report on the Algorithmic Language Scheme)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="top">
+<link href="Alphabetic-index.html" rel="index" title="Alphabetic index">
+<link href="Language-changes.html" rel="up" title="Language changes">
+<link href="Incompatibilities-with-R6RS.html" rel="next" title="Incompatibilities with R6RS">
+<link href="Incompatibilities-with-R5RS.html" rel="prev" title="Incompatibilities with R5RS">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section" id="Other-language-changes-since-R5RS">
+<div class="header">
+<p>
+Next: <a href="Incompatibilities-with-R6RS.html" accesskey="n" rel="next">Incompatibilities with R<sup>6</sup>RS</a>, Previous: <a href="Incompatibilities-with-R5RS.html" accesskey="p" rel="prev">Incompatibilities with R<sup>5</sup>RS</a>, Up: <a href="Language-changes.html" accesskey="u" rel="up">Language changes</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Other-language-changes-since-R5RS-1"></span><h3 class="section">Other language changes since R<sup>5</sup>RS</h3>
+
+<p>This section enumerates the additional differences between this report
+and the &ldquo;Revised<sup>5</sup> report&rdquo; [<a href="References.html#R5RS">R5RS</a>].
+</p>
+<p>This list is not authoritative, but is believed to be correct and
+complete.
+</p>
+<ul>
+<li> Various minor ambiguities and unclarities in R<sup>5</sup>RS have been
+cleaned up.
+
+</li><li> Libraries have been added as a new program structure to improve
+encapsulation and sharing of code. Some existing and new identifiers
+have been factored out into separate libraries. Libraries can be
+imported into other libraries or main programs, with controlled
+exposure and renaming of identifiers. The contents of a library can be
+made conditional on the features of the implementation on which it is
+to be used. There is an R<sup>5</sup>RS compatibility library.
+
+</li><li> The expressions types <code>include</code>, <code>include-ci</code>, and
+<code>cond-expand</code> have been added to the base library; they have the
+same semantics as the corresponding library declarations.
+
+</li><li> Exceptions can now be signaled explicitly with <code>raise</code>,
+<code>raise-continuable</code> or <code>error</code>, and can be handled with
+<code>with-exception-handler</code> and the <code>guard</code> syntax. Any object
+can specify an error condition; the implementation-defined conditions
+signaled by <code>error</code> have a predicate to detect them and accessor
+functions to retrieve the arguments passed to <code>error</code>. Conditions
+signaled by <code>read</code> and by file-related procedures also have
+predicates to detect them.
+
+</li><li> New disjoint types supporting access to multiple fields can be
+generated with the <code>define-record-type</code> of SRFI 9 [<a href="References.html#srfi9">srfi9</a>].
+
+</li><li> Parameter objects can be created with <code>make-parameter</code>, and
+dynamically rebound with <code>parameterize</code>. The procedures
+<code>current-input-port</code> and <code>current-output-port</code> are now
+parameter objects, as is the newly introduced
+<code>current-error-port</code>.
+
+</li><li> Support for promises has been enhanced based on SRFI 45 [<a href="References.html#srfi45">srfi45</a>].
+
+</li><li> Bytevectors, vectors of exact integers in the range from 0 to 255
+inclusive, have been added as a new disjoint type. A subset of the
+vector procedures is provided. Bytevectors can be converted to and from
+strings in accordance with the UTF-8 character encoding. Bytevectors
+have a datum representation and evaluate to themselves.
+
+</li><li> Vector constants evaluate to themselves.
+
+</li><li> The procedure <code>read-line</code> is provided to make line-oriented
+textual input simpler.
+
+</li><li> The procedure <code>flush-output-port</code> is provided to allow minimal
+control of output port buffering.
+
+</li><li> Ports can now be designated as textual or binary ports, with new
+procedures for reading and writing binary data. The new predicates
+<code>input-port-open?</code> and <code>output-port-open?</code> return whether a
+port is open or closed. The new procedure <code>close-port</code> now closes
+a port; if the port has both input and output sides, both are closed.
+
+</li><li> String ports have been added as a way to read and write characters to
+and from strings, and bytevector ports to read and write bytes to and
+from bytevectors.
+
+</li><li> There are now I/O procedures specific to strings and bytevectors.
+
+</li><li> The <code>write</code> procedure now generates datum labels when applied to
+circular objects. The new procedure <code>write-simple</code> never generates
+labels; <code>write-shared</code> generates labels for all shared and
+circular structure. The <code>display</code> procedure must not loop on
+circular objects.
+
+</li><li> The R<sup>6</sup>RS procedure <code>eof-object</code> has been added. Eof-objects
+are now required to be a disjoint type.
+
+</li><li> Syntax definitions are now allowed wherever variable definitions are.
+
+</li><li> The <code>syntax-rules</code> construct now allows the ellipsis symbol to be
+specified explicitly instead of the default <code>&hellip;</code>, allows
+template escapes with an ellipsis-prefixed list, and allows tail
+patterns to follow an ellipsis pattern.
+
+</li><li> The <code>syntax-error</code> syntax has been added as a way to signal
+immediate and more informative errors when a macro is expanded.
+
+</li><li> The <code>letrec*</code> binding construct has been added, and internal
+<code>define</code> is specified in terms of it.
+
+</li><li> Support for capturing multiple values has been enhanced with
+<code>define-values</code>, <code>let-values</code>, and <code>let*-values</code>.
+Standard expression types which contain a sequence of expressions now
+permit passing zero or more than one value to the continuations of all
+non-final expressions of the sequence.
+
+</li><li> The <code>case</code> conditional now supports <code>=&gt;</code> syntax analogous to
+<code>cond</code> not only in regular clauses but in the <code>else</code> clause
+as well.
+
+</li><li> To support dispatching on the number of arguments passed to a
+procedure, <code>case-lambda</code> has been added in its own library.
+
+</li><li> The convenience conditionals <code>when</code> and <code>unless</code> have been
+added.
+
+</li><li> The behavior of <code>eqv?</code> on inexact numbers now conforms to the
+R<sup>6</sup>RS definition.
+
+</li><li> When applied to procedures, <code>eq?</code> and <code>eqv?</code> are permitted to
+return different answers.
+
+</li><li> The R<sup>6</sup>RS procedures <code>boolean=?</code> and <code>symbol=?</code> have been
+added.
+
+</li><li> Positive infinity, negative infinity, NaN, and negative inexact zero
+have been added to the numeric tower as inexact values with the written
+representations <code>+inf.0</code>, <code>-inf.0</code>, <code>+nan.0</code>, and
+<code>-0.0</code> respectively. Support for them is not required. The
+representation <code>-nan.0</code> is synonymous with <code>+nan.0</code>.
+
+</li><li> The <code>log</code> procedure now accepts a second argument specifying
+the logarithm base.
+
+</li><li> The procedures <code>map</code> and <code>for-each</code> are now required to
+terminate on the shortest argument list.
+
+</li><li> The procedures <code>member</code> and <code>assoc</code> now take an optional
+third argument specifying the equality predicate to be used.
+
+</li><li> The numeric procedures <code>finite?</code>, <code>infinite?</code>, <code>nan?</code>,
+<code>exact-integer?</code>, <code>square</code>, and <code>exact-integer-sqrt</code>
+have been added.
+
+</li><li> The <code>-</code> and <code>/</code> procedures and the character and string
+comparison predicates are now required to support more than two
+arguments.
+
+</li><li> The forms <code>#true</code> and <code>#false</code> are now supported as well as
+<code>#t</code> and <code>#f</code>.
+
+</li><li> 
+The procedures <code>make-list</code>, <code>list-copy</code>, <code>list-set!</code>,
+<code>string-map</code>, <code>string-for-each</code>, <code>string-&gt;vector</code>,
+<code>vector-append</code>, <code>vector-copy</code>, <code>vector-map</code>,
+<code>vector-for-each</code>, <code>vector-&gt;string</code>, <code>vector-copy!</code>, and
+<code>string-copy!</code> have been added to round out the sequence
+operations.
+
+</li><li> Some string and vector procedures support processing of part of a
+string or vector using optional <var>start</var> and <var>end</var> arguments.
+
+</li><li> Some list procedures are now defined on circular lists.
+
+</li><li> Implementations may provide any subset of the full Unicode repertoire
+that includes ASCII, but implementations must support any such subset
+in a way consistent with Unicode. Various character and string
+procedures have been extended accordingly, and case conversion
+procedures added for strings. String comparison is no longer required
+to be consistent with character comparison, which is based solely on
+Unicode scalar values. The new <code>digit-value</code> procedure has been
+added to obtain the numerical value of a numeric character.
+
+</li><li> There are now two additional comment syntaxes: <code>#;</code> to skip the
+next datum, and <code>#|</code> ... <code>|#</code> for nestable block comments.
+
+</li><li> Data prefixed with datum labels <code>#&lt;</code><var>n</var><code>&gt;=</code> can be
+referenced with <code>#&lt;</code><var>n</var><code>&gt;#</code>, allowing for reading and
+writing of data with shared structure.
+
+</li><li> Strings and symbols now allow mnemonic and numeric escape sequences,
+and the list of named characters has been extended.
+
+</li><li> The procedures <code>file-exists?</code> and <code>delete-file</code> are available
+in the <code>(scheme file)</code> library.
+
+</li><li> An interface to the system environment, command line, and process exit
+status is available in the <code>(scheme process-context)</code> library.
+
+</li><li> Procedures for accessing time-related values are available in the
+<code>(scheme time)</code> library.
+
+</li><li> A less irregular set of integer division operators is provided
+with new and clearer names.
+
+</li><li> The <code>load</code> procedure now accepts a second argument specifying the
+environment to load into.
+
+</li><li> The <code>call-with-current-continuation</code> procedure now has the synonym
+<code>call/cc</code>.
+
+</li><li> The semantics of read-eval-print loops are now partly prescribed,
+requiring the redefinition of procedures, but not syntax keywords, to
+have retroactive effect.
+
+</li><li> The formal semantics now handles <code>dynamic-wind</code>.
+
+</li></ul>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Incompatibilities-with-R6RS.html">Incompatibilities with R<sup>6</sup>RS</a>, Previous: <a href="Incompatibilities-with-R5RS.html">Incompatibilities with R<sup>5</sup>RS</a>, Up: <a href="Language-changes.html">Language changes</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
