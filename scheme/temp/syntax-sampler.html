@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Formal syntax formatting sampler</title>
+
+<meta name="description" content="Formal syntax formatting sampler">
+<meta name="keywords" content="Formal syntax formatting sampler">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">Formal syntax formatting sampler</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Different ways of formatting and displaying the R<sup>7</sup>RS formal
+syntax.
+</p>
+<span id="Marked_002dup-text"></span><h3 class="heading">Marked-up text</h3>
+<span id="One-paragraph-per-production"></span><h4 class="subheading">One paragraph per production</h4>
+
+<p>&#x27e8;token&#x27e9; &rarr; &#x27e8;identifier&#x27e9; | &#x27e8;boolean&#x27e9;
+    | &#x27e8;number&#x27e9; | &#x27e8;character&#x27e9; | &#x27e8;string&#x27e9;
+    | <code>(</code> | <code>)</code> | <code>#(</code> | <code>#u8</code> | <code>'</code> |
+    | <code>`</code> | <code>,</code> | <code>,@</code> | <code>.</code>
+</p>
+<p>&#x27e8;delimiter&#x27e9; &rarr; &#x27e8;whitespace&#x27e9; | &#x27e8;vertical line&#x27e9;
+    | <code>(</code> | <code>)</code> | <code>&quot;</code> | <code>;</code>
+</p>
+<p>&#x27e8;intraline whitespace&#x27e9; &rarr; &#x27e8;space or tab&#x27e9;
+</p>
+<p>&#x27e8;whitespace&#x27e9; &rarr; &#x27e8;intraline whitespace&#x27e9;
+    | &#x27e8;line ending&#x27e9;
+</p>
+<p>&#x27e8;vertical line&#x27e9; &rarr; <code>|</code>
+</p>
+<p>&#x27e8;line ending&#x27e9; &rarr; &#x27e8;newline&#x27e9;
+    | &#x27e8;return&#x27e9; &#x27e8;newline&#x27e9; | &#x27e8;return&#x27e9;
+</p>
+<p>&#x27e8;comment&#x27e9; &rarr; <code>;</code> &#x27e8;all subsequent characters up to a line ending&#x27e9;
+    | &#x27e8;nested comment&#x27e9;
+    | <code>#;</code> &#x27e8;intertoken space&#x27e9; &#x27e8;datum&#x27e9;
+</p>
+<p>&#x27e8;nested comment&#x27e9; &rarr; <code>#|</code> &#x27e8;comment text&#x27e9;
+                  &#x27e8;comment cont&#x27e9;<sup>*</sup> <code>|#</code>
+</p>
+<p>&#x27e8;comment text&#x27e9; &rarr; &#x27e8;character sequence not containing <code>#|</code> or <code>|#</code>&#x27e9;
+</p>
+<p>&#x27e8;comment cont&#x27e9; &rarr; &#x27e8;nested comment&#x27e9;
+    &#x27e8;comment text&#x27e9;
+</p>
+<p>&#x27e8;directive&#x27e9; &rarr; <code>#!fold-case</code> | <code>#!no-fold-case</code>
+</p>
+<span id="Preformatted_002c-marked_002dup-text"></span><h3 class="heading">Preformatted, marked-up text</h3>
+
+<p>This is exceedingly hard to align and the results are very sensitive
+to the size of the display.
+</p>
+<div class="display">
+<pre class="display">&#x27e8;token&#x27e9; &rarr; &#x27e8;identifier&#x27e9; | &#x27e8;boolean&#x27e9;
+    | &#x27e8;number&#x27e9; | &#x27e8;character&#x27e9; | &#x27e8;string&#x27e9;
+    | <code>(</code> | <code>)</code> | <code>#(</code> | <code>#u8</code> | <code>'</code> |
+    | <code>`</code> | <code>,</code> | <code>,@</code> | <code>.</code>
+&#x27e8;delimiter&#x27e9; &rarr; &#x27e8;whitespace&#x27e9; | &#x27e8;vertical line&#x27e9;
+    | <code>(</code> | <code>)</code> | <code>&quot;</code> | <code>;</code>
+&#x27e8;intraline whitespace&#x27e9; &rarr; &#x27e8;space or tab&#x27e9;
+&#x27e8;whitespace&#x27e9; &rarr; &#x27e8;intraline whitespace&#x27e9;
+    | &#x27e8;line ending&#x27e9;
+&#x27e8;vertical line&#x27e9; &rarr; <code>|</code>
+&#x27e8;line ending&#x27e9; &rarr; &#x27e8;newline&#x27e9;
+    | &#x27e8;return&#x27e9; &#x27e8;newline&#x27e9; | &#x27e8;return&#x27e9;
+&#x27e8;comment&#x27e9; &rarr; <code>;</code> &#x27e8;all subsequent characters up to a line ending&#x27e9;
+    | &#x27e8;nested comment&#x27e9;
+    | <code>#;</code> &#x27e8;intertoken space&#x27e9; &#x27e8;datum&#x27e9;
+&#x27e8;nested comment&#x27e9; &rarr; <code>#|</code> &#x27e8;comment text&#x27e9;
+                  &#x27e8;comment cont&#x27e9;<sup>*</sup> <code>|#</code>
+&#x27e8;comment text&#x27e9; &rarr; &#x27e8;character sequence not containing <code>#|</code> or <code>|#</code>&#x27e9;
+&#x27e8;comment cont&#x27e9; &rarr; &#x27e8;nested comment&#x27e9;
+    &#x27e8;comment text&#x27e9;
+&#x27e8;directive&#x27e9; &rarr; <code>#!fold-case</code> | <code>#!no-fold-case</code>
+</pre></div>
+
+<span id="Plain_002dtext-EBNF-transcription"></span><h3 class="heading">Plain-text EBNF transcription</h3>
+
+<div class="example">
+<pre class="example">&lt;token&gt; --&gt; &lt;identifier&gt; | &lt;boolean&gt; | &lt;number&gt; | &lt;character&gt; | &lt;string&gt;
+    | ( | ) | #( | #u8( | ' | ` | , | ,&nbsp;| .
+
+&lt;delimiter&gt; --&gt; &lt;whitespace&gt; | &lt;vertical line&gt; | ( | )
+    | &quot; | ;
+
+&lt;intraline whitespace&gt; --&gt; &lt;space or tab&gt;
+
+&lt;whitespace&gt; --&gt; &lt;intraline whitespace&gt; | &lt;line ending&gt;
+
+&lt;vertical line&gt; --&gt; [a pipe character, U+007C]
+
+&lt;line ending&gt; --&gt; &lt;newline&gt; | &lt;return&gt; &lt;newline&gt; | &lt;return&gt;
+
+&lt;comment&gt; --&gt; ; &lt;all subsequent characters up to a line ending&gt;
+    | &lt;nested comment&gt;
+    | #; &lt;intertoken space&gt; &lt;datum&gt;
+
+&lt;nested comment&gt; --&gt; #| &lt;comment text&gt;
+                        &lt;comment cont&gt;* |#
+
+&lt;comment text&gt; --&gt; &lt;character sequence not containing #| or |#&gt;
+
+&lt;comment cont&gt; --&gt; &lt;nested comment&gt; &lt;comment text&gt;
+
+&lt;directive&gt; --&gt; #!fold-case | #!no-fold-case
+</pre></div>
+
+
+
+
+</body>
+</html>
