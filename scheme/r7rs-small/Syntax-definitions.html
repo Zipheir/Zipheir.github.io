@@ -51,10 +51,9 @@ Next: <a href="Record-type-definitions.html" accesskey="n" rel="next">Record-typ
 
 <p>Syntax definitions have this form:
 </p>
-<div class="example lisp">
-<pre class="lisp">(define-syntax <span class="roman">&#x27e8;keyword&#x27e9; &#x27e8;transformer spec&#x27e9;</span>)
-</pre></div>
-
+<dl class="def">
+<dt id="index-define_002dsyntax"><span class="category">syntax: </span><span><strong>define-syntax</strong> <em>&#x27e8;keyword&#x27e9; &#x27e8;transformer spec&#x27e9;</em><a href='#index-define_002dsyntax' class='copiable-anchor'> &para;</a></span></dt>
+<dd>
 <p>&#x27e8;Keyword&#x27e9; is an identifier, and the &#x27e8;transformer spec&#x27e9; is
 an instance of <code>syntax-rules</code>. Like variable definitions, syntax
 definitions can appear at the outermost level or nested within a body.
@@ -106,6 +105,8 @@ are errors:
     (define foo x)
     (plus foo x)))
 </pre></div>
+
+</dd></dl>
 
 </div>
 <hr>
