@@ -49,8 +49,48 @@ Next: <a href="Libraries-formal.html" accesskey="n" rel="next">Libraries</a>, Pr
 <hr>
 <span id="Programs-and-definitions-1"></span><h4 class="subsection">7.1.6 Programs and definitions</h4>
 
-<p>[grammar]
+<blockquote class="indentedblock">
+
+<p>&#x27e8;program&#x27e9; &rarr;
+   &#x27e8;import declaration&#x27e9;<sup>+</sup>
+   &#x27e8;command or definition&#x27e9;<sup>+</sup>
 </p>
+<p>&#x27e8;command or definition&#x27e9; &rarr; &#x27e8;command&#x27e9;
+    | &#x27e8;definition&#x27e9;
+    | <code>(begin </code>&#x27e8;command or definition&#x27e9;<sup>+</sup><code>)</code>
+</p>
+<p>&#x27e8;definition&#x27e9; &rarr;
+      <code>(define </code>&#x27e8;identifier&#x27e9; &#x27e8;expression&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(define </code>(&#x27e8;identifier&#x27e9; &#x27e8;def formals&#x27e9;<code>)</code>
+        &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| &#x27e8;syntax definition&#x27e9;<br>
+&nbsp;&nbsp;| <code>(define-values </code>&#x27e8;formals&#x27e9; &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(define-record-type </code>&#x27e8;identifier&#x27e9;
+        &#x27e8;constructor&#x27e9; &#x27e8;identifier&#x27e9;
+        &#x27e8;field spec&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(begin </code>&#x27e8;definition&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;def formals&#x27e9; &rarr; &#x27e8;identifier&#x27e9;<sup>*</sup>
+    | &#x27e8;identifier&#x27e9;<sup>*</sup> <code>.</code> &#x27e8;identifier&#x27e9;
+</p>
+<p>&#x27e8;constructor&#x27e9; &rarr;
+      <code>(</code>&#x27e8;identifier&#x27e9; &#x27e8;field name&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;field spec&#x27e9; &rarr;
+      <code>(</code>&#x27e8;field name&#x27e9; &#x27e8;accessor&#x27e9;<code>)</code>
+    | <code>(</code>&#x27e8;field name&#x27e9; &#x27e8;accessor&#x27e9; &#x27e8;mutator&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;field name&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+</p>
+<p>&#x27e8;accessor&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+</p>
+<p>&#x27e8;mutator&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+</p>
+<p>&#x27e8;syntax definition&#x27e9; &rarr;
+    <code>(define-syntax </code>&#x27e8;keyword&#x27e9; &#x27e8;transformer spec&#x27e9;<code>)</code>
+</p>
+</blockquote>
+
 </div>
 
 

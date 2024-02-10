@@ -53,8 +53,58 @@ Next: <a href="Programs-and-definitions.html" accesskey="n" rel="next">Programs 
 <code>syntax-rules</code> pattern must be a list pattern, not a vector
 pattern or an identifier pattern.
 </p>
-<p>[grammar]
+<blockquote class="indentedblock">
+
+<p>&#x27e8;transformer spec&#x27e9; &rarr;
+      <code>(syntax-rules </code>(&#x27e8;identifier&#x27e9;<sup>*</sup><code>)</code>
+        &#x27e8;syntax rule&#x27e9;<sup>*</sup><code>)</code>
+    | <code>(syntax-rules </code>&#x27e8;identifier&#x27e9;
+        <code>(</code>&#x27e8;identifier&#x27e9;<sup>*</sup><code>)</code>
+        &#x27e8;syntax rule&#x27e9;<sup>*</sup><code>)</code>
 </p>
+<p>&#x27e8;syntax rule&#x27e9; &rarr;
+      <code>(</code>&#x27e8;pattern&#x27e9; &#x27e8;template&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;pattern&#x27e9; &rarr; &#x27e8;pattern identifier&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;underscore&#x27e9;<br>
+&nbsp;&nbsp;| <code>(</code>&#x27e8;pattern&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(</code>&#x27e8;pattern&#x27e9;<sup>+</sup> <code>.</code> &#x27e8;pattern&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(</code>&#x27e8;pattern&#x27e9;<sup>*</sup> &#x27e8;pattern&#x27e9; &#x27e8;ellipsis&#x27e9;
+        &#x27e8;pattern&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(</code>&#x27e8;pattern&#x27e9;<sup>*</sup> &#x27e8;pattern&#x27e9; &#x27e8;ellipsis&#x27e9;
+        &#x27e8;pattern&#x27e9;<sup>*</sup> <code>.</code> &#x27e8;pattern&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>#(</code>&#x27e8;pattern&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>#(</code>&#x27e8;pattern&#x27e9;<sup>*</sup> &#x27e8;pattern&#x27e9;
+        &#x27e8;ellipsis&#x27e9; &#x27e8;pattern&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| &#x27e8;pattern datum&#x27e9;
+</p>
+<p>&#x27e8;pattern datum&#x27e9; &rarr; &#x27e8;string&#x27e9;
+    | &#x27e8;character&#x27e9;
+    | &#x27e8;boolean&#x27e9;
+    | &#x27e8;number&#x27e9;
+    | &#x27e8;bytevector&#x27e9;
+</p>
+<p>&#x27e8;template&#x27e9; &rarr; &#x27e8;pattern identifier&#x27e9;
+    | <code>(</code>&#x27e8;template element&#x27e9;<sup>*</sup><code>)</code>
+    | <code>(</code>&#x27e8;template element&#x27e9;<sup>+</sup> <code>.</code>
+        &#x27e8;template&#x27e9;<code>)</code>
+    | <code>#(</code>&#x27e8;template element&#x27e9;<sup>*</sup><code>)</code>
+    | &#x27e8;template datum&#x27e9;
+</p>
+<p>&#x27e8;template element&#x27e9; &rarr; &#x27e8;template&#x27e9;
+    | &#x27e8;template&#x27e9; &#x27e8;ellipsis&#x27e9;
+</p>
+<p>&#x27e8;template datum&#x27e9; &rarr; &#x27e8;pattern datum&#x27e9;
+</p>
+<p>&#x27e8;pattern identifier&#x27e9; &rarr;
+      &#x27e8;any identifier except <code>...</code>&#x27e9;
+</p>
+<p>&#x27e8;ellipsis&#x27e9; &rarr; &#x27e8;an identifier defaulting to <code>...</code>&#x27e9;
+</p>
+<p>&#x27e8;underscore&#x27e9; &rarr; &#x27e8;the identifier <code>_</code>&#x27e9;
+</p>
+</blockquote>
+
 </div>
 
 

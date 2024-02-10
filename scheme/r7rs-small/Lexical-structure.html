@@ -87,102 +87,147 @@ the corresponding character.
 <span id="index-identifier-1"></span>
 <span id="index-comment"></span>
 
-<div class="format">
-<pre class="format">&#x27e8;token&#x27e9; &rarr; &#x27e8;identifier&#x27e9; | &#x27e8;boolean&#x27e9;
+<blockquote class="indentedblock">
+
+<p>&#x27e8;token&#x27e9; &rarr; &#x27e8;identifier&#x27e9; | &#x27e8;boolean&#x27e9;
     | &#x27e8;number&#x27e9; | &#x27e8;character&#x27e9; | &#x27e8;string&#x27e9;
-    | <code>(</code> | <code>)</code> | <code>#(</code> | <code>#u8</code> | <code>'</code> |
+    | <code>(</code> | <code>)</code> | <code>#(</code> | <code>#u8</code>
+    | <code>'</code>
     | <code>`</code> | <code>,</code> | <code>,@</code> | <code>.</code>
-&#x27e8;delimiter&#x27e9; &rarr; &#x27e8;whitespace&#x27e9; | &#x27e8;vertical line&#x27e9;
+</p>
+<p>&#x27e8;delimiter&#x27e9; &rarr; &#x27e8;whitespace&#x27e9; | &#x27e8;vertical line&#x27e9;
     | <code>(</code> | <code>)</code> | <code>&quot;</code> | <code>;</code>
-&#x27e8;intraline whitespace&#x27e9; &rarr; &#x27e8;space or tab&#x27e9;
-&#x27e8;whitespace&#x27e9; &rarr; &#x27e8;intraline whitespace&#x27e9;
+</p>
+<p>&#x27e8;intraline whitespace&#x27e9; &rarr; &#x27e8;space or tab&#x27e9;
+</p>
+<p>&#x27e8;whitespace&#x27e9; &rarr; &#x27e8;intraline whitespace&#x27e9;
     | &#x27e8;line ending&#x27e9;
-&#x27e8;vertical line&#x27e9; &rarr; <code>|</code>
-&#x27e8;line ending&#x27e9; &rarr; &#x27e8;newline&#x27e9;
+</p>
+<p>&#x27e8;vertical line&#x27e9; &rarr; <code>|</code>
+</p>
+<p>&#x27e8;line ending&#x27e9; &rarr; &#x27e8;newline&#x27e9;
     | &#x27e8;return&#x27e9; &#x27e8;newline&#x27e9; | &#x27e8;return&#x27e9;
-&#x27e8;comment&#x27e9; &rarr; <code>;</code> &#x27e8;all subsequent characters up to a line ending&#x27e9;
+</p>
+<p>&#x27e8;comment&#x27e9; &rarr; <code>;</code>
+      &#x27e8;all subsequent characters up to a line ending&#x27e9;
     | &#x27e8;nested comment&#x27e9;
     | <code>#;</code> &#x27e8;intertoken space&#x27e9; &#x27e8;datum&#x27e9;
-&#x27e8;nested comment&#x27e9; &rarr; <code>#|</code> &#x27e8;comment text&#x27e9;
-                  &#x27e8;comment cont&#x27e9;<sup>*</sup> <code>|#</code>
-&#x27e8;comment text&#x27e9; &rarr; &#x27e8;character sequence not containing <code>#|</code> or <code>|#</code>&#x27e9;
-&#x27e8;comment cont&#x27e9; &rarr; &#x27e8;nested comment&#x27e9;
+</p>
+<p>&#x27e8;nested comment&#x27e9; &rarr;
+      <code>#|</code> &#x27e8;comment text&#x27e9;
+        &#x27e8;comment cont&#x27e9;<sup>*</sup> <code>|#</code>
+</p>
+<p>&#x27e8;comment text&#x27e9; &rarr;
+  &#x27e8;character sequence not containing <code>#|</code>
+              or <code>|#</code>&#x27e9;
+</p>
+<p>&#x27e8;comment cont&#x27e9; &rarr; &#x27e8;nested comment&#x27e9;
     &#x27e8;comment text&#x27e9;
-&#x27e8;directive&#x27e9; &rarr; <code>#!fold-case</code> | <code>#!no-fold-case</code>
-</pre></div>
+</p>
+<p>&#x27e8;directive&#x27e9; &rarr; <code>#!fold-case</code>
+    | <code>#!no-fold-case</code>
+</p>
+</blockquote>
 
 <p>Note that it is ungrammatical to follow a &#x27e8;directive&#x27e9; with
 anything but a &#x27e8;delimiter&#x27e9; or the end of file.
 </p>
-<div class="format">
-<pre class="format">&#x27e8;atmosphere&#x27e9; &rarr; &#x27e8;whitespace&#x27e9; ∣ &#x27e8;comment&#x27e9;
+<blockquote class="indentedblock">
+
+<p>&#x27e8;atmosphere&#x27e9; &rarr; &#x27e8;whitespace&#x27e9; ∣ &#x27e8;comment&#x27e9;
     ∣ &#x27e8;directive&#x27e9;
-&#x27e8;intertoken space&#x27e9; &rarr; &#x27e8;atmosphere&#x27e9;<sup>*</sup>
-</pre></div>
+</p>
+<p>&#x27e8;intertoken space&#x27e9; &rarr; &#x27e8;atmosphere&#x27e9;<sup>*</sup>
+</p>
+</blockquote>
 
 <p>Note that <code>+i</code>, <code>-i</code> and &#x27e8;infnan&#x27e9; below are exceptions
 to the &#x27e8;peculiar identifier&#x27e9; rule; they are parsed as numbers, not
 identifiers.
 </p>
-<div class="format">
-<pre class="format">&#x27e8;identifier&#x27e9; &rarr; &#x27e8;initial&#x27e9; &#x27e8;subsequent&#x27e9;<sup>*</sup>
-    | &#x27e8;vertical line&#x27e9; &#x27e8;symbol element&#x27e9;<sup>*</sup> &#x27e8;vertical line&#x27e9;
+<blockquote class="indentedblock">
+
+<p>&#x27e8;identifier&#x27e9; &rarr; &#x27e8;initial&#x27e9; &#x27e8;subsequent&#x27e9;<sup>*</sup>
+    | &#x27e8;vertical line&#x27e9; &#x27e8;symbol element&#x27e9;<sup>*</sup>
+        &#x27e8;vertical line&#x27e9;
     | &#x27e8;peculiar identifier&#x27e9;
-&#x27e8;initial&#x27e9; &rarr; &#x27e8;letter&#x27e9; | &#x27e8;special initial&#x27e9;
-&#x27e8;letter&#x27e9; &rarr; <code>a</code> | <code>b</code> | <code>c</code> | &hellip; | <code>z</code>
+</p>
+<p>&#x27e8;initial&#x27e9; &rarr; &#x27e8;letter&#x27e9; | &#x27e8;special initial&#x27e9;
+</p>
+<p>&#x27e8;letter&#x27e9; &rarr; <code>a</code> | <code>b</code> | <code>c</code>
+    | &hellip; | <code>z</code>
     | <code>A</code> | <code>B</code> | <code>C</code> | &hellip; | <code>Z</code>
-&#x27e8;special initial&#x27e9; &rarr; <code>!</code> | <code>$</code> | <code>%</code>
+</p>
+<p>&#x27e8;special initial&#x27e9; &rarr; <code>!</code> | <code>$</code> | <code>%</code>
     | <code>&amp;</code> | <code>*</code> | <code>/</code> | <code>:</code> | <code>&lt;</code> | <code>=</code>
     | <code>&gt;</code> | <code>?</code> | <code>^</code> | <code>_</code> | <code>~</code>
-&#x27e8;subsequent&#x27e9; &rarr; &#x27e8;initial&#x27e9; | &#x27e8;digit&#x27e9;
+</p>
+<p>&#x27e8;subsequent&#x27e9; &rarr; &#x27e8;initial&#x27e9; | &#x27e8;digit&#x27e9;
     | &#x27e8;special subsequent&#x27e9;
-&#x27e8;digit&#x27e9; &rarr; <code>0</code> | <code>1</code> | <code>2</code> | <code>3</code>
+</p>
+<p>&#x27e8;digit&#x27e9; &rarr; <code>0</code> | <code>1</code> | <code>2</code> | <code>3</code>
     | <code>4</code> | <code>5</code> | <code>6</code> | <code>7</code> | <code>8</code> | <code>9</code>
-&#x27e8;hex digit&#x27e9; &rarr; &#x27e8;digit&#x27e9; | <code>a</code> | <code>b</code>
+</p>
+<p>&#x27e8;hex digit&#x27e9; &rarr; &#x27e8;digit&#x27e9; | <code>a</code> | <code>b</code>
     | <code>c</code> | <code>d</code> | <code>e</code> | <code>f</code>
-&#x27e8;explicit sign&#x27e9; &rarr; <code>+</code> | <code>-</code>
-&#x27e8;special subsequent&#x27e9; &rarr; &#x27e8;explicit sign&#x27e9; | <code>.</code>
+</p>
+<p>&#x27e8;explicit sign&#x27e9; &rarr; <code>+</code> | <code>-</code>
+</p>
+<p>&#x27e8;special subsequent&#x27e9; &rarr; &#x27e8;explicit sign&#x27e9; | <code>.</code>
     | <code>@</code>
-&#x27e8;inline hex escape&#x27e9; &rarr; <code>\x</code>&#x27e8;hex scalar value&#x27e9;<code>;</code>
-&#x27e8;hex scalar value&#x27e9; &rarr; &#x27e8;hex digit&#x27e9;<sup>+</sup>
-&#x27e8;mnemonic escape&#x27e9; &rarr; <code>\a</code> | <code>\b</code> | <code>\t</code>
+</p>
+<p>&#x27e8;inline hex escape&#x27e9; &rarr;
+      <code>\x</code>&#x27e8;hex scalar value&#x27e9;<code>;</code>
+</p>
+<p>&#x27e8;hex scalar value&#x27e9; &rarr; &#x27e8;hex digit&#x27e9;<sup>+</sup>
+</p>
+<p>&#x27e8;mnemonic escape&#x27e9; &rarr; <code>\a</code> | <code>\b</code> | <code>\t</code>
     | <code>\n</code> | <code>\r</code>
-&#x27e8;peculiar identifier&#x27e9; &rarr; &#x27e8;explicit sign&#x27e9;
-    | &#x27e8;explicit sign&#x27e9; &#x27e8;sign subsequent&#x27e9; &#x27e8;subsequent&#x27e9;<sup>*</sup>
+</p>
+<p>&#x27e8;peculiar identifier&#x27e9; &rarr; &#x27e8;explicit sign&#x27e9;
+    | &#x27e8;explicit sign&#x27e9; &#x27e8;sign subsequent&#x27e9;
+        &#x27e8;subsequent&#x27e9;<sup>*</sup>
     | &#x27e8;explicit sign&#x27e9; <code>.</code> &#x27e8;dot subsequent&#x27e9;
       &#x27e8;subsequent&#x27e9;<sup>*</sup>
     | <code>.</code> &#x27e8;dot subsequent&#x27e9; &#x27e8;subsequent&#x27e9;<sup>*</sup>
-&#x27e8;dot subsequent&#x27e9; &rarr; &#x27e8;sign subsequent&#x27e9; | <code>.</code>
-&#x27e8;sign subsequent&#x27e9; &rarr; &#x27e8;initial&#x27e9; | &#x27e8;explicit sign&#x27e9;
+</p>
+<p>&#x27e8;dot subsequent&#x27e9; &rarr; &#x27e8;sign subsequent&#x27e9; | <code>.</code>
+</p>
+<p>&#x27e8;sign subsequent&#x27e9; &rarr; &#x27e8;initial&#x27e9; | &#x27e8;explicit sign&#x27e9;
     | <code>@</code>
-&#x27e8;symbol element&#x27e9; &rarr;
-    &#x27e8;any character other than &#x27e8;vertical line&#x27e9; or <code>\</code>&#x27e9;
+</p>
+<p>&#x27e8;symbol element&#x27e9; &rarr;
+    &#x27e8;any character other than &#x27e8;vertical line&#x27e9; or
+                <code>\</code>&#x27e9;
     | &#x27e8;inline hex escape&#x27e9; | &#x27e8;mnemonic escape&#x27e9; | <code>|</code>
-
-&#x27e8;boolean&#x27e9; &rarr; <code>#t</code> | <code>#f</code> | <code>#true</code>
+</p>
+<p>&#x27e8;boolean&#x27e9; &rarr; <code>#t</code> | <code>#f</code>
+    | <code>#true</code>
     | <code>#false</code>
-
-&#x27e8;character&#x27e9; &rarr; #\ &#x27e8;any character&#x27e9;
+</p>
+<p>&#x27e8;character&#x27e9; &rarr; #\ &#x27e8;any character&#x27e9;
     | #\ &#x27e8;character name&#x27e9;
     | #\x&#x27e8;hex scalar value&#x27e9;
-
-&#x27e8;character name&#x27e9; &rarr; <code>alarm</code> | <code>backspace</code>
+</p>
+<p>&#x27e8;character name&#x27e9; &rarr; <code>alarm</code> | <code>backspace</code>
    | <code>delete</code> | <code>escape</code> | <code>newline</code> | <code>null</code>
    | <code>return</code> | <code>space</code> | <code>tab</code>
-
-&#x27e8;string&#x27e9; &rarr; <code>&quot;</code> &#x27e8;string element&#x27e9;<sup>*</sup> <code>&quot;</code>
-
-&#x27e8;string element&#x27e9; &rarr;
-      &#x27e8;any character other than <code>&quot;</code> or <code>\</code>&#x27e9;
+</p>
+<p>&#x27e8;string&#x27e9; &rarr; <code>&quot;</code> &#x27e8;string element&#x27e9;<sup>*</sup> <code>&quot;</code>
+</p>
+<p>&#x27e8;string element&#x27e9; &rarr;
+      &#x27e8;any character other than <code>&quot;</code> or
+                  <code>\</code>&#x27e9;
     | &#x27e8;mnemonic escape&#x27e9; | <code>\&quot;</code> | <code>\\</code>
     | \&#x27e8;intraline whitespace&#x27e9;<sup>*</sup>&#x27e8;line ending&#x27e9;
       &#x27e8;intraline whitespace&#x27e9;<sup>*</sup>
     | &#x27e8;inline hex escape&#x27e9;
-
-&#x27e8;bytevector&#x27e9; &rarr; \#u8(&#x27e8;byte&#x27e9;<sup>*</sup>)
-
-&#x27e8;byte&#x27e9; &rarr; &#x27e8;any exact integer between 0 and 255&#x27e9;
-</pre></div>
+</p>
+<p>&#x27e8;bytevector&#x27e9; &rarr; \#u8(&#x27e8;byte&#x27e9;<sup>*</sup>)
+</p>
+<p>&#x27e8;byte&#x27e9; &rarr; &#x27e8;any exact integer between 0 and 255&#x27e9;
+</p>
+</blockquote>
 
 <p>The following rules for &#x27e8;num R&#x27e9;, &#x27e8;complex R&#x27e9;, &#x27e8;real R&#x27e9;,
 &#x27e8;ureal R&#x27e9;, &#x27e8;uinteger R&#x27e9;, and &#x27e8;prefix R&#x27e9; are implicitly
@@ -192,10 +237,12 @@ that numbers containing decimal points or exponents are always in
 decimal radix. Although not shown below, all alphabetic characters used
 in the grammar of numbers can appear in either upper or lower case.
 </p>
-<div class="format">
-<pre class="format">&#x27e8;num <var>R</var>&#x27e9; &rarr; &#x27e8;prefix <var>R</var>&#x27e9;
+<blockquote class="indentedblock">
+
+<p>&#x27e8;num <var>R</var>&#x27e9; &rarr; &#x27e8;prefix <var>R</var>&#x27e9;
     &#x27e8;complex <var>R</var>&#x27e9;
-&#x27e8;complex <var>R</var>&#x27e9; &rarr; &#x27e8;real <var>R</var>&#x27e9;
+</p>
+<p>&#x27e8;complex <var>R</var>&#x27e9; &rarr; &#x27e8;real <var>R</var>&#x27e9;
     | &#x27e8;real <var>R</var>&#x27e9; <code>@</code> &#x27e8;real <var>R</var>&#x27e9;
     | &#x27e8;real <var>R</var>&#x27e9; <code>+</code> &#x27e8;ureal <var>R</var>&#x27e9; <code>i</code>
     | &#x27e8;real <var>R</var>&#x27e9; <code>-</code> &#x27e8;ureal <var>R</var>&#x27e9; <code>i</code>
@@ -207,21 +254,28 @@ in the grammar of numbers can appear in either upper or lower case.
     | &#x27e8;infnan&#x27e9; <code>i</code>
     | <code>+ i</code>
     | <code>- i</code>
-&#x27e8;real <var>R</var>&#x27e9; &rarr; &#x27e8;sign&#x27e9; &#x27e8;ureal <var>R</var>&#x27e9;
+</p>
+<p>&#x27e8;real <var>R</var>&#x27e9; &rarr; &#x27e8;sign&#x27e9; &#x27e8;ureal <var>R</var>&#x27e9;
     | &#x27e8;infnan&#x27e9;
-&#x27e8;ureal <var>R</var>&#x27e9; &rarr; &#x27e8;uinteger <var>R</var>&#x27e9;
+</p>
+<p>&#x27e8;ureal <var>R</var>&#x27e9; &rarr; &#x27e8;uinteger <var>R</var>&#x27e9;
     | &#x27e8;uinteger <var>R</var>&#x27e9; <code>/</code> &#x27e8;uinteger <var>R</var>&#x27e9;
     | &#x27e8;decimal <var>R</var>&#x27e9;
-&#x27e8;decimal 10&#x27e9; &rarr; &#x27e8;uinteger 10&#x27e9; &#x27e8;suffix&#x27e9;
+</p>
+<p>&#x27e8;decimal 10&#x27e9; &rarr; &#x27e8;uinteger 10&#x27e9; &#x27e8;suffix&#x27e9;
     | <code>.</code> &#x27e8;digit 10&#x27e9;<sup>+</sup> &#x27e8;suffix&#x27e9;
     | &#x27e8;digit 10&#x27e9;<sup>+</sup> <code>.</code> &#x27e8;digit 10&#x27e9;<sup>*</sup>
       &#x27e8;suffix&#x27e9;
-&#x27e8;uinteger <var>R</var>&#x27e9; &rarr; &#x27e8;digit <var>R</var>&#x27e9;<sup>+</sup>
-&#x27e8;prefix <var>R</var>&#x27e9; &rarr; &#x27e8;radix <var>R</var>&#x27e9; &#x27e8;exactness&#x27e9;
+</p>
+<p>&#x27e8;uinteger <var>R</var>&#x27e9; &rarr; &#x27e8;digit <var>R</var>&#x27e9;<sup>+</sup>
+</p>
+<p>&#x27e8;prefix <var>R</var>&#x27e9; &rarr; &#x27e8;radix <var>R</var>&#x27e9; &#x27e8;exactness&#x27e9;
     | &#x27e8;exactness&#x27e9; &#x27e8;radix <var>R</var>&#x27e9;
-&#x27e8;infnan&#x27e9; &rarr; <code>+inf.0</code> | <code>-inf.0</code>
+</p>
+<p>&#x27e8;infnan&#x27e9; &rarr; <code>+inf.0</code> | <code>-inf.0</code>
     | <code>+nan.0</code> | <code>-nan.0</code>
-</pre></div>
+</p>
+</blockquote>
 
 <span id="index-b_0023b-1"></span>
 <span id="index-o_0023o-1"></span>
@@ -229,23 +283,37 @@ in the grammar of numbers can appear in either upper or lower case.
 <span id="index-e_0023e-1"></span>
 <span id="index-i_0023i-1"></span>
 
-<div class="format">
-<pre class="format">&#x27e8;suffix&#x27e9; &rarr; &#x27e8;empty&#x27e9;
+<blockquote class="indentedblock">
+
+<p>&#x27e8;suffix&#x27e9; &rarr; &#x27e8;empty&#x27e9;
     | &#x27e8;exponent marker&#x27e9; &#x27e8;sign&#x27e9; &#x27e8;digit 10&#x27e9;<sup>+</sup>
-&#x27e8;exponent marker&#x27e9; &rarr; <code>e</code>
-&#x27e8;sign&#x27e9; &rarr; &#x27e8;empty&#x27e9; | <code>+</code> | <code>-</code>
-&#x27e8;exactness&#x27e9; &rarr; &#x27e8;empty&#x27e9; | <code>#i</code> | <code>#e</code>
-&#x27e8;radix 2&#x27e9; &rarr; <code>#b</code>
-&#x27e8;radix 8&#x27e9; &rarr; <code>#o</code>
-&#x27e8;radix 10&#x27e9; &rarr; &#x27e8;empty&#x27e9; | <code>#d</code>
-&#x27e8;radix 16&#x27e9; &rarr; <code>#x</code>
-&#x27e8;digit 2&#x27e9; &rarr; <code>0</code> | <code>1</code>
-&#x27e8;digit 8&#x27e9; &rarr; <code>0</code> | <code>1</code> | <code>2</code> | <code>3</code>
+</p>
+<p>&#x27e8;exponent marker&#x27e9; &rarr; <code>e</code>
+</p>
+<p>&#x27e8;sign&#x27e9; &rarr; &#x27e8;empty&#x27e9; | <code>+</code> | <code>-</code>
+</p>
+<p>&#x27e8;exactness&#x27e9; &rarr; &#x27e8;empty&#x27e9; | <code>#i</code>
+    | <code>#e</code>
+</p>
+<p>&#x27e8;radix 2&#x27e9; &rarr; <code>#b</code>
+</p>
+<p>&#x27e8;radix 8&#x27e9; &rarr; <code>#o</code>
+</p>
+<p>&#x27e8;radix 10&#x27e9; &rarr; &#x27e8;empty&#x27e9; | <code>#d</code>
+</p>
+<p>&#x27e8;radix 16&#x27e9; &rarr; <code>#x</code>
+</p>
+<p>&#x27e8;digit 2&#x27e9; &rarr; <code>0</code> | <code>1</code>
+</p>
+<p>&#x27e8;digit 8&#x27e9; &rarr; <code>0</code> | <code>1</code> | <code>2</code> | <code>3</code>
     | <code>4</code> | <code>5</code> | <code>6</code> | <code>7</code>
-&#x27e8;digit 10&#x27e9; &rarr; &#x27e8;digit&#x27e9;
-&#x27e8;digit 16&#x27e9; &rarr; &#x27e8;digit 10&#x27e9; | <code>a</code> | <code>b</code>
+</p>
+<p>&#x27e8;digit 10&#x27e9; &rarr; &#x27e8;digit&#x27e9;
+</p>
+<p>&#x27e8;digit 16&#x27e9; &rarr; &#x27e8;digit 10&#x27e9; | <code>a</code> | <code>b</code>
     | <code>c</code> | <code>d</code> | <code>e</code> | <code>f</code>
-</pre></div>
+</p>
+</blockquote>
 
 </div>
 <hr>

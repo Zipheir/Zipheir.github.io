@@ -54,8 +54,169 @@ the syntax keywords defined in this report have been properly imported
 from their libraries, and that none of them have been redefined or
 shadowed.
 </p>
-<p>[grammar]
+<blockquote class="indentedblock">
+
+<p>&#x27e8;expression&#x27e9; &rarr; &#x27e8;identifier&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;literal&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;procedure call&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;lambda expression&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;conditional&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;assignment&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;derived expression&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;macro use&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;macro block&#x27e9;<br>
+&nbsp;&nbsp;| &#x27e8;includer&#x27e9;
 </p>
+<br>
+
+<p>&#x27e8;literal&#x27e9; &rarr; &#x27e8;quotation&#x27e9; | &#x27e8;self-evaluating&#x27e9;
+</p>
+<p>&#x27e8;self-evaluating&#x27e9; &rarr; &#x27e8;boolean&#x27e9; | &#x27e8;number&#x27e9;
+    | &#x27e8;vector&#x27e9; | &#x27e8;character&#x27e9; | &#x27e8;string&#x27e9; | &#x27e8;bytevector&#x27e9;
+</p>
+<p>&#x27e8;quotation&#x27e9; &rarr; <code>'</code>&#x27e8;datum&#x27e9;
+    | <code>(quote</code> &#x27e8;datum&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;procedure call&#x27e9; &rarr;
+    <code>(</code>&#x27e8;operator&#x27e9; &#x27e8;operand&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;operator&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;operand&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<br>
+
+<p>&#x27e8;lambda expression&#x27e9; &rarr;
+    <code>(lambda</code> &#x27e8;formals&#x27e9; &#x27e8;body&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;formals&#x27e9; &rarr; <code>(</code>&#x27e8;identifier&#x27e9;<sup>*</sup><code>)</code>
+    | &#x27e8;identifier&#x27e9;
+    | <code>(</code>&#x27e8;identifier&#x27e9;<sup>+</sup> <code>.</code>
+        &#x27e8;identifier&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;body&#x27e9; &rarr; &#x27e8;definition&#x27e9;<sup>*</sup> &#x27e8;sequence&#x27e9;
+</p>
+<p>&#x27e8;sequence&#x27e9; &rarr; &#x27e8;command&#x27e9;<sup>*</sup> &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;command&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<br>
+
+<p>&#x27e8;conditional&#x27e9; &rarr;
+    <code>(if</code> &#x27e8;test&#x27e9; &#x27e8;consequent&#x27e9; &#x27e8;alternate&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;test&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;consequent&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;alternate&#x27e9; &rarr; &#x27e8;expression&#x27e9; | &#x27e8;empty&#x27e9;
+</p>
+<br>
+
+<p>&#x27e8;assignment&#x27e9; &rarr;
+    <code>(set!</code> &#x27e8;identifier&#x27e9; &#x27e8;expression&#x27e9;<code>)</code>
+</p>
+<br>
+
+<p>&#x27e8;derived expression&#x27e9; &rarr;
+      <code>(cond </code>&#x27e8;cond clause&#x27e9;<sup>+</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(cond </code>&#x27e8;cond clause&#x27e9;<sup>*</sup> <code>(else</code>
+        &#x27e8;sequence&#x27e9;)<code>)</code><br>
+&nbsp;&nbsp;| <code>(case </code>&#x27e8;expression&#x27e9;
+           &#x27e8;case clause&#x27e9;<sup>+</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(case </code>&#x27e8;expression&#x27e9;
+           &#x27e8;case clause&#x27e9;<sup>*</sup>
+           <code>(else </code>&#x27e8;sequence&#x27e9;)<code>)</code><br>
+&nbsp;&nbsp;| <code>(case </code>&#x27e8;expression&#x27e9;
+           &#x27e8;case clause&#x27e9;<sup>*</sup>
+           <code>(else =&gt;</code> &#x27e8;recipient&#x27e9;)<code>)</code><br>
+&nbsp;&nbsp;| <code>(and </code>&#x27e8;test&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(or </code>&#x27e8;test&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(when </code>&#x27e8;test&#x27e9; &#x27e8;sequence&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(unless </code>&#x27e8;test&#x27e9; &#x27e8;sequence&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(let </code>(&#x27e8;binding spec&#x27e9;<sup>*</sup>) &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(let </code>&#x27e8;identifier&#x27e9; (&#x27e8;binding spec&#x27e9;<sup>*</sup>)
+        &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(let* </code>(&#x27e8;binding spec&#x27e9;<sup>*</sup>) &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(letrec </code>(&#x27e8;binding spec&#x27e9;<sup>*</sup>) &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(letrec* </code>(&#x27e8;binding spec&#x27e9;<sup>*</sup>) &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(let-values </code>(&#x27e8;mv binding spec&#x27e9;<sup>*</sup>)
+        &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(let*-values </code>(&#x27e8;mv binding spec&#x27e9;<sup>*</sup>)
+        &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(begin </code>&#x27e8;sequence&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(do </code>(&#x27e8;iteration spec&#x27e9;<sup>*</sup><code>)</code>
+               (&#x27e8;test&#x27e9; &#x27e8;do result&#x27e9;<code>)</code>
+           &#x27e8;command&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(delay </code>&#x27e8;expression&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(delay-force </code>&#x27e8;expression&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(parameterize </code>((&#x27e8;expression&#x27e9;
+        &#x27e8;expression&#x27e9;)<sup>*</sup><code>)</code> &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(guard </code>(&#x27e8;identifier&#x27e9; &#x27e8;cond clause&#x27e9;<sup>*</sup>)
+        &#x27e8;body&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| &#x27e8;quasiquotation&#x27e9;<br>
+&nbsp;&nbsp;| <code>(case-lambda </code>&#x27e8;case-lambda clause&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<br>
+
+<p>&#x27e8;cond clause&#x27e9; &rarr; <code>(</code>&#x27e8;test&#x27e9; &#x27e8;sequence&#x27e9;<code>)</code>
+    | <code>(</code>&#x27e8;test&#x27e9;<code>)</code>
+    | <code>(</code>&#x27e8;test&#x27e9; <code>=&gt;</code> &#x27e8;recipient&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;recipient&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;case clause&#x27e9; &rarr;
+      <code>((</code>&#x27e8;datum&#x27e9;<sup>*</sup><code>)</code> &#x27e8;sequence&#x27e9;<code>)</code>
+    | <code>((</code>&#x27e8;datum&#x27e9;<sup>*</sup><code>) =&gt;</code> &#x27e8;recipient&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;binding spec&#x27e9; &rarr; <code>(</code>&#x27e8;identifier&#x27e9;
+      &#x27e8;expression&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;mv binding spec&#x27e9; &rarr; <code>(</code>&#x27e8;formals&#x27e9;
+      &#x27e8;expression&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;iteration spec&#x27e9; &rarr; <code>(</code>&#x27e8;identifier&#x27e9; &#x27e8;init&#x27e9;
+     &#x27e8;step&#x27e9;<code>)</code>
+   | <code>(</code>&#x27e8;identifier&#x27e9; &#x27e8;init&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;case-lambda clause&#x27e9; &rarr; <code>(</code>&#x27e8;formals&#x27e9;
+     &#x27e8;body&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;init&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;step&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;do result&#x27e9; &rarr; &#x27e8;sequence&#x27e9; | &#x27e8;empty&#x27e9;
+</p>
+<br>
+
+<p>&#x27e8;macro use&#x27e9; &rarr; <code>(</code>&#x27e8;keyword&#x27e9;
+      &#x27e8;datum&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;keyword&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+</p>
+<p>&#x27e8;macro block&#x27e9; &rarr;
+      <code><code>(</code>let-syntax </code><code>(</code>&#x27e8;syntax spec&#x27e9;<sup>*</sup><code>)</code>
+        &#x27e8;body&#x27e9;<code>)</code>
+    | <code>(letrec-syntax </code><code>(</code>&#x27e8;syntax spec&#x27e9;<sup>*</sup><code>)</code>
+        &#x27e8;body&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;syntax spec&#x27e9; &rarr; <code>(</code>&#x27e8;keyword&#x27e9;
+      &#x27e8;transformer spec&#x27e9;<code>)</code>
+</p>
+<br>
+
+<p>&#x27e8;includer&#x27e9; &rarr;
+   | <code>(include </code>&#x27e8;string&#x27e9;<sup>+</sup><code>)</code>
+   | <code>(include-ci </code>&#x27e8;string&#x27e9;<sup>+</sup><code>)</code>
+</p>
+</blockquote>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Quasiquotations.html">Quasiquotations</a>, Previous: <a href="External-representations-formal.html">External representations</a>, Up: <a href="Formal-syntax.html">Formal syntax</a> &nbsp; [<a href="Alphabetic-index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

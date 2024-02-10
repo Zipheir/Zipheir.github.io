@@ -48,8 +48,57 @@ Previous: <a href="Programs-and-definitions.html" accesskey="p" rel="prev">Progr
 <hr>
 <span id="Libraries-2"></span><h4 class="subsection">7.1.7 Libraries</h4>
 
-<p>[grammar]
+<blockquote class="indentedblock">
+
+<p>&#x27e8;library&#x27e9; &rarr;
+      <code>(define-library </code>&#x27e8;library name&#x27e9;
+        &#x27e8;library declaration&#x27e9;<sup>*</sup><code>)</code>
 </p>
+<p>&#x27e8;library name&#x27e9; &rarr;
+      <code>(</code>&#x27e8;library name part&#x27e9;<sup>+</sup><code>)</code>
+</p>
+<p>&#x27e8;library name part&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+    | &#x27e8;uinteger 10&#x27e9;
+</p>
+<p>&#x27e8;library declaration&#x27e9; &rarr;
+      <code>(export </code>&#x27e8;export spec&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;  | &#x27e8;import declaration&#x27e9;<br>
+&nbsp;&nbsp;  | <code>(begin </code>&#x27e8;command or definition&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;  | &#x27e8;includer&#x27e9;<br>
+&nbsp;&nbsp;  | <code>(include-library-declarations</code>
+          &#x27e8;string&#x27e9;<sup>+</sup><code>)</code><br>
+&nbsp;&nbsp;  | <code>(cond-expand</code>
+          &#x27e8;cond-expand clause&#x27e9;<sup>+</sup><code>)</code><br>
+&nbsp;&nbsp;  | <code>(cond-expand</code>
+          &#x27e8;cond-expand clause&#x27e9;<sup>+</sup>
+          <code>(else </code>&#x27e8;library declaration&#x27e9;<sup>*</sup>)<code>)</code>
+</p>
+<p>&#x27e8;import declaration&#x27e9; &rarr;
+      <code>(import </code>&#x27e8;import set&#x27e9;<sup>+</sup><code>)</code>
+</p>
+<p>&#x27e8;export spec&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+   | <code>(rename </code>&#x27e8;identifier&#x27e9; &#x27e8;identifier&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;import set&#x27e9; &rarr; &#x27e8;library name&#x27e9;<br>
+&nbsp;&nbsp;| <code>(only </code>&#x27e8;import set&#x27e9;
+       &#x27e8;identifier&#x27e9;<sup>+</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(except </code>&#x27e8;import set&#x27e9;
+       &#x27e8;identifier&#x27e9;<sup>+</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(prefix </code>&#x27e8;import set&#x27e9; &#x27e8;identifier&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(rename </code>&#x27e8;import set&#x27e9;
+       (&#x27e8;identifier&#x27e9; &#x27e8;identifier&#x27e9;)<sup>+</sup><code>)</code>
+</p>
+<p>&#x27e8;cond-expand clause&#x27e9; &rarr;
+   (&#x27e8;feature requirement&#x27e9; &#x27e8;library declaration&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;feature requirement&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+&nbsp;&nbsp;| <code>(library </code>&#x27e8;library name&#x27e9;<code>)</code><br>
+&nbsp;&nbsp;| <code>(and </code>&#x27e8;feature requirement&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(or </code>&#x27e8;feature requirement&#x27e9;<sup>*</sup><code>)</code><br>
+&nbsp;&nbsp;| <code>(not </code>&#x27e8;feature requirement&#x27e9;<code>)</code>
+</p>
+</blockquote>
+
 </div>
 
 

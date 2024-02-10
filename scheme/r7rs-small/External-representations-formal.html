@@ -53,23 +53,33 @@ Next: <a href="Expressions-formal.html" accesskey="n" rel="next">Expressions</a>
 parses. Note that any string that parses as an &#x27e8;expression&#x27e9; will
 also parse as a &#x27e8;datum&#x27e9;.
 </p>
-<div class="format">
-<pre class="format">&#x27e8;datum&#x27e9; &rarr; &#x27e8;simple datum&#x27e9; ∣ &#x27e8;compound datum&#x27e9;
+<blockquote class="indentedblock">
+
+<p>&#x27e8;datum&#x27e9; &rarr; &#x27e8;simple datum&#x27e9; ∣ &#x27e8;compound datum&#x27e9;
     ∣ &#x27e8;label&#x27e9; <code>=</code> &#x27e8;datum&#x27e9; ∣ &#x27e8;label&#x27e9; <code>#</code>
-&#x27e8;simple datum&#x27e9; &rarr; &#x27e8;boolean&#x27e9; ∣ &#x27e8;number&#x27e9;
+</p>
+<p>&#x27e8;simple datum&#x27e9; &rarr; &#x27e8;boolean&#x27e9; ∣ &#x27e8;number&#x27e9;
     ∣ &#x27e8;character&#x27e9; ∣ &#x27e8;string&#x27e9; ∣ &#x27e8;symbol&#x27e9;
     ∣ &#x27e8;bytevector&#x27e9;
-&#x27e8;symbol&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
-&#x27e8;compound datum&#x27e9; &rarr; &#x27e8;list&#x27e9; ∣ &#x27e8;vector&#x27e9;
+</p>
+<p>&#x27e8;symbol&#x27e9; &rarr; &#x27e8;identifier&#x27e9;
+</p>
+<p>&#x27e8;compound datum&#x27e9; &rarr; &#x27e8;list&#x27e9; ∣ &#x27e8;vector&#x27e9;
     ∣ &#x27e8;abbreviation&#x27e9;
-&#x27e8;list&#x27e9; &rarr; <code>(</code>&#x27e8;datum&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;list&#x27e9; &rarr; <code>(</code>&#x27e8;datum&#x27e9;<sup>*</sup><code>)</code>
     ∣ <code>(</code>&#x27e8;datum&#x27e9;<sup>+</sup> <code>.</code> &#x27e8;datum&#x27e9;<code>)</code>
-&#x27e8;abbreviation&#x27e9; &rarr; &#x27e8;abbrev prefix&#x27e9; &#x27e8;datum&#x27e9;
-&#x27e8;abbrev prefix&#x27e9; &rarr; <code>'</code> ∣ <code>`</code> ∣ <code>,</code>
+</p>
+<p>&#x27e8;abbreviation&#x27e9; &rarr; &#x27e8;abbrev prefix&#x27e9; &#x27e8;datum&#x27e9;
+</p>
+<p>&#x27e8;abbrev prefix&#x27e9; &rarr; <code>'</code> ∣ <code>`</code> ∣ <code>,</code>
     ∣ <code>,@</code>
-&#x27e8;vector&#x27e9; &rarr; <code>#(</code>&#x27e8;datum&#x27e9;<sup>*</sup><code>)</code>
-&#x27e8;label&#x27e9; &rarr; <code>#</code> &#x27e8;uinteger 10&#x27e9;
-</pre></div>
+</p>
+<p>&#x27e8;vector&#x27e9; &rarr; <code>#(</code>&#x27e8;datum&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;label&#x27e9; &rarr; <code>#</code> &#x27e8;uinteger 10&#x27e9;
+</p>
+</blockquote>
 
 </div>
 

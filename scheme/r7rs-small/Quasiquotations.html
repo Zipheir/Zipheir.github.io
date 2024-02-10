@@ -54,8 +54,45 @@ It is presented as a recipe for generating an infinite number of
 production rules. Imagine a copy of the following rules for <var>D</var> =
 1, 2, 3, &hellip;, where <var>D</var> is the nesting depth.
 </p>
-<p>[grammar]
+<blockquote class="indentedblock">
+<p>&#x27e8;quasiquotation&#x27e9; &rarr; &#x27e8;quasiquotation 1&#x27e9;
 </p>
+<p>&#x27e8;qq template 0&#x27e9; &rarr; &#x27e8;expression&#x27e9;
+</p>
+<p>&#x27e8;quasiquotation <var>D</var>&#x27e9; &rarr;
+      <code>`</code>&#x27e8;qq template <var>D</var>&#x27e9;
+    | <code>(quasiquote </code>&#x27e8;qq template <var>D</var>&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;qq template <var>D</var>&#x27e9; &rarr; &#x27e8;simple datum&#x27e9;
+    | &#x27e8;list qq template <var>D</var>&#x27e9;
+    | &#x27e8;vector qq template <var>D</var>&#x27e9;
+    | &#x27e8;unquotation <var>D</var>&#x27e9;
+</p>
+<p>&#x27e8;list qq template <var>D</var>&#x27e9; &rarr;
+      <code>(</code>&#x27e8;qq template or splice <var>D</var>&#x27e9;<sup>*</sup><code>)</code>
+    | <code>(</code>&#x27e8;qq template or splice <var>D</var>&#x27e9;<sup>+</sup> <code>.</code>
+        &#x27e8;qq template <var>D</var>&#x27e9;<code>)</code>
+    | <code>'</code>&#x27e8;qq template <var>D</var>&#x27e9;
+    | &#x27e8;quasiquotation <var>D</var>+1&#x27e9;
+</p>
+<p>&#x27e8;vector qq template <var>D</var>&#x27e9; &rarr;
+      <code>#(</code>&#x27e8;qq template or
+        splice <var>D</var>&#x27e9;<sup>*</sup><code>)</code>
+</p>
+<p>&#x27e8;unquotation <var>D</var>&#x27e9; &rarr;
+      <code>,</code>&#x27e8;qq template <var>D</var>-1&#x27e9;
+    | <code>(unquote </code>&#x27e8;qq template <var>D</var>-1&#x27e9;<code>)</code>
+</p>
+<p>&#x27e8;qq template or splice <var>D</var>&#x27e9; &rarr;
+      &#x27e8;qq template <var>D</var>&#x27e9;
+    | &#x27e8;splicing unquotation <var>D</var>&#x27e9;
+</p>
+<p>&#x27e8;splicing unquotation <var>D</var>&#x27e9; &rarr;
+      <code>,@</code>&#x27e8;qq template <var>D</var>-1&#x27e9;
+    | <code>(unquote-splicing </code>&#x27e8;qq template <var>D</var>-1&#x27e9;)
+</p>
+</blockquote>
+
 <p>In &#x27e8;quasiquotation&#x27e9;s, a &#x27e8;list qq template <var>D</var>&#x27e9; can
 sometimes be confused with either an &#x27e8;unquotation <var>D</var>&#x27e9; or a
 &#x27e8;splicing unquotation <var>D</var>&#x27e9;.
