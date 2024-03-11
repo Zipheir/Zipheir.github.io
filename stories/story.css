@@ -1,4 +1,17 @@
-p { text-align: justify;
-    font-family: serif; }
+body {
+    text-align: justify;
+    font-family: serif;
+    margin-left: 20%;
+    margin-right: 20%;
+}
 
-hr.dinkus { width: 30%; }
+p { text-indent: 1em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+hr.dinkus {
+    width: 30%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
