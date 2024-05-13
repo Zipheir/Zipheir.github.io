@@ -1,9 +1,7 @@
-body {
-    text-align: justify;
+div.story > p {
     font-family: serif;
-}
-
-p { text-indent: 1em;
+    text.align: justify;
+    text-indent: 1em;
     margin-top: 0.25em;
     margin-bottom: 0.25em;
 }
