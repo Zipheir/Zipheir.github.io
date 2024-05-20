@@ -1,6 +1,4 @@
-body { margin: 1em auto;
-       max-width: 46em;
-}
+body { max-width: 46em; }
 
 div.story > p {
     font-family: serif;
