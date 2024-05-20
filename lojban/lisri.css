@@ -1,2 +1,5 @@
-p { text-align: justify;
-    font-family: serif; }
+body { margin: 1em auto;
+       max-width: 46em;
+}
+
+p { text-align: justify; }
