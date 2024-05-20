@@ -1,3 +1,5 @@
+body { max-width: 46em; }
+
 span.channel { font-family: monospace; } /* IRC channel */
 
 p.attribution { text-align: right; }  /* Quotation attribution. */
