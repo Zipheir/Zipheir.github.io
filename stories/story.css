@@ -1,7 +1,6 @@
 body { max-width: 46em; }
 
 div.story > p {
-    font-family: serif;
     text-align: justify;
     text-indent: 1em;
     margin-top: 0.25em;
