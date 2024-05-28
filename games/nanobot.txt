@@ -1,0 +1,33 @@
+### Idea for an automaton-based nano-constructor board game
+
+Players control a swarm (or swarms) of nanobot constructors and try
+to shepherd them to create buildings, spaceships, or something else.
+The nanobots can build by depositing their bodies to form layers
+(like coral polyps), or maybe in a more traditional way.
+
+Goal: The players must either finish some assigned projects before
+game end or collect points for completing projects, achievements, etc.
+
+The swarms are cellular automata which reproduce, move, and die
+according to simple rules. the players "operate" these swarms
+by placing different signal chemicals: "move", "build", "remove",
+etc. commands are available. Birth and death rates can also be affected
+this way.
+
+Mutation: Mutations sometimes occur within swarms. The usual effect
+of a mutation is uncontrolled nanobot duplication.  The players will
+have to keep an eye out for this and deal with mutations when they
+happen, probably by destroying the affected bots and some of the
+surrounding swarm. (This would exact a temporary building efficiency
+penalty.) A player could also try to *take advantage* of mutation,
+either to try for a beneficial mutation (increased efficiency in one
+action or another) or to try to damage another player's project.
+
+Increasing the birth rate might allow a player to finish a task
+quickly, but it would *also* increase the mutation rate.
+
+Basic game loop: (1) Choose a new project (maybe--draw from a deck or
+from a tableau, etc.). (2) Place chemical markers to guide your swarm.
+(3) Execute the swarm's actions.
+
+This could be a competitive or a cooperative game.
