@@ -1,3 +1,5 @@
 body { max-width: 46em; }
 
 p { text-align: justify; }
+
+p.note { font-style: italic; }
