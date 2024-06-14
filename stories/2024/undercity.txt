@@ -274,7 +274,7 @@ The light flicked off and the footsteps picked up again, now
 clattering as if in a long hall. Zhou hit the landing sooner than he
 expected. His knees twinging, he raced through a door and into the
 hall. He headed left, where a single ceiling fixture glowed some
-10 meters away, illuminating old green ceramic tiles. Passed the
+10 meters away, illuminating old green ceramic tiles. Past the
 light Zhou was in darkness again, and the floor was rough underfoot.
 
 He had just about decided to give up the hunt when he tripped,
@@ -875,6 +875,3 @@ blazing morning sun.
 
 Released under the terms of the CC BY 4.0 license. See
 https://creativecommons.org/licenses/by/4.0/ for details.
-
-This is version 2adc80cf308651430e612defb7afd8e12e003b47
-(2024-03-06).
