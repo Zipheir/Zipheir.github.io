@@ -5,3 +5,5 @@ span.channel { font-family: monospace; } /* IRC channel */
 p.attribution { text-align: right; }  /* Quotation attribution. */
 
 th, td { padding: 0.5em; }
+
+#sitename { font-family: monospace; }
