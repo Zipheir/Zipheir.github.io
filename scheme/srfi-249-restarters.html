@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SRFI 249: Restarting conditions</title>
+    <style type="text/css">
+      <!--
+      span.type-meta { font-style: italic }
+
+      dt {
+          font-style: italic;
+          margin-top: 5px;
+          clear: both
+      }
+
+      dt.tag-name {
+          font-family: monospace;
+          font-style: normal
+      }
+      -->
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+  <body>
+    <h2 id="specification">Specification</h2>
+
+    <p>A <dfn>restarter</dfn> is a condition object of type
+    <code>&amp;restarter</code>. It has four fields:</p>
+
+    <dl>
+      <dt>tag</dt>
+      <dd>A symbol describing this restarter.</dd>
+
+      <dt>description</dt>
+      <dd>a list of strings that describes the method of recovery and the
+      values, if any, needed for recovery.</dd>
+
+      <dt>formals</dt>
+      <dd>A symbol, list, or improper formals list as described in Section
+      4.1.4 of the R7RS, describing the arguments expected by the
+      restarter’s <var>invoker</var>.</dd>
+
+      <dt>invoker</dt>
+      <dd>a procedure that actually performs the recovery. It must not
+      return. The number of arguments it expects is equal to the length of
+      <var>description</var> minus 1.</dd>
+    </dl>
+
+    <p>Each restarter is associated with a control context (continuation)
+    in which the surrounding computation is in a “safe” state. (For
+    restarters created by <code>with-restarters</code>, this … TODO.) A
+    restarter’s invoker procedure will always invoke this continuation,
+    possibly delivering some values to it, and possibly after performing
+    some operations to restore the computation to a sane state.</p>
+
+    <p>Restarters are usually <dfn>ambient</dfn>; they are constructed
+    on the fly by <code>with-restarters</code> and <dfn>established</dfn>:
+    an exception handler is installed that makes all currently-established
+    restarters available whenever a exception is raised.</p>
+
+    <h3 id="procedures">Procedures</h3>
+
+    <p>(<code>make-restarter</code> and restarter acccessors
+    unchanged. Delete <code>ambient-restarters</code> and
+    <code>collect-restarters</code>.)</p>
+
+    <p><code>(restart</code> <var>restarter</var> <var>arg</var>
+    …<code>)</code> → does not return</p>
+
+    <p>Invokes the invoker procedure of <var>restarter</var> on the
+    <var>args</var>, delivering the resulting values to
+    <var>restarter</var>’s associated continuation.</p>
+
+    <p>If <var>restarter</var>’s invoker returns instead of invoking its
+    associated continuation, the result is undefined.</p>
+
+    <p><code>(find-restarter</code> <var>tag</var>
+    <var>restarters</var><code>)</code> → <span
+    class="type-meta">restarter</span> or <code>#f</code></p>
+
+    <p><code>(with-abort-restarter</code> <var>thunk</var><code>)</code></p>
+
+    <p>Establishes a restarter with tag <code>abort</code> and evaluates
+    <var>thunk</var>. The <code>abort</code> restarter accepts zero
+    arguments. When invoked, it completely aborts the current computation,
+    usually returning the user to some sort of initial user input such as a
+    REPL.</p>
+
+    <p>(More convenience <code>with-foo-restarter</code> procedures?)</p>
+
+    <h4 id="interactors">Interactors</h4>
+
+    <p>TODO</p>
+
+    <h3 id="syntax">Syntax</h3>
+
+    <p><code>(with-restarters</code> <var>restarter-clauses</var>
+    <var>body</var><code>)</code></p>
+
+    <p><span class="spec-head">Syntax:</span> <var>restarter-clauses</var> has
+    the form</p>
+
+    <pre><code>(((</code><var>tag</var> <code>.</code> <var>args</var><code>)</code>
+      <var>description-expr</var>
+      <var>expression1</var> <var>expression2</var> …<code>)</code></pre>
+
+    <p><var>tag</var> is be an identifier. <var>args</var> is a formals list
+    as specified in Section 4.1.4 of the R7RS. <var>description-expr</var>
+    is an expression that must evaluate to a string.</p>
+
+    <p><span class="spec-head">Semantics:</span> Installs a new exception
+    handler for the dynamic extent (as determined by <code>dynamic-wind</code>)
+    of the invocation of <var>thunk</var>. If an exception occurs, this
+    handler constructs a restarter condition from the raised condition and
+    from restarters constructed from the <var>restarter-clauses</var>, and
+    raises it with <code>raise-continuable</code>.</p>
+
+    <p>Each restarter constructed from the <var>restarter-clauses</var> is
+    associated with the continuation …. (TODO) Invoking any of the
+    <var>restarters</var> on values will deliver those values to this
+    continuation.</p>
+
+  </body>
+</html>
