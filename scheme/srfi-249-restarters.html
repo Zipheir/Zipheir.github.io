@@ -120,5 +120,13 @@
     from restarters constructed from the <var>restarter-clauses</var>, and
     raises it with <code>raise-continuable</code>.</p>
 
+    <p>Each restarter constructed from a <var>restarter-clause</var>
+    has tag <var>tag</var>, formals <var>args</var>, a description
+    given by the value of <var>description-expr</var>, and an invoker
+    constructed from the <var>expressions</var>. When the invoker is
+    invoked, the values of the final <var>expression</var> are
+    delivered to the continuation of the <code>with-restarters</code>
+    form.</p>
+
   </body>
 </html>
