@@ -127,7 +127,7 @@
 
     <p><span class="spec-head">Semantics:</span> Installs a new exception
     handler for the dynamic extent (as determined by <code>dynamic-wind</code>)
-    of the invocation of <var>thunk</var>. If an exception occurs, this
+    of the invocation of <var>body</var>. If an exception occurs, this
     handler constructs a restarter condition from the raised condition and
     from restarters constructed from the <var>restarter-clauses</var>, and
     raises it with <code>raise-continuable</code>. If
