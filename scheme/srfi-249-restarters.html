@@ -43,8 +43,8 @@
 
       <dt>invoker</dt>
       <dd>a procedure that actually performs the recovery. It must not
-      return. The number of arguments it expects is equal to the length of
-      <var>description</var> minus 1.</dd>
+      return. The number of arguments it expects is given by
+      <var>formals</var>.</dd>
     </dl>
 
     <p>Each restarter is associated with a control context (continuation)
@@ -105,7 +105,7 @@
   <var>description-expr</var>
   <var>expression1</var> <var>expression2</var> …<code>) …)</code></pre>
 
-    <p><var>tag</var> is be an identifier. <var>args</var> is a formals list
+    <p><var>tag</var> is an identifier. <var>args</var> is a formals list
     as specified in Section 4.1.4 of the R7RS. <var>description-expr</var>
     is an expression that must evaluate to a string.</p>
 
