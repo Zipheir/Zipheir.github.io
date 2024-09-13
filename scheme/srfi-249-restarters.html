@@ -33,8 +33,13 @@
       <dd>A symbol describing this restarter.</dd>
 
       <dt>description</dt>
-      <dd>a string (or list of strings?) that describes the method of
+      <dd>a string that describes the method of
       recovery and the values, if any, needed for recovery.</dd>
+
+      <dt>who</dt>
+      <dd>A string or symbol identifying the entity reporting the
+      exception that triggered the raising of the restarter
+      condition.</dd>
 
       <dt>formals</dt>
       <dd>A symbol, list, or improper formals list as described in Section
@@ -46,13 +51,6 @@
       return. The number of arguments it expects is given by
       <var>formals</var>.</dd>
     </dl>
-
-    <p>Each restarter is associated with a control context (continuation)
-    in which the surrounding computation is in a “safe” state. (For
-    restarters created by <code>with-restarters</code>, this … TODO.) A
-    restarter’s invoker procedure will always invoke this continuation,
-    possibly delivering some values to it, and possibly after performing
-    some operations to restore the computation to a sane state.</p>
 
     <p>Restarters are usually <dfn>ambient</dfn>; they are constructed
     on the fly by <code>with-restarters</code> and <dfn>established</dfn>:
@@ -69,23 +67,29 @@
     …<code>)</code> → does not return</p>
 
     <p>Invokes the invoker procedure of <var>restarter</var> on the
-    <var>args</var>, delivering the resulting values to
-    <var>restarter</var>’s associated continuation.</p>
+    <var>args</var>.</p>
 
-    <p>If <var>restarter</var>’s invoker returns instead of invoking its
-    associated continuation, the result is undefined.</p>
+    <p>If <var>restarter</var>’s invoker returns, then
+    the result is undefined.</p>
 
     <p><code>(find-restarter</code> <var>tag</var>
     <var>restarters</var><code>)</code> → <span
     class="type-meta">restarter</span> or <code>#f</code></p>
 
+    <p>Searches <var>restarters</var> for a restarter whose tag is the
+    same (in the sense of <code>symbol=?</code>) as <var>tag</var>.
+    If no such restarter is found in <var>restarters</var>,
+    <code>#f</code> is returned.</p>
+
     <p><code>(with-abort-restarter</code> <var>thunk</var><code>)</code></p>
 
-    <p>Establishes a restarter with tag <code>abort</code> and evaluates
-    <var>thunk</var>. The <code>abort</code> restarter accepts zero
-    arguments. When invoked, it completely aborts the current computation,
-    usually returning the user to some sort of initial user input such as a
-    REPL.</p>
+    <p>Establishes a restarter with tag <code>abort</code> for the
+    dynamic extend of <var>thunk</var> (as determined by
+    <code>dynamic-wind</code>). The <code>abort</code> restarter
+    accepts zero
+    arguments. When invoked, execution resumes with the continuation
+    and dynamic environment of the <code>with-abort-restarter</code>
+    form.</p>
 
     <p>(More convenience <code>with-foo-restarter</code> procedures?)</p>
 
@@ -115,11 +119,6 @@
     handler constructs a restarter condition from the raised condition and
     from restarters constructed from the <var>restarter-clauses</var>, and
     raises it with <code>raise-continuable</code>.</p>
-
-    <p>Each restarter constructed from the <var>restarter-clauses</var> is
-    associated with the continuation …. (TODO) Invoking any of the
-    <var>restarters</var> on values will deliver those values to this
-    continuation.</p>
 
   </body>
 </html>
