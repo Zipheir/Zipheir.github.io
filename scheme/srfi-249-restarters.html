@@ -102,28 +102,43 @@
     <p><code>(with-restarters</code> <var>restarter-clauses</var>
     <var>body</var><code>)</code></p>
 
-    <p><span class="spec-head">Syntax:</span> <var>restarter-clauses</var> has
-    the form</p>
+    <p><code>(with-restarters</code> <var>who</var> <var>restarter-clauses</var>
+    <var>body</var><code>)</code></p>
+
+    <p><span class="spec-head">Syntax:</span> <var>restarter-clauses</var>
+    takes one of two forms, either</p>
 
     <pre><code>(((</code><var>tag</var> <code>.</code> <var>args</var><code>)</code>
-  <var>description-expr</var>
+  <var>description</var>
   <var>expression1</var> <var>expression2</var> …<code>) …)</code></pre>
 
-    <p><var>tag</var> is an identifier. <var>args</var> is a formals list
-    as specified in Section 4.1.4 of the R7RS. <var>description-expr</var>
-    is an expression that must evaluate to a string.</p>
+    <p>or</p>
+
+    <pre><code>(</code><var>condition-var</var>
+ <code>((</code><var>tag</var> <code>.</code> <var>args</var><code>)</code>
+   <var>description</var>
+   <var>expression1</var> <var>expression2</var> …<code>) …)</code></pre>
+
+    <p><var>who</var> should be an identifier or string.
+    <var>condition-var</var> and
+    <var>tag</var> tag are identifiers. <var>args</var> is a formals list
+    as specified in Section 4.1.4 of the R7RS. <var>description</var>
+    is a string.</p>
 
     <p><span class="spec-head">Semantics:</span> Installs a new exception
     handler for the dynamic extent (as determined by <code>dynamic-wind</code>)
     of the invocation of <var>thunk</var>. If an exception occurs, this
     handler constructs a restarter condition from the raised condition and
     from restarters constructed from the <var>restarter-clauses</var>, and
-    raises it with <code>raise-continuable</code>.</p>
+    raises it with <code>raise-continuable</code>. If
+    <var>condition-var</var> is provided, then the condition object raised
+    by the original triggering exception is bound to it in the environment
+    of this handler.</p>
 
-    <p>Each restarter constructed from a <var>restarter-clause</var>
-    has tag <var>tag</var>, formals <var>args</var>, a description
-    given by the value of <var>description-expr</var>, and an invoker
-    constructed from the <var>expressions</var>. When the invoker is
+    <p>The who field of each restarter constructed from
+    <var>restarter-clauses</var> is filled by <var>who</var>, or
+    <code>#f</code> if <var>who</var> was omitted. Each invoker is
+    constructed from the <var>expressions</var>; when it is
     invoked, the values of the final <var>expression</var> are
     delivered to the continuation of the <code>with-restarters</code>
     form.</p>
