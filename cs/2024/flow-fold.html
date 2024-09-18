@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link href="https://www.sigwinch.xyz/cs/2024/flow-fold.html"
+          rel="canonical">
+    <title>Paragraph flowing as a fold</title>
+  </head>
+  <body>
+    <h2>Paragraph flowing as a fold</h2>
+
+    <p>A simple, useful, plain-text variant of Donald Knuth’s
+    paragraph-filling algorithm can be expressed as a fold. This algorithm
+    runs in time linear to the length of its input and usually produces
+    better results than the classic greedy text-flow algorithm.</p>
+
+    <p>We first specify the function <code>flow-paragraph</code> and
+    partially define its helpers:</p>
+
+    <pre><code>(: flow-paragraph (→ (list Word) (list (list Word))))
+{ flow-paragraph = build-lines ∘ flow }
+
+(: flow (→ (list Word) (list Line-Info)))
+(define (flow words)
+  (match words
+    (() ())
+    ((,w . ,ws)
+     (let ((ls (flow ws)))
+       (cons (best-break w ls) ls)))))
+
+(: build-lines (→ (list Line-Info) (list (list Word))))</code></pre>
+
+    <p>where the types are given by</p>
+
+    <pre><code>(define-type Word String)  ; but could be more complex
+
+    (define-type Line-Info (list Word Offset Cost))</code></pre>
+
+    <p>For simplicity, we represent a Word by its text as a String. The
+    type could include more data, e.g. a string containing any following
+    whitespace, or syntactic context information (does the word end with
+    punctuation? Does it end a sentence? etc.). We will ignore syntax and
+    assume that each word is followed by a single space.</p>
+
+    <p>We will spend most of our time on <code>flow</code>, which expresses
+    the algorithm by taking a list of words to a list of values which indicate
+    the “best” way to break a line beginning with a given word. To see how
+    this data is encoded, consider the line</p>
+
+    <pre><code>"It was the best of times, it was the worst of times,".</code></pre>
+
+    <p>This is represented by the Word list</p>
+
+    <pre><code>("It" "was" "the" "best" "of" "times," "it" "was" "the"
+ "worst" "of" "times,")</code></pre>
+
+    <p>If we were trying to break this into lines of about 25 characters, the
+    optimal first line might be <code>"It was the best of times,",</code>
+    which would be encoded by the triple <code>("It" 5 c).</code>
+
+    <p>The interpretation: This is a line consisting of the word
+    <code>"It"</code> followed by 5 words taken from the
+    paragraph-suffix (<code>"was the worst of times,"</code>).
+    <var>c</var> is a positive integer indicating the relative quality
+    (“badness”, in TeX terminology) of this line break—the lower the
+    cost, the better the choice.</p>
+
+    <p>The Flow algorithm flows a paragraph
+    <code>(</code><var>w</var> <code>.</code> <var>ws</var><code>)</code>
+    by finding the best line beginning with <var>w</var> that <em>also</em>
+    results in the best flow for the suffix <var>ws</var>. This is
+    crucially different from the greedy algorithm, which makes only local
+    choices; it may find a very nice break for <var>w</var>’s line at the
+    cost of choosing awful breaks for the rest of the paragraph.</p>
+
+    <p>Those familiar with the list folds will immediately recognize a
+    right fold in the equations for <code>flow</code>:</p>
+
+    <pre><code>(define (flow ws)
+  (fold-right (λ (w ls)
+                (cons (best-break w ls) ls))
+              '()
+              ws))</code></pre>
+
+    <p>We need a definition for <code>best-break</code>, which returns a
+    Line-Info
+    structure describing the best way to break the line beginning with
+    word <var>w</var>. If we can enumerate all legal ways of breaking
+    after <var>w</var>, then it should suffice to choose the minimum-cost
+    solution [TODO: more here about the retention of break data for the
+    entire suffix]:</p>
+
+    <pre><code>;; (: best-break (→ Word (list Line-Info) (list Line-Info)))
+(define (best-break w ls)
+  (minimum-cost
+   (enumerate-breaks (cons (word-&gt;line-info w) ls))))
+
+;; (: minimum-cost (→ (list Line-Info) Line-Info))
+(define (minimum-cost ls)
+  (minimum-by (λ (l1 l2)
+                (&lt; (cost l1) (cost l2)))
+              ls)
+
+;; (: word-&gt;line-info (→ Word Line-Info))
+(define (word-&gt;line-info w) (list w 1 0))</code></pre>
+
+    <p><code>word-&gt;line-info</code> constructs a singleton line, i.e.
+    one consisting of a single word. Adding this to the paragraph suffix
+    avoids some inelegance during length computation. We do not use the
+    cost associated with this sentinel value.</p>
+
+    <pre><code>;; (: enumerate-breaks (→ (list Line-Info) (list Line-Info)))
+(define (enumerate-breaks suffix)
+  (assert (pair? suffix))
+  (line-candidates 0 0 suffix))
+
+;; (: line-candidates (→ ℕ Offset (list Line-Info) (list Line-Info)))
+(define (line-candidates len run-len suffix)
+  (match suffix
+    ((,_)             ; last word of paragraph
+     `((,run-len 0)))
+    (((,w ,_ ,cost) . ,suffix*)
+     (if (&gt;= len longest-allowed-line)
+         '()          ; halt
+         (cons (list run-len (+ cost (length-cost len)))
+               (let ((len* (+ len space-length (word-length w))))
+                 (line-candidates len* (+ run-len 1) suffix*)))))))</code></pre>
+
+    <p>The helper function <code>line-candidates</code> is the most
+    complex part of the entire algorithm. It traverses a prefix of
+    <var>suffix</var>, extending the previous break by one word at each
+    step, until it hits the maximum line length. The list of candidate
+    breaks is returned.</p>
+
+    <p>A few explanations are in order. The last line of a paragraph is
+    always assigned a cost of 0, since it’s customary to allows these
+    lines to be very short. This is handled by the first, singleton case
+    of <code>line-candidates</code>. <code>space-length</code>—a constant
+    equal to 1 in this version of the algorithm—is added to the length of
+    each candidate; this is the number of spaces following the current word.
+    (These are deliberate simplifications. See the Enhancements section for
+    discussion.)</p>
+
+    <p><code>length-cost</code> computes the cost of a line as a function
+    of the square of the difference between its length and the goal
+    length:</p>
+
+    <pre><code>;; (: length-cost (→ ℕ Cost))
+(define (length-cost len)
+  (short-cost (- goal-length len)))
+
+;; (: short-cost (→ Integer Cost))
+(define (short-cost z)
+  (expt (* z 10) 2))</code></pre>
+
+    <p>(In GNU fmt, the goal length is 7% less than the maximum allowed
+    width.)</p>
+
+    <p>Much more complex heuristics could be used to compute the cost of
+    a line, but the version of <code>length-cost</code> above is simple
+    and pretty good in practice.</p>
+
+    <p>An elegant fact about the <code>line-candidates</code> fold is
+    that the number of words it must examine to find the optimal way of
+    breaking a given line is bounded by <code>longest-allowed-line</code>
+    / 2. To see this, consider a maximally “fine” (as opposed to “coarse”)
+    paragraph made up of one-character words, e.g.</p>
+
+    <blockquote><p>A B C D E F G …</p></blockquote>
+
+    <p><code>line-candidates</code> will produce many candidates
+    for a suffix of such a paragraph, because the cumulative
+    length will approach longest-allowed-line slowly. How
+    slowly? At a rate of 1 + <code>space-length</code> per
+    word. For normal prose <code>space-constant</code> ≥ 1, so the
+    <code>line-candidates</code> process will terminate after producing at
+    most <code>longest-allowed-line</code> / 2 candidates.</p>
+
+    <p><code>line-candidates</code> thus runs in O(1) time. And since the
+    rest of
+    the algorithm simply processes the candidates produced by this function,
+    it seems likely that <code>flow-paragraph</code> runs in time linear
+    in the length of its input.</p>
+
+    <h2>Enhancements</h2>
+
+    <p>TODO</p>
+
+    <p>© 2024 Wolfgang Corcoran-Mathe. Released under the terms of
+    the Creative Commons
+    <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+    Attribution 4.0 International</a> license.</p>
+
+    <p><a href="/index.html">SIGWINCH Home</a></p>
+  </body>
+</html>
+
