@@ -7,6 +7,8 @@ div.story > p {
     margin-bottom: 0.25em;
 }
 
+div.scene { margin-top: 2em; }
+
 hr.dinkus {
     width: 30%;
     margin-top: 2em;
