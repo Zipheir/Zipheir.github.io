@@ -1,0 +1,116 @@
+%
+<Riastradh> jcowan: how about LLL
+<jcowan> Sorry, only 26^3 TLAs
+...
+<Riastradh> LLL is black magic, yes.
+<Riastradh> I use it to sort my socks, personally.
+<foof`> are your socks encrypted?
+<Riastradh> that would be telling
+<foof`> security through obscurity!
+<Riastradh> security through axiom of sock choice
+%
+<Riastradh> jcowan: no I mean what is the evening star and why
+<jcowan> The morning star, because identity holds necessarily if it holds at all.
+<jcowan> I am a curious beast, being both a Quinean and a Kripkean.
+%
+<Riastradh> I am not a fixnum; I am a free initial object in the category of rings!
+%
+<jcowan> And then there's a recursion: to know yourself is to know that you know yourself, etc.
+* elflng hms.
+* elflng knows that he doesn't know himself and breaks on a halting paradox.
+<jcowan> Oh, ignorance doesn't involve any loops at all!
+<jcowan> Of course, in some places to claim ignorance may be seen as rather ... presumptuous.
+<jcowan> "Really?  I've been here in the monastery ten years and haven't acquired enough ignorance worth mentioning!"
+%
+<Bunny351> Kooda: I have seen many posts about superficially comparing scheme
+           implementations over the years, and it is always the same.
+<Kooda> Bunny351: is it that important? We don't *have* to be the fastest best
+        most incredible implementation
+<sjamaan> We don't? :)
+<Bunny351> WE DON'T???
+%
+<jcowan> Life is too short to spend it being spoon-fed at someone else's notion of what the max rate of information flow is.
+%
+<Riastradh> do you want to call (launch-the-missiles) when you
+compile the program,
+<Riastradh> or do you want to _generate_ a call to (launch-the-missiles)
+when you compile the program, so that it can be executed later on
+when you run the program?
+<Riastradh> (This is a trick question, of course -- the only winning
+move is not to play!  BUT, for the purposes of this exercise, we
+will put ourselves into the deathwish mentality of a Cold War-style
+regime of mutually assured destruction.)
+%
+<elflng> back when i was the product of all of your ages....
+<jcowan> Now that's hardcore.
+<elflng> no, hardcore is 'back when i was a sequential ackermann function of
+your ages, in descending order'
+%
+* alaricsp imagines that if his relative-references-in-infinite-memory machine
+  was combined with jcowan's extensible-registers-on-demand machine then it
+  could traverse all of memory in O(log infinity) time rather than O(infinity)
+  time, a definite improvement
+%
+<jcowan> I am well known for my arrogant humility.
+%
+<jcowan> ... But what I intended is simply to call char-whitespace? and ignore
+        any character that satisfies it.
+<Riastradh> ignore any white characters who just take up space, like
+            jared kushner
+<Zipheir> Riastradh: I don't think we're likely to encounter him in a base64
+          string.  I hope not, at least.
+<jcowan> Perhaps as an emoji.  Which will raise an error satisfying
+         bytestring-error?.
+%
+<jcowan> tdammers: It was you who brought up cotalks.
+<Riastradh> jcowan: you cobrought down cotalks without tdammers
+<tdammers> what have I done!
+<Riastradh> tdammers: what haven't you codone
+%
+<Riastradh> God created the NaNs; all else is the work of man.
+%
+<jcowan> I think I will extend my title in R7RS-large from "chief cook and bottle
+         washer" to "chief cook, bottle washer, and cat herder".
+* foof hisses
+<jcowan> Relax, relax, I'm not herding *you*.
+%
+<Riastradh> In the lockpicking world, where there are many different kinds of
+            locks and picking them takes some physical skill and training but
+            also some randomness, there's a notion of a `confidence lock'.
+<Riastradh> If you find yourself getting discouraged because a lock you thought
+            you knew how to pick is resisting your efforts, you might start to
+            question whether you're any good at it at all, and you might be
+            tempted to give up.
+<Riastradh> A `confidence lock' is a lock with a smaller number of pins that's
+            very easy to pick.  When you get stuck like that, going back to a
+            confidence lock -- and getting the immense satisfaction of that
+            last *click* or just sudden lack of resistance in your tensioner
+            -- can inspire your confidence again and get you back to it.
+%
+<sytse> ... he starts his academic class about software architecture
+        with 'as a way of establishing the fact that I'm real, and that
+        I've got street cred: I have like, 6 boxes running linux in my
+        house right now'
+<sytse> showoff, but fun :-)
+<jcowan> If he had 6 Hurd boxen that would be really impressive.
+<sytse> at least he doesn't start his lecture with his MCSEs ;-)
+ * jcowan chortles
+%
+<alaricsp> SO I AM EXCITED
+<alaricsp> WE WILL FIX THIS AND BE STRONGER FOR IT
+ * alaricsp foams at the mouth
+%
+<johnjay> wasamasa: i can't tell what you're thinking now after we hijacked the
+          channel for homological algebra and books
+<johnjay> i can only tell you... it was necessary
+%
+<danderson> #freenode is quite the party at the minute. Every sysadmin
+cosplayer on earth is there designing decentralized networks on napkins.
+%
+<jcowan> I would say: gently encourage people to move to libera.chat
+and get away from ragnarok and the Korean Empire.
+%
+<elflng> i have water coming out of my ceiling. this is a suboptimal state of affairs.
+%
+<mason> tokie: jcowan on #lisp notes early use by Maclisp..... and he's here
+<jcowan> I am EVERYWHERE
