@@ -1,0 +1,407 @@
+<!--
+  TEI-like (http://www.tei-c.org/ns/1.0) MicroXML document of
+  “Undercity” by Wolfgang Corcoran-Mathe.
+-->
+<TEI>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Undercity</title>
+        <author>Wolfgang Corcoran-Mathe</author>
+      </titleStmt>
+      <editionStmt>
+        <edition n="a758466851ae895579a353f7a63d770c698ceab4" />
+      </editionStmt>
+      <publicationStmt>
+        <publisher>Wolfgang Corcoran-Mathe</publisher>
+        <date when="2024-01">January 2024</date>
+        <idno type="UUID">9310722d-3c50-4d6c-9527-4552ed0a0c2f</idno>
+        <availability status="restricted">
+          <licence target="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Born digital. This MicroXML document was created from the original plain-text file.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+
+  <text>
+    <front>
+      <docTitle>
+        <titlePart>Undercity</titlePart>
+      </docTitle>
+      <docAuthor>Wolfgang Corcoran-Mathe</docAuthor>
+    </front>
+
+    <body>
+      <div1>
+        <p>When Zhou Michel Okemba’s eyes opened it was still dark, except for a pale green glowing haze that pulsed somewhere above his aching head. There was the sound of trickling water. He moved his hands and felt slimy, pitted concrete beneath him. His head spun when he sat up. He pulled his utility knife out of a pocket, switched on its flashlight, and ran its thin beam over his legs. His left sock seemed to be crusted with blood, though it was hard to tell blood from the black-brown muck that covered his pants. He looked and felt like he’d been shoved through a clogged drainpipe.</p>
+
+        <p>He moved the beam into the green mist above him. The ceiling, only a meter or so above his head, was teeming with silent life. The glow came from a glistening mold of some sort which grew in curd-like clumps. There were pale fleshy tubes and delicate filaments of mycelium, between which Zhou could see ancient steel and concrete bulkheads.</p>
+
+        <p>Somewhere above them was Kinshasa.</p>
+
+        <p>The air was thick and hot, but moving gently in the direction of his feet. “An old airshaft?” Zhou wondered. He pushed himself up and crawled on his knees until he reached a wall. Bracing himself, he staggered to his feet. His left ankle hurt, but held his weight when he took a careful step. He pulled out his phone. It showed no signal and its battery was nearly drained. His neck began to sweat as a wave of panic washed over him.</p>
+
+        <p>Zhou took several deep breaths, then began to scan the passage with his flashlight. The ceiling was low and the passage sloped upward to his left. The smooth concrete underfoot was damp, with patches of slick algae. There was an irregular, smeared trail, probably made by his unconscious body as it tumbled down from above. He followed it gingerly up the steepening slope.</p>
+
+        <p>When he had gone about ten meters, he slipped and landed hard on his back. He got up carefully and brushed slime from his shirt. The next fall could be worse, he thought. He turned around and walked slowly back downward.</p>
+
+        <p>After a while the shaft leveled and water pooled around his feet. Gray light began to fill the passage, reflecting off the slick walls. Zhou was stopped by a rusted grate that spanned the entire shaft. Through it he saw vague, gray, rectangular masses, looming out of a large chamber lit from above. There a rivulet running under the grate into the room. Judging by the splashing sound, he guessed that the room’s floor was no more than five meters below.</p>
+
+        <p>Hunting with his flashlight, he found an opening in the grate near the left wall. It was a small hole eaten away by rust and widened by an unknown hand; the metal edges had been filed down. He swept away the muck from around the hole, pocketed his knife, and carefully lowered his legs through the gap.</p>
+
+        <p>He dropped a meter and landed on a bed of lichen. Pain from his left ankle shot through him and he bit his sleeve to keep from crying out.</p>
+
+        <p>He was in a vast rectangular room, like an abandoned warehouse or hypermarket. The light was dim and emanated from a central ring of overhead LED arrays. Clustered around the ring of light were dozens of shipping containers. Most were small, recent models made of plastic or fiberglass, but a few ancient steel monsters could be made out far across the room, their rust-streaks looking like dried blood in the cold light. Some of the smaller containers were stacked, and all were covered with carpets of lichen. The air was hot and fetid.</p>
+
+        <p>Zhou carefully made his way along the wall. There were scrawled signs hung on the containers. They were in Chinese, French, English, and other languages, poorly written and spelled. A ragged banner affixed to the highest container in a stack read “MAISON D MORTES”: house of the dead. Some of the doors hung open, black and silent. The stillness was unnerving.</p>
+
+        <p>Zhou reached a corner and turned. This wall, like the other, was smooth and broken by an occasional grate. He examined each one carefully.</p>
+
+        <p>The next corner was flooded. He skirted the dark, undulating pool, coming closer than he liked to the yawning door of one of the massive steel containers.</p>
+
+        <p>He was following the far wall when a metallic rattling came from among the boxes. Zhou crouched, and his head snapped toward the center of the room. Nothing moved, and the sound did not come again.</p>
+
+        <p>Further on, his fingers felt cold metal, and then his hand was in open space. He had found a doorway. Zhou stepped inside. His shoes clacked on tile. He could see a little by a red glow that filtered down from high above. A meter away was a metal staircase that rose up into the gloom. The steps were rusted, but looked safe enough.</p>
+
+        <p>He climbed up several flights. The ambient red light steadily increased and the concrete walls became gray tile, stained and cracked. Zhou relaxed a little; the air was moving, and the damp, rotting odor of the lower level was beginning to fade. But there were no doors or signs, and his ankle hurt badly.</p>
+
+        <p>Finally he reached the source of the light, a glowing array mounted on a low ceiling. There was a faint ticking sound from somewhere above him. He climbed up the last flight of steps, which opened onto a narrow, high-ceilinged room. Across the room was a metal door marked with high-visibility stripes and a glowing emergency-exit sign.</p>
+
+        <p>Hope surged inside him. He was about to dash across the room when movement caught his eye. The ticking became louder as a metal arm extended from the wall. At its end was a complicated array of lenses and sensors, flanking a dark barrel. The arm swiveled, sweeping the room; then it slowed and there was a loud beep.</p>
+
+        <p>Zhou dove for the stairwell just as the sentinel opened fire. Bullets struck the floor and wall, showering concrete chips on him. His chest hit the steps and he slid most of the way down the flight, tearing his clothes and skinning his knees. He scrambled the rest of the way to the landing and lay still for a moment. Then, painfully, he stood up and examined himself in the glaring light.</p>
+
+        <p>The gun had missed him, but his knees were bloody and his torso felt badly bruised. His ribs seemed to be intact, though. Zhou reached for his knife-light and realized it was gone. He had been holding it when the gun had fired, and it was probably now laying on the floor above him in range of the automated sentinel. Cursing, he started back down the stairs.</p>
+
+        <p>The ambient light faded as he descended and he was soon in near darkness. The stench grew, and now there were clangs and thumps from the lower room. Zhou’s palms were damp with sweat as he followed the thin metal handrail.</p>
+
+        <p>When he reached the container room it was alive with shadows, vaguely human, cast on the walls by the central light. Zhou heard a scrabbling sound, and thin forms in rags came toward him, whispering hoarsely. He heard traces of Chinese and Kongo. A small crowd of ragged men and women began to gather around him. They were of all ages, mostly dark-skinned, and all emaciated.</p>
+
+        <p>Zhou walked toward the light, the crowd following. Suddenly he heard a man’s high voice cry out. A figure ran out of an open container, gesturing excitedly. His deep black skin was loose and wrinkled, though he did not seem old. He had a bland, weak-chinned face that looked as though it had once been plump. The crowd parted for him.</p>
+
+        <p>“Zhou! Zhou Okemba!”</p>
+
+        <p>Zhou was stunned. “Who—” he began hoarsely. His throat was very dry.</p>
+
+        <p>“It is me, Sébastien Ntsika,” said the ragged man, grinning. “Surely you remember.”</p>
+
+        <p>“I—yes, yes,” croaked Zhou, too exhausted to argue.</p>
+
+        <p>Some of the others came forward and touched Zhou’s clothes. He shook them off nervously. Sébastien, chuckling, grabbed him with both hands and stared into his face.</p>
+
+        <p>“Zhou, my friend! To think that even one so fortunate as Zhou Okemba could fall down to live among the dead! Ah, it is a shame!”</p>
+
+        <p>Zhou did not understand this. “Listen,” he said urgently. “I fell. Into the shaft. I must have fallen a long way. I need to get out of here, back to Kinshasa. Do you know a way?”</p>
+
+        <p>Sébastien chuckled again. “Zhou, Zhou, there is no way. Ah hah! We would all indeed like to find a way out!”</p>
+
+        <p>Desperation gripped Zhou. “There must be a way!”</p>
+
+        <p>“No, my friend,” Sébastien said. His eyes gleamed and he was no longer laughing. “There is no escape for you. You see, all of us have died, and now you are one of us. You, my friend, are dead.”</p>
+      </div1>
+
+      <div1>
+        <p>It was lunchtime, and Zhou had just left his office on the third subterranean level of Kinshasa. The air felt fresh and dry, and the ceiling display showed a bright blue sky with a few sheets of rolling cloud. He came to a narrow street lined with the shallow prefab storefronts found everywhere in the city. Most sold food of some sort. Zhou bought a bowl of grilled carp filets on rice and ate as he walked down the street. The “carp” was textured peanut protein, but it tasted good. Zhou smiled. The sky, the street food, and the noise of the crowd reminded him of pleasant days on the surface.</p>
+
+        <p>Near the end of the street, he wandered over to a dimly-lit, pink plastic stall. A middle-aged man in a brightly-colored robe was selling holo tokens, tiny memory chips that held access codes for 3D videos. Behind the pink plastic counter hung a synthetic kuba blanket, covering most of the back wall, in front of which a thin young girl was slumped in a folding chair. She stared at her phone and didn’t look up as Zhou approached.</p>
+
+        <p>He browsed the older tokens excitedly, looking for the capture-the-flag matches that he collected. Those old streams were almost impossible to watch without an access token, but chips more than a few years old were hard to find in the city. In a few minutes he found tokens for three rare matches. He placed them on the counter and handed his payment card to the seller. The robed man passed the card over the scanner, a smooth protrusion in the plastic counter. It made an ugly beep. The man tried again, sweeping the little rectangle quickly over the bump. Again came the rejecting beep. He shrugged and tapped on the pad mounted next to the scanner. The girl jumped up and grabbed the card. She said something to the man that Zhou didn’t hear, then darted behind the blanket.</p>
+
+        <p>The owner shrugged again and rubbed his stubbled chin. “She says she can fix it,” he said to Zhou.</p>
+
+        <p>Nearly a minute passed, and the girl did not return. Zhou waited in growing alarm. Then a dark hand pushed the blanket aside and the girl came out. Zhou glimpsed a long, dim hallway behind the stall before the blanket fell again. With a bored nod, the girl gave the seller Zhou’s card. The card worked and they completed the sale, the robed man mumbling apologies and something about a receipt. Zhou picked up the tokens and left.</p>
+
+        <p>It was not until that evening that Zhou realized what had happened. On his way out he tried to buy a soda from a machine in his office building. His card was rejected: “NO FUNDS”. Pulling out his phone, he checked his bank account, then tested the card with his bank’s verification tool. It wasn’t his.</p>
+
+        <p>Zhou ran out of the building and raced through the subterranean streets, his shoes slapping on the soft walkways. It had been 5 hours since he’d bought the holo tokens. If the merchant and the girl were professional thieves, they’d have run for it, Zhou thought anxiously.</p>
+
+        <p>When he reached the narrow street the food stalls were jammed with customers, mostly office workers like himself. At the quiet end of the street the crowd was thinner. He made straight for the holo token stall, which was still dimly lit. As he approached the stall’s lights flicked off, as if it was trying to hide from him.</p>
+
+        <p>The robed seller was packing up his wares and gave Zhou a nervous smile. “Hello again, my friend,” he said. “Is there anything else I can do for you?” The girl, still lounging behind the counter, didn’t look up.</p>
+
+        <p>“My card,” Zhou said, panting. “Give it back.”</p>
+
+        <p>“I don’t know what you’re talking about,” the seller said, busy with his tokens.</p>
+
+        <p>“I haven’t called the cops yet,” Zhou said, trying to relax. “Just give me the card. If you don’t I’ll report the theft and you’ll get shut down.”</p>
+
+        <p>“You’re not going to shut down shit,” the seller growled. “I don’t know anything about your card. You lost it, it’s not my problem.”</p>
+
+        <p>The girl ducked swiftly behind the blanket.</p>
+
+        <p>Zhou shoved the man aside and jumped over the counter. He wasted several seconds tangling with the blanket before he managed to get through. There were doorways on both sides of the empty corridor beyond. He ran to the nearest one and found a tiny room full of cardboard boxes. There was no sign of the girl. He ran onward.</p>
+
+        <p>At the end of the hall Zhou found a doorway opening onto a stair. He stopped to listen. The dark upper flight was silent, but he heard footsteps below him. He raced down the stairs.</p>
+
+        <p>The ceiling lights flickered. The walls were covered in graffiti, a rarity in Kinshasa. Zhou kicked aside rags and old food containers, turned at a landing, and found himself at the top of a pool of darkness. Somewhere below him a phone-sized light moved. Zhou shouted and started toward the light, keeping his hand on the invisible rail.</p>
+
+        <p>The light flicked off and the footsteps picked up again, now clattering as if in a long hall. Zhou hit the landing sooner than he expected. His knees twinging, he raced through a door and into the hall. He headed left, where a single ceiling fixture glowed some 10 meters away, illuminating old green ceramic tiles. Past the light Zhou was in darkness again, and the floor was rough underfoot.</p>
+
+        <p>He had just about decided to give up the hunt when he tripped, hit smooth concrete, and felt his body begin to slide. He reached out in the darkness, trying to stop his descent, but couldn’t find a handhold. His last, awful memory was that of falling through suddenly open space.</p>
+      </div1>
+
+      <div1>
+        <p>Zhou sat with his legs stretched out and his back against a container. The ragged crowd had dispersed and Sébastien had run off somewhere. Stiff and sore, Zhou closed his eyes and tried to think. The ragged man’s face revolved in his thoughts. Where had he met Sébastien Ntsika? With his ordinary face and pompous, fawning manner, he could have been any one of the hundreds of managers or bureaucrats Zhou had known in his career. It was impossible to remember.</p>
+
+        <p>After a few minutes, Sébastien returned carrying a ragged bundle, which he dropped on the ground under the lights. Then he ran to a container and rummaged around inside. Thick power cables ran up from a hole in the container’s roof to the ceiling, where a conduit for the LED arrays had been tapped. The man emerged with an old electric burner, the cable trailing back into the darkness. He placed it on the ground and warmed it up, then unrolled his bundle. Among the folds of stained and torn red poly was a pile of larvae and small yellow mushrooms. He began mashing his ingredients in an old tin pan. He set it on the glowing burner and then sat back and rubbed his hands gleefully as the meal cooked.</p>
+
+        <p>“Is that what everybody here eats?” Zhou asked, creeping forward.</p>
+
+        <p>Sébastien shrugged his bony shoulders and stared at the food. “Some of our enterprising citizens try to grow things. Yeast, mostly. Mustafa found a lamp and grows little green plants. Pah! They’re so bitter that even the roaches won’t touch them.”</p>
+
+        <p>“But what about the city?” Zhou asked. “Don’t they give you anything?”</p>
+
+        <p>Sébastien muttered something Zhou couldn’t make out. Zhou squatted next to him and touched the man’s shoulder.</p>
+
+        <p>“Sébastien, they must know you’re down here,” he said. “Even prisoners get food in Kinshasa.”</p>
+
+        <p>Sébastien didn’t seem to hear. “It is a great shame, my friend,” he said in a whining voice, “that so little comes to the poor and sick citizens here. Surely they know that I am here, and those who put me here do their best now to starve me. Do you remember Mwanga, that slick fat slob who used to give the Civil Service exams? A lazy coward! There was nothing he didn’t take credit for. He found a thousand ways to cut my pay. I worked overtime to grade the payroll exams every three months and he took all of it from me in bribes. Hah! You had to bribe Mwanga to use the toilet. Eventually he had me fired. You can be sure he knows that I am here now. Petty revenge! Ah!”</p>
+
+        <p>Sébastien had ignored his little stove during this rant and smoke was now beginning to rise from the hot pan. With quick prods of his spindly, dark fingers, he managed to get the pan off the heater and onto the ground. He blew on the food vigorously.</p>
+
+        <p>“What about the gun, Sébastien?” Zhou asked. “At the top of the stairs. Who reloads it?”</p>
+
+        <p>Zhou waved a hand dismissively and continued to blow on the food. “No one,” he said. “No one reloads it. Built-in fabricators. It can print enough bullets to kill us all many times over.”</p>
+
+        <p>Zhou brooded for a moment. Sébastien chuckled. “I know what you are thinking. ‘Wait until it must build a new magazine!’ Haha, am I right?” He shook his head and looked at Zhou craftily. “No, my friend, I have tried that. It makes new bullets as it shoots, I think. Very efficient!”</p>
+
+        <p>Still chuckling, Sébastien ran back to his container and emerged with two plastic trays. He filled both with food and held one toward Zhou, whose stomach was beginning to rumble. When Zhou reached for the tray, Sébastien pulled it away.</p>
+
+        <p>“The food is not free, my friend,” he said. “5,000 francs.”</p>
+
+        <p>Zhou gaped at him, then laughed scornfully. “What will you buy with 5,000 francs down here? Do you eat this shit because you ran out of money for the vending machines?”</p>
+
+        <p>Sébastien looked sour. “If you find a vending machine it will be empty, or full of worse than this. 5,000 francs, or the equivalent in renminbi or euros.” He pronounced the words carefully. “You must remember that I am always an entrepreneur. My family managed the most valuable cobalt mines in Congo. My brothers and sisters took it all and I ended up preparing exams for that bastard Mwanga. It is a very great shame.” He shook his head. “But you are a businessman, Zhou. A successful one, too, I believe—or you were, before you fell. You understand the value of exchange! Even in this place, we must hold to social principles. We are dead, but we have not become beasts.”</p>
+
+        <p>Disgusted, Zhou dug through his pockets for his emergency cash, the only paper money he carried. He pulled out a few thousand-franc bills and tossed them on the ground next to Sébastien, who hurriedly stuffed them in a ragged shirt-pocket. Zhou picked up the tray and began to eat, forcing the bland mush down his throat as Sébastien chattered, between mouthfuls, about his siblings’ betrayals. The man’s exaggerated idea of his family’s importance was annoying. Zhou had rare-earths wealth in his own family, and he had never heard of a Ntsika family in the cobalt business.</p>
+
+        <p>When Zhou had finished he asked where he could sleep.</p>
+
+        <p>“You may sleep in the engineer’s place,” Sébastien said. He wiped his mouth on his sleeve and pointed through the camp at a lichen-covered black container. He shook his head sadly. “The poor woman passed on this week and we have not disturbed her.”</p>
+
+        <p>Zhou looked at him sharply. “You mean you left her body to rot?”</p>
+
+        <p>Sébastien shrugged, as if to say it was not his concern. He picked up the burner, pans, and cables and lugged them into his container, leaving Zhou alone in the gray light.</p>
+      </div1>
+
+      <div1>
+        <p>The container was low, dark, and sweltering. Zhou stepped through the hatch carefully and felt water flood into his shoe. As his eyes began to adjust, he made out a duffel bag, some styrofoam dishware, and what looked like a small lantern. He grabbed the lantern and switched it on. The batteries were weak and the LEDs cast only a faint ghostly light.</p>
+
+        <p>The engineer’s body lay at the far end of the container. She wore a dirty, dark blue coverall and had been laid on her back with her arms at her sides. Her face was somewhat square, with light brown skin and cropped hair. Two strips of white tile, lashed together to form a cross, had been placed next to her head. He had no idea how to tell how long she’d been dead, but the body seemed undecayed and had no visible wounds.</p>
+
+        <p>Zhou searched the woman’s pockets and found a corporate ID which identified her as İdil Jackson Karahan, an engineer at Wenhua-KCG. The card had been issued a few years ago and gave a Kinshasa address in the upper levels. There was also a small memo pad and a fragment of a drafting pencil, crudely sharpened. The duffel held only a few ancient candy wrappers and some frightened roaches. There was no phone, money, or credit card.</p>
+
+        <p>Zhou bit his lip. The shelter had been carefully looted. Had Sébastien been involved, Zhou wondered. If so, the man had lied when he’d said the engineer’s body had not been disturbed.</p>
+
+        <p>He looked at the face and hands, which appeared translucent in the pale lantern light. He felt deeply depressed. He needed to get out of this box. He put the memo pad in his pocket, covered the body with the sleeping bag, and stepped over the puddle in the corner. He carefully closed the container door behind him, then went to find Sébastien.</p>
+
+        <p>The camp was silent. Zhou crept carefully through the maze of looming blocks, stepping around trash and squeezing through gaps between shelters. He recognized Sébastien’s hovel by the knot of cables running up from the roof. The door was closed. Zhou knocked softly. After a moment, it swung open and Sébastien leaned out, looking around suspiciously. He grinned when he recognized Zhou.</p>
+
+        <p>“Well, Monsieur Okemba,” he said softly. “Is your room to your liking?”</p>
+
+        <p>“I need your help,” Zhou said. “We have to dispose of the body.”</p>
+
+        <p>“I cannot help you with that,” Sébastien said with a look of distaste. “I do not like to handle … such things. Besides, you cannot bury her here.”</p>
+
+        <p>Zhou nodded. “I know. But is there a place where we could set a fire?”</p>
+
+        <p>“Fire? That means a lot of smoke. People here would not like that.”</p>
+
+        <p>“What, then?” said Zhou, impatiently. “Do you want disease? You can’t leave her body there to rot. And were you so afraid to handle her body when you went through her pockets? That container’s been stripped bare.”</p>
+
+        <p>Sébastien made a face. “Do not make accusations. I cannot stop others from taking things.” He held up his hands as Zhou stepped foward angrily. “It was not my affair. Please, I am not a thief, but I am not a policeman, either. If you want to get her body out of here, do so. Yes, indeed, I thank you. I am much obliged.” He began to close the door. “Just remember: no fires!”</p>
+
+        <p>Zhou grabbed the door’s rusty handle. “Who was she, Sébastien?” he said fiercely. “How did she die? Tell me, did she live here long?”</p>
+
+        <p>Sébastien glared at him silently. Zhou kept a firm grip on the door.</p>
+
+        <p>“No, she did not,” said Sébastien. “She came in the same way you did. A few months she was here. I cooked for her and she paid me. I did not know her. Always she was looking for a way out and going into places she should not have. She cut herself and got sick, I believe. She did not ask for help. Very, very brave. But foolish.”</p>
+
+        <p>Sébastien backed away slowly and began puttering around his shelter. Zhou stood at the door, watching him. After a minute Sébastien returned with a wand flashlight and an old plastic shovel.</p>
+
+        <p>“Very well, my friend,” he said reluctantly. “I will help you, if that is what I must do to get some peace. Come, we will put her in the garden in the lower level. I will show you.”</p>
+      </div1>
+
+      <div1>
+        <p>Zhou and Sébastien carried the woman’s body across the camp to a doorway leading to a descending ramp. It was unlit and they needed their hands to carry the body, so Sébastien turned on his wand light and unceremoniously shoved the handle into the front pocket of the engineer’s coverall. They carried the body down the ramp. After about fifty meters the concrete gave way to packed dirt.</p>
+
+        <p>They turned off into the “garden”, a wide room with a muddy dirt floor and a low ceiling. There was a sluggish stream of murky fluid running from a pipe at the far end, which had collected in a wide black pool at the room’s center. Around the edge grew thick clusters of fungus, including tufts of the yellow mushrooms that Sébastien had cooked. The reek of the pool was overpowering.</p>
+
+        <p>They carried the engineer’s body to the far side of the pool. Zhou began digging while Sébastien fidgeted impatiently with the light. The earth was soft and Zhou was able to dig the grave quickly. Sliding in the mud, the two men lowered the body, then buried it. Sébastien kicked dirt in with his feet. As soon as the grave was filled, he turned and started back.</p>
+
+        <p>“We should say a few words,” said Zhou, panting. His voice sounded small in this close, fetid pit of a room.</p>
+
+        <p>“No, thank you. It stinks.”</p>
+
+        <p>“Then at least wait a minute while I say something,” Zhou said. “I’ll need the light to get back.”</p>
+
+        <p>“You know the way.”</p>
+
+        <p>The light bobbed around the pool. The sound of Sébastien’s feet splashing in the mud moved away, then faded.</p>
+
+        <p>Zhou stood in the dark and began to recite the few phrases he remembered of the French Requiem mass. After a few words, he thought better of it. He did not know to what faith, if any, İdil had belonged. Eventually, he uttered what he hoped were a few universal phrases appropriate to the end of a human life, then bowed his head for a minute.</p>
+
+        <p>He carefully felt his way back to the camp in pitch darkness.</p>
+      </div1>
+
+      <div1>
+        <p>Zhou was exhausted when he returned to the engineer’s container. He pulled out the sleeping bag and shook the roaches out of it, then spread it out at the dry end of the room. He collapsed onto the bedding. His back ached and he felt stifled by the hot, stagnant air. Roaches, millipedes, and something with long legs climbed over him. Turning on the light, he thought, would only make things worse. He squeezed his eyes shut, dozed intermittently, and got up when he could no longer sleep.</p>
+
+        <p>He opened the door to let in some light and drank from a plastic water jug that Sébastien had sold him. Then he sat down and took out İdil’s memo book.</p>
+
+        <p>It was a small, old-fashioned, spiral-bound engineer’s pad of good quality. The first pages were covered with pencil diagrams of construction work, with notes in English. Several fragmentary Web links were scribbled on one page, along with a Chinese surname—a colleague? After this there were many blank pages. Toward the end of the book there was a series of rough sketches, sparsely annotated. The paper was very dirty. Shapes ran over the pages, with arrows indicating a path. It was a map. Zhou recognized the airshaft and grate from which he’d arrived the day before. Excitedly, he flipped to the last page. A large arrow pointed up from a series of rooms; it was marked “sub-kinshasa street level”.</p>
+
+        <p>Zhou heard a noise and looked up to see Sébastien watching him curiously from the doorway.</p>
+
+        <p>“Good morning,” Sébastien said. “I am about to cook breakfast.”</p>
+
+        <p>“Thanks,” said Zhou. “I’ll be right there.”</p>
+
+        <p>“What is that book you found?”</p>
+
+        <p>“İdil’s—the engineer’s—notebook,” Zhou said, putting it in his pocket and standing up. “I was trying to find out where she lived, or names of people she knew. Something about her.”</p>
+
+        <p>“And what did you find?”</p>
+
+        <p>Zhou was silent for a moment. “Not much. Business notes, lists, some sketches.”</p>
+
+        <p>“Ah, well.” Sébastien nodded sadly, but his eyes were sharp.</p>
+
+        <p>He continued to interrogate Zhou about the memo book over breakfast. It was clear that the man knew Zhou had found something and would watch him doggedly until he found out what it was. Finally, Zhou showed him the map.</p>
+
+        <p>Sébastien was ecstatic. “We will escape, my friend! A parting gift from that dear woman. Do you know that I always wondered what she was doing, coming and going all the time? A map!” He laughed, then lowered his voice and came close to Zhou. “Do not show this to anyone. We will go quietly, and I will guide. I know many of these places.” He ran his fingers over the pages and chuckled, then turned in the direction of his container. “I must get a few things. Meet me by the big grate, in half an hour.”</p>
+      </div1>
+
+      <div1>
+        <p>Zhou waited near the grate for several minutes. He stood in the shadow of an ancient steel tank container to avoid attention from the camp’s residents, some of whom had wandered close by. Sébastien arrived with bulging pockets and with his wand light swinging from a lanyard.</p>
+
+        <p>They climbed up to the hole in the grate from which Zhou had entered. Once in the air shaft, Sébastien led the way, holding the tiny map close to his face. Zhou followed close behind. He already regretted showing Sébastien the map and felt sure that he would’ve been safer making the attempt alone. He intended to keep a careful watch on his guide.</p>
+
+        <p>The clouds of luminous mold appeared overhead and the shaft sloped upward. Sébastien turned right and bent down at the wall of the shaft, feeling along the overgrown panels. He passed Zhou the map and light, muttering to himself. Zhou watched his spindly fingers search through the spongy lichen like brown spiders hunting for grubs.</p>
+
+        <p>Finally, Sébastien found a thin spot in the wall flora that disguised an indented door-grip. He laughed and yanked on it, causing a shower of sparkling condesation. Behind was a small passage, completely dark. They went in, ducking under the low ceiling.</p>
+
+        <p>They followed the passage for hundreds of meters. It zig-zagged and rose slowly, with short flights of steps every dozen meters or so. Zhou began to feel hopeful. He heard the sound of running water ahead of them, and suddenly the passage opened onto a catwalk. Zhou reached out and felt handrails to his left and right. From their echoing steps and the bubbling sounds below him, Zhou knew they had reached a large space, perhaps a cistern of some sort.</p>
+
+        <p>The catwalk descended until they could hear water near their feet. Sébastien stopped and pointed. There was black, slow-moving water to their left, as far as Zhou could see. The catwalk turned to cross it, but the middle section had rusted away. Many meters off in the gloom he could make out the twisted metal of the other end.</p>
+
+        <p>Sébastien leaned against the handrail and looked at the map.</p>
+
+        <p>“‘Swim’, she says. Only ten meters?” He peered out over the water, then grabbed Zhou’s shoulder. “Look,” he said impatiently. “Can you see anything?”</p>
+
+        <p>Zhou looked. Ghostly yellow-green bars appeared in the water, rising to a bar of light somewhere beyond a round support column. He blinked and shook his head, thinking that the long journey in the dark was making him hallucinate. The lights—bio-lights, he realized—were still there. The distant bar might be a pier or platform, overgrown with glowing flora. The lights pulsed gently with the flow of the water.</p>
+
+        <p>“Ten meters, maybe a little more,” he said. “A lot more, if that’s a mirage. What about the map and the light?”</p>
+
+        <p>Sébastien pulled an old plastic bag from his pocket and began wrapping the memo book in it. “We must take our chances with the light,” he said. “I think it will be OK in the water.” He looked down and shook his head. “Phew! As I said, a brave woman.” He jumped in, and the harsh white glow of the wand light bobbed crazily as he stablized himself. Zhou jumped in after him. They paddled slowly toward the dimly-glowing bar.</p>
+
+        <p>The light bounced as Sébastien swam. Zhou, following a few meters behind, could see little more than the dark outline of the man’s head and the wavering glow of the bio-lights. The water was tepid and murky, and Zhou did not want to think of what might be living in it.</p>
+
+        <p>As they neared the glowing bar, Zhou’s feet kicked the bottom. They began to wade through the shallower water. Ahead, Zhou saw a concrete stair and a low platform, shaggy with bioluminescent growth, that rose a few centimeters above the waterline. Sébastien, breathing hard, clambered up the stair and started shaking the water from his clothes and out of the light.</p>
+
+        <p>Zhou climbed up after him. “Let me see the map,” he said, panting.</p>
+
+        <p>“No!” Sébastien snapped. He carefully unwrapped the book.</p>
+
+        <p>“Why not? I won’t get it wet. Hold it up in the light if you’re so worried.”</p>
+
+        <p>Sébastien ignored him. He stood loking at the pages, blocking Zhou’s gaze with his body. After a moment he snapped the book closed and walked off without a word. Cursing under his breath, Zhou followed.</p>
+
+        <p>They walked a long way along the platform. The glowing fungi gave way to a slick brown growth that coated the tiles underfoot. Zhou slipped several times, causing Sébastien to hiss with impatience.</p>
+
+        <p>Eventually they found a rusted door not far from the water’s edge. Inside was what looked like an abandoned utility closet. Sébastien flicked a light switch and threw himself into an old plastic folding chair. Zhou sat down across from him, his clothes still soaked, his throat parched, and his arms aching. The ancient fluorescent tubes hummed loudly and cast the room’s empty racks and shelves in bluish-gray.</p>
+
+        <p>Sébastien took a small plastic bottle from one of his pockets, drank off the water in it, and then tossed it aside. He wiped his mouth and started to put the memo book in his wet pocket, then cursed and set it on a nearby rack.</p>
+
+        <p>“We are almost through, I think,” he said, softly. “So … we must speak of a delicate subject.”</p>
+
+        <p>Zhou stared at him.</p>
+
+        <p>“We will soon be back in Kinshasa, my friend. This could not be if it were not for my guidance.”</p>
+
+        <p>Zhou shook his head in disbelief. He kicked his chair aside, walked to the closed door on the far wall of the closet, and yanked it open. On the other side was a short hallway stinking of mildew. Sébastien sat silently for a moment, then sprang out of the chair. He came up close beside Zhou and grabbed at his damp sleeve.</p>
+
+        <p>“Where would you be if you did not have a guide? And where would you be had I not helped when you arrived at the camp? You must help me in turn. I have no friends in Kinshasa, and the money I have earned down here will not last long. You are a fortunate man, Zhou. You will have been away for just a few days. All will be well for you. But it will be different for me!” He shook his head bitterly. “A small amount to get me on my feet. That is all I need, Zhou. It would make a great difference.” Sébastien gripped Zhou’s arm. “It is only fair, Zhou. Surely you see that it is fair.”</p>
+
+        <p>Zhou shook him off with difficulty. “Go to hell, Sébastien,” he said. “You’re only here because you wouldn’t let anyone escape without taking you along. I don’t owe you anything.”</p>
+
+        <p>“I didn’t let you starve, my friend,” Sébastien said quietly.</p>
+
+        <p>“Because I could pay,” Zhou said, his anger mounting. “You sold me water, you sold me garbage to eat—at restaurant prices!—and you would’ve left me to rot in one of those boxes if I hadn’t had pocket change for you. That’s what happened to İdil, isn’t it?”</p>
+
+        <p>“I had nothing to do with the death of that poor woman,” Sébastien said reprovingly. “I cooked for her, and she was most grateful. She was a dear friend, Zhou.”</p>
+
+        <p>“Until she stopped paying you,” Zhou snapped. “Then you waited for her to die and took everthing she had.”</p>
+
+        <p>Sébastien glared and his body tensed. “I told you before, do not say things like that.”</p>
+
+        <p>“Where was her phone, then? Her credit card, her money? You only missed the map because you were too greedy to look at an old paper notebook.”</p>
+
+        <p>Rubbing his small chin and looking pained, Sébastien said nothing. He stalked around the room tensely a few times, then returned.</p>
+
+        <p>“So,” he said. “You will not help me? You will give me nothing?”</p>
+
+        <p>“Forget it.”</p>
+
+        <p>“You could at least mention my name to the officers of your company, or to some of your friends. You are a fortunate man, after all!” Sébastien grinned strangely and there was an edge in his voice.</p>
+
+        <p>“When—if—we reach Kinshasa,” Zhou said, “I’ll take you to the police and tell them that you went missing years ago. If you have any living relatives, they’ll help you find them. I will make sure that they do. No more and no less. Now, let’s go.”</p>
+
+        <p>“Very well, my friend,” Sébastien said quietly. “Very well.”</p>
+
+        <p>Zhou went through the door. Sébastien followed a few steps behind.</p>
+
+        <p>There were a series of hallways, all badly mildew-spotted and some ankle-deep in dark water. Eventually, they turned off into a stairwell and climbed for a long time, Sébastien leading the way with his light. Zhou, remembering his encounter with the sentry gun, slowed down as they climbed. The ambient light was increasing; it was now a pale yellow glow.</p>
+
+        <p>Suddenly Sébastien stopped and leaned against the wall, listening apprehensively. He was panting hard. “Go up,” he said. “We are near the top. You must see what is up there. I must rest.”</p>
+
+        <p>“Yeah, sure.” Sébastien was taking no risks, Zhou thought irritably.</p>
+
+        <p>He crept up the stair, listening carefully. At the top of the flight was a vestibule full of metal junk, and a door with a large window. Through it Zhou could see a well-lit, white-walled corridor. He listened carefully and looked for any sign of danger. The cluttered vestibule was silent, but he thought for a moment that he could hear voices from far down the hallway.</p>
+
+        <p>Zhou slipped back down to Sébastien. “Come on,” he said. “I think it’s safe. I think we’re nearly out. We just have to pick our way through some trash.”</p>
+
+        <p>Sébastien followed him up without a word. Zhou began pushing aside rubbish—conduit, pipes, metal desks, and folding chairs, all rusty and begrimed. He heard Sébastien moving along gingerly behind him. Reaching the door, he shoved against the crash bar. The door creaked but didn’t move.</p>
+
+        <p>“Give me a hand here,” Zhou said, kicking at the door. There was no reply.</p>
+
+        <p>Zhou turned and was blinded by the wand light, which Sébastien had raised to eye-level. Zhou cursed, shielding his eyes just as the man swung something dark and heavy at his face. It struck his hand, hard. The second blow hit the left side of his head. His vision flared and he crumpled down against the door, which opened slowly and loudly under his weight. He watched helplessly as Sébastien bent over and went quickly through his pockets. He took Zhou’s soggy cash, his cards, and his phone and shoved them in his pockets, then squeezed past the door and dashed off down the corridor.</p>
+
+        <p>Nauseous and dizzy, Zhou crawled through the door and as far down the hall as he could go before he vomited. He rolled over on his back, his head pounding. The bright overhead lights swam and then slowly faded out.</p>
+      </div1>
+
+      <div1>
+        <p>He awakened to someone rubbing his shoulders. He turned his head and recognized the girl from the video booth. He grabbed one of her hands. She looked alarmed and ready to flee, but relaxed a little as Zhou continued to lie on his back.</p>
+
+        <p>“It’s you,” he murmured. “I’m hurt. Can you get me up to the street?” She looked at him distrustfully. “I don’t care about the card,” he added. “Just get me out of here.”</p>
+
+        <p>“OK,” she said, nodding reluctantly. She helped him to his feet. He groaned and nearly fell over, then slowly began to walk.</p>
+
+        <p>The girl led him down the corridor, then through a series of small storage rooms, down a short stair, and through another long hallway. Zhou lost track of the path; he followed close behind, his eyes fixed on her sneakers, trying to keep his vision from spinning.</p>
+
+        <p>After what seemed like hours, they emerged from an empty storefront across the street from the little plastic video booth. The ceiling showed bright daylight and a few women were chatting happily with a food vendor in the quiet street. Zhou was too exhausted to feel anything but relief. He closed his eyes, sagged against the girl and impulsively hugged her.</p>
+
+        <p>She gently pushed him away and looked at him impassively. “Go see a doctor,” she said. She turned and ran off.</p>
+      </div1>
+
+      <div1>
+        <p>Zhou spent the rest of the day at an emergency clinic, where he learned that he had a concussion and a sprained ankle. He returned to his apartment, exhausted and shaken, as the ceiling outside was shifting from blue to sunset pink. He ate a large meal and then slept until the next evening. Several times he awoke from nightmares. He went to his office the following day, and began to pick up his normal routine of work and daily life.</p>
+
+        <p>Zhou made no attempt to find Sébastien or to report the robbery; the story, he thought, was too strange. He contacted Wenhua-KCG, but learned only that İdil Jackson Karahan’s employment record had been lost in a database failure. Zhou continued to search, looking for her name in city records and on the Web.</p>
+
+        <p>Nightmares tormented him. In them, labyrinths of fetid black tunnels and flickering corridors spread behind every door, all funneling downward to the pits beneath the city. Often he watched helplessly as İdil walked through a blanket-covered doorway and became lost.</p>
+
+        <p>He avoided the lower levels, which now gave him acute claustrophobia. He walked in his office building’s garden during breaks and filled his apartment with plants and warm light. His happiest days, though, were spent on the surface, in an open Kinshasa market under a blazing morning sun.</p>
+      </div1>
+    </body>
+
+    <back>
+      <div type="ack">
+        <p>Thanks to <persName>Rudyard Kipling</persName>. The plot of this story was plundered from his <bibl><title level="a">The Strange Ride of Morrowbie Jukes</title>, collected in <title level="m">Indian Tales</title></bibl>. (No doubt he plundered it from an Indian folk source.)</p>
+      </div>
+    </back>
+  </text>
+</TEI>
