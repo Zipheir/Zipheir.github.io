@@ -10,13 +10,13 @@
         <author>Wolfgang Corcoran-Mathe</author>
       </titleStmt>
       <editionStmt>
-        <!-- Git commit SHA1 of latest story text file. -->
-        <edition n="a758466851ae895579a353f7a63d770c698ceab4" />
+        <edition>SHA1 hash of latest story commit:
+          a758466851ae895579a353f7a63d770c698ceab4.
+        </edition>
       </editionStmt>
       <publicationStmt>
         <publisher>Wolfgang Corcoran-Mathe</publisher>
         <date when="2024-01">January 2024</date>
-        <!-- Author's catalog identifier. -->
         <idno type="UUID">9310722d-3c50-4d6c-9527-4552ed0a0c2f</idno>
         <availability status="restricted">
           <licence target="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</licence>
