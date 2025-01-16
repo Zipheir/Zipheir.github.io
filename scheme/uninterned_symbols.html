@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+SPDX-FileCopyrightText: 2025 Wolfgang Corcoran-Mathe
+SPDX-License-Identifier: MIT
+-->
+  <head>
+    <meta charset="utf-8">
+    <title>SRFI ###: ???title???</title>
+    <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="https://srfi.schemers.org/srfi.css" type="text/css">
+    <style>
+      <!--
+      /* Names of Scheme types: boolean, pair, etc. */
+      span.type-meta { font-style: italic }
+
+      /* Channel name on IRC or similar services. */
+      span.channel { font-family: monospace }
+      -->
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h1><a href="https://srfi.schemers.org/"><img class="srfi-logo" src="https://srfi.schemers.org/srfi-logo.svg" alt="SRFI surfboard logo"/></a>Uninterned Symbols</h1>
+
+    <p>by Wolfgang Corcoran-Mathe</p>
+
+    <h2 id="status">Status</h2>
+
+    <p style="color: red;">For editor's use only.  Please do not edit this section.</p>
+
+    <p>??? the draft/final/withdrawn status of the SRFI, information on how
+    to subscribe to its mailing list, and important dates in its history.
+    The editor will add this section.</p>
+
+
+    <h2 id="abstract">Abstract</h2>
+
+    <p>An uninterned symbol is not the same as any other symbol, even one
+    with the same name. These symbols are useful in macro programming and
+    in other situations where guaranteed-unique names are needed. A survey
+    of uninterned and uniquely-named symbol implementations in Scheme is
+    also provided.</p>
+
+    <h2 id="table-of-contents">Table of Contents</h2>
+
+    <ul>
+      <li><a href="#issues">Issues</a></li>
+      <li><a href="#rationale">Rationale</a></li>
+      <li><a href="#specification">Specification</a></li>
+      <li>
+        <a href="#procedures">Procedures</a>
+        <ul>
+          <li>
+            <a href="#string-to-uninterned-symbol">
+              <code>string-&gt;uninterned-symbol</code>
+            </a>
+          </li>
+          <li>
+            <a href="#symbol-interned?"><code>symbol-interned?</code></a>
+          </li>
+          <li>
+            <a href="#generate-uninterned-symbol">
+              <code>generate-uninterned-symbol</code>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#prior-art">Prior Art</a>
+        <ul>
+          <li><a href="#chezscheme">ChezScheme</a></li>
+          <li><a href="#guile">Guile</a></li>
+          <li><a href="#mit-gnu-scheme">MIT/GNU Scheme</a></li>
+        </ul>
+      </li>
+      <li><a href="#implementation">Implementation</a></li>
+      <li><a href="#acknowledgments">Acknowledgments</a></li>
+      <li><a href="#copyright">Copyright</a></li>
+    </ul>
+
+
+    <h2 id="issues">Issues</h2>
+
+    <p>Should uninterned symbols be readable?</p>
+
+
+    <h2 id="rationale">Rationale</h2>
+
+    <p>A characteristic property of symbols in Scheme is that “two symbols
+    are identical (in the sense of <code>eqv?</code>) if and only if their
+    names are spelled the same way” (<cite>R7RS</cite> section 6.5). Such
+    symbols are traditionally known as <dfn>interned</dfn> symbols. It is
+    sometimes useful, however, to create <dfn>uninterned</dfn> symbols
+    that are different from all other symbols, even those with the same
+    name.</p>
+
+    <p>Many Scheme implementations provide uninterned symbols, and they
+    are also part of the ANSI Common Lisp standard. Their use was almost
+    mandatory with unhygienic macro systems (like that of Common Lisp),
+    where they were used as "hidden" names that could not be accidentally
+    captured. This issue is largely solved by Scheme’s hygienic macro
+    systems, but uninterned symbols still have their uses in Scheme macro
+    programming. They can be used as unique keys shared between
+    communicating macros or procedures, since there is no possibility of
+    collision between uninterned and user-created symbols.</p>
+
+    <p>The traditional way to create a unique symbol is through a
+    <code>gensym</code> procedure. The name of this procedure is
+    ubiquitous: it dates back to at least LISP 1.5, and a variant of
+    <code>gensym</code> is provided by almost every Scheme implementation.
+    Unsurprisingly, the behavior of <code>gensym</code> procedures varies
+    widely; in particular, many <code>gensym</code>s return interned
+    symbols (see the Prior Art section below for details). To increase
+    compatibility with existing implementations, this document specifies
+    another constructor, <code>string-&gt;uninterned-symbol</code>, which
+    is consistent across the Scheme implementations that provide it.</p>
+
+
+    <h2 id="specification">Specification</h2>
+
+    <p>An uninterned symbol is a symbol (in the sense of
+    <code>symbol?</code>) which is not identical (in the sense of
+    <code>symbol=?</code>) with any other symbol, even a symbol with the
+    same name.</p>
+
+    <p>Uninterned symbols do not support the write/read invariance
+    described in <cite>R7RS</cite> section 6.5: if an uninterned symbol is
+    written out with <code>write</code> and then read back in, the
+    resulting symbol is not identical (in the sense of
+    <code>symbol=?</code>) to the original symbol.</p>
+
+
+    <h2 id="procedures">Procedures</h2>
+
+    <p id="string-to-uninterned-symbol">
+    <code>(string-&gt;uninterned-symbol</code> <var>string</var><code>)</code>
+    → <span class="type-meta">uninterned-symbol</span></p>
+
+    <p>Returns an uninterned symbol with a name given by <var>string</var>.</p>
+
+    <p id="symbol-interned?"><code>(symbol-interned?</code> <var>symbol</var>
+    <code>)</code> → <span class="type-meta">boolean</span></p>
+
+    <p>Returns <code>#t</code> if <var>symbol</var> is an interned (ordinary)
+    symbol, and <code>#f</code> if it is uninterned.</p>
+
+    <p id="generate-uninterned-symbol"><code>(generate-uninterned-symbol</code>
+    [<var>prefix</var>]<code>)</code> →
+    <span class="type-meta">uninterned-symbol</span></p>
+
+    <p>Returns an uninterned symbol with a name that is likely to be
+    unique. If the optional <var>prefix</var> argument is provided and is a
+    string / symbol, then <var>prefix</var> / the name of <var>prefix</var> is
+    prepended to the resulting symbol’s name.</p>
+
+    <p>Rationale:</p>
+
+    <p><code>generate-uninterned-symbol</code> duplicates the behavior of
+    <code>gensym</code> in Scheme implementations that provide uninterned
+    symbols (and in which <code>gensym</code> returns an uninterned
+    symbol).</p>
+
+
+    <h2 id="prior-art">Prior Art</h2>
+
+    <p>The following table summarizes existing support for uninterned symbols
+    and related objects in Scheme.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Implementation</th>
+          <th>Uninterned symbols?</th>
+          <th><code>gensym</code></th>
+          <th>Prefix argument?</th>
+          <th><code>gensym</code> interned?</th>
+          <th>string->uninterned-symbol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bigloo</td>
+          <td>No?</td>
+          <td>Yes</td>
+          <td>String or symbol</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>ChezScheme</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>String</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>CHICKEN</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>String or symbol</td>
+          <td>No</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Cyclone</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>String or symbol</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Gambit</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Symbol</td>
+          <td>No</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Guile</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>String</td>
+          <td>Yes</td>
+          <td>No</td>
+        <tr>
+          <td>Ikarus</td>
+          <td>EMPTY</td>
+          <td>Yes</td>
+          <td>String</td>
+          <td>Yes</td>
+          <td>EMPTY</td>
+        </tr>
+        <tr>
+          <td>Kawa</td>
+          <td>No</td>
+          <td>No</td>
+          <td>EMPTY</td>
+          <td>Yes (gentemp)</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Larceny</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>String</td>
+          <td>No</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Loko</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>No</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>MIT/GNU Scheme</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>EMPTY</td>
+          <td>EMPTY</td>
+          <td>Yes</td>
+        <tr>
+          <td>Racket</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>String or symbol</td>
+          <td>No</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>TinySCHEME</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <h3 id="chezscheme">ChezScheme</h3>
+
+    <p>Chez provides interned gensyms which can be distinguished by the
+    <code>gensym?</code> predicate. Chez’s gensyms have “pretty” and
+    “unique”d names. The former are created immediately and the latter are
+    generated lazily using an internal prefix and counter, which are
+    accessible through parameter objects.
+    <code>gensym-&gt;unique-string</code> returns the unique name of a
+    gensym.</p>
+
+    <p>Chez’s <code>gensym</code> procedure takes optional
+    <var>pretty-name</var> and <var>unique-name</var> string arguments.
+    The latter argument allows the unique name of one gensym to be given
+    to another; thus, distinct gensyms that are equal in the sense of
+    <code>symbol=?</code> can be created in Chez.</p>
+
+
+    <h3 id="guile">Guile</h3>
+
+    <p>Guile provides uninterned symbols, but these are not created by
+    <code>gensym</code>, which returns an interned symbol. Uninterned
+    symbols are created with <code>make-symbol</code>, instead. Guile’s
+    <code>gensym</code> “creates a new symbol with a name constructed from
+    a prefix and a counter value” and accepts an optional prefix
+    argument.</p>
+
+
+    <h3 id="mit-gnu-scheme">MIT/GNU Scheme</h3>
+
+    <p>No way to tell interned and uninterned symbols apart.</p>
+
+    <p>Uninterned symbols are unreadable.</p>
+
+
+    <h2 id="implementation">Implementation</h2>
+
+    <p>A portable implementation of uninterned symbols is impossible. See the
+    table above for a list of Scheme implementations that provide
+    uninterned symbols and <code>string-&gt;uninterned-symbol</code>.</p>
+
+
+    <h2 id="acknowledgments">Acknowledgments</h2>
+
+    <p>Thanks to Daphne Preston-Kendall for pushing for this SRFI and to
+    Marc Nieper-Wißkirchen for challenging almost everything in it.</p>
+
+    <p>Thanks to those who provided reviews and commentary via the SRFI
+    mailing list or the <span class="channel">#scheme</span> IRC
+    channel.</p>
+
+
+    <h2 id="copyright">Copyright</h2>
+
+    <p>&copy; 2025 Wolfgang Corcoran-Mathe</p>
+
+    <p>
+      Permission is hereby granted, free of charge, to any person
+      obtaining a copy of this software and associated documentation files
+      (the "Software"), to deal in the Software without restriction,
+      including without limitation the rights to use, copy, modify, merge,
+      publish, distribute, sublicense, and/or sell copies of the Software,
+      and to permit persons to whom the Software is furnished to do so,
+      subject to the following conditions:</p>
+
+    <p>
+      The above copyright notice and this permission notice (including the
+      next paragraph) shall be included in all copies or substantial
+      portions of the Software.</p>
+    <p>
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+      EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+      MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+      NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+      BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+      ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+      CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.</p>
+
+    <hr>
+    <address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">Arthur A. Gleckler</a></address>
+  </body>
+</html>
