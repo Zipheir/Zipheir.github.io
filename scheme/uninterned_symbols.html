@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 -->
   <head>
     <meta charset="utf-8">
-    <title>SRFI ###: ???title???</title>
+    <title>SRFI ###: Uninterned symbols</title>
     <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png">
     <link rel="stylesheet" href="https://srfi.schemers.org/srfi.css" type="text/css">
     <style>
@@ -16,6 +16,16 @@ SPDX-License-Identifier: MIT
 
       /* Channel name on IRC or similar services. */
       span.channel { font-family: monospace }
+
+      /* Variables in syntax forms. */
+      var.syn { font-style: normal; }
+      var.syn:before { content: "\27E8"; }
+      var.syn:after  { content: "\27E9"; }
+
+      pre.example { margin-left: 2em; }
+
+      td.yes { background-color: LightGreen; }
+      td.no { background-color: LightSalmon; }
       -->
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,9 +48,11 @@ SPDX-License-Identifier: MIT
 
     <p>An uninterned symbol is not the same as any other symbol, even one
     with the same name. These symbols are useful in macro programming and
-    in other situations where guaranteed-unique names are needed. A survey
-    of uninterned and uniquely-named symbol implementations in Scheme is
-    also provided.</p>
+    in other situations where guaranteed-unique names are needed.
+    A lexical syntax for uninterned symbols is described, allowing
+    uninterned literal symbols to appear in program source and macro
+    templates. A survey of uninterned and uniquely-named symbol
+    implementations in Scheme is also provided.</p>
 
     <h2 id="table-of-contents">Table of Contents</h2>
 
@@ -57,7 +69,7 @@ SPDX-License-Identifier: MIT
             </a>
           </li>
           <li>
-            <a href="#symbol-interned?"><code>symbol-interned?</code></a>
+            <a href="#symbol-interned"><code>symbol-interned?</code></a>
           </li>
           <li>
             <a href="#generate-uninterned-symbol">
@@ -66,16 +78,17 @@ SPDX-License-Identifier: MIT
           </li>
         </ul>
       </li>
+      <li><a href="#lexical-syntax">Lexical syntax</a></li>
       <li>
-        <a href="#prior-art">Prior Art</a>
+        <a href="#prior-art">Prior art</a>
         <ul>
           <li><a href="#chezscheme">ChezScheme</a></li>
-          <li><a href="#guile">Guile</a></li>
-          <li><a href="#mit-gnu-scheme">MIT/GNU Scheme</a></li>
+          <li><a href="#common-lisp">Common Lisp</a></li>
         </ul>
       </li>
       <li><a href="#implementation">Implementation</a></li>
       <li><a href="#acknowledgments">Acknowledgments</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#copyright">Copyright</a></li>
     </ul>
 
@@ -93,12 +106,12 @@ SPDX-License-Identifier: MIT
     symbols are traditionally known as <dfn>interned</dfn> symbols. It is
     sometimes useful, however, to create <dfn>uninterned</dfn> symbols
     that are different from all other symbols, even those with the same
-    name.</p>
+    textual name.</p>
 
     <p>Many Scheme implementations provide uninterned symbols, and they
-    are also part of the ANSI Common Lisp standard. Their use was almost
+    are also part of the ANSI Common Lisp standard. Their use is almost
     mandatory with unhygienic macro systems (like that of Common Lisp),
-    where they were used as "hidden" names that could not be accidentally
+    where they are used as “hidden” names that cannot be accidentally
     captured. This issue is largely solved by Scheme’s hygienic macro
     systems, but uninterned symbols still have their uses in Scheme macro
     programming. They can be used as unique keys shared between
@@ -109,20 +122,27 @@ SPDX-License-Identifier: MIT
     <code>gensym</code> procedure. The name of this procedure is
     ubiquitous: it dates back to at least LISP 1.5, and a variant of
     <code>gensym</code> is provided by almost every Scheme implementation.
-    Unsurprisingly, the behavior of <code>gensym</code> procedures varies
+    It should come as no surprise that the behavior of these
+    <code>gensym</code> procedures varies
     widely; in particular, many <code>gensym</code>s return interned
-    symbols (see the Prior Art section below for details). To increase
+    symbols (see the Prior art section below for details). To increase
     compatibility with existing implementations, this document specifies
+    <code>generate-uninterned-symbol</code>, a <code>gensym</code>-like
+    procedure, and
     another constructor, <code>string-&gt;uninterned-symbol</code>, which
     is consistent across the Scheme implementations that provide it.</p>
 
 
     <h2 id="specification">Specification</h2>
 
+    <p>In this document, a symbol’s <dfn>textual name</dfn> refers to
+    the string returned when <code>symbol-&gt;string</code> is invoked
+    on the symbol.</p>
+
     <p>An uninterned symbol is a symbol (in the sense of
     <code>symbol?</code>) which is not identical (in the sense of
     <code>symbol=?</code>) with any other symbol, even a symbol with the
-    same name.</p>
+    same textual name.</p>
 
     <p>Uninterned symbols do not support the write/read invariance
     described in <cite>R7RS</cite> section 6.5: if an uninterned symbol is
@@ -137,9 +157,9 @@ SPDX-License-Identifier: MIT
     <code>(string-&gt;uninterned-symbol</code> <var>string</var><code>)</code>
     → <span class="type-meta">uninterned-symbol</span></p>
 
-    <p>Returns an uninterned symbol with a name given by <var>string</var>.</p>
+    <p>Returns an uninterned symbol with a textual name given by <var>string</var>.</p>
 
-    <p id="symbol-interned?"><code>(symbol-interned?</code> <var>symbol</var>
+    <p id="symbol-interned"><code>(symbol-interned?</code> <var>symbol</var>
     <code>)</code> → <span class="type-meta">boolean</span></p>
 
     <p>Returns <code>#t</code> if <var>symbol</var> is an interned (ordinary)
@@ -149,147 +169,194 @@ SPDX-License-Identifier: MIT
     [<var>prefix</var>]<code>)</code> →
     <span class="type-meta">uninterned-symbol</span></p>
 
-    <p>Returns an uninterned symbol with a name that is likely to be
+    <p>Returns an uninterned symbol with a textual name that is likely to be
     unique. If the optional <var>prefix</var> argument is provided and is a
     string / symbol, then <var>prefix</var> / the name of <var>prefix</var> is
     prepended to the resulting symbol’s name.</p>
 
-    <p>Rationale:</p>
+    <h4>Rationale:</h4>
 
     <p><code>generate-uninterned-symbol</code> duplicates the behavior of
     <code>gensym</code> in Scheme implementations that provide uninterned
     symbols (and in which <code>gensym</code> returns an uninterned
-    symbol).</p>
+    symbol).
+
+    <h4>Implementation (informational discussion):</h4>
+
+    <p>Following <a href="#common-lisp">Common Lisp</a>, many
+    <code>gensym</code> implementations use a non-negative integer
+    counter, a representation of the value of which is appended to
+    the name of the returned symbol. Each call to <code>gensym</code>
+    increments this counter. Other implementations use Universally
+    Unique Identifiers (UUIDs) (ITU-T Rec. X.667, ISO/IEC
+    9834-8:2014) as names.</p>
 
 
-    <h2 id="prior-art">Prior Art</h2>
+    <h2 id="lexical-syntax">Lexical syntax</h2>
 
-    <p>The following table summarizes existing support for uninterned symbols
-    and related objects in Scheme.</p>
+    <p>Uninterned symbols are written using the notation
+    <code>:|</code><var class="syn">identifier</var><code>|</code>, where
+    <var class="syn">identifier</var> belongs to the class of valid Scheme
+    identifiers defined in <cite>R7RS</cite> §7.1.1. Example:</p>
+
+    <pre class="example"><code>(symbol-&gt;string :|srfi|)</code> ⇒ <code>"srfi"
+(symbol-interned? :|srfi|)</code> ⇒ <code>#f</code></pre>
+
+    <p>More formally, this SRFI extends the syntax of Scheme as described
+    in section 7.1 of the <cite>R7RS</cite> as follows. The following
+    production is added to section 7.1.1:</p>
+
+    <pre><var class="syn">uninterned symbol</var> ⟶ <code>:|</code> <var class="syn">identifier</var> <code>|</code></pre>
+
+    <p>The following production of section 7.1.2 is extended:</p>
+
+    <pre><var class="syn">simple datum</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
+
+    <p>Similarly, in section 7.1.3:</p>
+
+    <pre><var class="syn">self-evaluating</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
+
+    <p>Section 7.1.5:</p>
+
+    <pre><var class="syn">pattern datum</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
+
+    <h2 id="prior-art">Prior art</h2>
 
     <table>
+      <caption>Summary of existing support for uninterned symbols,
+      <code>gensym</code>, and related forms in Scheme.</caption>
       <thead>
         <tr>
           <th>Implementation</th>
-          <th>Uninterned symbols?</th>
+          <th>Uninterned symbols</th>
           <th><code>gensym</code></th>
-          <th>Prefix argument?</th>
-          <th><code>gensym</code> interned?</th>
-          <th>string->uninterned-symbol</th>
+          <th><code>gensym</code> prefix argument</th>
+          <th><code>gensym</code> interned</th>
+          <th><code>string-&gt;uninterned-symbol</code></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Bigloo</td>
-          <td>No?</td>
-          <td>Yes</td>
+          <td class="no">No</td>
+          <td class="yes">Yes</td>
           <td>String or symbol</td>
           <td>Yes</td>
-          <td>No</td>
+          <td class="no">No</td>
         </tr>
         <tr>
           <td>ChezScheme</td>
-          <td>No</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
           <td>String</td>
           <td>Yes</td>
-          <td>No</td>
+          <td class="yes">Yes</td>
         </tr>
         <tr>
           <td>CHICKEN</td>
-          <td>Yes</td>
-          <td>Yes</td>
+          <td class="yes" class="yes">Yes</td>
+          <td class="yes">Yes</td>
           <td>String or symbol</td>
           <td>No</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
         </tr>
         <tr>
           <td>Cyclone</td>
-          <td>No</td>
-          <td>Yes</td>
+          <td class="no" class="no">No</td>
+          <td class="yes">Yes</td>
           <td>String or symbol</td>
           <td>Yes</td>
-          <td>No</td>
+          <td class="no">No</td>
         </tr>
         <tr>
           <td>Gambit</td>
-          <td>Yes</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
           <td>Symbol</td>
           <td>No</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
         </tr>
         <tr>
           <td>Guile</td>
-          <td>Yes</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
           <td>String</td>
           <td>Yes</td>
-          <td>No</td>
+          <td class="no">No</td>
         <tr>
           <td>Ikarus</td>
-          <td>EMPTY</td>
-          <td>Yes</td>
+          <td class="no">No</td>
+          <td class="yes">Yes</td>
           <td>String</td>
           <td>Yes</td>
-          <td>EMPTY</td>
+          <td class="no">No</td>
         </tr>
         <tr>
           <td>Kawa</td>
-          <td>No</td>
-          <td>No</td>
-          <td>EMPTY</td>
-          <td>Yes (gentemp)</td>
-          <td>No</td>
+          <td class="no">No</td>
+          <td class="no">No*</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td class="no">No</td>
         </tr>
         <tr>
           <td>Larceny</td>
-          <td>Yes</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
           <td>String</td>
           <td>No</td>
-          <td>No</td>
+          <td class="no">No</td>
         </tr>
         <tr>
           <td>Loko</td>
-          <td>Yes</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
+          <td>None</td>
           <td>No</td>
-          <td>No</td>
-          <td>No</td>
+          <td class="no">No</td>
         </tr>
         <tr>
           <td>MIT/GNU Scheme</td>
-          <td>Yes</td>
-          <td>No</td>
-          <td>EMPTY</td>
-          <td>EMPTY</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
+          <td class="no">No†</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td class="yes">Yes</td>
         <tr>
           <td>Racket</td>
-          <td>Yes</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
           <td>String or symbol</td>
           <td>No</td>
-          <td>Yes</td>
+          <td class="yes">Yes</td>
         </tr>
         <tr>
           <td>TinySCHEME</td>
-          <td>No</td>
+          <td class="no">No</td>
+          <td class="yes">Yes</td>
+          <td>None</td>
           <td>Yes</td>
-          <td>No</td>
-          <td>Yes</td>
-          <td>No</td>
+          <td class="no">No</td>
         </tr>
       </tbody>
     </table>
 
+    <p>*: Kawa includes a
+    <a href="https://www.gnu.org/software/kawa/Macros.html#idm45230724012608">
+    zero-argument <code>gentemp</code> procedure</a> that returns an interned
+    symbol.</p>
+
+    <p>†: MIT/GNU Scheme provides
+    <a href="https://web.mit.edu/scheme/scheme_v9.2/doc/mit-scheme-ref/Symbols.html">generate-uninterned-symbol</a>,
+    an extended version of
+    <a href="#generate-uninterned-symbol">the procedure described
+    above.</a></p>
 
     <h3 id="chezscheme">ChezScheme</h3>
 
     <p>Chez provides interned gensyms which can be distinguished by the
     <code>gensym?</code> predicate. Chez’s gensyms have “pretty” and
-    “unique”d names. The former are created immediately and the latter are
+    “unique” names. The former are created immediately and the latter are
     generated lazily using an internal prefix and counter, which are
     accessible through parameter objects.
     <code>gensym-&gt;unique-string</code> returns the unique name of a
@@ -301,22 +368,27 @@ SPDX-License-Identifier: MIT
     to another; thus, distinct gensyms that are equal in the sense of
     <code>symbol=?</code> can be created in Chez.</p>
 
+    <h3 id="common-lisp">Common Lisp</h3>
 
-    <h3 id="guile">Guile</h3>
+    <p>Uninterned symbols are used extensively in Common Lisp macro
+    programming. The Common Lisp
+    HyperSpec specifies
+    <a href="http://clhs.lisp.se/Body/f_mk_sym.htm#make-symbol"><code>MAKE-SYMBOL</code></a>
+    (analogous to <code>string->uninterned-symbol</code>) and
+    <a href="http://clhs.lisp.se/Body/f_gensym.htm#gensym"><code>GENSYM</code></a>
+    procedures that construct uninterned symbols. The names of the
+    symbols returned by <code>GENSYM</code> usually include the value
+    of <code>*GENSYM-COUNTER*</code>, a non-negative integer variable,
+    which is incremented by each call to <code>GENSYM</code>. (This
+    behavior can be circumvented by providing an explicit suffix to
+    <code>GENSYM</code>. See the CLHS for details.)</p>
 
-    <p>Guile provides uninterned symbols, but these are not created by
-    <code>gensym</code>, which returns an interned symbol. Uninterned
-    symbols are created with <code>make-symbol</code>, instead. Guile’s
-    <code>gensym</code> “creates a new symbol with a name constructed from
-    a prefix and a counter value” and accepts an optional prefix
-    argument.</p>
-
-
-    <h3 id="mit-gnu-scheme">MIT/GNU Scheme</h3>
-
-    <p>No way to tell interned and uninterned symbols apart.</p>
-
-    <p>Uninterned symbols are unreadable.</p>
+    <p>Since Common Lisp does not have Scheme’s distinction between
+    symbols and identifiers, the implications of internedness are
+    much broader in Common Lisp. For example, objects named by
+    uninterned symbols are, in effect, private to the package in
+    which they were defined. A full discussion of uninterned symbols
+    in Common Lisp is beyond the scope of this SRFI.</p>
 
 
     <h2 id="implementation">Implementation</h2>
@@ -324,6 +396,14 @@ SPDX-License-Identifier: MIT
     <p>A portable implementation of uninterned symbols is impossible. See the
     table above for a list of Scheme implementations that provide
     uninterned symbols and <code>string-&gt;uninterned-symbol</code>.</p>
+
+    <p>Many Scheme implementations maintain a table of symbols, indexed
+    by name. When a symbol is created, its name is looked up in this
+    table; if a symbol with that name exists, it is returned;
+    otherwise, a fresh symbol is added to the table. In implementations
+    that use this or a similar strategy, uninterned symbols may be
+    provided by simply skipping the table-lookup and insertion
+    steps.</p>
 
 
     <h2 id="acknowledgments">Acknowledgments</h2>
@@ -334,6 +414,18 @@ SPDX-License-Identifier: MIT
     <p>Thanks to those who provided reviews and commentary via the SRFI
     mailing list or the <span class="channel">#scheme</span> IRC
     channel.</p>
+
+
+    <h2 id="references">References</h2>
+
+    <p>Alex Shinn, John Cowan, &amp; Arthur A. Gleckler, eds.,
+    <cite>Revised<sup>7</sup> Report on the Algorithmic Language Scheme</cite>
+    (R7RS Small) (2013). Available <a href="https://small.r7rs.org/">on the
+    Web</a>.</p>
+
+    <p>Kent M. Pitman, et al, eds., <cite>Common Lisp HyperSpec</cite>™
+    (CLHS) (1994). Available <a href="http://clhs.lisp.se/">on the
+    Web</a>.</p>
 
 
     <h2 id="copyright">Copyright</h2>
