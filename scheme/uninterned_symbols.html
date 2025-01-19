@@ -1,14 +1,12 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <!--
 SPDX-FileCopyrightText: 2025 Wolfgang Corcoran-Mathe
 SPDX-License-Identifier: MIT
 -->
   <head>
-    <meta charset="utf-8">
     <title>SRFI ###: Uninterned symbols</title>
-    <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png">
-    <link rel="stylesheet" href="https://srfi.schemers.org/srfi.css" type="text/css">
     <style>
       <!--
       /* Names of Scheme types: boolean, pair, etc. */
@@ -23,11 +21,13 @@ SPDX-License-Identifier: MIT
       var.syn:after  { content: "\27E9"; }
 
       pre.example { margin-left: 2em; }
+      pre.grammar { font-family: serif; }
 
       td.yes { background-color: LightGreen; }
       td.no { background-color: LightSalmon; }
       -->
     </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -51,8 +51,8 @@ SPDX-License-Identifier: MIT
     in other situations where guaranteed-unique names are needed.
     A lexical syntax for uninterned symbols is described, allowing
     uninterned literal symbols to appear in program source and macro
-    templates. A survey of uninterned and uniquely-named symbol
-    implementations in Scheme is also provided.</p>
+    templates. A survey of uninterned and uniquely-named symbols
+    in Scheme is also provided.</p>
 
     <h2 id="table-of-contents">Table of Contents</h2>
 
@@ -95,7 +95,7 @@ SPDX-License-Identifier: MIT
 
     <h2 id="issues">Issues</h2>
 
-    <p>Should uninterned symbols be readable?</p>
+    <p>None at present.</p>
 
 
     <h2 id="rationale">Rationale</h2>
@@ -111,21 +111,23 @@ SPDX-License-Identifier: MIT
     <p>Many Scheme implementations provide uninterned symbols, and they
     are also part of the ANSI Common Lisp standard. Their use is almost
     mandatory with unhygienic macro systems (like that of Common Lisp),
-    where they are used as “hidden” names that cannot be accidentally
+    where they are used as hidden names that cannot be accidentally
     captured. This issue is largely solved by Scheme’s hygienic macro
     systems, but uninterned symbols still have their uses in Scheme macro
     programming. They can be used as unique keys shared between
-    communicating macros or procedures, since there is no possibility of
+    communicating macros or procedures, for example,
+    since there is no possibility of
     collision between uninterned and user-created symbols.</p>
 
     <p>The traditional way to create a unique symbol is through a
     <code>gensym</code> procedure. The name of this procedure is
-    ubiquitous: it dates back to at least LISP 1.5, and a variant of
+    ubiquitous: it dates back at least as far as LISP 1.5, and a variant of
     <code>gensym</code> is provided by almost every Scheme implementation.
     It should come as no surprise that the behavior of these
     <code>gensym</code> procedures varies
     widely; in particular, many <code>gensym</code>s return interned
-    symbols (see the Prior art section below for details). To increase
+    symbols (see the <a href="#prior-art">survey</a>
+    below for details). To increase
     compatibility with existing implementations, this document specifies
     <code>generate-uninterned-symbol</code>, a <code>gensym</code>-like
     procedure, and
@@ -197,28 +199,28 @@ SPDX-License-Identifier: MIT
     <p>Uninterned symbols are written using the notation
     <code>:|</code><var class="syn">identifier</var><code>|</code>, where
     <var class="syn">identifier</var> belongs to the class of valid Scheme
-    identifiers defined in <cite>R7RS</cite> §7.1.1. Example:</p>
+    identifiers defined in <cite>R7RS</cite> § 7.1.1. Example:</p>
 
     <pre class="example"><code>(symbol-&gt;string :|srfi|)</code> ⇒ <code>"srfi"
 (symbol-interned? :|srfi|)</code> ⇒ <code>#f</code></pre>
 
     <p>More formally, this SRFI extends the syntax of Scheme as described
-    in section 7.1 of the <cite>R7RS</cite> as follows. The following
-    production is added to section 7.1.1:</p>
+    in § 7.1 of the <cite>R7RS</cite> as follows. The following
+    production is added to § 7.1.1:</p>
 
-    <pre><var class="syn">uninterned symbol</var> ⟶ <code>:|</code> <var class="syn">identifier</var> <code>|</code></pre>
+    <pre class="grammar"><var class="syn">uninterned symbol</var> ⟶ <code>:|</code> <var class="syn">identifier</var> <code>|</code></pre>
 
-    <p>The following production of section 7.1.2 is extended:</p>
+    <p>The following production of § 7.1.2 is extended:</p>
 
-    <pre><var class="syn">simple datum</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
+    <pre class="grammar"><var class="syn">simple datum</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
 
-    <p>Similarly, in section 7.1.3:</p>
+    <p>Similarly, in § 7.1.3:</p>
 
-    <pre><var class="syn">self-evaluating</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
+    <pre class="grammar"><var class="syn">self-evaluating</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
 
-    <p>Section 7.1.5:</p>
+    <p>And in § 7.1.5:</p>
 
-    <pre><var class="syn">pattern datum</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
+    <pre class="grammar"><var class="syn">pattern datum</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
 
     <h2 id="prior-art">Prior art</h2>
 
@@ -254,7 +256,7 @@ SPDX-License-Identifier: MIT
         </tr>
         <tr>
           <td>CHICKEN</td>
-          <td class="yes" class="yes">Yes</td>
+          <td class="yes">Yes</td>
           <td class="yes">Yes</td>
           <td>String or symbol</td>
           <td>No</td>
@@ -262,7 +264,7 @@ SPDX-License-Identifier: MIT
         </tr>
         <tr>
           <td>Cyclone</td>
-          <td class="no" class="no">No</td>
+          <td class="no">No</td>
           <td class="yes">Yes</td>
           <td>String or symbol</td>
           <td>Yes</td>
@@ -354,7 +356,7 @@ SPDX-License-Identifier: MIT
 
     <h3 id="chezscheme">ChezScheme</h3>
 
-    <p>Chez provides interned gensyms which can be distinguished by the
+    <p>Chez provides interned “gensyms” which are distinguished by the
     <code>gensym?</code> predicate. Chez’s gensyms have “pretty” and
     “unique” names. The former are created immediately and the latter are
     generated lazily using an internal prefix and counter, which are
@@ -367,6 +369,9 @@ SPDX-License-Identifier: MIT
     The latter argument allows the unique name of one gensym to be given
     to another; thus, distinct gensyms that are equal in the sense of
     <code>symbol=?</code> can be created in Chez.</p>
+
+    <p>See section 7.9 of the <cite>ChezScheme User’s Guide</cite> for
+    further details.</p>
 
     <h3 id="common-lisp">Common Lisp</h3>
 
@@ -393,9 +398,10 @@ SPDX-License-Identifier: MIT
 
     <h2 id="implementation">Implementation</h2>
 
-    <p>A portable implementation of uninterned symbols is impossible. See the
-    table above for a list of Scheme implementations that provide
-    uninterned symbols and <code>string-&gt;uninterned-symbol</code>.</p>
+    <p>A portable implementation of uninterned symbols is impossible. In
+    Scheme implementations that provide them (see the table above),
+    uninterned symbols and <code>string-&gt;uninterned-symbol</code> are
+    generally compatible with this SRFI.</p>
 
     <p>Many Scheme implementations maintain a table of symbols, indexed
     by name. When a symbol is created, its name is looked up in this
@@ -427,6 +433,10 @@ SPDX-License-Identifier: MIT
     (CLHS) (1994). Available <a href="http://clhs.lisp.se/">on the
     Web</a>.</p>
 
+    <p>Cisco Systems, Inc., <cite>Chez Scheme User’s Guide</cite> (2015).
+    Available <a href="https://cisco.github.io/ChezScheme/csug9.5">on the
+    Web</a>.</p>
+
 
     <h2 id="copyright">Copyright</h2>
 
@@ -456,6 +466,7 @@ SPDX-License-Identifier: MIT
       SOFTWARE.</p>
 
     <hr>
-    <address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">Arthur A. Gleckler</a></address>
+    <p>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">Arthur A.
+    Gleckler</a></p>
   </body>
 </html>
