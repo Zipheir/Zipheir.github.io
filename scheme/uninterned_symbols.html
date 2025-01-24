@@ -144,8 +144,14 @@ SPDX-License-Identifier: MIT
 
     <p>An uninterned symbol is a symbol (in the sense of
     <code>symbol?</code>) which is not identical (in the sense of
-    <code>symbol=?</code>) with any other symbol, even a symbol with the
-    same textual name.</p>
+    <code>symbol=?</code>) with any other symbol, even a symbol with
+    the same textual name. An uninterned symbol is “identical to
+    itself”. That is, if <var>s</var> and <var>t</var> are uninterned
+    symbols, <code>(symbol=?</code> <var>s</var>
+    <var>t</var><code>)</code> returns true if and only if <var>s</var>
+    and <var>t</var> were created by the same invocation of
+    <code>string-&gt;uninterned-symbol</code> or
+    <code>generate-uninterned-symbol</code>.</p>
 
     <p>Uninterned symbols do not support the write/read invariance
     described in <cite>R7RS</cite> section 6.5: if an uninterned symbol is
@@ -222,6 +228,20 @@ SPDX-License-Identifier: MIT
     <p>And in § 7.1.5:</p>
 
     <pre class="grammar"><var class="syn">pattern datum</var> ⟶ <var class="syn">boolean</var> | … | <var class="syn">uninterned symbol</var></pre>
+
+    <h4>Rationale:</h4>
+
+    <p>The <code>:|</code>…<code>|</code> syntax was chosen for its
+    similarity to R7RS’s lexical syntax for identifiers and to Common
+    Lisp’s keyword syntax (like CL’s keywords, uninterned symbols are
+    “self-quoting”).</p>
+
+    <p>Most implementations that provide uninterned symbols do not
+    offer lexical syntax for them, so there is little prior art to go
+    on here. <a href="#chezscheme">ChezScheme</a> has lexical syntax
+    for its gensyms, but, since these are special interned symbols, it
+    would create unnecessary incompatibility to use Chez’s syntax for
+    uninterned symbols.</p>
 
     <h2 id="prior-art">Prior art</h2>
 
@@ -371,6 +391,10 @@ SPDX-License-Identifier: MIT
     to another; thus, distinct gensyms that are equal in the sense of
     <code>symbol=?</code> can be created in Chez.</p>
 
+    <p>The lexical syntax <code>#:</code><var class="syn">name</var> is
+    used to write gensyms; <var class="syn">name</var> is the pretty
+    name of the resulting gensym.</p>
+
     <p>See section 7.9 of the <cite>ChezScheme User’s Guide</cite> for
     further details.</p>
 
@@ -402,7 +426,9 @@ SPDX-License-Identifier: MIT
     <p>A portable implementation of uninterned symbols is impossible. In
     Scheme implementations that provide them (see the table above),
     uninterned symbols and <code>string-&gt;uninterned-symbol</code> are
-    generally compatible with this SRFI.</p>
+    generally compatible with this SRFI. A sample implementation for
+    ChezScheme and a portable test suite are included in this SRFI’s
+    repository.</p>
 
     <p>Many Scheme implementations maintain a table of symbols, indexed
     by name. When a symbol is created, its name is looked up in this
