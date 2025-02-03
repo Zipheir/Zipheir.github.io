@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- mobile device brain-damage -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link href="https://www.sigwinch.xyz/misc/version-control.html" rel="canonical">
+    <title>A Discipline of Version Control</title>
+  </head>
+  <body>
+    <h2>A Discipline of Version Control</h2>
+
+    <p>Some dogmatic opinions about the practice of version control:</p>
+
+    <ul>
+      <li>The centralized (single trunk repository) model of version control
+      is simplest. Prefer it. If you must use a decentralized system like Git,
+      don't create forks needlessly.</li>
+
+      <li><em>Never</em> rewrite history. Undo commits with new commits.</li>
+
+      <li>If a system provides "lightweight" (Git-style) branches, treat them
+      like "real" branches; i.e. assume that everything committed to them will
+      be forever part of your repository's history. A branch is an abstraction
+      barrier, not a way to save face.</li>
+
+      <li>Don't create unneeded or "topic" branches. Each additional branch in
+      a repository makes the project harder to understand.</li>
+
+      <li>Write commit messages carefully: use standard spelling and
+      punctuation, and make sure they clearly express the changes made and, if
+      the commit is significant, the reasons for making them. Make things
+      clear. It may be a decade or more before someone needs to understand
+      your changes.</li>
+
+      <li>Be careful not to stuff unrelated changes into a merge commit. If
+      major changes are needed before you can merge cleanly, record them in
+      ordinary commits.</li>
+
+      <li>Avoid using clever tricks and unfamiliar VCS features. Complicated
+      version-control practices create complicated software. (You need look no
+      further than Git for evidence of this.)</li>
+    </ul>
+
+    <hr>
+
+    <p>© 2025 Wolfgang Corcoran-Mathe. Released under the terms of
+    the Creative Commons
+    <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+    Attribution 4.0 International</a> license.</p>
+
+    <p><a href="/index.html">SIGWINCH Home</a></p>
+  </body>
+</html>
