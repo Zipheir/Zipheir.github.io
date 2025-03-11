@@ -756,10 +756,8 @@ laughing at his grandiose vision.
 of the Creative Commons Attribution 4.0 International License
 (https://creativecommons.org/licenses/by/4.0/).
 
-Catalog UUID: a932c12e-c54a-4ff7-bb9b-34f9199ca0c9
-
 Story catalog UUID: a932c12e-c54a-4ff7-bb9b-34f9199ca0c9
 
 Version:
 
-$Id: grand_vision_of_joseph_mueller.txt,v 1.46 2025/03/11 21:22:18 wcm Exp wcm $
+$Id: grand_vision_of_joseph_mueller.txt,v 1.47 2025/03/11 21:34:02 wcm Exp wcm $
