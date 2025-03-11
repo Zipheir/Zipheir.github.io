@@ -1,4 +1,7 @@
-body { max-width: 46em; }
+body {
+    max-width: 46em;
+    font-family: serif;
+}
 
 div.story > p {
     text-align: justify;
