@@ -44,6 +44,14 @@
       <li><p>Avoid using clever tricks and unfamiliar VCS features. Complicated
       version-control practices create complicated software. (You need look no
       further than Git for evidence of this.)</p></li>
+
+      <li><p>Large repositories are like large program source files with
+      many global names: it can be hard to trace connections between
+      components. Using programming languages with good abstraction
+      barriers (modules, in particular) can ease understanding, but so
+      can keeping repositories small and focused. For this reason,
+      "monorepos", which lump together many projects, should be
+      avoided like the plague.</p></li>
     </ul>
 
     <hr>
