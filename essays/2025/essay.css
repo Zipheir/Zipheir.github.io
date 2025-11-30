@@ -1,0 +1,19 @@
+body {
+    max-width: 46em;
+    font-family: serif;
+}
+
+div.essay > p {
+    text-align: justify;
+    text-indent: 1em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+hr.dinkus {
+    width: 30%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+div.footer { margin-top: 2em; }
