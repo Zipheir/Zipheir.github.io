@@ -17,3 +17,8 @@ hr.dinkus {
 }
 
 div.footer { margin-top: 2em; }
+
+/* Put song titles in double quotes, if possible. */
+cite.song { font-style: normal; }
+cite.song:before { content: "\201C"; }
+cite.song:after { content: "\201D"; }
