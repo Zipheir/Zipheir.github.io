@@ -79,6 +79,7 @@ Karl’s opinions were dogmatic in the extreme when it came to music
 and movies. As far as he was concerned my taste was terrible and
 badly in need of remedy. One day I brought my binder of music CDs
 to the club. It didn’t contain much beyond Paul Simon’s _Graceland_,
+an Elvis Presley greatest-hits anthology which I’d received as a gift,
 Leonard Bernstein’s 1964 recording of Beethoven’s 9th symphony, and,
 for some reason, most of the Gipsy Kings discography. Karl grabbed
 the binder and ran through the pages quickly.
@@ -304,7 +305,7 @@ finished our food. Finally I asked him what was bothering him.
 “They might take everything I own,” he said bluntly. “Any time in
 the next six months.”
 
-I didn’t ask who “they” were. By now I'd guessed: the collection
+I didn’t ask who “they” were. By now I’d guessed: the collection
 agency had caught up with him. “What’re you going to do?”
 
 “I’m going to move in with Joan,” he said. (Joan was his girlfriend.)
@@ -439,4 +440,4 @@ Catalog UUID: 145eb7cb-b807-46df-ad42-ac804257e056
 
 Version:
 
-$Id: the_outsider.txt,v 2.23 2025/12/01 18:24:14 wcm Exp wcm $
+$Id: the_outsider.txt,v 2.25 2025/12/02 01:50:03 wcm Exp wcm $
