@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link href="https://www.sigwinch.xyz/scheme/csv.html"
+          rel="canonical">
+    <title>(csv): CSV parsing library</title>
+  </head>
+  <body>
+    <h2>(csv): CSV parsing library</h2>
+
+    <p>This is a CSV parsing library written in portable R6RS Scheme.
+    I wrote it because most of the Scheme CSV parsers I could find
+    were sloppy or written on top of big, complicated general parsing
+    libraries.</p>
+
+    <p>This library takes a rather strict view of CSV, modeled after
+    <a href="https://datatracker.ietf.org/doc/html/draft-shafranovich-rfc4180-bis">a
+    draft update to RFC 4180</a>.  In particular, a record without a
+    CRLF terminator is considered a syntax error; this requirement
+    simplifies the grammar of CSV data dramatically.  My guiding
+    principle in designing this library is that any optional
+    complexity should come from error handling (an important feature
+    often ignored in hacker-designed parsers) rather than from trying
+    to parse permissively.</p>
+
+    <p>All the usual warnings about work-in-progress apply.  If you
+    find any bugs or have suggestions, please let me know.</p>
+
+    <h3>Source</h3>
+
+    <p><a href="code/csv.sls">csv.sls</a></p>
+
+    <p>A tarball including the library and a test suite can be found
+    <a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/csv.tar.bz2">on
+    FTP</a>.</p>
+
+    <h2>Library interface</h2>
+
+    <h3>Procedures</h3>
+
+    <p><code>(make-csv-parser <var>port</var>)</code></p>
+
+    <p>
+    Returns a CSV parser object which will read CSV data from
+    <var>port</var>,
+    which must be a textual input port.
+    Since the parser will mutate <var>port</var>, creating multiple
+    parsers
+    with the same input port is not recommended.
+    The parser expects <var>port</var> to produce UTF-8-encoded text
+    with CRLF
+    line endings.
+    (So don't transcode those CRLFs to LFs.)</p>
+
+
+    <p><code>(parse-csv <var>parser</var> <var>handler</var>
+                        <var>init</var> ...)</code></p>
+
+    <p>
+    The main parser driver.
+    <var>parser</var> must be a CSV parser object created with
+    <code>make-csv-parser</code>; it reads data from the port associated
+    with it when it was created.
+    For each compete record, it calls <var>handler</var> with a list
+    of that record's fields, in order, and a number of "seeds".
+    <var>handler</var>, in turn, returns one or more values to the
+    parser.
+    If the first value is false, then the parser halts and returns
+    the current seeds.
+    Otherwise, parsing continues, using the remaining values returned
+    by <var>handler</var> as new seeds.
+    When <var>parser</var>'s input port retuns EOF, the
+    <code>parse-csv</code>
+    procedure returns the final seeds.
+    The initial seed values are given by the <var>init</var> arguments.
+    The number of seeds should not vary between calls to <var>parser</var>.
+    </p>
+
+    <p>
+    If an error occurs while parsing, then a condition of type
+    <code>&amp;parser</code> (described below) is raised.</p>
+
+    <h4>Example:</h4>
+
+    <p>Assume input.csv contains:</p>
+
+<pre>a,b,c
+1,2,3
+</pre>
+
+    <p>Then:</p>
+
+<pre>(call-with-port
+  (open-file-input-port "input.csv")
+  (lambda (port)
+    (let ((parser (make-csv-parser port)))
+      (reverse
+       (parse-csv parser
+                  (lambda (r rs)
+                    (values #t (cons r rs)))
+                  0)))))
+ ⇒ (("a" "b" "c")
+    ("1" "2" "3"))
+</pre>
+
+
+    <h3>Condition type</h3>
+
+    <p>
+    When things go wrong, a CSV parser raises a condition of type
+    <code>&amp;parser</code>.
+    This is a subtype of <code>&amp;i/o-port</code> (see the R6RS
+    Standard Libraries
+    document, section 8).</p>
+
+    <p><code>(parser-error? <var>obj</var>)</code></p>
+
+    <p>Returns true if <var>obj</var> is a <code>&amp;parser</code>
+    condition and false otherwise.</p>
+
+
+    <p><code>(condition-line-position <var>condition</var>)</code></p>
+
+    <p>
+    Returns the input line at which the error occurred.
+    </p>
+
+    <p>
+    FIXME: Should this be replaced by the ordinal number of the
+    <em>record</em>
+    at which the error occurred?
+    If not, make sure that embedded CRLFs are correctly counted.</p>
+
+
+    <p><code>(condition-char-position <var>condition</var>)</code></p>
+
+    <p>
+    Returns the character (on the line designated by
+    <code>(condition-line-position <var>condition</var>)</code>
+    at which the error occurred.</p>
+
+
+    <p><code>(condition-input-char <var>condition</var>)</code></p>
+
+    <p>
+    Returns the input token (as a Scheme character) that triggered the
+    error, or <code>#f</code> if there is no relevant token.</p>
+
+
+    <h3>Copyright</h3>
+
+    <p>© 2025 by Wolfgang Corcoran-Mathe</p>
+
+    <p>Licensed under the
+    <a href="https://opensource.org/license/eupl-1-2">EUPL</a>
+    version 1.2 or later.</p>
+
+    <p><a href="/index.html">Home</a></p>
+  </body>
+</html>
