@@ -1,4 +1,4 @@
-;;; $Id: csv.sls,v 1.20 2025/12/12 00:01:33 wcm Exp wcm $
+;;; $Id: csv.sls,v 1.21 2025/12/13 06:01:11 wcm Exp wcm $
 ;;;
 ;;; SPDX-FileCopyrightText: 2025 Wolfgang Corcoran-Mathe
 ;;;
@@ -35,8 +35,7 @@
           (rnrs control)
 	  (rnrs exceptions)
           (rnrs io ports)
-          (only (rnrs lists) cons* memv)
-          (prefix (only (chezscheme) format) chez:))
+          (only (rnrs lists) cons* memv))
 
   ;; This definition may need tweaking.
   ;; Should the position information be part of an &irritants
