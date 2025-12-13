@@ -1,4 +1,4 @@
-;;; $Id: csv.sls,v 1.22 2025/12/13 06:04:28 wcm Exp wcm $
+;;; $Id: csv.sls,v 1.24 2025/12/13 16:42:53 wcm Exp wcm $
 ;;;
 ;;; SPDX-FileCopyrightText: 2025 Wolfgang Corcoran-Mathe
 ;;;
@@ -7,6 +7,8 @@
 ;;; Copyright © 2025 Wolfgang Corcoran-Mathe <wcm@sigwinch.xyz>
 ;;;
 ;;; Licensed under the terms of the EUPL version 1.2 or later.
+;;;
+;;; Thanks to Yuval Langer for suggestions & proofreading.
 ;;;
 ;;;
 ;;; Small, fairly strict CSV parser.
@@ -97,11 +99,11 @@
             ((#\,)  ; new field begins
              (consume #\,)
              ;; Examine first char of next field to determine whether
-             ;; it's a quoted field.
+             ;; it's an escaped field.
              (case (lookahead-char csv-port)
-               ((#\")
+               ((#\")  ; opening quote of escaped field
                 (lex-iter (cons (lex-escaped-field) fields)))
-               (else
+               (else   ; ordinary field
                 (lex-iter (cons (lex-field) fields)))))
             (else
              (parser-error/current-position "Unexpected input" look)))))
@@ -111,7 +113,7 @@
     ;; Lex the first field of a record.
     (define (lex-first-field)
       (case (lookahead-char csv-port)
-        ((#\,) "")
+        ((#\,) "")  ; empty initial field
         ((#\") (lex-escaped-field))
         ((#\return)
          (error 'lex-first-field "initial CR--can't happen!"))
@@ -121,6 +123,9 @@
     (define (lex-field)
       (define (accum-loop rev-chars)
         (let ((look (lookahead-char csv-port)))
+          (when (eof-object? look)
+            (parser-error/current-position
+             "unterminated field (reached EOF)"))
           (case look
             ((#\, #\return)
              (list->string (reverse rev-chars)))
@@ -143,7 +148,7 @@
       (define (accum-loop rev-chars)
         (let ((look (lookahead-char csv-port)))
           (when (eof-object? look)
-            (parser-error "unterminated escaped field"
+            (parser-error "unterminated record (reached EOF)"
                           opening-line-position
                           opening-char-position))
           (case look
@@ -151,9 +156,8 @@
              (consume #\")
              (let ((look* (lookahead-char csv-port)))
                (when (eof-object? look*)
-                 (parser-error "unexpected EOF"
-                               line-position
-                               (+ char-position 1)))
+                 (parser-error/current-position
+                  "unterminated record (reached EOF)"))
                (case look*
                  ((#\, #\return)
                   (list->string (reverse rev-chars)))
