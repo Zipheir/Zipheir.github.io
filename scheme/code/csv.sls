@@ -1,4 +1,4 @@
-;;; $Id: csv.sls,v 1.24 2025/12/13 16:42:53 wcm Exp wcm $
+;;; $Id: csv.sls,v 1.25 2025/12/14 17:15:52 wcm Exp wcm $
 ;;;
 ;;; SPDX-FileCopyrightText: 2025 Wolfgang Corcoran-Mathe
 ;;;
