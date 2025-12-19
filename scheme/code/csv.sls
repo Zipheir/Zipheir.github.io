@@ -1,4 +1,4 @@
-;;; $Id: csv.sls,v 1.25 2025/12/14 17:15:52 wcm Exp wcm $
+;;; $Id: csv.sls,v 1.26 2025/12/16 04:37:55 wcm Exp wcm $
 ;;;
 ;;; SPDX-FileCopyrightText: 2025 Wolfgang Corcoran-Mathe
 ;;;
@@ -82,9 +82,9 @@
         (unless (eqv? c in)
           (parser-error/current-position "Unexpected input" in))))
 
-    ;; Consume a CRLF.
+    ;; Consume a line-ending LF.  (Assumes the CR has already been
+    ;; consumed.)
     (define (consume-terminator)
-      (consume #\return)
       (consume #\newline)
       (set! line-position (+ line-position 1))
       (reset-char-position!))
@@ -93,7 +93,7 @@
       (define (lex-iter fields)
         (let ((look (lookahead-char csv-port)))
           (case look
-            ((#\return)
+            ((#\return #\newline)
              (consume-terminator)
              (reverse fields))  ; end of record
             ((#\,)  ; new field begins
@@ -127,8 +127,15 @@
             (parser-error/current-position
              "unterminated field (reached EOF)"))
           (case look
-            ((#\, #\return)
+            ((#\,)
              (list->string (reverse rev-chars)))
+            ((#\return)
+             ;; Check that this is the first half of a CRLF.
+             (consume #\return)
+             (if (eqv? #\newline (lookahead-char csv-port))
+                 (list->string (reverse rev-chars))
+                 (parser-error/current-position "invalid field character"
+                                                #\return)))
             ((#\" #\newline)
              (parser-error/current-position "invalid field character"
                                             look))
@@ -139,6 +146,7 @@
       (accum-loop '()))
 
     ;; Lex an escaped (double-quoted) field.
+    ;; TODO: Break this up.
     (define (lex-escaped-field)
       ;; Record the position of the field's opening quote, for
       ;; help diagnosing unterminated-field errors.
@@ -159,8 +167,16 @@
                  (parser-error/current-position
                   "unterminated record (reached EOF)"))
                (case look*
-                 ((#\, #\return)
+                 ((#\,)
                   (list->string (reverse rev-chars)))
+                 ((#\return)
+                  ;; Check that this is the first half of a CRLF.
+                  (consume #\return)
+                  (if (eqv? #\newline (lookahead-char csv-port))
+                      (list->string (reverse rev-chars))
+                      (parser-error/current-position
+                       "invalid field character"
+                       #\return)))
                  ((#\") ; escaped double-quote
                   (consume #\")
                   (accum-loop (cons #\" rev-chars)))
