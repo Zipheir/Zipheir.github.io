@@ -20,7 +20,8 @@
     <p>This library takes a rather strict view of CSV, modeled on
     <a href="https://datatracker.ietf.org/doc/html/draft-shafranovich-rfc4180-bis">a
     draft update to RFC 4180</a>.  In particular, a record without a
-    CRLF terminator is considered a syntax error; this requirement
+    CRLF or LF
+    terminator is considered a syntax error; this requirement
     simplifies the grammar of CSV data dramatically.  My guiding
     principle in designing this library is that any optional
     complexity should come from error handling (an important feature
@@ -53,9 +54,8 @@
     parsers
     with the same input port is not recommended.
     The parser expects <var>port</var> to produce UTF-8-encoded text
-    with CRLF
-    line endings.
-    (So don't transcode those CRLFs to LFs.)</p>
+    with CRLF or LF
+    line endings.</p>
 
 
     <p><code>(parse-csv <var>parser</var> <var>handler</var>
@@ -134,7 +134,7 @@
     FIXME: Should this be replaced by the ordinal number of the
     <em>record</em>
     at which the error occurred?
-    If not, make sure that embedded CRLFs are correctly counted.</p>
+    If not, make sure that embedded [CR]LFs are correctly counted.</p>
 
 
     <p><code>(condition-char-position <var>condition</var>)</code></p>
