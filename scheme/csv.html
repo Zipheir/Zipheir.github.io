@@ -85,29 +85,6 @@
     If an error occurs while parsing, then a condition of type
     <code>&amp;parser</code> (described below) is raised.</p>
 
-    <h4>Example:</h4>
-
-    <p>Assume input.csv contains:</p>
-
-<pre>a,b,c
-1,2,3
-</pre>
-
-    <p>Then:</p>
-
-<pre>(call-with-port
-  (open-file-input-port "input.csv")
-  (lambda (port)
-    (let ((parser (make-csv-parser port)))
-      (reverse
-       (parse-csv parser
-                  (lambda (r rs)
-                    (values #t (cons r rs)))
-                  0)))))
- ⇒ (("a" "b" "c")
-    ("1" "2" "3"))
-</pre>
-
 
     <h3>Condition type</h3>
 
@@ -116,11 +93,23 @@
     <code>&amp;parser</code>.
     This is a subtype of <code>&amp;i/o-port</code> (see the R6RS
     Standard Libraries
-    document, section 8).</p>
+    document, section 8).
+    Some parser errors are recoverable. These are reported with a
+    condition belonging to the <code>&amp;parser</code> subtype
+    <code>&amp;parser-recoverable</code>.
+
+
+    <h3>Error-handling procedures</h3>
 
     <p><code>(parser-error? <var>obj</var>)</code></p>
 
     <p>Returns true if <var>obj</var> is a <code>&amp;parser</code>
+    condition and false otherwise.</p>
+
+    <p><code>(recoverable-parser-error? <var>obj</var>)</code></p>
+
+    <p>Returns true if <var>obj</var> is a
+    <code>&amp;recoverable-parser</code>
     condition and false otherwise.</p>
 
 
@@ -151,6 +140,93 @@
     Returns the input token (as a Scheme character) that triggered the
     error, or <code>#f</code> if there is no relevant token.</p>
 
+    <p><code>(condition-skip-record <var>condition</var>)</code></p>
+
+    <p><var>condition</var> must satisfy
+    <code>recoverable-parser-error?</code>.</p>
+
+    <p>Returns a zero-argument procedure. When invoked, the parser will
+    attempt to skip the rest of the current CSV record and resume parsing
+    at the beginning of the next.</p>
+
+    <p><strong>Gotcha:</strong> The record-skipping algorithm is
+    currently quite simple: characters from the CSV port are discarded
+    up to and including the next [CR]LF, regardless of the parser's
+    pre-error context. In particular, if the error occurred while the
+    parser was in a quoted field, no attempt is made to find a closing
+    double-quote before considering [CR]LFs to be record terminators.
+    In the case of quoted fields with embedded newlines, this could
+    cause the parser to resume parsing within the field, leading to
+    more (recoverable) errors down the line.</p>
+
+    <p>This behavior seems better than the alternative, which is to
+    expect every quoted field to be properly terminated. When a field
+    has already triggered an error, that expectation seems dubious.
+    If there is no terminator, then the parser could end up
+    discarding several valid records, or even the entire remaining
+    CSV stream.</p>
+
+
+    <h3>Examples</h3
+
+    <h4>Simple usage</h4>
+
+    <p>The following procedure returns a list of all CSV records
+    parsed from <var>file<var>, in order:</p>
+
+<pre>(define (csv-file->list file)
+ (call-with-input-file
+  file
+  (lambda (port)
+    (let ((parser (make-csv-parser port)))
+      (reverse
+       (parse-csv parser
+                  (lambda (r rs)
+                    (values #t (cons r rs)))
+                  0))))))
+</pre>
+
+    <p>Assume the file <code>input.csv</code> contains:</p>
+
+<pre>a,b,c
+1,2,3
+</pre>
+
+    <p>Then:</p>
+
+<pre>(csv-file->list "input.csv")
+ ⇒ (("a" "b" "c")
+    ("1" "2" "3"))
+</pre>
+
+    <h4>Permissive parsing</h4>
+
+    <p>Sloppy CSV files are common, and it may be preferable for
+    parsing to continue through errors whenever this is possible. 
+    Here is a variant of the above example which prints a warning
+    and continues whenever a recoverable parser error occurs:</p>
+
+<pre><code>(define (csv-file->list file)
+  (call-with-input-file
+   file
+   (lambda (port)
+     (let ((parser (make-csv-parser port)))
+       (guard (con
+               ((recoverable-parser-error? con)
+                (display "WARNING: bad record at line ")
+                (display (condition-line-position con))
+                (newline)
+                ((condition-skip-record) con)))
+         (reverse
+          (parse-csv parser
+                     (lambda (r rs)
+                       (values #t (cons r rs)))
+                     0)))))))</code></pre>
+
+    <h3>Future directions</h3>
+
+    <p>None.</p>
+
 
     <h3>Copyright</h3>
 
@@ -159,38 +235,6 @@
     <p>Licensed under the
     <a href="https://opensource.org/license/eupl-1-2">EUPL</a>
     version 1.2 or later.</p>
-
-    <h3>Future directions</h3>
-
-    <h4>Error recovery</h4>
-
-    <p>It would be nice if a CSV parser could continue parsing after
-    skipping a bad character or record.  Record-skipping recovery is
-    not hard to implement using <code>guard</code> and
-    <code>call/cc</code>, but implementing character skipping with the
-    same technique makes the parser much more complex.  The reason
-    for this disparity seems to be the number of "recovery points":
-    there are many more places to return to after character-skipping
-    recovery than there are for record-skipping recovery.</p>
-
-    <p>Another possible problem is efficiency.  In most implementations
-    <code>guard</code> will need to grab its continuation, even if
-    its body never raises an exception.  If the only point I need to
-    <code>guard</code> is the beginning of a CSV record parse (which
-    is the recovery point for record-skipping recovery), this expense
-    isn't worth worrying about.  But if every <code>get-char</code> has
-    to be <code>guard</code>ed, is the cost still negligible?  The only
-    way to find out is to benchmark.</p>
-
-    <p>On the whole I am more worried about the cost in code complexity
-    than in efficiency, but both costs are troubling since they affect
-    all users of the parser.  This for a feature which only some users
-    will want to bother with.</p>
-
-    <p>That raises an obvious question: How often do people use error
-    recovery when reading CSV?  A brief survey of the Python and Haskell
-    options suggests many parsers don't offer it.</p>
-
     <p><a href="/index.html">Home</a></p>
   </body>
 </html>
