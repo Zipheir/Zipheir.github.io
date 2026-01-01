@@ -94,6 +94,8 @@
     This is a subtype of <code>&amp;i/o-port</code> (see the R6RS
     Standard Libraries
     document, section 8).
+    Most parser-error conditions include a message condition; the
+    error message can be retrieved with <code>condition-message</code>.
     Some parser errors are recoverable. These are reported with a
     condition belonging to the <code>&amp;parser</code> subtype
     <code>&amp;parser-recoverable</code>.
