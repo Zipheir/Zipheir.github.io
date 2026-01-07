@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link href="https://www.sigwinch.xyz/scheme/pqueues.html"
+          rel="canonical">
+    <title>(pqueues): Priority queues</title>
+  </head>
+  <body>
+    <h1>(pqueues): Priority queues</h1>
+
+    <p>This is an implementation of functional priority queues in
+    portable R6RS Scheme (plus one SRFI library).</p>
+
+    <p>These queues are based on a rooted, functional variety of binomial
+    trees, first described by David J. King in “Functional Binomial
+    Queues” (1994) and redesigned by G. S. Brodal &amp; Chris Okasaki in
+    “Optimal purely functional priority queues” (1996).  Access to the
+    least element in a queue takes constant time, and the other basic
+    queue operations run in logarithmic time.  In practice, these queue
+    seem very fast, comparable to imperative implementations.</p>
+
+    <p><strong>This library is in development. The interface could change at
+    any time.</strong></p>
+
+    <h2 id="toc">Contents</h2>
+
+    <ol>
+      <li><a href="#source">Source</a></li>
+      <li><a href="#dependencies">Dependencies</a></li>
+      <li><a href="#issues">Issues</a></li>
+      <li><a href="#specification">Specification</a>
+        <ol>
+          <li><a href="#constructors">Constructors</a></li>
+          <li><a href="#predicates">Predicates</a></li>
+          <li><a href="#accessors">Accessors</a></li>
+          <li><a href="#updaters">Updaters</a></li>
+          <li><a href="#conversions">Conversions</a></li>
+          <li><a href="#the-whole-pqueue">The whole pqueue</a></li>
+        </ol>
+      <li><a href="#copyright">Copyright</a></li>
+    </ol>
+
+
+    <h2 id="source">Source</h2>
+
+    <p><a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/pqueues.tar.bz2">FTP.</a>
+    The tarball includes the library source and a test suite.</p>
+
+
+    <h2 id="dependencies">Dependencies</h2>
+
+    <p>The SRFI 128 comparator library is required.  SRFIs 1 and 64 are
+    required to run the included tests.</p>
+
+
+    <h2 id="issues">Issues</h2>
+
+    <p>The delete and decrease-key operations aren’t yet implemented.
+    As Brodal &amp; Okasaki note in their paper, these are difficult to
+    implement efficiently on functional trees.</p>
+
+    <p>King actually implements decrease-key as a simple insertion (which
+    falls back to identity on the queue when the key isn’t found). This
+    is probably fine in many cases, but it can obviously blow up
+    space-usage if you use a lot of decrease-key operations.</p>
+
+
+    <h2 id="specification">Specification</h2>
+
+    <p>A priority queue (“pqueue”) represents a homogeneous fully-ordered
+    sequence.</p>
+
+    <p>The type and ordering of a priority queue is defined by an embedded
+    SRFI 128 comparator object (with mandatory type-test, equality, and
+    ordering predicates).</p>
+
+
+    <h3 id="constructors">Constructors</h3>
+
+    <p><code>(pqueue <var>comparator</var> <var>element</var> …) →
+    pqueue</code></p>
+
+    <p>Returns a priority queue with the given elements.  Each
+    <var>element</var> must satisfy <var>comparator</var>’s type-test
+    predicate.  Runs in O(<var>m</var> log <var>n</var>) time, where
+    <var>m</var> is the number of <var>elements</var>.</p>
+
+
+    <h3 id="predicates">Predicates</h3>
+
+    <p><code>(pqueue? <var>obj</var>) → boolean</code></p>
+
+    <p>Returns <code>#t</code> if <var>obj</var> is a priority queue and
+    <code>#f</code> otherwise.</p>
+
+    <p><code>(pqueue-empty? <var>pqueue</var>) → boolean</code></p>
+
+    <p>Returns <code>#t</code> if <var>pqueue</var> is empty and
+    <code>#f</code> otherwise.</p>
+
+
+    <h3 id="accessors">Accessors</h3>
+
+    <p><code>(pqueue-min <var>pqueue</var>) → *</code></p>
+
+    <p>Returns the least element of <var>pqueue</var>, defined by
+    <var>pqueue</var>’s ordering.  If <var>pqueue</var> is empty, an
+    assertion violation is signaled. Runs in O(1) time.</p>
+
+    <p><code>(pqueue-element-comparator <var>pqueue</var>) →
+    comparator</code></p>
+
+    <p>Returns <var>pqueue</var>’s embedded element comparator.</p>
+
+
+    <h3 id="updaters">Updaters</h3>
+
+    <p><code>(pqueue-delete-min <var>pqueue</var>) → pqueue</code></p>
+
+    <p>Returns a priority queue with the same type predicate and ordering
+    as <var>pqueue</var>, and with the same elements except for the least.
+    An assertion violation is signaled if <var>pqueue</var> is empty.
+    Runs in O(log <var>n</var>) time.</p>
+
+    <p><code>(pqueue-meld <var>pqueue</var> …) → pqueue</code></p>
+
+    <p>Returns a priority queue containing all of the elements of the
+    <var>pqueue</var>s.  While the <var>pqueues</var> may have different
+    comparators (in the sense of <code>eqv?</code>), they must define the
+    same element type and equality and ordering relations.  Otherwise, an
+    assertion violation is signaled.</p>
+
+
+    <h3 id="conversions">Conversions</h3>
+
+    <p><code>(pqueue-&gt;list <var>pqueue</var>) → list</code></p>
+
+    <p>Returns a list of the elements of <var>pqueue</var> in an
+    unspecified order. Runs in O(<var>n</var>) time.</p>
+
+
+    <h3 id="the-whole-pqueue">The whole pqueue</h3>
+
+    <p><code>(pqueue-size <var>pqueue</var>) → exact-integer</code></p>
+
+    <p>Returns the number of elements in <var>pqueue</var>. Runs in
+    O(log <var>n</var>) time.</p>
+
+
+    <h2 id="copyright">Copyright</h2>
+
+    <p>© 2024--2026 by Wolfgang Corcoran-Mathe</p>
+
+    <p>Licensed under the
+    <a href="https://opensource.org/license/MIT">MIT (Expat)</a>
+    license.</p>
+
+    <p><a href="/index.html">Home</a></p>
+  </body>
+</html>
