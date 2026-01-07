@@ -16,9 +16,10 @@
     portable R6RS Scheme (plus one SRFI library).</p>
 
     <p>These queues are based on a rooted, functional variety of binomial
-    trees, first described by David J. King in “Functional Binomial
-    Queues” (1994) and redesigned by G. S. Brodal &amp; Chris Okasaki in
-    “Optimal purely functional priority queues” (1996).  Access to the
+    trees, first described by David J. King in <cite>Functional Binomial
+    Queues</cite> (1994) and redesigned by G. S. Brodal &amp; Chris Okasaki
+    in <cite>Optimal purely functional priority queues</cite> (1996).
+    Access to the
     least element in a queue takes constant time, and the other basic
     queue operations run in logarithmic time.  In practice, these queue
     seem very fast, comparable to imperative implementations.</p>
@@ -71,8 +72,8 @@
 
     <h2 id="specification">Specification</h2>
 
-    <p>A priority queue (“pqueue”) represents a homogeneous fully-ordered
-    sequence.</p>
+    <p>A <dfn>priority queue</dfn> (“pqueue”) represents a homogeneous
+    fully-ordered sequence.</p>
 
     <p>The type and ordering of a priority queue is defined by an embedded
     SRFI 128 comparator object (with mandatory type-test, equality, and
