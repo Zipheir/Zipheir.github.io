@@ -13,14 +13,12 @@
     <h1>(pqueues): Priority queues</h1>
 
     <p>This is an implementation of functional priority queues in
-    portable R6RS Scheme (plus one SRFI library).</p>
+    portable Scheme (in an R6RS library wrapper).</p>
 
-    <p>These queues are based on a rooted, functional variety of binomial
+    <p>These queues are based on a functional variety of binomial
     trees, first described by David J. King in <cite>Functional Binomial
-    Queues</cite> (1994) and redesigned by G. S. Brodal &amp; Chris Okasaki
-    in <cite>Optimal purely functional priority queues</cite> (1996).
-    Access to the
-    least element in a queue takes constant time, and the other basic
+    Queues</cite> (1994).
+    The basic
     queue operations run in logarithmic time.  In practice, these queue
     seem very fast, comparable to imperative implementations.</p>
 
@@ -39,8 +37,8 @@
           <li><a href="#predicates">Predicates</a></li>
           <li><a href="#accessors">Accessors</a></li>
           <li><a href="#updaters">Updaters</a></li>
-          <li><a href="#conversions">Conversions</a></li>
           <li><a href="#the-whole-pqueue">The whole pqueue</a></li>
+          <li><a href="#iteration">Iteration</a></li>
         </ol>
       <li><a href="#copyright">Copyright</a></li>
       <li><a href="#references">References</a></li>
@@ -49,14 +47,18 @@
 
     <h2 id="source">Source</h2>
 
-    <p><a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/pqueues.tar.bz2">FTP.</a>
-    The tarball includes the library source and a test suite.</p>
+    <p><a href="code/pqueues.sls">pqueues.sls</a>
+    (<a href="code/pqueues.sls.asc">PGP signature</a>).</p>
+
+    <p>A tarball including the library and a (SRFI 64) test suite can
+    be found
+    <a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/pqueues.tar.bz2">on
+    FTP</a>.</p>
 
 
     <h2 id="dependencies">Dependencies</h2>
 
-    <p>The SRFI 128 comparator library is required.  SRFIs 1 and 64 are
-    required to run the included tests.</p>
+    <p>SRFIs 1, 9, and 128 are required.</p>
 
 
     <h2 id="issues">Issues</h2>
@@ -111,7 +113,7 @@
 
     <p>Returns the least element of <var>pqueue</var>, defined by
     <var>pqueue</var>’s ordering.  If <var>pqueue</var> is empty, an
-    assertion violation is signaled. Runs in O(1) time.</p>
+    assertion violation is signaled. Runs in O(log <var>n</var>) time.</p>
 
     <p><code>(pqueue-element-comparator <var>pqueue</var>) →
     comparator</code></p>
@@ -128,21 +130,29 @@
     An assertion violation is signaled if <var>pqueue</var> is empty.
     Runs in O(log <var>n</var>) time.</p>
 
+    <p><code>(pqueue-pop <var>pqueue</var>) → [* pqueue]</code></p>
+
+    <p>Returns two values: the least element of <var>pqueue</var> and a
+    new pqueue containing all of the other elements of <var>pqueue</var>.
+    This is equivalent to:</p>
+
+<pre><code>(values (pqueue-min pqueue)
+        (pqueue-delete-min pqueue))
+</code></pre>
+
+    <p>but will usually be more efficient.  An assertion violation is
+    signaled if <var>pqueue</var> is empty.  Runs in O(log <var>n</var>)
+    time.</p>
+
     <p><code>(pqueue-meld <var>pqueue</var> …) → pqueue</code></p>
 
     <p>Returns a priority queue containing all of the elements of the
-    <var>pqueue</var>s.  While the <var>pqueues</var> may have different
+    <var>pqueue</var>s.  The comparator of the resulting pqueue is taken
+    from one of the arguments (which is unspecified).
+    While the <var>pqueues</var> may have different
     comparators (in the sense of <code>eqv?</code>), they must define the
-    same element type and equality and ordering relations.  Otherwise, an
-    assertion violation is signaled.</p>
-
-
-    <h3 id="conversions">Conversions</h3>
-
-    <p><code>(pqueue-&gt;list <var>pqueue</var>) → list</code></p>
-
-    <p>Returns a list of the elements of <var>pqueue</var> in an
-    unspecified order. Runs in O(<var>n</var>) time.</p>
+    same element type and equality and ordering relations.  (This is
+    not checked.)</p>
 
 
     <h3 id="the-whole-pqueue">The whole pqueue</h3>
@@ -151,6 +161,40 @@
 
     <p>Returns the number of elements in <var>pqueue</var>. Runs in
     O(log <var>n</var>) time.</p>
+
+
+    <h3 id="iteration">Iteration</h3>
+
+    <p>Priority-queue folds iterate by successively popping elements
+    from the pqueue(s) until they are all empty.  When more than one
+    pqueue is folded, all pqueues must be of the same length.  If they
+    are not, an assertion violation is signaled.</p>
+
+    <p><code>(pqueue-fold-right <var>proc</var> <var>base</var>
+    <var>pqueue<sub>1</sub></var> <var>pqueue<sub>2</sub></var>) → *</p>
+
+    <p>Right folds <var>proc<var> over the elements of the
+    <var>pqueue</var>s in order.  <var>proc</var> is invoked as
+    <code>(<var>proc</var> <var>e<sub>1</sub></var>
+    <var>e<sub>2</sub></var> … <var>seed</var>)</code>, where
+    <var>e<sub>i</sub></var> is an element drawn from the <var>i</var>th
+    <var>pqueue</var>.</p>
+
+    <h4>Example</h4>
+
+<pre><code>(pqueue-fold-right cons '() (pqueue integer-comparator 3 2 1))
+  ⇒ (1 2 3)
+</code></pre>
+
+    <p><code>(pqueue-fold-left <var>proc</var> <var>base</var>
+    <var>pqueue<sub>1</sub></var> <var>pqueue<sub>2</sub></var>) → *</p>
+
+    <p>Left folds <var>proc<var> over the elements of the
+    <var>pqueue</var>s in order.  <var>proc</var> is invoked as
+    <code>(<var>proc</var> <var>seed</var> <var>e<sub>1</sub></var>
+    <var>e<sub>2</sub></var> …)</code>, where
+    <var>e<sub>i</sub></var> is an element drawn from the <var>i</var>th
+    <var>pqueue</var>.</p>
 
 
     <h2 id="copyright">Copyright</h2>
