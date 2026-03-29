@@ -1,0 +1,107 @@
+## Random ports
+
+### Abstract
+
+I propose a pattern of libraries for binary input ports
+that produce pseudorandom bytes.  The design is intentionally
+minimal and leave the details of pseudorandom number generation
+to the implementer.
+
+
+### Author
+
+Wolfgang Corcoran-Mathe
+
+
+### Specification
+
+#### Libraries
+
+A Scheme implementation conforming to this specification provides
+at least the following R7RS libraries:
+
+* (scheme random)
+* (scheme random crypto)
+* (scheme random repeatable)
+
+(scheme random) is simply an alias for (scheme random crypto).
+
+Both the 'crypto' and 'repeatable' libraries export the same interface
+(described below). Implementations may provide additional libraries
+under the "namespaces" given above, e.g. (scheme random repeatable
+xorshift). If they do, they should ensure (a) that each library exports
+the following interface and (b) that libraries with the (scheme random
+crypto) prefix provide cryptographic-quality randomness, and that
+those with the (scheme random repeatable) prefix provide deterministic
+sequences of pseudorandom bytes. This is this specification's only
+mechanism for choosing between different pseudorandom sources: each
+library is tied to a specific generation mechanism.
+
+
+### Interface
+
+#### Random ports
+
+The follow procedures are exported by all libraries with the
+(scheme random) prefix:
+
+(make-random-port) -> binary-input-port
+
+Returns a binary input port from which pseudorandom bytes can be
+read, e.g. with read-u8 or read-bytevector.
+
+(With deterministic sources the sequence produced by two random ports
+may be the same.  But of course each random port is distinct; operating
+on one random port should not change the state of any other port.)
+
+
+(random-port? obj) -> boolean
+
+True if obj is a port created with make-random-port and false otherwise.
+Whether random ports are distinct from other binary input ports is
+implementation-specified.
+
+
+(random-port-randomize! random-port) -> unspecified
+
+Makes an effort to put random-port into a hard-to-predict state.
+
+
+#### Random-number input
+
+The following port-reading "wrapper" procedures are required.
+Implementations may provide additional procedures for reading
+random numbers in other ranges and distributions.
+
+(read-random-integer random-port low high) -> integer
+
+Reads an unspecified number of bytes from random-port and returns a
+pseudorandom integer k satisfying low ≤ k < high.
+
+
+(read-random-real random-port low high) -> real
+
+Reads an unspecified number of bytes from random-port and returns a
+pseudorandom real number r satisfying low ≤ r < high.
+
+
+### TODO
+
+Seeding procedure for repeatable random ports.
+
+
+## Comments
+
+Please let me know what you think.
+
+Email: wcm at sigwinch dot xyzzy minus the zy
+
+IRC: Zipheir in #scheme on libera.chat
+
+
+## Copyright
+
+© 2026 Wolfgang Corcoran-Mathe
+
+Released under the terms of the Creative Commons Attribution 4.0
+International license (https://creativecommons.org/licenses/by/4.0/).
