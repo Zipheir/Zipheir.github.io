@@ -37,6 +37,11 @@ sequences of pseudorandom bytes. This is this specification's only
 mechanism for choosing between different random sources: each
 library is tied to a specific generation mechanism.
 
+No means is provided here for getting other kinds of data (integers,
+reals, etc.) out of random ports.  I intend that other libraries
+built on top of this one provide "wrappers" for generating those
+types.
+
 
 ### Interface
 
@@ -65,24 +70,6 @@ implementation-specified.
 (random-port-randomize! random-port) -> unspecified
 
 Makes an effort to put random-port into a hard-to-predict state.
-
-
-#### Random-number input
-
-The following port-reading "wrapper" procedures are required.
-Implementations may provide additional procedures for reading
-random numbers in other ranges and distributions.
-
-(read-random-integer random-port low high) -> integer
-
-Reads an unspecified number of bytes from random-port and returns a
-random integer k satisfying low ≤ k < high.
-
-
-(read-random-real random-port low high) -> real
-
-Reads an unspecified number of bytes from random-port and returns a
-random real number r satisfying low ≤ r < high.
 
 
 ### TODO
