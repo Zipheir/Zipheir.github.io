@@ -3,8 +3,8 @@
 ### Abstract
 
 I propose a pattern of libraries for binary input ports
-that produce pseudorandom bytes.  The design is intentionally
-minimal and leave the details of pseudorandom number generation
+that produce random bytes.  The design is intentionally
+minimal and leave the details of random number generation
 to the implementer.
 
 
@@ -34,7 +34,7 @@ the following interface and (b) that libraries with the (scheme random
 crypto) prefix provide cryptographic-quality randomness, and that
 those with the (scheme random repeatable) prefix provide deterministic
 sequences of pseudorandom bytes. This is this specification's only
-mechanism for choosing between different pseudorandom sources: each
+mechanism for choosing between different random sources: each
 library is tied to a specific generation mechanism.
 
 
@@ -47,7 +47,7 @@ The follow procedures are exported by all libraries with the
 
 (make-random-port) -> binary-input-port
 
-Returns a binary input port from which pseudorandom bytes can be
+Returns a binary input port from which (pseudo)random bytes can be
 read, e.g. with read-u8 or read-bytevector.
 
 (With deterministic sources the sequence produced by two random ports
@@ -76,13 +76,13 @@ random numbers in other ranges and distributions.
 (read-random-integer random-port low high) -> integer
 
 Reads an unspecified number of bytes from random-port and returns a
-pseudorandom integer k satisfying low ≤ k < high.
+random integer k satisfying low ≤ k < high.
 
 
 (read-random-real random-port low high) -> real
 
 Reads an unspecified number of bytes from random-port and returns a
-pseudorandom real number r satisfying low ≤ r < high.
+random real number r satisfying low ≤ r < high.
 
 
 ### TODO
