@@ -4,7 +4,7 @@
 
 I propose a pattern of libraries for binary input ports
 that produce random bytes.  The design is intentionally
-minimal and leave the details of random number generation
+minimal and leaves the details of random number generation
 to the implementer.
 
 
