@@ -1,51 +1,97 @@
-## Random ports
+== Basic random ports ==
 
-### Abstract
+=== Abstract ===
 
-I propose a pattern of libraries for binary input ports
-that produce random bytes.  The design is intentionally
-minimal and leaves the details of random number generation
-to the implementer.
+This SRFI proposes a pattern of libraries for binary input ports
+that produce random bytes.  The design leaves the details of random
+number generation to the implementer and the transformation of
+bytes to floats, etc. to other libraries.
 
 
-### Author
+=== Author ===
 
 Wolfgang Corcoran-Mathe
 
 
-### Specification
+=== Rationale ===
 
-#### Libraries
+SRFI 27, the best-known (and excellent) proposal for random-number
+systems in Scheme, includes both too little and too much.  On
+the one hand, it makes no distinction between sources of
+cryptographic-quality random numbers and sources of the
+deterministic pseudorandom data sometimes needed for tests &
+other purposes.  On the other, it includes forms for defining
+new random sources and for parameterizing library procedures
+over them.  It also branches out into procedures for other
+distributions of random numbers, an area which other proposals
+(e.g. SRFI 194) have covered in much greater detail.
+
+In this specification I take a different tack.
+I would like to provide a framework for random-byte generation
+that adds as little as necessary to the language.
+To manage this, SRFI ???
+
+* Uses binary ports, rather than a novel type, for random sources.
+
+* Uses the Scheme library system--and only the Scheme library
+system--to distinguish between
+(hopefully) cryptographic-quality sources and repeatable sources,
+as well as between different sub-kinds of sources.
+
+* Specifies no procedures for drawing random data.  The
+random-byte-seeking user is pointed in the direction of `read-u8'
+and `read-bytevector', and the
+other-types-seeking user in the direction of SRFI 194.
+
+
+=== Issues ===
+
+Repeatable random ports should be seedable.
+
+Should there be a predicate defining random port types?  If so, how
+should it deal with random ports exported by different libraries?
+Should it be provided separately?
+
+
+=== Specification ===
+
+==== Libraries ====
 
 A Scheme implementation conforming to this specification provides
 at least the following R7RS libraries:
 
-* (scheme random)
-* (scheme random crypto)
-* (scheme random repeatable)
+* (srfi ??? random)
+* (srfi ??? random crypto)
+* (srfi ??? random repeatable)
 
-(scheme random) is simply an alias for (scheme random crypto).
+(srfi ??? random) is simply an alias for (srfi ??? random crypto).
 
 Both the 'crypto' and 'repeatable' libraries export the same interface
 (described below). Implementations may provide additional libraries
 under the "namespaces" given above, e.g. (scheme random repeatable
 xorshift). If they do, they should ensure (a) that each library exports
-the following interface and (b) that libraries with the (scheme random
+the following interface and (b) that libraries with the (srfi ??? random
 crypto) prefix provide cryptographic-quality randomness, and that
-those with the (scheme random repeatable) prefix provide deterministic
+those with the (srfi ??? random repeatable) prefix provide deterministic
 sequences of pseudorandom bytes. This is this specification's only
 mechanism for choosing between different random sources: each
 library is tied to a specific generation mechanism.
+To aid portability, a list of suggested (scheme repeatable) library
+names is provided below.
 
 No means is provided here for getting other kinds of data (integers,
 reals, etc.) out of random ports.  I intend that other libraries
 built on top of this one provide "wrappers" for generating those
 types.
 
+If this proposal is accepted as part of the R7RS, the suggested
+library prefix is 'scheme random' (e.g. (scheme random crypto),
+etc.).
 
-### Interface
 
-#### Random ports
+=== Interface ===
+
+==== Random ports ====
 
 The follow procedures are exported by all libraries with the
 (scheme random) prefix:
@@ -60,33 +106,49 @@ may be the same.  But of course each random port is distinct; operating
 on one random port should not change the state of any other port.)
 
 
-(random-port? obj) -> boolean
-
-True if obj is a port created with make-random-port and false otherwise.
-Whether random ports are distinct from other binary input ports is
-implementation-specified.
-
-
 (random-port-randomize! random-port) -> unspecified
 
 Makes an effort to put random-port into a hard-to-predict state.
 
 
-### TODO
+=== Example PRNG library names ===
 
-Seeding procedure for repeatable random ports.
+This section is informational.  Names are based on
+https://prng.di.unimi.it and Wikipedia.
 
+(srfi ??? random repeatable xorshift)::
+Library using some kind of
+link:https://en.wikipedia.org/wiki/Xorshift[xorshift]
+generator.
 
-## Comments
+(srfi ??? random repeatable xoshiro256++)::
+(srfi ??? random repeatable xoshiro256**)::
+...::
+link:https://prng.di.unimi.it/#id-64-bit[xoshiro]
+libraries.
+
+(srfi ??? random repeatable mwc256)::
+Library for a 256-bit
+link:https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator[multiply-with-carry] source.
+
+== Compatibility ==
+
+TODO:
+
+Can SRFI 27 random sources be ports?
+
+SRFI 194: Ports are generators--no problem?
+
+== Comments ==
 
 Please let me know what you think.
 
 Email: wcm at sigwinch dot xyzzy minus the zy
 
-IRC: Zipheir in #scheme on libera.chat
+IRC: Zipheir in =scheme on libera.chat
 
 
-## Copyright
+== Copyright ==
 
 © 2026 Wolfgang Corcoran-Mathe
 
