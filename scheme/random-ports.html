@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+SPDX-FileCopyrightText: [year] [copyright holder]
+SPDX-License-Identifier: MIT
+-->
+  <head>
+    <meta charset="utf-8">
+    <title>SRFI ###: ???title???</title>
+    <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="https://srfi.schemers.org/srfi.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"></head>
+  <body>
+    <h1><a href="https://srfi.schemers.org/"><img class="srfi-logo" src="https://srfi.schemers.org/srfi-logo.svg" alt="SRFI surfboard logo" /></a>###: ???title???</h1>
+
+    <p>by Wolfgang Corcoran-Mathe</p>
+
+    <h2 id="status">Status</h2>
+
+    <p style="color: red;">For editor's use only.  Please do not edit this section.</p>
+
+    <p>??? the draft/final/withdrawn status of the SRFI, information on how
+    to subscribe to its mailing list, and important dates in its history.
+    The editor will add this section.</p>
+
+
+    <h2 id="abstract">Abstract</h2>
+
+    <p>This SRFI proposes a pattern of libraries for binary input ports
+    that produce random bytes.  The design leaves the details of random
+    number generation to the implementer and the transformation of
+    bytes to floats, etc. to other libraries.</p>
+
+
+    <h2 id="issues">Issues</h2>
+
+    <p>Should there be a predicate defining random port types?  If so, how
+    should it deal with random ports exported by different libraries?
+    Should it be provided separately?</p>
+
+
+    <h2 id="rationale">Rationale</h2>
+
+    <p>SRFI 27, the best-known (and excellent) proposal for random-number
+    systems in Scheme, includes both too little and too much.  On
+    the one hand, it makes no distinction between sources of
+    cryptographic-quality random numbers and sources of the
+    deterministic pseudorandom data sometimes needed for tests &
+    other purposes.  On the other, it includes forms for defining
+    new random sources and for parameterizing library procedures
+    over them.  It also branches out into procedures for other
+    distributions of random numbers, an area which other proposals
+    (e.g. SRFI 194) have covered in much greater detail.</p>
+
+    <p>In this specification I take a different tack.
+    I would like to provide a framework for random-byte generation
+    that adds as little as necessary to the language.
+    To manage this, SRFI ???</p>
+
+    <ul>
+      <li>
+        <p>Uses binary ports, rather than a novel type, for random
+        sources.</p>
+      </li>
+      <li>
+        <p>Uses the Scheme library system--and only the Scheme library
+        system--to distinguish between (hopefully) cryptographic-quality
+        sources and repeatable sources, as well as between different
+        sub-kinds of sources.</p>
+      </li>
+      <li>
+        <p>Specifies no procedures for drawing random data.  The
+        random-byte-seeking user is pointed in the direction of
+        <code>read-u8</code> and <code>read-bytevector</code>, and
+        the other-types-seeking user in the direction of SRFI 194.</p>
+      </li>
+    </ul>
+
+
+    <h2 id="specification">Specification</h2>
+
+    <h3 id="libraries">Libraries</h3>
+
+    <p>A Scheme implementation conforming to this specification provides
+    at least the following R7RS libraries:</p>
+
+    <ul>
+      <li><code>(srfi ??? random)</code></li>
+      <li><code>(srfi ??? random crypto)</code></li>
+      <li><code>(srfi ??? random repeatable)</code></li>
+    </ul>
+
+    <p>The usual library-name-format variants for these libraries
+    may also be provided:</p>
+
+    <ul>
+      <li><code>(srfi :??? random crypto)</code>, etc.</li>
+      <li><code>(srfi srfi-??? random crypto)</code>, etc.</li>
+    </ul>
+
+    <p><code>(srfi ??? random)</code> is simply an alias for
+    <code>(srfi ??? random crypto)</code>. (Rationale: Incautious
+    programmers who simply want random numbers get the best
+    available.)</p>
+
+    <p>Both the <code>crypto</code> and <code>repeatable</code>
+    libraries export the same interface (described below).
+    Implementations may provide additional libraries under the
+    "namespaces" given above, e.g.
+    <code>(scheme random repeatable xorshift)</code>.
+    If they do, they should ensure (a) that each library exports
+    the following interface and (b) that libraries with the <code>(srfi
+    ??? random crypto)</code> prefix provide cryptographic-quality
+    randomness, and that those with the <code>(srfi ??? random
+    repeatable)</code> prefix provide deterministic sequences of
+    pseudorandom bytes.</p>
+
+    <h4 id="discussion">Discussion</h4>
+
+    <p>This is this specification’s only mechanism for choosing
+    between different random sources: each library is tied to a
+    specific generation mechanism.  To aid portability, a list of
+    suggested (scheme repeatable) library names is provided below.</p>
+
+    <p>No means is provided here for getting other kinds of data
+    (integers, reals, etc.) out of random ports.  I intend that
+    other libraries built on top of this one provide "wrappers" for
+    generating those types.</p>
+
+    <p>If this proposal is accepted as part of the R7RS, the suggested
+    library prefix is <code>scheme random</code> (e.g.  <code>(scheme
+    random crypto)</code>, etc.).</p>
+
+
+    <h3 id="interface">Interface</h3>
+
+    <p>The follow procedures are exported by all libraries with the
+    <code>(scheme random)</code> prefix:</p>
+
+    <div id="make-random-port">
+      <p><code>(make-random-port)</code> → binary-input-port</p>
+
+      <p>Returns a binary input port from which (pseudo)random bytes
+      can be read, e.g. with <code>read-u8</code> or
+      <code>read-bytevector</code>.</p>
+
+      <p>(With deterministic sources the sequence produced by two
+      random ports may be the same.  But of course each random port
+      is distinct; operating on one random port should not change the
+      state of any other port.)</p>
+    </div>
+
+    <div id="random-port-randomize">
+      <p><code>(random-port-randomize! <var>random-port</var>
+      [<var>seed</var>])</code>
+      → unspecified</p>
+
+      <p>Initializes <var>random-port</var> to a “random” state.</p>
+
+      <p>The <code>random-port-randomize!</code> procedures exported
+      by <a href="#libraries"><code>repeatable</code> libraries</a>
+      should make use of the optional <var>seed</var> argument to
+      initialize <var>random-port</var> to a state derived from the
+      value of that argument.  Integer <var>seed</var>s must be 
+      supported, and implementations may allow other types as
+      well.</p>
+    </div>
+
+
+    <h3 id="example-prng-library-names">Example PRNG library names</h3>
+
+    <p>This section is informational.  Names are based on
+    <a href="https://prng.di.unimi.it">https://prng.di.unimi.it</a>
+    and Wikipedia.</p>
+
+    <dl>
+      <dt>(srfi ??? random repeatable xorshift)</dt>
+      <dd>
+        <p>Library using some kind of
+        <a href="https://en.wikipedia.org/wiki/Xorshift">xorshift</a>
+        generator.</p>
+      </dd>
+
+      <dt>(srfi ??? random repeatable xoshiro256++)</dt>
+      <dt>(srfi ??? random repeatable xoshiro256**)</dt>
+      <dd>
+        <p><a href="https://prng.di.unimi.it/#id-64-bit">xoshiro</a>
+        libraries.</p>
+      </dd>
+
+      <dt>(srfi ??? random repeatable mwc256)</dt>
+      <dd>
+        <p>Library for a 256-bit
+        <a href="https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator">multiply-with-carry</a>
+        source.</p>
+      </dd>
+    </dl>
+
+
+    <h2 id="implementation">Implementation</h2>
+
+    <!-- TODO -->
+
+
+    <h2 id="acknowledgements">Acknowledgements</h2>
+
+    <p>??? credit where it is due.</p>
+    <!-- TODO -->
+
+
+    <h2 id="copyright">Copyright</h2>
+    <p>&copy; 2026 Wolfgang Corcoran-Mathe.</p>
+
+    <p>
+      Permission is hereby granted, free of charge, to any person
+      obtaining a copy of this software and associated documentation files
+      (the "Software"), to deal in the Software without restriction,
+      including without limitation the rights to use, copy, modify, merge,
+      publish, distribute, sublicense, and/or sell copies of the Software,
+      and to permit persons to whom the Software is furnished to do so,
+      subject to the following conditions:</p>
+
+    <p>
+      The above copyright notice and this permission notice (including the
+      next paragraph) shall be included in all copies or substantial
+      portions of the Software.</p>
+
+    <p>
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+      EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+      MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+      NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+      BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+      ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+      CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.</p>
+
+    <hr>
+    <address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">Arthur A. Gleckler</a></address>
+  </body>
+</html>
