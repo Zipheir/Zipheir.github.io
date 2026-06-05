@@ -33,6 +33,7 @@
       <li>60-day deadline: 2026-07-02</li>
       <li>Draft #1 published: 2026-05-03</li>
       <li>Draft #2 published: 2026-05-13</li>
+      <li>Draft #3 published: 2026-06-03</li>
     </ul>
 
     <h2 id="abstract">Abstract</h2>
@@ -164,6 +165,8 @@
       since the states of randomized ports cannot in general
       be represented by Scheme values.  (Consider a random port
       backed by a hardware random-number generator, for example.)
+      Random-port states can also be compared for equality with
+      <code>random-state=?</code>, a feature missing from SRFI 27.</p>
 
     <p>Random ports are seeded only when they are created.  The
       <code>make-random-port</code> constructor accepts an optional state
@@ -175,7 +178,7 @@
       from other random ports; this eliminates the need for awkward
       initialization procedures like
       <code>random-source-randomize!</code>.  Given a single good-quality
-      randomized port, this makes it easy to create determinzed ports with
+      randomized port, this makes it easy to create determinized ports with
       random initial states.</p>
 
     <h3>Why ports?</h3>
@@ -242,11 +245,17 @@
         ports with the same states must produce the same sequence of
         pseudorandom numbers.</p>
 
-      <p>A <dfn>random state</dfn> is a semi-opaque object representing
+      <p>A <dfn>random state</dfn> is an object representing
         the state of a random port (or, more precisely, of the
-        random-number generator embodied by a random port).  Random
-        states must have an external representation and be comparable
-        with <code>equal?</code>.</p>
+        random-number generator embodied by a random port).  A type
+        of random states must have an external representation and must
+        support <code>write</code>/<code>read</code> invariance: a random
+        state that has been returned as part of a literal expression,
+        or read using the <code>read</code> procedure, and subsequently
+        written out using the <code>write</code> procedure, will read
+        back in as the same state in the sense of
+        <a href="#random-state-equalp"><code>random-state=?</code></a>.
+        (cf. R7RS §6.5.)</p>
     </div>
 
     <div id="libraries">
@@ -415,18 +424,51 @@
             initial state is the same as <var>rport</var>’s state.</p>
         </div>
 
+        <p><code>(random-port? <var>obj</var>)</code> → boolean</p>
+        
+        <p>Returns <code>#t</code> if <var>obj</var> is a random port
+          in the sense that it can be safely passed to procedures,
+          exported by the same library, which accept a
+          <var>random-port</var> argument.
+          Returns <code>#f</code> otherwise.</p>
+
+        <p>Rationale: <code>random-port?</code> may be used to “guard”
+          calls to procedures like <code>random-port-state</code> so as
+          to avoid the undefined behavior associated with ill-typed
+          procedure arguments.</p>
+
+        <p>The value of the <code>random-port?</code> procedure exported
+          by one random-port library when applied to a random port from
+          a different library is unspecified.</p>
+
+        <p>Rationale: Some implementations may introduce a
+          type of random ports which encompasses all of the ports
+          created by <code>(srfi 271)</code> libraries.  Others may
+          choose to make each library’s port type disjoint from all
+          other types.  The specification of <code>random-port?</code>
+          is meant to allow both approaches.</p>
+
         <p><code>(random-port-state <var>random-port</var>)</code> →
           state</p>
 
         <p>Returns an immutable random-state object representing the
-          current state
-          of <var>random-port</var>. If a new port is created with
-          <code>(make-random-port <var>state</var>)</code>, where
-          <var>state</var> is the value of <code>(random-port-state
-            <var>old-port</var>)</code> (or is equal to that value
-          in the sense of <code>equal?</code>), then the new port
-          must produce the same random sequence as <var>old-port</var>.
-        </p>
+          current state of <var>random-port</var>.</p>
+
+        <p><code>(random-port-state? <var>obj</var>)</code> →
+          boolean</p>
+
+        <p>Returns <code>#t</code> if <var>obj</var> is a valid
+          random-port state in the context of the exporting library.
+          Returns <code>#f</code> otherwise.</p>
+
+        <p id="random-state-equalp"><code>(random-state=?
+          <var>state<sub>1</sub></var> <var>state<sub>2</sub></var>
+          <var>state<sub>3</sub></var> …)</code> → state</p>
+
+        <p>Returns <code>#t</code> if all the <var>state</var>s are
+          equal, and <code>#f</code> otherwise.  Random states are
+          considered to be equal if random ports initialized to them
+          produce the same sequence.</p>
 
         <p><code>(random-port-initialization-error? <var>obj</var>)</code>
           → boolean</p>
@@ -606,7 +648,7 @@
       <a href="https://small.r7rs.org/">https://small.r7rs.org</a></p>
 
     <p>Sebastiano Vigna, <cite>A PRNG
-      shootout</cite>, (no publication date given).
+      shootout</cite>, 2026.
       <a href="https://prng.di.unimi.it">https://prng.di.unimi.it</a>
 
     <p id="c23"><cite>ISO/IEC 9899:2024. Programming languages —
