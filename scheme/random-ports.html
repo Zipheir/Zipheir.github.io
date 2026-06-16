@@ -212,12 +212,20 @@
       ports and generators have all of the same features and compete,
       pointlessly, for control of every I/O domain.</p>
 
-    <p>Back to the point. Some of the standard port operations that
-      are not available for SRFI 158 generators are useful for random
-      ports. For example, some random sources (traditionally, though
-      unfortunately) may block until sufficient entropy is available. With
-      random ports, applying <code>u8-ready?</code> should be enough to
-      alert you of this situation.</p>
+    <p>Back to the point.  Some of the standard port operations that are
+      not available for SRFI 158 generators are useful for random ports.
+      For example, some random sources (traditionally, though
+      unfortunately) may block until sufficient entropy is available.
+      With random ports, applying <code>u8-ready?</code> should be enough
+      to alert you of this situation.  Port positioning (described in
+      R6RS and <a href="https://srfi.schemers.org/srfi-192">SRFI 192</a>)
+      may also be useful when working with random-number generators that
+      allow seeking through their output stream.  Transcoders, another
+      R6RS port feature (also described in
+      <a href="https://srfi.schemers.org/srfi-181">SRFI 181</a>), could
+      be used to make ports that produce random strings.  Programmers
+      will no doubt discover other ways to use standard port features
+      with random ports.</p>
 
 
     <h2 id="specification">Specification</h2>
@@ -289,7 +297,9 @@
       <p><code>(srfi 271)</code> is simply an alias for
         <code>(srfi 271 randomized)</code>. (Rationale:
         Rushed or incautious programmers who just want random numbers
-        <a href="#riastradh-comments">get the best available.</a>)</p>
+        get those most likely to be of cryptographic quality. See
+        e.g. <a href="#riastradh-comments">Taylor Campbell’s
+        comments</a> on preferable defaults.)</p>
 
       <h4 id="library-protocol">Library protocol</h4>
 
@@ -603,33 +613,29 @@
 
     <h3>A higher-level interface</h3>
 
-    <p>Since the libraries specified by this SRFI do not provide
+    <p>Since this SRFI does not provide
       procedures for getting generally useful data types (integers
       within arbitrary ranges, reals, etc.) out of random ports, a
-      higher-level interface will be needed to make random-port
-      programming congenial.  The multi-library design of this SRFI leads
-      to one important consideration in choosing such an interface: it
-      should work with random ports from any library.  Because Scheme lacks
-      a means of parameterizing one library over the exports of another,
-      we need an interface to random ports in general, not just to the
-      ports from, say, <code>(srfi 271 randomized)</code>, if we wish to
+      higher-level interface is needed to make random-port
+      programming congenial.  Such an interface should work with random
+      ports from any SRFI 271 library, to
       avoid multiplying libraries unnecessarily.</p>
 
-    <p>For several reasons, detailed below, SRFI 27 would make a poor
-      high-level interface to random ports.  SRFI 194, while specified in
-      terms of SRFI 27, is a better fit, and it provides more kinds
-      of random-data generators than most programmers will ever need.
-      By wrapping random ports in SRFI 158 generators, however, several
-      useful properties of ports would be lost (see the
+    <p>For reasons detailed below, SRFI 27 would make a poor
+      interface to random ports.  SRFI 194, while specified in
+      terms of SRFI 27, is a better fit, and it provides more
+      random-data generators than most programmers will ever need.
+      Wrapping random ports in SRFI 158 generators, however, would
+      hide several useful properties of input ports (see the
       <a href="#rationale">Rationale</a> for details).  My preference
-      (which may be reified in a future SRFI) is for a library of bland
+      (which may be reified in a future SRFI) is a library of bland
       port-reading procedures, e.g. <code>read-random-integer</code>,
       <code>read-random-real</code>, etc., which would do the (sometimes
-      prickly) job of extracting good-quality random values without
-      hiding the ports providing the raw data.</p>
+      tricky) job of extracting good-quality random values without
+      hiding the ports themselves.</p>
 
     <p>That being said, SRFI 27 remains the best-known random-number
-      interface in Scheme, and it may be desirable to provide both SRFI
+      interface in Scheme, and implementers may want to provide both SRFI
       27 and 271 interfaces.  A discussion of SRFI 27 / 271 compatibility
       issues follows.</p>
 
@@ -672,7 +678,7 @@
 
     <h2 id="acknowledgements">Acknowledgements</h2>
 
-    <p>Thanks to John W. Cowan for helping to chip away
+    <p>Thanks to John W. Cowan and Peter McGoron for helping to chip away
       everything in this SRFI that did not look like an elephant.</p>
 
     <p>Thanks to Taylor Campbell and Alaric Snell-Pym for suggestions
@@ -682,7 +688,10 @@
       properties of such a source; any inaccuracies in the SRFI’s
       version are my own doing.</p>
 
-    <p>Thanks to Peter McGoron and the other members of the R7RS
+    <p>Thanks to Zhu Zihao for pointing out the connection between port
+      positions and seekable random-number generators.</p>
+
+    <p>Thanks to the members of the R7RS
       Second Working Group for advice and discussion.</p>
 
     <p>Thanks to those who provided feedback via the SRFI mailing list
@@ -703,6 +712,11 @@
       <cite>Revised Revised Report on Scheme</cite> (RRRS), MIT
       Artificial Intelligence Memo No. 848, August
       1985.</p>
+
+    <p id="r6rs">Michael Sperber, R. Kent Dybvig, Matthew Flatt, &amp;
+      Anton van Straaten, eds., <cite>Revised<sup>6</sub> Report on the
+      Algorithmic Language Scheme</cite> (R6RS), 2007.
+      <a href="https://www.r6rs.org">https://www.r6rs.org</a>.</p>
 
     <p id="r7rs">Alex Shinn, John Cowan, &amp; Arthur A. Gleckler,
       eds., <cite>Revised<sup>7</sup> Report on the Algorithmic Language
@@ -730,6 +744,15 @@
       <cite>SRFI 158: Generators and Accumulators</cite>.
       <a href="https://srfi.schemers.org/srfi-158/">
         https://srfi.schemers.org/srfi-158/</a>, 2017.</p>
+
+    <p id="srfi-181">John Cowan, <cite>SRFI 181: Custom ports
+      (including transcoded ports)</cite>.
+      <a href="https://srfi.schemers.org/srfi-181/">
+        https://srfi.schemers.org/srfi-181/</a>, 2020.</p>
+
+    <p id="srfi-192">John Cowan and Shiro Kawai, <cite>SRFI 192: Port
+      Positioning</cite>. <a href="https://srfi.schemers.org/srfi-192/">
+        https://srfi.schemers.org/srfi-192/</a>, 2020.</p>
 
     <p id="srfi-194">Shiro Kawai, Arvydas Silanskas, Linas Vepštas,
       and John Cowan. <cite>SRFI 194: Random data generators</cite>.
