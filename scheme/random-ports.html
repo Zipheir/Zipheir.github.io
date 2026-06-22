@@ -39,6 +39,7 @@
       <li>Draft #1 published: 2026-05-03</li>
       <li>Draft #2 published: 2026-05-13</li>
       <li>Draft #3 published: 2026-06-03</li>
+      <li>Draft #4 published: 2026-06-17</li>
     </ul>
 
     <h2 id="abstract">Abstract</h2>
@@ -74,6 +75,7 @@
               <li><a href="#discussion">Discussion</a></li>
             </ol>
           </li>
+          <li><a href="#example-of-usage">Example of usage</a></li>
           <li>
             <a href="#interface">Interface</a>
             <ol type="i">
@@ -248,7 +250,7 @@
         random-number generator) or from a
         deterministic generation algorithm which has been seeded
         from such a source. The sequence produced by a
-        randomized source should be unpredictable, even
+        randomized port should be unpredictable, even
         by an adversary who can read past outputs and simulate
         generation of outputs on demand.</p>
 
@@ -341,6 +343,13 @@
         a higher-level library, similar to SRFI 194, which can transform
         the binary output of a random port into values of other types.</p>
 
+      <p>Implementations might provide both randomized and determinized
+        libraries for the same random-number generator.  For
+        security-relevant applications, it may be undesirable to
+        allow ports to be initialized from known, possibly
+        very low-entropy, states.  The randomized library interface,
+        which does not allow this, could be seen as slightly safer.</p>
+
       <p>If this proposal is incorporated into the R7RS, I suggest
         that aliases under the library prefix <code>(scheme random)</code>
         (e.g. <code>(scheme random randomized)</code>,
@@ -398,10 +407,8 @@
                 <code>random-port-initialization-error?</code> is
                 signaled if <code>make-random-port</code> cannot obtain
                 enough data from <var>initializer</var> to initialize a
-                random port state, or if the data obtained is unsuitable
-                for initializing the implementation’s pseudorandom
-                number
-                generator.  Implementations should allow initialization
+                random-port state, or if the data obtained is unsuitable.
+                Implementations should allow initialization
                 from arbitrary infinite sequences.  An exception is the
                 all-zeros sequence (0, 0, …), which is known to cause
                 problems for many algorithms. Implementations may allow
@@ -527,6 +534,51 @@
       </div>
     </div>
 
+    <div id="example-of-usage">
+      <h4>Example of usage</h4>
+
+      <p><em>This section is informational.</em></p>
+
+      <pre><code>(import (scheme base)
+        (scheme read)
+        (scheme write)
+        (srfi 271 determinized)
+        (prefix (srfi 271 randomized) r:))
+
+(define rport (make-random-port))
+
+;; Explicit initialization using another port.
+(let ((rport2 (make-random-port (r:make-random-port))))
+  (equal? (read-bytevector 100 rport)
+          (read-bytevector 100 rport2)))
+;; ⇒ #f with a high probability
+
+(define rport-state (random-port-state rport))
+
+;; Initialization with a random-port state.
+(define rport3 (make-random-port rport-state))
+
+(equal? (read-bytevector 100 rport)
+        (read-bytevector 100 rport3))
+;; ⇒ #t
+
+(random-port-state=? (random-port-state rport)
+                     (random-port-state rport3))
+;; ⇒ #t
+
+;; Serializing a random-port state.
+(let ((output (open-output-string)))
+  (write rport-state output)
+  (let* ((str (get-output-string output))
+         (input (open-input-string str))
+         (serialized-state (read input)))
+    (random-port-state=? rport-state serialized-state)))
+;; ⇒ #t</code></pre>
+
+      <p>This is a revised version of an example provided by
+        Peter McGoron.</p>
+    </div>
+
     <div id="example-library-names">
       <h3>Example library names</h3>
 
@@ -548,6 +600,19 @@
             UNIX-like systems.</p>
         </dd>
 
+        <dt>
+          <code>(srfi 271 randomized hwrng)</code>
+        </dt>
+        <dd>
+          <p>Linux-only library which draws random data from a hardware
+            random-number generator via the <code>/dev/hwrng</code>
+            file.</p>
+        </dd>
+      </dl>
+
+      <h4><code>determinized</code> libraries</h4>
+
+      <dl>
         <dt><code>(srfi 271 randomized chacha8)</code></dt>
         <dt><code>(srfi 271 randomized chacha12)</code></dt>
         <dt><code>(srfi 271 randomized chacha20)</code></dt>
@@ -556,11 +621,6 @@
             <a href="https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant">ChaCha</a>
             stream ciphers.</p>
         </dd>
-      </dl>
-
-      <h4><code>determinized</code> libraries</h4>
-
-      <dl>
         <dt>
           <code>(srfi 271 determinized xorshift)</code>
         </dt>
