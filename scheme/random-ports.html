@@ -320,7 +320,7 @@
 
       <h4 id="additional-libraries">Additional libraries</h4>
 
-      <p>Implementations are encouraged to provide additional libraries
+      <p>Implementers are encouraged to provide additional libraries
         under
         the <code>(srfi 271)</code> prefix.  If they
         do, they must ensure that each library follows the protocol
@@ -491,6 +491,10 @@
           <p>Returns a random-port state representing the state of
             <var>random-port</var>.  If the value returned by
             <code>random-port-state</code> is mutated, the behavior is
+            undefined.</p>
+
+          <p>If <var>random-port</var> does not satisfy
+            <code>random-port?</code>, then the behavior is
             undefined.</p>
         </div>
 
