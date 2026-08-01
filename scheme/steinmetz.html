@@ -78,12 +78,18 @@
 
     <h2 id="using-steinmetz">Using steinmetz</h2>
 
-    <p>There are three libraries of general utility:</p>
+    <p>There are five libraries of general utility:</p>
 
     <dl>
       <dt><code>(steinmetz parse)</code></dt>
       <dd>
         <p>Exports the two primary parsing procedures.</p>
+      </dd>
+
+      <dt><code>(steinmetz exceptions)</code></dt>
+      <dd>
+        <p>Exports procedures for raising and catching parsing
+          exceptions.</p>
       </dd>
 
       <dt><code>(steinmetz options)</code></dt>
@@ -102,6 +108,9 @@
           formatted usage information drawn from a set of options.</p>
       </dd>
     </dl>
+
+    <p>The catch-all <code>(steinmetz)</code> library exports
+      everything exported by the above libraries.</p>
 
 
     <h2 id="option-type">Option type</h2>
@@ -434,10 +443,10 @@
         <dd>An arbitrary value.</dd>
       </dl>
 
-      <p>A general-purpose parsing procedure similar to SRFI 37's
+      <p>A general-purpose parsing procedure similar to SRFI 37’s
         <code>args-fold</code>. Applies <var>proc</var> to options
         and arguments derived from <var>cl-list</var>. At each step,
-        <var>proc</var> is applied to an Option, the option's argument
+        <var>proc</var> is applied to an Option, the option’s argument
         value (or <code>#f</code> if the option has no argument), and
         the current seeds.  For example, if the first two elements of
         <var>cl-list</var> are <code>"-f"</code> and <code>"foo"</code>,
