@@ -2,6 +2,8 @@
    "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
   <head>
+    <!-- SPDX-FileCopyrightText: Copyright 2022--2026 Wolfgang Corcoran-Mathe -->
+    <!-- SPDX-License-Identifier: MIT -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/style.css" rel="stylesheet" type="text/css">
@@ -81,13 +83,17 @@
     <dl>
       <dt><code>(steinmetz parse)</code></dt>
       <dd>
-        <p>Exports the two primary parsing procedures and the high-level
-          option-definition forms.  For simple programs, this is all
-          you’ll need.</p>
+        <p>Exports the two primary parsing procedures.</p>
       </dd>
 
       <dt><code>(steinmetz options)</code></dt>
       <dd><p>Exports the low-level option interface.</p></dd>
+
+      <dt><code>(steinmetz syntax)</code></dt>
+      <dd>
+        <p>Exports the <a href="#options-macro"><code>options</code></a>
+          syntactic interface.</p>
+      </dd>
 
       <dt><code>(steinmetz usage)</code></dt>
       <dd>
@@ -96,10 +102,6 @@
           formatted usage information drawn from a set of options.</p>
       </dd>
     </dl>
-
-    <p><code>(steinmetz command-line)</code> is available but
-      probably not very interesting.  It provides a command-line
-      pre-processor which is used by the parsing procedures.</p>
 
 
     <h2 id="option-type">Option type</h2>
@@ -261,9 +263,10 @@
 
     <div class="proc-spec">
       <p><code>(option-argument-parser <var>option</var>)</code>
-        → procedure</p>
+        → (or procedure false)</p>
 
-      <p>Returns the argument parser associated with <var>option</var>.
+      <p>Returns the argument parser associated with <var>option</var>,
+        or <code>#f</code> if the option takes no argument.</p>
     </div>
 
     <div class="proc-spec">
