@@ -45,7 +45,7 @@
       <li><a href="#using-steinmetz">Using steinmetz</a></li>
       <li>
         <a href="#option-type">Option type</a>
-        <ol>
+        <ol type="i">
           <li>
             <a href="#syntactic-interface">Syntactic interface</a>
           </li>
@@ -56,7 +56,7 @@
       </li>
       <li>
         <a href="#parsing">Parsing</a>
-        <ol>
+        <ol type="i">
           <li>
             <a href="#parsing-conventions">Parsing conventions</a>
           </li>
@@ -66,7 +66,7 @@
       <li>
         <a href="#conditions-and-exceptions">Conditions and
           Exceptions</a>
-        <ol>
+        <ol type="i">
           <li><a href="#invalid-option-condition">Invalid
             option</a></li>
           <li><a href="#invalid-argument-condition">Invalid
@@ -470,9 +470,13 @@
         <var>proc</var> will be invoked as
         <code>(proc #f "frob")</code>.</p>
 
-      <p><var>parse-command-line</var> returns the values returned
+      <p><code>parse-command-line</code> returns the values returned
         by the final invocation of <var>proc</var>, followed by the
         remaining suffix of <var>cl-list</var>.</p>
+
+      <p>TODO: An example using <code>parse-command-line</code> to
+        do things that are difficult to do with the higher-level
+        form.</p>
 
       <h4 id="parse-command-line-exception-protocol">Exception
         protocol</h4>
