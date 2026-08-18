@@ -12,8 +12,8 @@
   <body>
     <h2>(csv): CSV parsing library</h2>
 
-    <p>This is a CSV parsing library written in portable R6RS Scheme.
-    I wrote it because most of the Scheme CSV parsers I could find
+    <p>This is a Scheme CSV parsing library which
+    I wrote because most of the CSV parsers I could find
     were sloppy or written on top of big, complicated general parsing
     libraries.</p>
 
@@ -33,10 +33,32 @@
 
     <h3>Source</h3>
 
+    <p>There are both R<sup>6</sup>RS and R<sup>7</sup>RS libraries
+      available.</p>
+
+    <h4>R<sup>6</sup>RS library</h4>
+
     <p><a href="code/csv.sls">csv.sls</a>
     (<a href="code/csv.sls.asc">PGP signature</a>)</p>
 
-    <p>A tarball including the library and a test suite can be found
+    <p>This version has been tested on ChezScheme 10.0.0. It has no
+      dependencies other than the standard R<sup>6</sup>RS
+      libraries.</p>
+
+    <h4>R<sup>7</sup>RS library</h4>
+
+    <p><a href="code/csv.sld">csv.sld</a>
+    (<a href="code/csv.sld.asc">PGP signature</a>)</p>
+
+    <p>Tested on Gauche and chibi.  Uses SRFI 35 to define its
+      condition types.</p>
+
+    <p>Note that error recovery does not currently work on Gauche: when
+      the exception handler calls an error-recovery procedure, the CSV
+      parser's input port is closed, for some reason.  I am
+      investigating this behavior.</p>
+
+    <p>A tarball including both libraries and a test suite can be found
     <a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/csv.tar.bz2">on
     FTP</a>.</p>
 
@@ -204,7 +226,7 @@
     <h4>Permissive parsing</h4>
 
     <p>Sloppy CSV files are common, and it may be preferable for
-    parsing to continue through errors whenever this is possible. 
+    parsing to continue through errors whenever this is possible.
     Here is a variant of the above example which prints a warning
     and continues whenever a recoverable parser error occurs:</p>
 
