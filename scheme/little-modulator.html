@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link href="https://www.sigwinch.xyz/scheme/little-modulator.html"
+          rel="canonical">
+    <title>The Little Modulator</title>
+  </head>
+  <body>
+    <h1>The Little Modulator</h1>
+
+    <p>The Little Modulator is a synthesizer instrument modeled on
+      Yamaha’s famous X-series FM synthesizers.  It will be implemented
+      as a set of Scheme libraries, with driver programs for
+      performance.</p>
+
+    <h2>Source</h2>
+
+    <p>TLM is currently vaporware.  When either the realtime or
+      ahead-of-time performance driver is working, a link to the source
+      will appear here.</p>
+
+    <h2>Features</h2>
+
+    <ul>
+      <li>
+        <p>Sound synthesis using arbitrary (but currently acyclic)
+          graphs of frequency-modulated oscillators for tone
+          production.  (Implemented.)</p>
+      </li>
+      <li>
+        <p>Per-oscillator customizable envelope generators.
+          (Implemented.)</p>
+      </li>
+      <li>
+        <p>Arbitrary pitch specification by frequency and frequency
+          ratio.  No artificial restriction to MIDI-note pitches (i.e.
+          to twelve-tone equal temperament).  (Implemented, at least
+          internally.)</p>
+      </li>
+      <li>
+        <p>MUSIC V / Csound–style score input for ahead-of-time
+          synthesis.  (TODO.)</p>
+      </li>
+      <li><p>Realtime performance under MIDI control. (TODO.)</p></li>
+    </ul>
+
+    <h2>Dependencies</h2>
+
+    <p>TLM is currently written in R7RS Scheme with a few additional
+      dependencies:</p>
+
+    <ul>
+      <li>SRFI 1</li>
+      <li>SRFI 133</li>
+      <li>
+        <p>The R<sup>6</sup>RS bytevector library (AKA <code>(scheme
+          bytevector)</code>) or the equivalent.</p>
+      </li>
+    </ul>
+
+    <h2>License</h2>
+
+    <p>EUPL v1.2 or later.</p>
+
+    <p><a href="/index.html">Home</a></p>
+  </body>
+</html>
