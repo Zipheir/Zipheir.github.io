@@ -6,9 +6,8 @@ p.attribution { text-align: right; }  /* Quotation attribution. */
 
 th, td { padding: 0.5em; }
 
-h1#sitename { font-family: monospace;
-              padding-top: 10px;
-              padding-bottom: 10px; }
+h1#sitename { font-family: monospace; }
 
 div#titlebar { background-color: navy;
-               color: yellow; }
+               color: yellow;
+               padding: 10px 0 10px 5px; }
