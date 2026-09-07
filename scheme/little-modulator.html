@@ -13,15 +13,23 @@
     <h1>The Little Modulator</h1>
 
     <p>The Little Modulator is a synthesizer instrument modeled on
-      Yamaha’s famous X-series FM synthesizers.  It will be implemented
+      Yamaha’s famous X-series FM synthesizers.  It is implemented
       as a set of Scheme libraries, with driver programs for
       performance.</p>
 
+    <p><em>This is a work in progres.</em>  The implementation is still
+      quite rough.  Bug reports and suggestions — especially on the
+      finer points of synthesis implementation — are welcome.</p>
+
     <h2>Source</h2>
 
-    <p>TLM is currently vaporware.  When either the realtime or
-      ahead-of-time performance driver is working, a link to the source
-      will appear here.</p>
+    <p>
+      <a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/little-modulator_alpha_0.0.1.tar.bz2">
+        Tarball (FTP).</a></p>
+
+    <p>At the moment I am working on TLM with Gauche.  The
+      implementation will need some adjustment to run under other
+      R<sup>7</sup>RS Schemes.</p>
 
     <h2>Features</h2>
 
@@ -43,7 +51,7 @@
       </li>
       <li>
         <p>MUSIC V / Csound–style score input for ahead-of-time
-          synthesis.  (TODO.)</p>
+          synthesis.  (Implemented.)</p>
       </li>
       <li><p>Realtime performance under MIDI control. (TODO.)</p></li>
     </ul>
@@ -55,12 +63,56 @@
 
     <ul>
       <li>SRFI 1</li>
+      <li>SRFI 27</li>
       <li>SRFI 133</li>
+      <li>SRFI 196</li>
       <li>
         <p>The R<sup>6</sup>RS bytevector library (AKA <code>(scheme
           bytevector)</code>) or the equivalent.</p>
       </li>
     </ul>
+
+    <h2>Ahead-of-time Example</h2>
+
+    <p>The following uses an electric-organ-like instrument (described
+      by Chowning &amp; Bristow in <cite>FM Theory &amp;
+      Applications<cite> (1986), p. 101) to play a five-note scale
+      (<a href="https://en.wikipedia.org/wiki/Ptolemy%27s_intense_diatonic_scale">Ptolemy’s
+      diatonic</a>) the file <code>scale</code>.  The format is currently
+      raw 16-bit PCM.</p>
+
+    <pre><code>
+(import (scheme base)
+        (tlm envelopes)
+        (tlm output)
+        (tlm score)
+        (tlm signal-graphs)
+        )
+
+(define my-synth
+  (let* ((env0 (make-env 99 100 95 30 99 0.0))
+         (osc0 (make-osc #f 30 (make-env-generator env0) 1.0))
+         (osc1 (make-osc 1.0 1.5 (make-env-generator env0) #f))
+         (osc2 (make-osc #f 30 (make-env-generator env0) 1.288))
+         (osc3 (make-osc 2.0 1.5 (make-env-generator env0) #f))
+         (osc4 (make-osc #f 30 (make-env-generator env0) 2.042))
+         (osc5 (make-osc 3.0 1.5 (make-env-generator env0) #f))
+         (ov (vector osc0 osc1 osc2 osc3 osc4 osc5)))
+    (make-instrument ov '((0) (1 0)
+                          (2) (3 2)
+                          (4) (5 4)))))
+
+(define my-score
+  (list (make-note 0 2 400 64)
+        (make-note 4 2 450 64)
+        (make-note 8 2 500 64)
+        (make-note 12 2 533.333 64)
+        (make-note 16 4 600 64)))
+
+(call-with-port
+ (open-binary-output-file "scale")
+ (lambda (port)
+   (play-score port my-synth my-score)))</code></pre>
 
     <h2>License</h2>
 
