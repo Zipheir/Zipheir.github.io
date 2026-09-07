@@ -11,3 +11,5 @@ h1#sitename { font-family: monospace; }
 div#titlebar { background-color: navy;
                color: yellow;
                padding: 5px 0 5px 5px; }
+
+div#footer { top-margin: 10px; }
