@@ -80,11 +80,12 @@
       by Chowning &amp; Bristow in <cite>FM Theory &amp;
       Applications</cite> (1986), p. 101) to play a five-note scale
       (<a href="https://en.wikipedia.org/wiki/Ptolemy%27s_intense_diatonic_scale">Ptolemy’s
-      diatonic</a>) to the file <code>scale</code>.  The format is currently
+      diatonic</a>) to the file <code>scale.s16</code>.  The format is currently
       raw 16-bit PCM.</p>
 
     <pre><code>
 (import (scheme base)
+        (scheme file)
         (tlm envelopes)
         (tlm output)
         (tlm score)
@@ -112,7 +113,7 @@
         (make-note 16 4 600 64)))
 
 (call-with-port
- (open-binary-output-file "scale")
+ (open-binary-output-file "scale.s16")
  (lambda (port)
    (play-score port my-synth my-score)))</code></pre>
 
