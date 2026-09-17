@@ -17,3 +17,7 @@ hr.dinkus {
 }
 
 div.footer { margin-top: 2em; }
+
+div#titlebar { background-color: navy;
+               color: yellow;
+               padding: 5px 0 5px 5px; }
