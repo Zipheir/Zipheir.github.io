@@ -26,7 +26,7 @@
     <h2>Source</h2>
 
     <p>
-      <a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/little-modulator_alpha_0.0.2.tar.bz2">
+      <a href="ftp://ftp.sigwinch.xyz/pub/wcm/code/tlm/little-modulator_alpha_0.0.3.tar.bz2">
         Tarball (FTP).</a></p>
 
     <p>At the moment I am working on TLM with Gauche.  The
@@ -93,24 +93,25 @@
         )
 
 (define my-synth
-  (let* ((env0 (make-env 99 100 95 30 99 0.0))
-         (osc0 (make-osc #f 30 (make-env-generator env0) 1.0))
-         (osc1 (make-osc 1.0 1.5 (make-env-generator env0) #f))
-         (osc2 (make-osc #f 30 (make-env-generator env0) 1.288))
-         (osc3 (make-osc 2.0 1.5 (make-env-generator env0) #f))
-         (osc4 (make-osc #f 30 (make-env-generator env0) 2.042))
-         (osc5 (make-osc 3.0 1.5 (make-env-generator env0) #f))
+  (let* ((env0 (make-env 99 150.0 95 45.0 99 0.0))
+         (carrier-env (env-scale-levels 20 env0))
+         (osc0 (make-osc #f (make-env-generator carrier-env) 1.0))
+         (osc1 (make-osc 1.0 (make-env-generator env0) #f))
+         (osc2 (make-osc #f (make-env-generator carrier-env) 1.288))
+         (osc3 (make-osc 2.0 (make-env-generator env0) #f))
+         (osc4 (make-osc #f (make-env-generator carrier-env) 2.042))
+         (osc5 (make-osc 3.0 (make-env-generator env0) #f))
          (ov (vector osc0 osc1 osc2 osc3 osc4 osc5)))
     (make-instrument ov '((0) (1 0)
                           (2) (3 2)
                           (4) (5 4)))))
 
 (define my-score
-  (list (make-note 0 2 400 64)
-        (make-note 4 2 450 64)
-        (make-note 8 2 500 64)
-        (make-note 12 2 533.333 64)
-        (make-note 16 4 600 64)))
+  (list (make-note 0 3 400 64)
+        (make-note 4 3 450 64)
+        (make-note 8 3 500 64)
+        (make-note 12 3 533.333 64)
+        (make-note 16 6 600 64)))
 
 (call-with-port
  (open-binary-output-file "scale.s16")
