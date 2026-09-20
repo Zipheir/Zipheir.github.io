@@ -1,7 +1,6 @@
-body {
-    max-width: 46em;
-    font-family: serif;
-}
+@import "http://www.sigwinch.xyz/body_max_width.css";
+
+div.essay { font-family: serif; }
 
 div.essay > p {
     text-align: justify;

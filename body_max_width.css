@@ -1,0 +1,4 @@
+/* This is in its own file, because there seems to be no easy way
+ * to override max-width (e.g. for a table) in current Palemoon or
+ * Firefox. */
+body { max-width: 46em; }
