@@ -1,3 +1,7 @@
-body { max-width: 46em; }
-
 p { text-align: justify; }
+
+div.footer { margin-top: 2em; }
+
+div#titlebar { background-color: navy;
+               color: yellow;
+               padding: 5px 0 5px 5px; }
