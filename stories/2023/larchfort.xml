@@ -2,7 +2,7 @@
   (Micro) TEI-Lite (https://old.tei-c.org/guidelines/customization/lite/)
   version of “Larchfort” by Wolfgang Corcoran-Mathe.
 -->
-<TEI>
+<TEI lang="en">
   <teiHeader>
     <fileDesc>
       <titleStmt>

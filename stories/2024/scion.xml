@@ -2,7 +2,7 @@
   (Micro) TEI-Lite (https://old.tei-c.org/guidelines/customization/lite/)
   document of “Scion” by Wolfgang Corcoran-Mathe.
 -->
-<TEI>
+<TEI lang="en">
   <teiHeader>
     <fileDesc>
       <titleStmt>
