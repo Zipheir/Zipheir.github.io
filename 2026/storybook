@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/style.css" type="text/css">
+    <title>StoryBook Namespace</title>
+  </head>
+  <body>
+    <div id="titlebar">
+      <h1>StoryBook Namespace</h1>
+    </div>
+
+    <p>This is the namespace page for StoryBook, my fiction-oriented
+      variant of DocBook 5.  If anyone is crazy enough to use it, then
+      the following namespace should be used:</p>
+
+    <blockquote>
+      <code>http://www.sigwinch.xyz/2026/storybook</code>
+    </blockquote>
+    
+    <p id="footer"><a href="/index.html">Home</a></p>
+  </body>
+</html>
